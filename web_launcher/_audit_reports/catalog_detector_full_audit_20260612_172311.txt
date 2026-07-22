@@ -1,0 +1,791 @@
+=== FULL CATALOG / DETECTOR / PREPROCESS AUDIT ===
+timestamp: 20260612_172311
+report: /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/catalog_detector_full_audit_20260612_172311.txt
+
+================ ROOT PATHS ================
+OK  WEB_ROOT                           dir                /proj/zefflab/projects/Flooding/pipeline/web_launcher
+OK  APP_PATH                           file  79049        /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+OK  PREPROCESS_PATH                    file  99604        /proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py
+OK  MANUAL_HTML                        file  140463       /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+OK  OVERRIDE_HTML                      file  163373       /proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html
+OK  STATIC_CATALOG                     dir                /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county
+OK  EVENT_CATALOG                      dir                /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms
+OK  RUN_CONFIG                         file  11039        /proj/zefflab/projects/Flooding/sfincs_runs/harvey_2017_mrms_manual_001/run_config.json
+
+================ KEY INPUT FILES ================
+OK  HCFCD_DEM_5m_UTM.tif               file  731212310    /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif
+OK  README.md                          file  130          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/dem/README.md
+OK  README.md                          file  183          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/subgrid/README.md
+OK  hydromt_data.yml                   file  5370         /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata/hydromt_data.yml
+OK  cn_avg.tif                         file  640146429    /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/curve_number/cn_avg.tif
+OK  cn_wet.tif                         file  613372086    /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/curve_number/cn_wet.tif
+OK  cn_dry.tif                         file  640146429    /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/curve_number/cn_dry.tif
+OK  NLCD_2016_Land_Cover_L48_20190424.img file  28700        /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/landcover/NLCD_2016_Land_Cover_L48_20190424.img
+OK  nlcd_mapping_mean.csv              file  177          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/manning_reclass_table/nlcd_mapping_mean.csv
+OK  houston_model.shp                  file  52716        /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/region_geom/houston_model.shp
+OK  AB_dams.shp                        file  884          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/structures_thin_dams/AB_dams.shp
+OK  event_runtime_window.csv           file  269          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_runtime_window/event_runtime_window.csv
+OK  harvey_mrms.nc                     file  13839647     /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_precip/harvey_mrms.nc
+OK  harvey_houston_wl_bc.csv           file  28614        /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_waterlevel/harvey_houston_wl_bc.csv
+OK  event_source_table.csv             file  578          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_source_table/event_source_table.csv
+OK  harvey_houston_q_bc.csv            file  444041       /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_discharge/harvey_houston_q_bc.csv
+OK  sfincs_obs_points_lite.xy          file  184          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/lite/sfincs_obs_points_lite.xy
+OK  sfincs_obs_points_validation.xy    file  805          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/validation/sfincs_obs_points_validation.xy
+OK  sfincs_obs_points_full_candidates.xy file  1219         /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/full_candidates/sfincs_obs_points_full_candidates.xy
+OK  sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy file  1748         /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy
+OK  sfincs_crs_lines_REVIEWED.xyxy     file  1702         /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED.xyxy
+
+================ DIRECTORY SNAPSHOTS ================
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county ---
+DIR   _audit/
+DIR   _manifests/
+DIR   _notes/
+DIR   bathy/
+DIR   boundary_points_static/
+DIR   curve_number/
+DIR   dem/
+DIR   grid_template/
+DIR   infiltration/
+DIR   landcover/
+DIR   manning_reclass_table/
+DIR   mask/
+DIR   obs_lines_static/
+DIR   obs_points_static/
+DIR   region_geom/
+DIR   roughness/
+DIR   scs_infiltration/
+DIR   source_points_static/
+DIR   static_metadata/
+DIR   structures_drainage/
+DIR   structures_levees/
+DIR   structures_thin_dams/
+DIR   structures_weirs/
+DIR   subgrid/
+DIR   topobathy/
+DIR   vertical_datum_notes/
+FILE  README.md  size=479
+FILE  README_harris_county.txt  size=413
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy ---
+FILE  .keep  size=49
+FILE  HCFCD_DEM_5m_UTM.tif  size=731212310
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata ---
+FILE  .keep  size=49
+FILE  hydromt_data.yml  size=5370
+FILE  README.md  size=524
+FILE  static_catalog_file_manifest.csv  size=14587
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/curve_number ---
+FILE  .keep  size=49
+FILE  cn_avg.tif  size=640146429
+FILE  cn_dry.tif  size=640146429
+FILE  cn_wet.tif  size=613372086
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/dem ---
+FILE  .keep  size=49
+FILE  README.md  size=130
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/subgrid ---
+FILE  .keep  size=49
+FILE  README.md  size=183
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms ---
+DIR   _manifests/
+DIR   _notes/
+DIR   event_boundary_table/
+DIR   event_discharge/
+DIR   event_discharge_points/
+DIR   event_forcing_qc/
+DIR   event_metadata/
+DIR   event_precip/
+DIR   event_pressure/
+DIR   event_runtime_window/
+DIR   event_source_table/
+DIR   event_validation_lines/
+DIR   event_validation_points/
+DIR   event_waterlevel/
+DIR   event_waterlevel_points/
+DIR   event_wind/
+FILE  README.md  size=478
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles ---
+DIR   full_candidates/
+DIR   lite/
+DIR   validation/
+FILE  OBS_POINT_PROFILES_SUMMARY.csv  size=1692
+FILE  README.md  size=198
+
+--- LIST /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines ---
+DIR   custom_review_figures/
+DIR   review_figures/
+FILE  crs_line_orientation_review_choices.csv  size=13949
+FILE  crs_lines_CUSTOM_NEEDED.csv  size=416
+FILE  crs_lines_SKIPPED.csv  size=3613
+FILE  sfincs_crs_lines_AUTO_CUSTOM.csv  size=615
+FILE  sfincs_crs_lines_REVIEWED.csv  size=10066
+FILE  sfincs_crs_lines_REVIEWED.geojson  size=25791
+FILE  sfincs_crs_lines_REVIEWED.xyxy  size=1702
+FILE  sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.csv  size=10498
+FILE  sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.geojson  size=27937
+FILE  sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy  size=1748
+
+================ YAML / CATALOG SOURCE AUDIT ================
+
+--- YAML /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata/hydromt_data.yml ---
+L1     source=galveston_bay                    driver=raster path=Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif
+L19    source=gcn250                           driver=raster path=Z:\projects\sfincs\data\soil\gcn250\{variable}.tif
+L32    source=harvey_bc_discharge              driver=vector path=Z:\projects\sfincs\data\gages\Harvey\reservoir_coords.csv
+L48    source=harvey_bc_waterlevel             driver=vector path=Z:\users\lelise\data\gages\Harvey\gage_coords.csv
+L65    source=hcfcd_bathy                      driver=raster path=Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt
+L81    source=hcfcd_dams                       driver=vector path=Z:\projects\sfincs\data\structures\AB_dams.shp
+L89    source=houston_domain                   driver=vector path=Z:\projects\sfincs\data\mask\houston\houston_model.shp
+L98    source=houston_outflow_bc               driver=vector path=Z:\projects\sfincs\data\mask\houston\houston_outflow_bc.shp
+L108   source=houston_wl_bc                    driver=vector path=Z:\projects\sfincs\data\mask\houston\houston_wl_bc.shp
+L118   source=mrms_tc_harvey                   driver=netcdf path=Z:\users\lelise\data\meteo\mrms\harvey_mrms.nc
+L131   source=ned_10m_houston                  driver=raster path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif
+L149   source=ned_2m_houston                   driver=raster path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif
+L167   source=nlcd_2016                        driver=raster path=Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img
+L176   source=nlcd_mapping_mean                driver=csv path=Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv
+
+Likely relevant source/path hits:
+  L1     galveston_bay                    Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif
+  L19    gcn250                           Z:\projects\sfincs\data\soil\gcn250\{variable}.tif
+  L65    hcfcd_bathy                      Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt
+  L81    hcfcd_dams                       Z:\projects\sfincs\data\structures\AB_dams.shp
+  L131   ned_10m_houston                  Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif
+  L149   ned_2m_houston                   Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif
+  L167   nlcd_2016                        Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img
+  L176   nlcd_mapping_mean                Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv
+
+--- YAML /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_metadata/hydromt_data.yml ---
+L1     source=galveston_bay                    driver=raster path=Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif
+L19    source=gcn250                           driver=raster path=Z:\projects\sfincs\data\soil\gcn250\{variable}.tif
+L32    source=harvey_bc_discharge              driver=vector path=Z:\projects\sfincs\data\gages\Harvey\reservoir_coords.csv
+L48    source=harvey_bc_waterlevel             driver=vector path=Z:\users\lelise\data\gages\Harvey\gage_coords.csv
+L65    source=hcfcd_bathy                      driver=raster path=Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt
+L81    source=hcfcd_dams                       driver=vector path=Z:\projects\sfincs\data\structures\AB_dams.shp
+L89    source=houston_domain                   driver=vector path=Z:\projects\sfincs\data\mask\houston\houston_model.shp
+L98    source=houston_outflow_bc               driver=vector path=Z:\projects\sfincs\data\mask\houston\houston_outflow_bc.shp
+L108   source=houston_wl_bc                    driver=vector path=Z:\projects\sfincs\data\mask\houston\houston_wl_bc.shp
+L118   source=mrms_tc_harvey                   driver=netcdf path=Z:\users\lelise\data\meteo\mrms\harvey_mrms.nc
+L131   source=ned_10m_houston                  driver=raster path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif
+L149   source=ned_2m_houston                   driver=raster path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif
+L167   source=nlcd_2016                        driver=raster path=Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img
+L176   source=nlcd_mapping_mean                driver=csv path=Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv
+
+Likely relevant source/path hits:
+  L1     galveston_bay                    Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif
+  L19    gcn250                           Z:\projects\sfincs\data\soil\gcn250\{variable}.tif
+  L65    hcfcd_bathy                      Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt
+  L81    hcfcd_dams                       Z:\projects\sfincs\data\structures\AB_dams.shp
+  L131   ned_10m_houston                  Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif
+  L149   ned_2m_houston                   Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif
+  L167   nlcd_2016                        Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img
+  L176   nlcd_mapping_mean                Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv
+
+================ PREPROCESS REQUIREMENTS AUDIT ================
+
+--- CONTEXT SEARCH /proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py ---
+
+### hit around line 1005
+     979:     if region_mode == "geom":
+     980:         region_path = cfg_path(cfg, "region_path")
+     981:         if path_exists(region_path):
+     982:             print(f"FOUND: region_path: {region_path}")
+     983:         elif allow_missing:
+     984:             print(f"WARNING: region_path missing but allow_missing_model_inputs=True: {region_path}")
+     985:         else:
+     986:             msg = f"MISSING REQUIRED: region_path: {region_path}"
+     987:             print(msg)
+     988:             failures.append(msg)
+     989:     elif region_mode == "bbox":
+     990:         bbox = cfg_get(cfg, "region_bbox")
+     991:         if bbox:
+     992:             print(f"FOUND/SET: region_bbox: {bbox}")
+     993:         elif allow_missing:
+     994:             print("WARNING: region_bbox missing but allow_missing_model_inputs=True")
+     995:         else:
+     996:             msg = "MISSING REQUIRED: region_bbox is not set while region_mode='bbox'"
+     997:             print(msg)
+     998:             failures.append(msg)
+     999:     else:
+    1000:         msg = f"UNKNOWN region_mode: {region_mode}"
+    1001:         print(msg)
+    1002:         failures.append(msg)
+    1003: 
+    1004:     # DEM raw paths are useful sanity checks, even though HydroMT actually uses source names.
+>>  1005:     dem_paths = cfg_path_list(cfg, "dem_paths")
+    1006:     if dem_paths:
+    1007:         for i, path in enumerate(dem_paths, start=1):
+    1008:             if path.exists():
+    1009:                 print(f"FOUND: dem_paths[{i}]: {path}")
+    1010:             elif allow_missing:
+    1011:                 print(f"WARNING: dem_paths[{i}] missing but allow_missing_model_inputs=True: {path}")
+    1012:             else:
+    1013:                 msg = f"MISSING REQUIRED: dem_paths[{i}]: {path}"
+    1014:                 print(msg)
+    1015:                 failures.append(msg)
+    1016:     elif allow_missing:
+    1017:         print("WARNING: dem_paths list is empty but allow_missing_model_inputs=True")
+    1018:     else:
+    1019:         msg = "MISSING REQUIRED: dem_paths list is empty"
+    1020:         print(msg)
+    1021:         failures.append(msg)
+    1022: 
+    1023:     # HydroMT source names are required for actual HydroMT build.
+    1024:     elevation_sources = build_elevation_list(cfg, raise_if_missing=False)
+    1025:     if elevation_sources:
+    1026:         print(f"FOUND/SET: HydroMT elevation sources: {elevation_sources}")
+    1027:     elif allow_missing:
+    1028:         print("WARNING: no HydroMT elevation sources configured but allow_missing_model_inputs=True")
+    1029:     else:
+    1030:         msg = (
+    1031:             "MISSING REQUIRED: no hydromt_dem_sources/hydromt_bathy_sources configured. "
+
+### hit around line 1102
+    1076:         "pressure_path",
+    1077:         "thin_dam_path",
+    1078:         "weir_path",
+    1079:         "drainage_structure_path",
+    1080:         "culvert_path",
+    1081:         "obs_points_path",
+    1082:         "obs_lines_path",
+    1083:         "outflow_boundary_polygon_path",
+    1084:         "subgrid_river_path",
+    1085:         "discharge_points_csv_path",
+    1086:         "discharge_timeseries_csv_path",
+    1087:         "thin_dam_native_file_path",
+    1088:         "weir_native_file_path",
+    1089:         "drainage_structure_native_file_path",
+    1090:         "culvert_native_file_path",
+    1091:     ]
+    1092:     print("\nOptional path checks:")
+    1093:     for label in optional_labels:
+    1094:         path = cfg_path(cfg, label)
+    1095:         if path is None:
+    1096:             print(f"SKIP OPTIONAL: {label} is blank")
+    1097:         elif path.exists():
+    1098:             print(f"FOUND: {label}: {path}")
+    1099:         else:
+    1100:             print(f"SKIP OPTIONAL MISSING: {label}: {path}")
+    1101: 
+>>  1102:     bathy_paths = cfg_path_list(cfg, "bathy_paths")
+    1103:     if bathy_paths:
+    1104:         for i, path in enumerate(bathy_paths, start=1):
+    1105:             print(f"{'FOUND' if path.exists() else 'SKIP OPTIONAL MISSING'}: bathy_paths[{i}]: {path}")
+    1106:     else:
+    1107:         print("SKIP OPTIONAL: bathy_paths list is empty")
+    1108: 
+    1109:     if failures:
+    1110:         raise FileNotFoundError("\n".join(failures))
+    1111: 
+    1112: 
+    1113: def write_data_inventory(cfg: dict[str, Any]) -> None:
+    1114:     """Write a lightweight data inventory from configured paths only."""
+    1115:     if not cfg_get(cfg, "save_data_inventory", True):
+    1116:         return
+    1117: 
+    1118:     print_section("WRITE DATA INVENTORY")
+    1119: 
+    1120:     path_keys = [
+    1121:         "project_root",
+    1122:         "data_root",
+    1123:         "output_root",
+    1124:         "region_path",
+    1125:         "landcover_path",
+    1126:         "landcover_reclass_table",
+    1127:         "rainfall_path",
+    1128:         "waterlevel_path",
+... 12 additional raw hits not shown
+
+================ APP DETECTOR CODE AUDIT ================
+
+--- CONTEXT SEARCH /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py ---
+
+### hit around line 582
+     558: 
+     559:     path = Path(runtime_csv)
+     560: 
+     561:     if not path.exists():
+     562:         return {}
+     563: 
+     564:     with path.open("r", encoding="utf-8", newline="") as f:
+     565:         row = next(csv.DictReader(f), None)
+     566: 
+     567:     if not row:
+     568:         return {}
+     569: 
+     570:     return {
+     571:         "tref": row.get("tref") or "",
+     572:         "tstart": row.get("tstart") or "",
+     573:         "tstop": (
+     574:             row.get("tstop_recommended_end_exclusive")
+     575:             or row.get("tstop")
+     576:             or ""
+     577:         ),
+     578:         "raw": row,
+     579:     }
+     580: 
+     581: 
+>>   582: def _detect_one_data_catalog(root: Path) -> dict[str, Any]:
+     583:     """
+     584:     Inspect one catalog-like folder and return a mode-neutral description.
+     585: 
+     586:     Manual Mode can use suggested_config to fill source paths.
+     587:     Override Mode can use the same response to validate/classify event catalogs
+     588:     without changing its native static override behavior.
+     589:     """
+     590:     found: dict[str, Any] = {
+     591:         "runtime_csv": _catalog_first_match(root, [
+     592:             "event_runtime_window/event_runtime_window.csv",
+     593:         ]),
+     594:         "region_path": _catalog_first_match(root, [
+     595:             "region_geom/*.shp",
+     596:             "region_geom/*.geojson",
+     597:             "region_geom/*.gpkg",
+     598:             "region/*.shp",
+     599:             "region/*.geojson",
+     600:             "region/*.gpkg",
+     601:         ]),
+     602:         "dem_path": _catalog_first_match(root, [
+     603:             "topobathy/HCFCD_DEM_5m_UTM.tif",
+     604:             "topobathy/*.tif",
+     605:             "dem/*.tif",
+     606:             "elevation/*.tif",
+
+### hit around line 670
+     646:         ]),
+     647:         "rainfall_path": _catalog_first_match(root, [
+     648:             "event_precip/*.nc",
+     649:             "event_precip/*.zarr",
+     650:             "event_precip/*.tif",
+     651:             "precip/*.nc",
+     652:             "rainfall/*.nc",
+     653:         ]),
+     654:         "waterlevel_path": _catalog_first_match(root, [
+     655:             "event_waterlevel/*.csv",
+     656:             "event_boundary_table/*.csv",
+     657:             "waterlevel/*.csv",
+     658:             "boundary_waterlevel/*.csv",
+     659:         ]),
+     660:         "discharge_timeseries_csv_path": _catalog_first_match(root, [
+     661:             "event_discharge/*.csv",
+     662:             "discharge/*.csv",
+     663:             "source_discharge/*.csv",
+     664:         ]),
+     665:         "discharge_points_csv_path": _catalog_first_match(root, [
+     666:             "event_source_table/*.csv",
+     667:             "source_points_static/*.csv",
+     668:             "discharge_points/*.csv",
+     669:         ]),
+>>   670:         "obs_points_lite_path": _catalog_first_match(root, [
+     671:             "event_validation_points/profiles/lite/*.xy",
+     672:             "event_validation_points/profiles/lite/*.csv",
+     673:             "obs_points/lite/*.xy",
+     674:             "obs_points/*.xy",
+     675:         ]),
+     676:         "obs_points_validation_path": _catalog_first_match(root, [
+     677:             "event_validation_points/profiles/validation/*.xy",
+     678:             "event_validation_points/profiles/validation/*.csv",
+     679:         ]),
+     680:         "obs_lines_reviewed_plus_path": _catalog_first_match(root, [
+     681:             "event_validation_lines/reviewed_crs_lines/*REVIEWED_PLUS_AUTO_CUSTOM*.xyxy",
+     682:         ]),
+     683:         "obs_lines_reviewed_path": _catalog_first_match(root, [
+     684:             "event_validation_lines/reviewed_crs_lines/*REVIEWED*.xyxy",
+     685:             "obs_lines/*.xyxy",
+     686:         ]),
+     687:         "native_sfincs_files": _catalog_all_matches(root, [
+     688:             "sfincs.inp",
+     689:             "sfincs.dep",
+     690:             "sfincs.msk",
+     691:             "sfincs.ind",
+     692:             "sfincs.sbg",
+     693:             "sfincs.bnd",
+     694:             "sfincs.bzs",
+
+### hit around line 723
+     699:             "sfincs.thd",
+     700:             "sfincs.weir",
+     701:             "sfincs.drn",
+     702:         ]),
+     703:     }
+     704: 
+     705:     roles: list[str] = []
+     706: 
+     707:     if (
+     708:         found["runtime_csv"]
+     709:         or found["rainfall_path"]
+     710:         or found["waterlevel_path"]
+     711:         or found["discharge_timeseries_csv_path"]
+     712:     ):
+     713:         roles.append("event")
+     714: 
+     715:     if (
+     716:         found["region_path"]
+     717:         or found["dem_path"]
+     718:         or found["landcover_path"]
+     719:         or found["thin_dam_path"]
+     720:     ):
+     721:         roles.append("static")
+     722: 
+>>   723:     if found["obs_points_lite_path"] or found["obs_lines_reviewed_path"]:
+     724:         roles.append("validation")
+     725: 
+     726:     native_names = {Path(path).name for path in found["native_sfincs_files"]}
+     727:     if {"sfincs.inp", "sfincs.dep", "sfincs.msk"} & native_names:
+     728:         roles.append("native_sfincs_package")
+     729: 
+     730:     if not roles:
+     731:         roles.append("unknown")
+     732: 
+     733:     runtime_values = _read_runtime_csv_values(found["runtime_csv"])
+     734: 
+     735:     return {
+     736:         "path": str(root),
+     737:         "name": root.name,
+     738:         "roles": roles,
+     739:         "found": found,
+     740:         "runtime_values": runtime_values,
+     741:     }
+     742: 
+     743: 
+     744: def detect_data_catalogs_from_config(cfg: dict[str, Any]) -> dict[str, Any]:
+     745:     catalog_paths, warnings = _catalog_path_list_from_config(cfg)
+     746:     catalogs = [_detect_one_data_catalog(path) for path in catalog_paths]
+     747: 
+
+### hit around line 780
+     756: 
+     757:     def choose_runtime_values() -> dict[str, Any]:
+     758:         for item in catalogs:
+     759:             values = item.get("runtime_values") or {}
+     760:             if values.get("tref") or values.get("tstart") or values.get("tstop"):
+     761:                 return values
+     762:         return {}
+     763: 
+     764:     runtime_values = choose_runtime_values()
+     765: 
+     766:     if runtime_values.get("tref"):
+     767:         suggested_config["tref"] = _review_runtime_normalize_time(runtime_values["tref"])
+     768:     if runtime_values.get("tstart"):
+     769:         suggested_config["tstart"] = _review_runtime_normalize_time(runtime_values["tstart"])
+     770:     if runtime_values.get("tstop"):
+     771:         suggested_config["tstop"] = _review_runtime_normalize_time(runtime_values["tstop"])
+     772: 
+     773:     region_path = choose_found("region_path")
+     774:     if region_path:
+     775:         suggested_config["region_mode"] = "geom"
+     776:         suggested_config["region_path"] = region_path
+     777: 
+     778:     dem_path = choose_found("dem_path")
+     779:     if dem_path:
+>>   780:         suggested_config["dem_paths"] = [dem_path]
+     781:         suggested_config["hydromt_dem_sources"] = []
+     782:         suggested_config["hydromt_bathy_sources"] = []
+     783:         suggested_config["bathy_paths"] = []
+     784: 
+     785:     landcover_path = choose_found("landcover_path")
+     786:     if landcover_path:
+     787:         suggested_config["landcover_path"] = landcover_path
+     788:         suggested_config["landcover_source"] = "local_file"
+     789:         suggested_config["use_landcover_roughness_if_available"] = True
+     790:         suggested_config["use_spatially_variable_roughness"] = True
+     791: 
+     792:     landcover_reclass_table = choose_found("landcover_reclass_table")
+     793:     if landcover_reclass_table:
+     794:         suggested_config["landcover_reclass_table"] = landcover_reclass_table
+     795: 
+     796:     thin_dam_path = choose_found("thin_dam_path")
+     797:     if thin_dam_path:
+     798:         suggested_config["use_structures"] = True
+     799:         suggested_config["thin_dam_source_kind"] = "geodataframe"
+     800:         suggested_config["thin_dam_path"] = thin_dam_path
+     801: 
+     802:     weir_path = choose_found("weir_path")
+     803:     if weir_path:
+     804:         suggested_config["use_structures"] = True
+
+### hit around line 840
+     816:         suggested_config["use_rainfall"] = True
+     817:         suggested_config["rainfall_kind"] = "spatial"
+     818:         suggested_config["rainfall_path"] = rainfall_path
+     819:         suggested_config["rainfall_source"] = "local_file"
+     820: 
+     821:     waterlevel_path = choose_found("waterlevel_path")
+     822:     if waterlevel_path:
+     823:         suggested_config["use_waterlevel_boundary"] = True
+     824:         suggested_config["waterlevel_source_kind"] = "event_catalog_csv"
+     825:         suggested_config["waterlevel_path"] = waterlevel_path
+     826:         suggested_config["waterlevel_source"] = "local_file"
+     827: 
+     828:     discharge_timeseries_csv_path = choose_found("discharge_timeseries_csv_path")
+     829:     if discharge_timeseries_csv_path:
+     830:         suggested_config["use_discharge_boundary"] = True
+     831:         suggested_config["discharge_source_kind"] = "event_catalog_csv"
+     832:         suggested_config["discharge_timeseries_csv_path"] = discharge_timeseries_csv_path
+     833:         suggested_config["discharge_source"] = "local_file"
+     834: 
+     835:     discharge_points_csv_path = choose_found("discharge_points_csv_path")
+     836:     if discharge_points_csv_path:
+     837:         suggested_config["discharge_points_csv_path"] = discharge_points_csv_path
+     838: 
+     839:     obs_points_path = (
+>>   840:         choose_found("obs_points_lite_path")
+     841:         or choose_found("obs_points_validation_path")
+     842:     )
+     843:     if obs_points_path:
+     844:         suggested_config["use_obs_points"] = True
+     845:         suggested_config["obs_points_path"] = obs_points_path
+     846: 
+     847:     obs_lines_path = (
+     848:         choose_found("obs_lines_reviewed_plus_path")
+     849:         or choose_found("obs_lines_reviewed_path")
+     850:     )
+     851:     if obs_lines_path:
+     852:         # Detect this, but do not enable it automatically for a first smoke run.
+     853:         suggested_config["use_obs_lines"] = False
+     854:         suggested_config["obs_lines_path"] = obs_lines_path
+     855: 
+     856:     native_catalogs = [
+     857:         item["path"]
+     858:         for item in catalogs
+     859:         if "native_sfincs_package" in item.get("roles", [])
+     860:     ]
+     861: 
+     862:     if native_catalogs:
+     863:         _catalog_warning(
+     864:             warnings,
+
+### hit around line 1038
+    1014:             "audit": {
+    1015:                 "status": "major_warning",
+    1016:                 "severity": "major",
+    1017:                 "ui_color": "red",
+    1018:                 "category": "runtime_window_review_failed",
+    1019:                 "message": "Runtime window review check failed.",
+    1020:                 "reason": str(exc),
+    1021:             },
+    1022:         }), 500
+    1023: 
+    1024: 
+    1025: @app.post("/api/detect-data-catalogs")
+    1026: @app.post("/api/detect-manual-catalogs")
+    1027: def api_detect_data_catalogs():
+    1028:     payload = request.get_json(silent=True) or {}
+    1029:     cfg = payload.get("config") or {}
+    1030: 
+    1031:     if not isinstance(cfg, dict):
+    1032:         return jsonify({
+    1033:             "ok": False,
+    1034:             "error": "Request must contain a JSON object named config.",
+    1035:         }), 400
+    1036: 
+    1037:     try:
+>>  1038:         result = detect_data_catalogs_from_config(cfg)
+    1039:         return jsonify({
+    1040:             "ok": True,
+    1041:             **result,
+    1042:         })
+    1043:     except Exception as exc:
+    1044:         return jsonify({
+    1045:             "ok": False,
+    1046:             "error": str(exc),
+    1047:             "catalogs": [],
+    1048:             "suggested_config": {},
+    1049:             "warnings": [str(exc)],
+    1050:         }), 500
+    1051: 
+    1052: 
+    1053: @app.get("/api/launcher-defaults")
+    1054: def api_get_launcher_defaults():
+    1055:     return jsonify({
+    1056:         "ok": True,
+    1057:         "defaults": _read_launcher_site_defaults(),
+    1058:         "defaults_path": str(LAUNCHER_DEFAULTS_PATH),
+    1059:     })
+    1060: 
+    1061: 
+    1062: @app.post("/api/launcher-defaults")
+
+================ APP DETECTOR RUNTIME AUDIT ================
+Detector return type: dict
+
+--- detector raw-ish JSON, truncated ---
+{
+  "catalogs": [
+    {
+      "found": {
+        "bathy_paths": [],
+        "dem_path": "",
+        "discharge_points_csv_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_source_table/event_source_table.csv",
+        "discharge_timeseries_csv_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_discharge/harvey_houston_q_bc.csv",
+        "drainage_structure_path": "",
+        "landcover_path": "",
+        "landcover_reclass_table": "",
+        "native_sfincs_files": [],
+        "obs_lines_reviewed_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED.xyxy",
+        "obs_lines_reviewed_plus_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy",
+        "obs_points_lite_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/lite/sfincs_obs_points_lite.xy",
+        "obs_points_validation_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/validation/sfincs_obs_points_validation.xy",
+        "rainfall_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_precip/harvey_mrms.nc",
+        "region_path": "",
+        "runtime_csv": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_runtime_window/event_runtime_window.csv",
+        "thin_dam_path": "",
+        "waterlevel_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_waterlevel/harvey_houston_wl_bc.csv",
+        "weir_path": ""
+      },
+      "name": "harvey_2017_mrms",
+      "path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms",
+      "roles": [
+        "event",
+        "validation"
+      ],
+      "runtime_values": {
+        "raw": {
+          "base_event_name": "harvey_2017",
+          "event_name": "harvey_2017_full",
+          "note": "Full Harvey model window matching professor/PPE sfincs.inp tstop.",
+          "raw_end_date": "2017-09-17",
+          "raw_start_date": "2017-08-22",
+          "tref": "20170822 000000",
+          "tstart": "20170822 000000",
+          "tstop_recommended_end_exclusive": "20170917 010000"
+        },
+        "tref": "20170822 000000",
+        "tstart": "20170822 000000",
+        "tstop": "20170917 010000"
+      }
+    },
+    {
+      "found": {
+        "bathy_paths": [
+          "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/bathy/galveston_bay_G260_2018_edited.tif"
+        ],
+        "dem_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif",
+        "discharge_points_csv_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/source_points_static/source_points_selected_for_harvey.csv",
+        "discharge_timeseries_csv_path": "",
+        "drainage_structure_path": "",
+        "landcover_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/landcover/NLCD_2016_Land_Cover_L48_20190424.img",
+        "landcover_reclass_table": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/manning_reclass_table/nlcd_mapping_mean.csv",
+        "native_sfincs_files": [],
+        "obs_lines_reviewed_path": "",
+        "obs_lines_reviewed_plus_path": "",
+        "obs_points_lite_path": "",
+        "obs_points_validation_path": "",
+        "rainfall_path": "",
+        "region_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/region_geom/houston_model.shp",
+        "runtime_csv": "",
+        "thin_dam_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/structures_thin_dams/AB_dams.shp",
+        "waterlevel_path": "",
+        "weir_path": ""
+      },
+      "name": "harris_county",
+      "path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county",
+      "roles": [
+        "static"
+      ],
+      "runtime_values": {}
+    }
+  ],
+  "suggested_config": {
+    "bathy_paths": [],
+    "dem_paths": [
+      "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif"
+    ],
+    "discharge_points_csv_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_source_table/event_source_table.csv",
+    "discharge_source": "local_file",
+    "discharge_source_kind": "event_catalog_csv",
+    "discharge_timeseries_csv_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_discharge/harvey_houston_q_bc.csv",
+    "hydromt_bathy_sources": [],
+    "hydromt_dem_sources": [],
+    "landcover_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/landcover/NLCD_2016_Land_Cover_L48_20190424.img",
+    "landcover_reclass_table": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/manning_reclass_table/nlcd_mapping_mean.csv",
+    "landcover_source": "local_file",
+    "obs_lines_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy",
+    "obs_points_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/lite/sfincs_obs_points_lite.xy",
+    "rainfall_kind": "spatial",
+    "rainfall_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_precip/harvey_mrms.nc",
+    "rainfall_source": "local_file",
+    "region_mode": "geom",
+    "region_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/region_geom/houston_model.shp",
+    "thin_dam_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/structures_thin_dams/AB_dams.shp",
+    "thin_dam_source_kind": "geodataframe",
+    "tref": "2017-08-22 00:00:00",
+    "tstart": "2017-08-22 00:00:00",
+    "tstop": "2017-09-17 01:00:00",
+    "use_discharge_boundary": true,
+    "use_landcover_roughness_if_available": true,
+    "use_obs_lines": false,
+    "use_obs_points": true,
+    "use_rainfall": true,
+    "use_spatially_variable_roughness": true,
+    "use_structures": true,
+    "use_waterlevel_boundary": true,
+    "waterlevel_path": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_waterlevel/harvey_houston_wl_bc.csv",
+    "waterlevel_source": "local_file",
+    "waterlevel_source_kind": "event_catalog_csv"
+  },
+  "warnings": []
+}
+
+--- key suggested_config fields ---
+data_catalogs: null
+region_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/region_geom/houston_model.shp"
+dem_paths: [
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif"
+]
+hydromt_dem_sources: []
+bathy_paths: []
+hydromt_bathy_sources: []
+landcover_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/landcover/NLCD_2016_Land_Cover_L48_20190424.img"
+landcover_source: "local_file"
+landcover_reclass_table: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/manning_reclass_table/nlcd_mapping_mean.csv"
+rainfall_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_precip/harvey_mrms.nc"
+rainfall_source: "local_file"
+waterlevel_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_waterlevel/harvey_houston_wl_bc.csv"
+discharge_timeseries_csv_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_discharge/harvey_houston_q_bc.csv"
+discharge_points_csv_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_source_table/event_source_table.csv"
+thin_dam_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/structures_thin_dams/AB_dams.shp"
+curve_number_path: null
+obs_points_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/lite/sfincs_obs_points_lite.xy"
+obs_lines_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy"
+
+================ FAILED RUN CONFIG AUDIT ================
+run_name: "harvey_2017_mrms_manual_001"
+data_catalogs: [
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms",
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+]
+dem_paths: [
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif"
+]
+hydromt_dem_sources: []
+bathy_paths: []
+hydromt_bathy_sources: []
+landcover_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/landcover/NLCD_2016_Land_Cover_L48_20190424.img"
+rainfall_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_precip/harvey_mrms.nc"
+waterlevel_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_waterlevel/harvey_houston_wl_bc.csv"
+discharge_timeseries_csv_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_discharge/harvey_houston_q_bc.csv"
+discharge_points_csv_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_source_table/event_source_table.csv"
+use_infiltration: true
+infiltration_mode: "curve_number"
+curve_number_path: "/proj/zefflab/projects/Flooding/Data/emes_server/lelise_INCOMING_RETRY/data/soil/gcn250/cn_avg.tif"
+obs_points_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/full_candidates/sfincs_obs_points_full_candidates.xy"
+use_obs_lines: true
+obs_lines_path: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy"
+
+================ LIKELY PATCH TARGETS ================
+PATCH NEEDED: detector finds dem_paths but suggests hydromt_dem_sources=[]
+  Backend currently rejects that. Detector must either:
+  A) suggest a real HydroMT elevation source name from an available catalog YAML, or
+  B) generate/register a local temporary HydroMT source for the raw DEM path, or
+  C) set whatever preprocess_stage.py expects for raw DEM-to-source conversion.
+PATCH LIKELY: detector may need to suggest static/harris_county/curve_number/cn_avg.tif when use_infiltration is true.
+REVIEW: detector defaults obs points to lite. Decide whether default should be validation or lite.
+
+Manual immediate workaround, if needed:
+  Put a nonempty hydromt_dem_sources value that preprocess_stage.py accepts.
+  But do NOT guess the source name yet; use the audit context above first.

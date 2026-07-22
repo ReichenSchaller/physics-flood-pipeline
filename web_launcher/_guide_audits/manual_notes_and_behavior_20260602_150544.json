@@ -1,0 +1,4699 @@
+{
+  "generated": "2026-06-02T15:05:44",
+  "manual_html": "/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html",
+  "guide_html": "/proj/zefflab/projects/Flooding/pipeline/web_launcher/guide.html",
+  "external_scripts": [
+    "static/launcher_defaults.js",
+    "static/config_path_browse_buttons.js",
+    "static/path_browser.js",
+    "static/pipeline_actions.js",
+    "static/page_reset.js"
+  ],
+  "browse_settings": {
+    "found": true,
+    "sectionNumbers": [
+      "0",
+      "4",
+      "5",
+      "6",
+      "10",
+      "11",
+      "12",
+      "17"
+    ],
+    "specialPathKeys": [
+      "project_root",
+      "output_root",
+      "data_catalogs",
+      "region_path",
+      "dem_paths",
+      "bathy_paths",
+      "landcover_path",
+      "landcover_reclass_table",
+      "rainfall_path",
+      "waterlevel_path",
+      "streamflow_site_info_path",
+      "streamflow_data_path",
+      "hydrography_path",
+      "obs_points_path",
+      "obs_lines_path",
+      "thin_dam_path",
+      "weir_path",
+      "drainage_structure_path",
+      "culvert_path",
+      "outflow_boundary_polygon_path",
+      "subgrid_native_file_path",
+      "subgrid_river_path",
+      "discharge_points_csv_path",
+      "discharge_timeseries_csv_path",
+      "wind_path",
+      "pressure_path",
+      "infiltration_path",
+      "curve_number_path",
+      "hsg_path",
+      "soil_storage_path",
+      "qinf_path",
+      "smax_path",
+      "seff_path",
+      "ks_path",
+      "sigma_path",
+      "psi_path",
+      "f0_path",
+      "fc_path",
+      "kd_path",
+      "vol_path",
+      "conda_env_path",
+      "conda_python",
+      "sfincs_container_path"
+    ]
+  },
+  "function_names": [
+    "applyManualFixedConfig",
+    "asList",
+    "getConfig",
+    "hasAnyValue",
+    "isBlank",
+    "loadConfigFromFile",
+    "makeCheck",
+    "manualReviewEsc",
+    "outputRoot",
+    "parseManualDate",
+    "parseValue",
+    "plannedRunRoot",
+    "renderRuntimeWindowReview",
+    "runChecks",
+    "runRuntimeWindowReviewCheck",
+    "saveConfig",
+    "setFieldValue",
+    "showTab",
+    "stringifyForField",
+    "updatePreview"
+  ],
+  "tabs": [
+    {
+      "tab_id": "tab-0",
+      "label": "0 Run identity",
+      "guide_panel": "run_identity",
+      "start_line": 528,
+      "rows": [
+        {
+          "line": 534,
+          "setting_text": "event_name",
+          "control_key": "event_name",
+          "tag": "input",
+          "type": "",
+          "default": "harvey_2017",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Convenience label. Used by this page to help name runs, but it is also saved normally.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 535,
+          "setting_text": "run_series",
+          "control_key": "run_series",
+          "tag": "input",
+          "type": "",
+          "default": "manual_001",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Convenience label for repeat experiments.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 536,
+          "setting_text": "run_name",
+          "control_key": "run_name",
+          "tag": "input",
+          "type": "",
+          "default": "harris_harvey_2017_manual_001",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Only letters, numbers, underscores, dashes, and periods. This becomes the run folder name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 537,
+          "setting_text": "project_root",
+          "control_key": "project_root",
+          "tag": "input",
+          "type": "",
+          "default": "/proj/zefflab/projects/Flooding/pipeline",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Backend pipeline bundle root.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 538,
+          "setting_text": "output_root",
+          "control_key": "output_root",
+          "tag": "input",
+          "type": "",
+          "default": "/proj/zefflab/projects/Flooding/sfincs_runs",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Run folders will be created under this path by the backend.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 539,
+          "setting_text": "planned run root",
+          "control_key": "",
+          "tag": "",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Preview only. This is computed as output_root / run_name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 540,
+          "setting_text": "overwrite_existing_run",
+          "control_key": "overwrite_existing_run",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Keep false unless you are deliberately replacing a run folder.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 541,
+          "setting_text": "allow_writes_inside_proj",
+          "control_key": "allow_writes_inside_proj",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Shared project runs use /proj. Personal scratch runs may keep this false.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 542,
+          "setting_text": "allow_missing_model_inputs",
+          "control_key": "allow_missing_model_inputs",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Real runs should normally keep this false. Skeleton tests may set it true.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 543,
+          "setting_text": "run_description",
+          "control_key": "run_description",
+          "tag": "input",
+          "type": "",
+          "default": "Manual launcher SFINCS pipeline run.",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Short human description.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 544,
+          "setting_text": "run_tags",
+          "control_key": "run_tags",
+          "tag": "textarea",
+          "type": "",
+          "default": "[\"manual\", \"sfincs\", \"harris_county\"]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "JSON list of tags.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-1",
+      "label": "1 Pipeline",
+      "guide_panel": "pipeline",
+      "start_line": 551,
+      "rows": [
+        {
+          "line": 557,
+          "setting_text": "run_preprocessing_job",
+          "control_key": "run_preprocessing_job",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Stage 1.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 558,
+          "setting_text": "run_sfincs_job",
+          "control_key": "run_sfincs_job",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Stage 2.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 559,
+          "setting_text": "run_postprocessing_job",
+          "control_key": "run_postprocessing_job",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Stage 3.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 560,
+          "setting_text": "submit_with_dependencies",
+          "control_key": "submit_with_dependencies",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Normally true so later jobs wait for earlier jobs.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 561,
+          "setting_text": "dependency_type",
+          "control_key": "dependency_type",
+          "tag": "select",
+          "type": "",
+          "default": "afterok",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "afterok",
+              "selected": true
+            }
+          ],
+          "disabled": false,
+          "notes": "Currently the supported dependency style.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-2",
+      "label": "2 Slurm general",
+      "guide_panel": "slurm_general",
+      "start_line": 568,
+      "rows": [
+        {
+          "line": 574,
+          "setting_text": "slurm_account",
+          "control_key": "slurm_account",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Leave blank unless the lab/cluster requires an account.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 575,
+          "setting_text": "slurm_partition",
+          "control_key": "slurm_partition",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Leave blank for default partition.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 576,
+          "setting_text": "slurm_qos",
+          "control_key": "slurm_qos",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Leave blank unless needed.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 577,
+          "setting_text": "slurm_email",
+          "control_key": "slurm_email",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional email for job notifications.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 578,
+          "setting_text": "slurm_mail_type",
+          "control_key": "slurm_mail_type",
+          "tag": "input",
+          "type": "",
+          "default": "END,FAIL",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Used only when slurm_email is set.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 579,
+          "setting_text": "slurm_extra_directives",
+          "control_key": "slurm_extra_directives",
+          "tag": "textarea",
+          "type": "",
+          "default": "[]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "JSON list of extra #SBATCH lines. Usually empty.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 580,
+          "setting_text": "bash_strict_mode",
+          "control_key": "bash_strict_mode",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Keep true unless debugging unusual shell behavior.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-3",
+      "label": "3 Stage resources",
+      "guide_panel": "stage_resources",
+      "start_line": 587,
+      "rows": [
+        {
+          "line": 593,
+          "setting_text": "preprocess_time",
+          "control_key": "preprocess_time",
+          "tag": "input",
+          "type": "",
+          "default": "01:00:00",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Wall time for preprocessing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 594,
+          "setting_text": "preprocess_nodes",
+          "control_key": "preprocess_nodes",
+          "tag": "input",
+          "type": "",
+          "default": "1",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Usually 1.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 595,
+          "setting_text": "preprocess_ntasks",
+          "control_key": "preprocess_ntasks",
+          "tag": "input",
+          "type": "",
+          "default": "1",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Usually 1.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 596,
+          "setting_text": "preprocess_cpus_per_task",
+          "control_key": "preprocess_cpus_per_task",
+          "tag": "input",
+          "type": "",
+          "default": "4",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "More helpful for heavier preprocessing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 597,
+          "setting_text": "preprocess_mem",
+          "control_key": "preprocess_mem",
+          "tag": "input",
+          "type": "",
+          "default": "16G",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Memory request.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 598,
+          "setting_text": "sfincs_time",
+          "control_key": "sfincs_time",
+          "tag": "input",
+          "type": "",
+          "default": "04:00:00",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Wall time for solver.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 599,
+          "setting_text": "sfincs_nodes",
+          "control_key": "sfincs_nodes",
+          "tag": "input",
+          "type": "",
+          "default": "1",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Usually 1.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 600,
+          "setting_text": "sfincs_ntasks",
+          "control_key": "sfincs_ntasks",
+          "tag": "input",
+          "type": "",
+          "default": "1",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Usually 1.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 601,
+          "setting_text": "sfincs_cpus_per_task",
+          "control_key": "sfincs_cpus_per_task",
+          "tag": "input",
+          "type": "",
+          "default": "8",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "OpenMP threads for SFINCS.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 602,
+          "setting_text": "sfincs_mem",
+          "control_key": "sfincs_mem",
+          "tag": "input",
+          "type": "",
+          "default": "32G",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Memory request.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 603,
+          "setting_text": "postprocess_time",
+          "control_key": "postprocess_time",
+          "tag": "input",
+          "type": "",
+          "default": "01:00:00",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Wall time for postprocessing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 604,
+          "setting_text": "postprocess_nodes",
+          "control_key": "postprocess_nodes",
+          "tag": "input",
+          "type": "",
+          "default": "1",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Usually 1.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 605,
+          "setting_text": "postprocess_ntasks",
+          "control_key": "postprocess_ntasks",
+          "tag": "input",
+          "type": "",
+          "default": "1",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Usually 1.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 606,
+          "setting_text": "postprocess_cpus_per_task",
+          "control_key": "postprocess_cpus_per_task",
+          "tag": "input",
+          "type": "",
+          "default": "2",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Can increase for heavy plotting.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 607,
+          "setting_text": "postprocess_mem",
+          "control_key": "postprocess_mem",
+          "tag": "input",
+          "type": "",
+          "default": "24G",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Memory request.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 608,
+          "setting_text": "sfincs_use_openmp_threads",
+          "control_key": "sfincs_use_openmp_threads",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Usually true.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 609,
+          "setting_text": "sfincs_omp_proc_bind",
+          "control_key": "sfincs_omp_proc_bind",
+          "tag": "input",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "OpenMP binding setting.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 610,
+          "setting_text": "sfincs_omp_places",
+          "control_key": "sfincs_omp_places",
+          "tag": "input",
+          "type": "",
+          "default": "cores",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "OpenMP placement setting.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-4",
+      "label": "4 Data catalogs",
+      "guide_panel": "data_catalogs",
+      "start_line": 617,
+      "rows": [
+        {
+          "line": 623,
+          "setting_text": "data_catalogs",
+          "control_key": "data_catalogs",
+          "tag": "textarea",
+          "type": "",
+          "default": "[\"artifact_data\"]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "JSON list of catalog paths or HydroMT catalog names. Use full catalog paths when needed.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-5",
+      "label": "5 Required inputs",
+      "guide_panel": "required_inputs",
+      "start_line": 630,
+      "rows": [
+        {
+          "line": 636,
+          "setting_text": "region_mode",
+          "control_key": "region_mode",
+          "tag": "select",
+          "type": "",
+          "default": "geom",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "geom",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "bbox",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Region geometry or bounding box.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 637,
+          "setting_text": "region_path",
+          "control_key": "region_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 639,
+          "setting_text": "dem_paths",
+          "control_key": "dem_paths",
+          "tag": "textarea",
+          "type": "",
+          "default": "[]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "JSON list of DEM paths.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 640,
+          "setting_text": "hydromt_dem_sources",
+          "control_key": "hydromt_dem_sources",
+          "tag": "textarea",
+          "type": "",
+          "default": "[ {\"elevation\": \"merit_hydro\", \"zmin\": 0.001} ]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "HydroMT DEM source definitions.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 643,
+          "setting_text": "require_at_least_one_forcing",
+          "control_key": "require_at_least_one_forcing",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Safety: at least one forcing should be enabled.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-6",
+      "label": "6 Optional inputs",
+      "guide_panel": "optional_inputs",
+      "start_line": 650,
+      "rows": [
+        {
+          "line": 656,
+          "setting_text": "bathy_paths",
+          "control_key": "bathy_paths",
+          "tag": "textarea",
+          "type": "",
+          "default": "[]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "JSON list of bathymetry paths.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 657,
+          "setting_text": "hydromt_bathy_sources",
+          "control_key": "hydromt_bathy_sources",
+          "tag": "textarea",
+          "type": "",
+          "default": "[ {\"elevation\": \"gebco\"} ]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "HydroMT bathy source definitions.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 660,
+          "setting_text": "landcover_path",
+          "control_key": "landcover_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional landcover file path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 661,
+          "setting_text": "landcover_source",
+          "control_key": "landcover_source",
+          "tag": "input",
+          "type": "",
+          "default": "vito_2015",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "HydroMT source name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 662,
+          "setting_text": "landcover_reclass_table",
+          "control_key": "landcover_reclass_table",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "[] rainfall_path",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 665,
+          "setting_text": "rainfall_source",
+          "control_key": "rainfall_source",
+          "tag": "input",
+          "type": "",
+          "default": "era5_hourly",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "HydroMT rainfall source.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 666,
+          "setting_text": "rainfall_variable",
+          "control_key": "rainfall_variable",
+          "tag": "input",
+          "type": "",
+          "default": "precip",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Rainfall variable name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 667,
+          "setting_text": "waterlevel_path",
+          "control_key": "waterlevel_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional direct water-level path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 668,
+          "setting_text": "waterlevel_source",
+          "control_key": "waterlevel_source",
+          "tag": "input",
+          "type": "",
+          "default": "gtsmv3_eu_era5",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "HydroMT water-level source.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 669,
+          "setting_text": "waterlevel_variable",
+          "control_key": "waterlevel_variable",
+          "tag": "input",
+          "type": "",
+          "default": "zeta",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Water-level variable/column.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 670,
+          "setting_text": "discharge_source",
+          "control_key": "discharge_source",
+          "tag": "input",
+          "type": "",
+          "default": "discharge_forcing",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "HydroMT discharge source name or configured catalog source.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 671,
+          "setting_text": "streamflow_site_info_path",
+          "control_key": "streamflow_site_info_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional streamflow metadata path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 672,
+          "setting_text": "streamflow_data_path",
+          "control_key": "streamflow_data_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional streamflow data path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 673,
+          "setting_text": "hydrography_path",
+          "control_key": "hydrography_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional hydrography path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 674,
+          "setting_text": "hydrography_source",
+          "control_key": "hydrography_source",
+          "tag": "input",
+          "type": "",
+          "default": "nhdplus_or_enhdplus",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Hydrography source name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 675,
+          "setting_text": "obs_points_path",
+          "control_key": "obs_points_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "thin_dam_source_kind",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 678,
+          "setting_text": "thin_dam_path",
+          "control_key": "thin_dam_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional thin-dam path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 679,
+          "setting_text": "weir_source_kind",
+          "control_key": "weir_source_kind",
+          "tag": "select",
+          "type": "",
+          "default": "none",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "geodataframe",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Weir source style.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 680,
+          "setting_text": "weir_path",
+          "control_key": "weir_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional weir path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 681,
+          "setting_text": "drainage_structure_source_kind",
+          "control_key": "drainage_structure_source_kind",
+          "tag": "select",
+          "type": "",
+          "default": "none",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "geodataframe",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Drainage structure source style.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 682,
+          "setting_text": "drainage_structure_path",
+          "control_key": "drainage_structure_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional drainage structure path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 683,
+          "setting_text": "culvert_source_kind",
+          "control_key": "culvert_source_kind",
+          "tag": "select",
+          "type": "",
+          "default": "none",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "geodataframe",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Culvert source style.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 684,
+          "setting_text": "culvert_path",
+          "control_key": "culvert_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional culvert path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-7",
+      "label": "7 Model settings",
+      "guide_panel": "model_settings",
+      "start_line": 691,
+      "rows": [
+        {
+          "line": 697,
+          "setting_text": "grid_resolution_m",
+          "control_key": "grid_resolution_m",
+          "tag": "input",
+          "type": "",
+          "default": "50",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "General target resolution.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 698,
+          "setting_text": "grid_dx_m",
+          "control_key": "grid_dx_m",
+          "tag": "input",
+          "type": "",
+          "default": "100",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Grid dx.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 699,
+          "setting_text": "grid_dy_m",
+          "control_key": "grid_dy_m",
+          "tag": "input",
+          "type": "",
+          "default": "100",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Grid dy.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 700,
+          "setting_text": "grid_crs",
+          "control_key": "grid_crs",
+          "tag": "input",
+          "type": "",
+          "default": "utm",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "CRS label for HydroMT build workflows.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 701,
+          "setting_text": "grid_rotated",
+          "control_key": "grid_rotated",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Whether grid is rotated.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 702,
+          "setting_text": "grid_rotation_deg",
+          "control_key": "grid_rotation_deg",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Blank saves as null.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 703,
+          "setting_text": "tref",
+          "control_key": "tref",
+          "tag": "input",
+          "type": "",
+          "default": "2017-08-22 00:00:00",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Reference time.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 704,
+          "setting_text": "tstart",
+          "control_key": "tstart",
+          "tag": "input",
+          "type": "",
+          "default": "2017-08-22 00:00:00",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Model start.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 705,
+          "setting_text": "tstop",
+          "control_key": "tstop",
+          "tag": "input",
+          "type": "",
+          "default": "2017-09-17 01:00:00",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Model stop.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 706,
+          "setting_text": "use_rainfall",
+          "control_key": "use_rainfall",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Rainfall forcing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 707,
+          "setting_text": "use_waterlevel_boundary",
+          "control_key": "use_waterlevel_boundary",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Boundary water-level forcing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 708,
+          "setting_text": "use_discharge_boundary",
+          "control_key": "use_discharge_boundary",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Discharge/source forcing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 709,
+          "setting_text": "use_infiltration",
+          "control_key": "use_infiltration",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Infiltration/SCS.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 710,
+          "setting_text": "use_wind",
+          "control_key": "use_wind",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Wind forcing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 711,
+          "setting_text": "use_pressure",
+          "control_key": "use_pressure",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Pressure forcing.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 712,
+          "setting_text": "use_structures",
+          "control_key": "use_structures",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Structures such as thin dams if configured.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 713,
+          "setting_text": "use_obs_points",
+          "control_key": "use_obs_points",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Observation points.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 714,
+          "setting_text": "use_obs_lines",
+          "control_key": "use_obs_lines",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Observation lines/cross sections.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-8",
+      "label": "8 Elevation/mask",
+      "guide_panel": "elevation_mask",
+      "start_line": 721,
+      "rows": [
+        {
+          "line": 727,
+          "setting_text": "dem_zmin",
+          "control_key": "dem_zmin",
+          "tag": "input",
+          "type": "",
+          "default": "0.001",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Minimum DEM threshold.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 728,
+          "setting_text": "elevation_buffer_cells",
+          "control_key": "elevation_buffer_cells",
+          "tag": "input",
+          "type": "",
+          "default": "1",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Elevation buffer cells.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 729,
+          "setting_text": "active_zmin",
+          "control_key": "active_zmin",
+          "tag": "input",
+          "type": "",
+          "default": "-5.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Active mask threshold.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 730,
+          "setting_text": "mask_fill_area_km2",
+          "control_key": "mask_fill_area_km2",
+          "tag": "input",
+          "type": "",
+          "default": "10.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Fill small areas.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 731,
+          "setting_text": "mask_drop_area_km2",
+          "control_key": "mask_drop_area_km2",
+          "tag": "input",
+          "type": "",
+          "default": "0.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Drop small areas.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 732,
+          "setting_text": "waterlevel_boundary_zmax",
+          "control_key": "waterlevel_boundary_zmax",
+          "tag": "input",
+          "type": "",
+          "default": "-5.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Water-level boundary z threshold.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 733,
+          "setting_text": "reset_waterlevel_boundary",
+          "control_key": "reset_waterlevel_boundary",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Reset/create water-level boundary.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 734,
+          "setting_text": "outflow_boundary_polygon_path",
+          "control_key": "outflow_boundary_polygon_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional outflow boundary polygon.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 735,
+          "setting_text": "reset_outflow_boundary",
+          "control_key": "reset_outflow_boundary",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Reset/create outflow boundary.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-9",
+      "label": "9 Roughness",
+      "guide_panel": "roughness",
+      "start_line": 742,
+      "rows": [
+        {
+          "line": 748,
+          "setting_text": "manning_uniform",
+          "control_key": "manning_uniform",
+          "tag": "input",
+          "type": "",
+          "default": "0.04",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Uniform fallback Manning n.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 749,
+          "setting_text": "manning_land",
+          "control_key": "manning_land",
+          "tag": "input",
+          "type": "",
+          "default": "0.04",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Land Manning n.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 750,
+          "setting_text": "manning_sea",
+          "control_key": "manning_sea",
+          "tag": "input",
+          "type": "",
+          "default": "0.02",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Sea Manning n.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 751,
+          "setting_text": "roughness_land_level_m",
+          "control_key": "roughness_land_level_m",
+          "tag": "input",
+          "type": "",
+          "default": "0.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Land/sea threshold.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 752,
+          "setting_text": "use_landcover_roughness_if_available",
+          "control_key": "use_landcover_roughness_if_available",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Use landcover mapping when available.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-10",
+      "label": "10 Subgrid",
+      "guide_panel": "subgrid",
+      "start_line": 759,
+      "rows": [
+        {
+          "line": 770,
+          "setting_text": "use_subgrid",
+          "control_key": "use_subgrid",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Master toggle for subgrid use.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 781,
+          "setting_text": "subgrid_source_kind",
+          "control_key": "subgrid_source_kind",
+          "tag": "select",
+          "type": "",
+          "default": "hydromt_generate",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "hydromt_generate",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "premade_sbgfile",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "none",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Choose whether preprocessing should generate subgrid data or use a pre-made SFINCS subgrid file. Backend support may need to be added for this new key.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 795,
+          "setting_text": "subgrid_nr_pixels",
+          "control_key": "subgrid_nr_pixels",
+          "tag": "input",
+          "type": "",
+          "default": "6",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Subgrid pixels per model cell. Higher values can improve detail but increase preprocessing cost and storage.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 801,
+          "setting_text": "subgrid_write_dep_tif",
+          "control_key": "subgrid_write_dep_tif",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Write depth/elevation diagnostic GeoTIFF during subgrid creation.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 812,
+          "setting_text": "subgrid_write_man_tif",
+          "control_key": "subgrid_write_man_tif",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Write Manning roughness diagnostic GeoTIFF during subgrid creation.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 823,
+          "setting_text": "subgrid_use_rivers",
+          "control_key": "subgrid_use_rivers",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Use river network information in subgrid generation when supported by the preprocessing path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 836,
+          "setting_text": "subgrid_river_source",
+          "control_key": "subgrid_river_source",
+          "tag": "input",
+          "type": "",
+          "default": "river_network_for_subgrid",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "River source name in a HydroMT catalog.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 842,
+          "setting_text": "use_spatially_variable_roughness",
+          "control_key": "use_spatially_variable_roughness",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Related roughness/subgrid behavior. Keep aligned with the roughness settings tab.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-11",
+      "label": "11 Forcing",
+      "guide_panel": "forcing",
+      "start_line": 858,
+      "rows": [
+        {
+          "line": 865,
+          "setting_text": "rainfall_kind",
+          "control_key": "rainfall_kind",
+          "tag": "select",
+          "type": "",
+          "default": "spatial",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "spatial",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "uniform",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "event_catalog_aorc",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "spatial = gridded/catalog rainfall; uniform = one constant rainfall rate; event_catalog_aorc = reduced-event AORC rainfall path used by hybrid workflows.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 877,
+          "setting_text": "rainfall_uniform_mm_hr",
+          "control_key": "rainfall_uniform_mm_hr",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Used only for uniform rainfall. Blank saves as null.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 883,
+          "setting_text": "rainfall_clip_to_model_time",
+          "control_key": "rainfall_clip_to_model_time",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Clip rainfall forcing to the model time window.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 894,
+          "setting_text": "waterlevel_source_kind",
+          "control_key": "waterlevel_source_kind",
+          "tag": "select",
+          "type": "",
+          "default": "geodataset",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "geodataset",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "cora",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "event_catalog_csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Water-level boundary source style. Native SFINCS is more naturally handled in Override Mode.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 908,
+          "setting_text": "waterlevel_clip_to_model_time",
+          "control_key": "waterlevel_clip_to_model_time",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Clip water-level forcing to the model time window.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 919,
+          "setting_text": "discharge_source_kind",
+          "control_key": "discharge_source_kind",
+          "tag": "select",
+          "type": "",
+          "default": "geodataset",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "geodataset",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "event_catalog_csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Discharge/source forcing style. Native SFINCS is more naturally handled in Override Mode.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 932,
+          "setting_text": "discharge_clip_to_model_time",
+          "control_key": "discharge_clip_to_model_time",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Clip discharge forcing to the model time window.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 943,
+          "setting_text": "discharge_points_csv_path",
+          "control_key": "discharge_points_csv_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional direct discharge source-point CSV.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 949,
+          "setting_text": "discharge_points_x_column",
+          "control_key": "discharge_points_x_column",
+          "tag": "input",
+          "type": "",
+          "default": "x",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "X-coordinate column for discharge points.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 955,
+          "setting_text": "discharge_points_y_column",
+          "control_key": "discharge_points_y_column",
+          "tag": "input",
+          "type": "",
+          "default": "y",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Y-coordinate column for discharge points.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 961,
+          "setting_text": "discharge_points_name_column",
+          "control_key": "discharge_points_name_column",
+          "tag": "input",
+          "type": "",
+          "default": "name",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Name/ID column for discharge points.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 967,
+          "setting_text": "discharge_timeseries_csv_path",
+          "control_key": "discharge_timeseries_csv_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional direct discharge time-series CSV.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 973,
+          "setting_text": "discharge_time_column",
+          "control_key": "discharge_time_column",
+          "tag": "input",
+          "type": "",
+          "default": "time",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Time column in the discharge time-series CSV.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 979,
+          "setting_text": "discharge_value_columns",
+          "control_key": "discharge_value_columns",
+          "tag": "textarea",
+          "type": "",
+          "default": "[]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "JSON list. Empty means use all non-time columns.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 985,
+          "setting_text": "discharge_time_format",
+          "control_key": "discharge_time_format",
+          "tag": "input",
+          "type": "",
+          "default": "auto",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Usually auto.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 991,
+          "setting_text": "discharge_units",
+          "control_key": "discharge_units",
+          "tag": "input",
+          "type": "",
+          "default": "m3/s",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Discharge units.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 997,
+          "setting_text": "meteo_update_interval_s",
+          "control_key": "meteo_update_interval_s",
+          "tag": "input",
+          "type": "",
+          "default": "1800",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Meteorological forcing update interval.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1003,
+          "setting_text": "wind_path",
+          "control_key": "wind_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional wind path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1009,
+          "setting_text": "pressure_path",
+          "control_key": "pressure_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional pressure path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1015,
+          "setting_text": "wind_source",
+          "control_key": "wind_source",
+          "tag": "input",
+          "type": "",
+          "default": "wind_forcing",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Wind source name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1021,
+          "setting_text": "pressure_source",
+          "control_key": "pressure_source",
+          "tag": "input",
+          "type": "",
+          "default": "pressure_forcing",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Pressure source name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-12",
+      "label": "12 Infiltration",
+      "guide_panel": "infiltration",
+      "start_line": 1032,
+      "rows": [
+        {
+          "line": 1038,
+          "setting_text": "infiltration_mode",
+          "control_key": "infiltration_mode",
+          "tag": "select",
+          "type": "",
+          "default": "none",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "constant",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "spatial_constant",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "curve_number",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "curve_number_with_ks",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Choose one of the supported/planned infiltration modes. Native SFINCS is usually for override/native-file workflows.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1052,
+          "setting_text": "qinf_mm_hr",
+          "control_key": "qinf_mm_hr",
+          "tag": "input",
+          "type": "",
+          "default": "0.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Constant infiltration if used.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1053,
+          "setting_text": "qinf_zmin_m",
+          "control_key": "qinf_zmin_m",
+          "tag": "input",
+          "type": "",
+          "default": "0.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Threshold if used.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1054,
+          "setting_text": "scs_initial_abstraction_factor",
+          "control_key": "scs_initial_abstraction_factor",
+          "tag": "input",
+          "type": "",
+          "default": "0.2",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "SCS parameter.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1055,
+          "setting_text": "infiltration_path",
+          "control_key": "infiltration_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional HydroMT infiltration source path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1056,
+          "setting_text": "curve_number_path",
+          "control_key": "curve_number_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional HydroMT/Curve Number source path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1057,
+          "setting_text": "hsg_path",
+          "control_key": "hsg_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional hydrologic soil group path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1058,
+          "setting_text": "soil_storage_path",
+          "control_key": "soil_storage_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Optional soil storage path.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1060,
+          "setting_text": "qinf_path",
+          "control_key": "qinf_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual SFINCS qinf file. Copies to sfincs.qinf and writes qinffile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1061,
+          "setting_text": "smax_path",
+          "control_key": "smax_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual maximum soil storage file. Copies to sfincs.smax and writes smaxfile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1062,
+          "setting_text": "seff_path",
+          "control_key": "seff_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual initial/effective soil storage file. Copies to sfincs.seff and writes sefffile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1063,
+          "setting_text": "ks_path",
+          "control_key": "ks_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual saturated hydraulic conductivity file. Copies to sfincs.ks and writes ksfile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1065,
+          "setting_text": "sigma_path",
+          "control_key": "sigma_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual Green-Ampt sigma file. Copies to sfincs.sigma and writes sigmafile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1066,
+          "setting_text": "psi_path",
+          "control_key": "psi_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual Green-Ampt psi file. Copies to sfincs.psi and writes psifile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1068,
+          "setting_text": "f0_path",
+          "control_key": "f0_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual Horton f0 file. Copies to sfincs.f0 and writes f0file.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1069,
+          "setting_text": "fc_path",
+          "control_key": "fc_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual Horton fc file. Copies to sfincs.fc and writes fcfile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1070,
+          "setting_text": "kd_path",
+          "control_key": "kd_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual Horton decay coefficient file. Copies to sfincs.kd and writes kdfile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1072,
+          "setting_text": "vol_path",
+          "control_key": "vol_path",
+          "tag": "input",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Manual storage volume file. Copies to sfincs.vol and writes volfile.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-13",
+      "label": "13 Output",
+      "guide_panel": "output",
+      "start_line": 1079,
+      "rows": [
+        {
+          "line": 1085,
+          "setting_text": "output_format",
+          "control_key": "output_format",
+          "tag": "input",
+          "type": "",
+          "default": "net",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Output format.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1086,
+          "setting_text": "dtout_s",
+          "control_key": "dtout_s",
+          "tag": "input",
+          "type": "",
+          "default": "3600",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Map output interval.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1087,
+          "setting_text": "dthisout_s",
+          "control_key": "dthisout_s",
+          "tag": "input",
+          "type": "",
+          "default": "900",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "History output interval.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1088,
+          "setting_text": "dtmaxout_s",
+          "control_key": "dtmaxout_s",
+          "tag": "input",
+          "type": "",
+          "default": "99999.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Maximum output interval.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1089,
+          "setting_text": "dtrstout_s",
+          "control_key": "dtrstout_s",
+          "tag": "input",
+          "type": "",
+          "default": "259200",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Restart output interval.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1090,
+          "setting_text": "store_wet_duration",
+          "control_key": "store_wet_duration",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save wet duration.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1091,
+          "setting_text": "store_velocity",
+          "control_key": "store_velocity",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save velocity.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1092,
+          "setting_text": "store_max_velocity",
+          "control_key": "store_max_velocity",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save max velocity.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1093,
+          "setting_text": "store_max_flux",
+          "control_key": "store_max_flux",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save max flux.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1094,
+          "setting_text": "store_cumulative_precip",
+          "control_key": "store_cumulative_precip",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save cumulative precipitation.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1095,
+          "setting_text": "store_hmax_subgrid",
+          "control_key": "store_hmax_subgrid",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save hmax subgrid.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-14",
+      "label": "14 Advanced",
+      "guide_panel": "advanced",
+      "start_line": 1102,
+      "rows": [
+        {
+          "line": 1108,
+          "setting_text": "advanced_config",
+          "control_key": "advanced_config",
+          "tag": "textarea",
+          "type": "",
+          "default": "{ \"mmax\": 997, \"nmax\": 1012, \"dx\": 100, \"dy\": 100, \"x0\": 211971.0, \"y0\": 3261293.0, \"rotation\": 0, \"epsg\": 32615, \"latitude\": 0.0, \"tspinup\": 86400, \"trstout\": -999.0, \"dtwnd\": 1800.0, \"alpha\": 0.5, \"theta\": 1, \"huthresh\": 0.05, \"manning\": 0.04, \"zsini\": -0.5, \"rhoa\": 1.25, \"rhow\": 1024.0, \"dtmax...",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Must be valid JSON. These keys are written as advanced SFINCS controls.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-15",
+      "label": "15 Postprocess",
+      "guide_panel": "postprocess",
+      "start_line": 1154,
+      "rows": [
+        {
+          "line": 1160,
+          "setting_text": "postprocess_create_summary_txt",
+          "control_key": "postprocess_create_summary_txt",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Create summary text.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1161,
+          "setting_text": "postprocess_create_summary_json",
+          "control_key": "postprocess_create_summary_json",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Create summary JSON.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1162,
+          "setting_text": "postprocess_list_output_variables",
+          "control_key": "postprocess_list_output_variables",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "List output variables.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1163,
+          "setting_text": "postprocess_make_quicklook_plots",
+          "control_key": "postprocess_make_quicklook_plots",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Make quicklook plots.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1164,
+          "setting_text": "postprocess_plot_max_water_level",
+          "control_key": "postprocess_plot_max_water_level",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Plot max water level.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1165,
+          "setting_text": "postprocess_plot_max_flood_depth",
+          "control_key": "postprocess_plot_max_flood_depth",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Plot max flood depth.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1166,
+          "setting_text": "postprocess_plot_final_water_level",
+          "control_key": "postprocess_plot_final_water_level",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Plot final water level.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1167,
+          "setting_text": "postprocess_plot_obs_hydrographs",
+          "control_key": "postprocess_plot_obs_hydrographs",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Plot observation hydrographs.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1168,
+          "setting_text": "postprocess_use_basemap",
+          "control_key": "postprocess_use_basemap",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Use basemap for maps.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1169,
+          "setting_text": "postprocess_basemap_source",
+          "control_key": "postprocess_basemap_source",
+          "tag": "input",
+          "type": "",
+          "default": "sat",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Basemap source.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1170,
+          "setting_text": "postprocess_basemap_zoomlevel",
+          "control_key": "postprocess_basemap_zoomlevel",
+          "tag": "input",
+          "type": "",
+          "default": "14",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Can be a number or a string such as auto.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1171,
+          "setting_text": "postprocess_use_rotated_map_plots",
+          "control_key": "postprocess_use_rotated_map_plots",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Use rotated map plots.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1172,
+          "setting_text": "postprocess_use_basemap_on_result_maps",
+          "control_key": "postprocess_use_basemap_on_result_maps",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Overlay result maps on basemap.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1173,
+          "setting_text": "postprocess_result_map_alpha",
+          "control_key": "postprocess_result_map_alpha",
+          "tag": "input",
+          "type": "",
+          "default": "1.0",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Result layer opacity.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1174,
+          "setting_text": "postprocess_result_map_background_fade_alpha",
+          "control_key": "postprocess_result_map_background_fade_alpha",
+          "tag": "input",
+          "type": "",
+          "default": "0.35",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Basemap fade amount.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1175,
+          "setting_text": "postprocess_result_map_show_model_features",
+          "control_key": "postprocess_result_map_show_model_features",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Show model features.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1176,
+          "setting_text": "postprocess_result_map_show_obs",
+          "control_key": "postprocess_result_map_show_obs",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Show observation points.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1177,
+          "setting_text": "postprocess_result_map_show_boundaries",
+          "control_key": "postprocess_result_map_show_boundaries",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Show boundaries.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1178,
+          "setting_text": "postprocess_result_map_show_dep_layer",
+          "control_key": "postprocess_result_map_show_dep_layer",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Show bed/elevation layer.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1179,
+          "setting_text": "postprocess_result_map_show_layout_legend",
+          "control_key": "postprocess_result_map_show_layout_legend",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Show layout legend.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1180,
+          "setting_text": "postprocess_waterlevel_var_candidates",
+          "control_key": "postprocess_waterlevel_var_candidates",
+          "tag": "textarea",
+          "type": "",
+          "default": "[\"zs\", \"waterlevel\", \"water_level\"]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Candidate variable names.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1181,
+          "setting_text": "postprocess_bedlevel_var_candidates",
+          "control_key": "postprocess_bedlevel_var_candidates",
+          "tag": "textarea",
+          "type": "",
+          "default": "[\"zb\", \"bedlevel\", \"bed_level\", \"dep\"]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Candidate variable names.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1182,
+          "setting_text": "postprocess_depth_var_candidates",
+          "control_key": "postprocess_depth_var_candidates",
+          "tag": "textarea",
+          "type": "",
+          "default": "[\"h\", \"depth\", \"flood_depth\"]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Candidate variable names.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1183,
+          "setting_text": "postprocess_max_waterlevel_var_candidates",
+          "control_key": "postprocess_max_waterlevel_var_candidates",
+          "tag": "textarea",
+          "type": "",
+          "default": "[\"zsmax\", \"max_zs\", \"waterlevel_max\"]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Candidate variable names.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1184,
+          "setting_text": "postprocess_max_depth_var_candidates",
+          "control_key": "postprocess_max_depth_var_candidates",
+          "tag": "textarea",
+          "type": "",
+          "default": "[\"hmax\", \"max_h\", \"flood_depth_max\"]",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Candidate variable names.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1185,
+          "setting_text": "postprocess_matplotlib_backend",
+          "control_key": "postprocess_matplotlib_backend",
+          "tag": "input",
+          "type": "",
+          "default": "Agg",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Non-interactive plotting backend.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1186,
+          "setting_text": "postprocess_max_plot_cells",
+          "control_key": "postprocess_max_plot_cells",
+          "tag": "input",
+          "type": "",
+          "default": "2000000",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Plot downsampling guard.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-16",
+      "label": "16 Safety/debug",
+      "guide_panel": "safety_debug",
+      "start_line": 1193,
+      "rows": [
+        {
+          "line": 1199,
+          "setting_text": "print_config_summary",
+          "control_key": "print_config_summary",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Print summary in backend logs.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1200,
+          "setting_text": "validate_paths_before_submit",
+          "control_key": "validate_paths_before_submit",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Safety path validation.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1201,
+          "setting_text": "stop_if_required_path_missing",
+          "control_key": "stop_if_required_path_missing",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Set false only if you truly want warnings instead of stops.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1202,
+          "setting_text": "save_data_inventory",
+          "control_key": "save_data_inventory",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save data inventory.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1203,
+          "setting_text": "save_config_json",
+          "control_key": "save_config_json",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Backend should write frozen run_config.json.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1204,
+          "setting_text": "save_job_ids",
+          "control_key": "save_job_ids",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Save Slurm job IDs.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1205,
+          "setting_text": "print_optional_path_warnings",
+          "control_key": "print_optional_path_warnings",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Print optional path warnings.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1206,
+          "setting_text": "warn_unknown_config_keys",
+          "control_key": "warn_unknown_config_keys",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Schema hardening warning.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1207,
+          "setting_text": "strict_schema_validation",
+          "control_key": "strict_schema_validation",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Use true for final strict checking.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1208,
+          "setting_text": "warn_schema_type_mismatches",
+          "control_key": "warn_schema_type_mismatches",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Schema hardening type warning.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-17",
+      "label": "17 Backend paths",
+      "guide_panel": "backend_paths",
+      "start_line": 1215,
+      "rows": [
+        {
+          "line": 1226,
+          "setting_text": "prefer_pipeline_bundle_runtime_paths",
+          "control_key": "prefer_pipeline_bundle_runtime_paths",
+          "tag": "select",
+          "type": "",
+          "default": "true",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Prefer runtime paths inside the shared pipeline bundle when available.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1237,
+          "setting_text": "anaconda_module",
+          "control_key": "anaconda_module",
+          "tag": "input",
+          "type": "",
+          "default": "anaconda",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Longleaf module name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1243,
+          "setting_text": "apptainer_module",
+          "control_key": "apptainer_module",
+          "tag": "input",
+          "type": "",
+          "default": "apptainer",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Longleaf module name.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1249,
+          "setting_text": "preprocess_stage_script",
+          "control_key": "preprocess_stage_script",
+          "tag": "input",
+          "type": "",
+          "default": "/proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Shared pipeline backend script.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1255,
+          "setting_text": "postprocess_stage_script",
+          "control_key": "postprocess_stage_script",
+          "tag": "input",
+          "type": "",
+          "default": "/proj/zefflab/projects/Flooding/pipeline/code/postprocess_stage.py",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Shared pipeline backend script.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1261,
+          "setting_text": "conda_env_path",
+          "control_key": "conda_env_path",
+          "tag": "input",
+          "type": "",
+          "default": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Desired shared environment path. Use only after the shared env exists and passes smoke tests.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1267,
+          "setting_text": "conda_python",
+          "control_key": "conda_python",
+          "tag": "input",
+          "type": "",
+          "default": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "Desired shared Python executable. Current known-good fallback is still under /users/e/p/epsilon/... .",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1273,
+          "setting_text": "sfincs_container_path",
+          "control_key": "sfincs_container_path",
+          "tag": "input",
+          "type": "",
+          "default": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+          "placeholder": "",
+          "options": [],
+          "disabled": false,
+          "notes": "SFINCS Apptainer image inside the shared pipeline bundle.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1279,
+          "setting_text": "preprocess_enable_hydromt_file_logging",
+          "control_key": "preprocess_enable_hydromt_file_logging",
+          "tag": "select",
+          "type": "",
+          "default": "false",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "disabled": false,
+          "notes": "Keep false by default; HydroMT file logging is slow. Slurm stdout/stderr logs still capture preprocessing messages.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        },
+        {
+          "line": 1290,
+          "setting_text": "preprocess timing report",
+          "control_key": "",
+          "tag": "select",
+          "type": "",
+          "default": "",
+          "placeholder": "",
+          "options": [
+            {
+              "value": "",
+              "label": "backend hook needed",
+              "selected": false
+            }
+          ],
+          "disabled": true,
+          "notes": "Timing blocks already exist in preprocessing, but making this configurable from the web page requires a small backend/config hook. Not worth adding as a fake HTML-only setting.",
+          "button_text": "",
+          "pipeline_action": "",
+          "requires_preflight": "",
+          "onclick": ""
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "tab_id": "tab-check",
+      "label": "Check all",
+      "guide_panel": "check_all",
+      "start_line": 1305,
+      "rows": [],
+      "buttons": [
+        {
+          "line": 1313,
+          "text": "Run page checks",
+          "id": "check-button-2",
+          "class": "primary",
+          "type": "button",
+          "data_pipeline_action": "",
+          "data_requires_preflight": "",
+          "data_output_target": "",
+          "onclick": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-submit",
+      "label": "Submit",
+      "guide_panel": "submit",
+      "start_line": 1321,
+      "rows": [],
+      "buttons": [
+        {
+          "line": 1350,
+          "text": "Run backend preflight",
+          "id": "",
+          "class": "primary",
+          "type": "button",
+          "data_pipeline_action": "preflight",
+          "data_requires_preflight": "",
+          "data_output_target": "runner-output",
+          "onclick": "",
+          "disabled": false
+        },
+        {
+          "line": 1356,
+          "text": "Build Slurm scripts",
+          "id": "",
+          "class": "secondary",
+          "type": "button",
+          "data_pipeline_action": "build_scripts",
+          "data_requires_preflight": "true",
+          "data_output_target": "runner-output",
+          "onclick": "",
+          "disabled": true
+        },
+        {
+          "line": 1364,
+          "text": "Submit Slurm chain",
+          "id": "",
+          "class": "primary",
+          "type": "button",
+          "data_pipeline_action": "submit",
+          "data_requires_preflight": "true",
+          "data_output_target": "runner-output",
+          "onclick": "",
+          "disabled": true
+        }
+      ]
+    }
+  ],
+  "behavior_hits": [
+    "   L0017:       --accent-2: #173f73;\n   L0018:       --good: #18794e;\n>> L0019:       --warn: #b25e09;\n   L0020:       --bad: #b42318;\n   L0021:       --radius: 18px;",
+    "   L0230:     }\n   L0231: \n>> L0232:     .tab.check-tab.active { background: var(--warn); border-color: var(--warn); }\n   L0233:     .tab.submit-tab.active { background: var(--bad); border-color: var(--bad); }\n   L0234: ",
+    "   L0335: \n   L0336:     .pill.good { color: var(--good); background: #eaf6ef; border-color: #badfca; }\n>> L0337:     .pill.warn { color: var(--warn); background: #fff4e5; border-color: #ffd6a7; }\n   L0338:     .pill.bad { color: var(--bad); background: #ffeceb; border-color: #ffbdb8; }\n   L0339: ",
+    "   L0374:     }\n   L0375: \n>> L0376:     .callout.warn {\n   L0377:       border-left-color: var(--warn);\n   L0378:       background: #fff7ed;",
+    "   L0375: \n   L0376:     .callout.warn {\n>> L0377:       border-left-color: var(--warn);\n   L0378:       background: #fff7ed;\n   L0379:       color: #7a3e00;",
+    "   L0403: \n   L0404:     .check-item.good { border-color: #badfca; background: #f0fbf4; }\n>> L0405:     .check-item.warn { border-color: #ffd6a7; background: #fff8ec; }\n   L0406:     .check-item.bad { border-color: #ffbdb8; background: #fff0ef; }\n   L0407:     .check-status { font-weight: 900; }",
+    "   L0407:     .check-status { font-weight: 900; }\n   L0408:     .check-item.good .check-status { color: var(--good); }\n>> L0409:     .check-item.warn .check-status { color: var(--warn); }\n   L0410:     .check-item.bad .check-status { color: var(--bad); }\n   L0411: ",
+    "   L0464: </head>\n   L0465: <body>\n>> L0466:   <input type=\"hidden\" data-key=\"pipeline_mode\" data-type=\"string\" value=\"preflight_only\">\n   L0467:   <input type=\"hidden\" data-key=\"preprocess_mode\" data-type=\"string\" value=\"hydromt_build\">\n   L0468:   <input type=\"hidden\" data-key=\"data_root\" data-type=\"string\" value=\"/proj/zefflab/projects/Flooding/Data/harris_county\">",
+    "   L0465: <body>\n   L0466:   <input type=\"hidden\" data-key=\"pipeline_mode\" data-type=\"string\" value=\"preflight_only\">\n>> L0467:   <input type=\"hidden\" data-key=\"preprocess_mode\" data-type=\"string\" value=\"hydromt_build\">\n   L0468:   <input type=\"hidden\" data-key=\"data_root\" data-type=\"string\" value=\"/proj/zefflab/projects/Flooding/Data/harris_county\">\n   L0469:   <input type=\"hidden\" data-key=\"sfincs_container\" data-type=\"string\" value=\"/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif\">",
+    "   L0492:           New run / wipe page\n   L0493:         </button>\n>> L0494:         <button class=\"primary\" type=\"button\" id=\"save-config-button\">Save progress</button>\n   L0495:         <label class=\"file-label\" for=\"load-config-input\">Load config</label>\n   L0496:         <input id=\"load-config-input\" type=\"file\" accept=\".json,application/json\" />",
+    "   L0493:         </button>\n   L0494:         <button class=\"primary\" type=\"button\" id=\"save-config-button\">Save progress</button>\n>> L0495:         <label class=\"file-label\" for=\"load-config-input\">Load config</label>\n   L0496:         <input id=\"load-config-input\" type=\"file\" accept=\".json,application/json\" />\n   L0497:       </div>",
+    "   L0494:         <button class=\"primary\" type=\"button\" id=\"save-config-button\">Save progress</button>\n   L0495:         <label class=\"file-label\" for=\"load-config-input\">Load config</label>\n>> L0496:         <input id=\"load-config-input\" type=\"file\" accept=\".json,application/json\" />\n   L0497:       </div>\n   L0498:     </div>",
+    "   L0538:               <tr><td>output_root</td><td><input data-key=\"output_root\" data-type=\"string\" value=\"/proj/zefflab/projects/Flooding/sfincs_runs\"></td><td>Run folders will be created under this path by the backend.</td></tr>\n   L0539:               <tr><td>planned run root</td><td><div id=\"run-root-preview\" class=\"path-preview\"></div></td><td>Preview only. This is computed as output_root / run_name.</td></tr>\n>> L0540:               <tr><td>overwrite_existing_run</td><td><select data-key=\"overwrite_existing_run\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Keep false unless you are deliberately replacing a run folder.</td></tr>\n   L0541:               <tr><td>allow_writes_inside_proj</td><td><select data-key=\"allow_writes_inside_proj\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Shared project runs use /proj. Personal scratch runs may keep this false.</td></tr>\n   L0542:               <tr><td>allow_missing_model_inputs</td><td><select data-key=\"allow_missing_model_inputs\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Real runs should normally keep this false. Skeleton tests may set it true.</td></tr>",
+    "   L0539:               <tr><td>planned run root</td><td><div id=\"run-root-preview\" class=\"path-preview\"></div></td><td>Preview only. This is computed as output_root / run_name.</td></tr>\n   L0540:               <tr><td>overwrite_existing_run</td><td><select data-key=\"overwrite_existing_run\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Keep false unless you are deliberately replacing a run folder.</td></tr>\n>> L0541:               <tr><td>allow_writes_inside_proj</td><td><select data-key=\"allow_writes_inside_proj\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Shared project runs use /proj. Personal scratch runs may keep this false.</td></tr>\n   L0542:               <tr><td>allow_missing_model_inputs</td><td><select data-key=\"allow_missing_model_inputs\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Real runs should normally keep this false. Skeleton tests may set it true.</td></tr>\n   L0543:               <tr><td>run_description</td><td><input data-key=\"run_description\" data-type=\"string\" value=\"Manual launcher SFINCS pipeline run.\"></td><td>Short human description.</td></tr>",
+    "   L0540:               <tr><td>overwrite_existing_run</td><td><select data-key=\"overwrite_existing_run\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Keep false unless you are deliberately replacing a run folder.</td></tr>\n   L0541:               <tr><td>allow_writes_inside_proj</td><td><select data-key=\"allow_writes_inside_proj\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Shared project runs use /proj. Personal scratch runs may keep this false.</td></tr>\n>> L0542:               <tr><td>allow_missing_model_inputs</td><td><select data-key=\"allow_missing_model_inputs\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Real runs should normally keep this false. Skeleton tests may set it true.</td></tr>\n   L0543:               <tr><td>run_description</td><td><input data-key=\"run_description\" data-type=\"string\" value=\"Manual launcher SFINCS pipeline run.\"></td><td>Short human description.</td></tr>\n   L0544:               <tr><td>run_tags</td><td><textarea class=\"short-textarea\" data-key=\"run_tags\" data-type=\"json\">[\"manual\", \"sfincs\", \"harris_county\"]</textarea></td><td>JSON list of tags.</td></tr>",
+    "   L0576:               <tr><td>slurm_qos</td><td><input data-key=\"slurm_qos\" data-type=\"nullable\" value=\"\"></td><td>Leave blank unless needed.</td></tr>\n   L0577:               <tr><td>slurm_email</td><td><input data-key=\"slurm_email\" data-type=\"nullable\" value=\"\"></td><td>Optional email for job notifications.</td></tr>\n>> L0578:               <tr><td>slurm_mail_type</td><td><input data-key=\"slurm_mail_type\" data-type=\"string\" value=\"END,FAIL\"></td><td>Used only when slurm_email is set.</td></tr>\n   L0579:               <tr><td>slurm_extra_directives</td><td><textarea class=\"short-textarea\" data-key=\"slurm_extra_directives\" data-type=\"json\">[]</textarea></td><td>JSON list of extra #SBATCH lines. Usually empty.</td></tr>\n   L0580:               <tr><td>bash_strict_mode</td><td><select data-key=\"bash_strict_mode\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Keep true unless debugging unusual shell behavior.</td></tr>",
+    "   L0621:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>\n   L0622:             <tbody>\n>> L0623:               <tr><td>data_catalogs</td><td><textarea data-key=\"data_catalogs\" data-type=\"json\">[\"artifact_data\"]</textarea></td><td>JSON list of catalog paths or HydroMT catalog names. Use full catalog paths when needed.</td></tr>\n   L0624:             </tbody>\n   L0625:           </table>",
+    "   L0675:               <tr><td>obs_points_path</td><td><input data-key=\"obs_points_path\" data-type=\"nullable\" value=\"\">\n   L0676:               <tr><td>obs_lines_path</td><td><input data-key=\"obs_lines_path\" data-type=\"nullable\" value=\"\">\n>> L0677:               <tr><td>thin_dam_source_kind</td><td><select data-key=\"thin_dam_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Thin-dam source style.</td></tr>\n   L0678:               <tr><td>thin_dam_path</td><td><input data-key=\"thin_dam_path\" data-type=\"nullable\" value=\"\"></td><td>Optional thin-dam path.</td></tr>\n   L0679:               <tr><td>weir_source_kind</td><td><select data-key=\"weir_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Weir source style.</td></tr>",
+    "   L0677:               <tr><td>thin_dam_source_kind</td><td><select data-key=\"thin_dam_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Thin-dam source style.</td></tr>\n   L0678:               <tr><td>thin_dam_path</td><td><input data-key=\"thin_dam_path\" data-type=\"nullable\" value=\"\"></td><td>Optional thin-dam path.</td></tr>\n>> L0679:               <tr><td>weir_source_kind</td><td><select data-key=\"weir_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Weir source style.</td></tr>\n   L0680:               <tr><td>weir_path</td><td><input data-key=\"weir_path\" data-type=\"nullable\" value=\"\"></td><td>Optional weir path.</td></tr>\n   L0681:               <tr><td>drainage_structure_source_kind</td><td><select data-key=\"drainage_structure_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Drainage structure source style.</td></tr>",
+    "   L0679:               <tr><td>weir_source_kind</td><td><select data-key=\"weir_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Weir source style.</td></tr>\n   L0680:               <tr><td>weir_path</td><td><input data-key=\"weir_path\" data-type=\"nullable\" value=\"\"></td><td>Optional weir path.</td></tr>\n>> L0681:               <tr><td>drainage_structure_source_kind</td><td><select data-key=\"drainage_structure_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Drainage structure source style.</td></tr>\n   L0682:               <tr><td>drainage_structure_path</td><td><input data-key=\"drainage_structure_path\" data-type=\"nullable\" value=\"\"></td><td>Optional drainage structure path.</td></tr>\n   L0683:               <tr><td>culvert_source_kind</td><td><select data-key=\"culvert_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Culvert source style.</td></tr>",
+    "   L0681:               <tr><td>drainage_structure_source_kind</td><td><select data-key=\"drainage_structure_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Drainage structure source style.</td></tr>\n   L0682:               <tr><td>drainage_structure_path</td><td><input data-key=\"drainage_structure_path\" data-type=\"nullable\" value=\"\"></td><td>Optional drainage structure path.</td></tr>\n>> L0683:               <tr><td>culvert_source_kind</td><td><select data-key=\"culvert_source_kind\" data-type=\"string\"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Culvert source style.</td></tr>\n   L0684:               <tr><td>culvert_path</td><td><input data-key=\"culvert_path\" data-type=\"nullable\" value=\"\"></td><td>Optional culvert path.</td></tr>\n   L0685:             </tbody>",
+    "   L0761:           <p class=\"section-intro\">Subgrid controls are important because they affect how fine-scale elevation and roughness are represented inside coarser SFINCS cells. This page supports either generating subgrid data from source inputs or pointing to a pre-made subgrid file.</p>\n   L0762: \n>> L0763:           <div class=\"callout warn\">\n   L0764:             The pre-made subgrid file option is intentionally separate from full Override Mode. Full Override Mode is for many already-processed SFINCS files; this option is only for using a pre-made subgrid while keeping the rest of the setup manual.\n   L0765:           </div>",
+    "   L0780: \n   L0781:               <tr>\n>> L0782:                 <td>subgrid_source_kind</td>\n   L0783:                 <td>\n   L0784:                   <select data-key=\"subgrid_source_kind\" data-type=\"string\">",
+    "   L0782:                 <td>subgrid_source_kind</td>\n   L0783:                 <td>\n>> L0784:                   <select data-key=\"subgrid_source_kind\" data-type=\"string\">\n   L0785:                     <option selected>hydromt_generate</option>\n   L0786:                     <option>premade_sbgfile</option>",
+    "   L0784:                   <select data-key=\"subgrid_source_kind\" data-type=\"string\">\n   L0785:                     <option selected>hydromt_generate</option>\n>> L0786:                     <option>premade_sbgfile</option>\n   L0787:                     <option>none</option>\n   L0788:                   </select>",
+    "   L0900:                     <option>cora</option>\n   L0901:                     <option>event_catalog_csv</option>\n>> L0902:                     <option>native_sfincs</option>\n   L0903:                   </select>\n   L0904:                 </td>",
+    "   L0924:                     <option>csv</option>\n   L0925:                     <option>event_catalog_csv</option>\n>> L0926:                     <option>native_sfincs</option>\n   L0927:                   </select>\n   L0928:                 </td>",
+    "   L1045:                     <option>curve_number</option>\n   L1046:                     <option>curve_number_with_ks</option>\n>> L1047:                     <option>native_sfincs</option>\n   L1048:                   </select>\n   L1049:                 </td>",
+    "   L1193:         <div class=\"panel tab-panel\" id=\"tab-16\">\n   L1194:           <h2>16. Safety / debug settings</h2>\n>> L1195:           <p class=\"section-intro\">This is where failed checks can be understood. Some safety checks can be relaxed deliberately, but the page should make that choice visible.</p>\n   L1196:           <table class=\"config-table\">\n   L1197:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>",
+    "   L1199:               <tr><td>print_config_summary</td><td><select data-key=\"print_config_summary\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Print summary in backend logs.</td></tr>\n   L1200:               <tr><td>validate_paths_before_submit</td><td><select data-key=\"validate_paths_before_submit\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Safety path validation.</td></tr>\n>> L1201:               <tr><td>stop_if_required_path_missing</td><td><select data-key=\"stop_if_required_path_missing\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Set false only if you truly want warnings instead of stops.</td></tr>\n   L1202:               <tr><td>save_data_inventory</td><td><select data-key=\"save_data_inventory\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Save data inventory.</td></tr>\n   L1203:               <tr><td>save_config_json</td><td><select data-key=\"save_config_json\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Backend should write frozen run_config.json.</td></tr>",
+    "   L1203:               <tr><td>save_config_json</td><td><select data-key=\"save_config_json\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Backend should write frozen run_config.json.</td></tr>\n   L1204:               <tr><td>save_job_ids</td><td><select data-key=\"save_job_ids\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Save Slurm job IDs.</td></tr>\n>> L1205:               <tr><td>print_optional_path_warnings</td><td><select data-key=\"print_optional_path_warnings\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Print optional path warnings.</td></tr>\n   L1206:               <tr><td>warn_unknown_config_keys</td><td><select data-key=\"warn_unknown_config_keys\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Schema hardening warning.</td></tr>\n   L1207:               <tr><td>strict_schema_validation</td><td><select data-key=\"strict_schema_validation\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Use true for final strict checking.</td></tr>",
+    "   L1204:               <tr><td>save_job_ids</td><td><select data-key=\"save_job_ids\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Save Slurm job IDs.</td></tr>\n   L1205:               <tr><td>print_optional_path_warnings</td><td><select data-key=\"print_optional_path_warnings\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Print optional path warnings.</td></tr>\n>> L1206:               <tr><td>warn_unknown_config_keys</td><td><select data-key=\"warn_unknown_config_keys\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Schema hardening warning.</td></tr>\n   L1207:               <tr><td>strict_schema_validation</td><td><select data-key=\"strict_schema_validation\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Use true for final strict checking.</td></tr>\n   L1208:               <tr><td>warn_schema_type_mismatches</td><td><select data-key=\"warn_schema_type_mismatches\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Schema hardening type warning.</td></tr>",
+    "   L1206:               <tr><td>warn_unknown_config_keys</td><td><select data-key=\"warn_unknown_config_keys\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Schema hardening warning.</td></tr>\n   L1207:               <tr><td>strict_schema_validation</td><td><select data-key=\"strict_schema_validation\" data-type=\"bool\"><option value=\"false\" selected>false</option><option value=\"true\">true</option></select></td><td>Use true for final strict checking.</td></tr>\n>> L1208:               <tr><td>warn_schema_type_mismatches</td><td><select data-key=\"warn_schema_type_mismatches\" data-type=\"bool\"><option value=\"true\" selected>true</option><option value=\"false\">false</option></select></td><td>Schema hardening type warning.</td></tr>\n   L1209:             </tbody>\n   L1210:           </table>",
+    "   L1217:           <p class=\"section-intro\">Usually these should remain stable. They define the Python environment, stage scripts, and SFINCS container used by generated Slurm scripts.</p>\n   L1218: \n>> L1219:           <div class=\"callout warn\">\n   L1220:             The shared-project Python environment path below is the desired multi-user direction. If <span class=\"mono\">/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python</span> has not been created and tested yet, keep using the known-good personal environment for actual runs.\n   L1221:           </div>",
+    "   L1278: \n   L1279:               <tr>\n>> L1280:                 <td>preprocess_enable_hydromt_file_logging</td>\n   L1281:                 <td>\n   L1282:                   <select data-key=\"preprocess_enable_hydromt_file_logging\" data-type=\"bool\">",
+    "   L1280:                 <td>preprocess_enable_hydromt_file_logging</td>\n   L1281:                 <td>\n>> L1282:                   <select data-key=\"preprocess_enable_hydromt_file_logging\" data-type=\"bool\">\n   L1283:                     <option value=\"false\" selected>false</option>\n   L1284:                     <option value=\"true\">true</option>",
+    "   L1314:           </div>\n   L1315:         \n>> L1316:           <div id=\"runtime-window-review-output\"></div>\n   L1317:           <div id=\"checks-output\" class=\"checks-list\"></div>\n   L1318:         <!-- CHECK ALL END -->",
+    "   L1327:           </p>\n   L1328: \n>> L1329:           <div class=\"callout warn\">\n   L1330:             Keep <span class=\"mono\">preprocess_mode = hydromt_build</span> for clean Manual Mode testing.\n   L1331:             Use Override Mode for already-native or hybrid reduced-event catalog workflows unless you are intentionally debugging those backend paths from Manual.",
+    "   L1328: \n   L1329:           <div class=\"callout warn\">\n>> L1330:             Keep <span class=\"mono\">preprocess_mode = hydromt_build</span> for clean Manual Mode testing.\n   L1331:             Use Override Mode for already-native or hybrid reduced-event catalog workflows unless you are intentionally debugging those backend paths from Manual.\n   L1332:           </div>",
+    "   L1410:     const checksOutput = document.getElementById('checks-output');\n   L1411:     \n>> L1412:     let extraLoadedConfig = {};\n   L1413:     let lastLoadedUnmatchedKeys = [];\n   L1414: ",
+    "   L1413:     let lastLoadedUnmatchedKeys = [];\n   L1414: \n>> L1415:     const MANUAL_FIXED_CONFIG = {\n   L1416:       pipeline_mode: 'preflight_only',\n   L1417:       preprocess_mode: 'hydromt_build',",
+    "   L1414: \n   L1415:     const MANUAL_FIXED_CONFIG = {\n>> L1416:       pipeline_mode: 'preflight_only',\n   L1417:       preprocess_mode: 'hydromt_build',\n   L1418:       use_sfincs_file_overrides: false",
+    "   L1415:     const MANUAL_FIXED_CONFIG = {\n   L1416:       pipeline_mode: 'preflight_only',\n>> L1417:       preprocess_mode: 'hydromt_build',\n   L1418:       use_sfincs_file_overrides: false\n   L1419:     };",
+    "   L1416:       pipeline_mode: 'preflight_only',\n   L1417:       preprocess_mode: 'hydromt_build',\n>> L1418:       use_sfincs_file_overrides: false\n   L1419:     };\n   L1420:     ",
+    "   L1419:     };\n   L1420:     \n>> L1421:     const MANUAL_STRIP_LOADED_KEYS = new Set([\n   L1422:       // Override/native workflow metadata should not survive into Manual Mode.\n   L1423:       'native_static_sfincs_input_dirs',",
+    "   L1423:       'native_static_sfincs_input_dirs',\n   L1424:       'native_event_sfincs_input_dirs',\n>> L1425:       'native_sfincs_input_dirs',\n   L1426:       'sfincs_file_overrides',\n   L1427:       'override_source_path',",
+    "   L1439:     \n   L1440:     function applyManualFixedConfig(cfg) {\n>> L1441:       Object.entries(MANUAL_FIXED_CONFIG).forEach(([key, value]) => {\n   L1442:         cfg[key] = value;\n   L1443:       });",
+    "   L1443:       });\n   L1444:     \n>> L1445:       MANUAL_STRIP_LOADED_KEYS.forEach(key => {\n   L1446:         delete cfg[key];\n   L1447:       });",
+    "   L1483:     }\n   L1484: \n>> L1485:     function getConfig() {\n   L1486:       // Start from keys loaded from an existing backend JSON but not rendered by this page.\n   L1487:       // Rendered Manual fields then overwrite matching keys, so visible edits always win.",
+    "   L1486:       // Start from keys loaded from an existing backend JSON but not rendered by this page.\n   L1487:       // Rendered Manual fields then overwrite matching keys, so visible edits always win.\n>> L1488:       const cfg = { ...extraLoadedConfig };\n   L1489:     \n   L1490:       document.querySelectorAll('[data-key]').forEach(el => {",
+    "   L1494:           el.style.borderColor = '';\n   L1495:         } catch (err) {\n>> L1496:           cfg[key] = `JSON_PARSE_ERROR: ${err.message}`;\n   L1497:           el.style.borderColor = 'var(--bad)';\n   L1498:         }",
+    "   L1502:     }\n   L1503: \n>> L1504:     function setFieldValue(key, value) {\n   L1505:       const el = document.querySelector(`[data-key=\"${CSS.escape(key)}\"]`);\n   L1506:       if (!el) return false;",
+    "   L1516:     }\n   L1517: \n>> L1518:     function updatePreview() {\n   L1519:       const cfg = getConfig();\n   L1520:       const root = plannedRunRoot(cfg);",
+    "   L1517: \n   L1518:     function updatePreview() {\n>> L1519:       const cfg = getConfig();\n   L1520:       const root = plannedRunRoot(cfg);\n   L1521:       if (runRootPreview) runRootPreview.textContent = root;",
+    "   L1527:       const div = document.createElement('div');\n   L1528:       div.className = `check-item ${status}`;\n>> L1529:       const label = status === 'good' ? 'OK' : status === 'warn' ? 'WARN' : 'FAIL';\n   L1530:       div.innerHTML = `<div class=\"check-status\">${label}</div><div><b>${message}</b><br><span class=\"muted\">${detail || ''}</span></div>`;\n   L1531:       return div;",
+    "   L1542:     \n   L1543:     function renderRuntimeWindowReview(audit) {\n>> L1544:       const target = document.getElementById('runtime-window-review-output');\n   L1545:       if (!target) return;\n   L1546:     ",
+    "   L1561:       target.innerHTML = `\n   L1562:         <div style=\"margin-top: 1rem; margin-bottom: 1rem; padding: 1rem; border-radius: 14px; border: 2px solid ${border}; background: ${background}; color: ${text};\">\n>> L1563:           <div><strong>${manualReviewEsc(audit.message || 'Runtime-window review complete.')}</strong></div>\n   L1564:           <div style=\"margin-top: 0.45rem;\">Category: <code>${manualReviewEsc(audit.category || '')}</code></div>\n   L1565:           <div style=\"margin-top: 0.45rem;\">Reason: ${manualReviewEsc(audit.reason || '')}</div>",
+    "   L1571:     }\n   L1572:     \n>> L1573:     async function runRuntimeWindowReviewCheck() {\n   L1574:       const target = document.getElementById('runtime-window-review-output');\n   L1575:       if (target) {",
+    "   L1572:     \n   L1573:     async function runRuntimeWindowReviewCheck() {\n>> L1574:       const target = document.getElementById('runtime-window-review-output');\n   L1575:       if (target) {\n   L1576:         target.innerHTML = `",
+    "   L1583:       let cfg;\n   L1584:       try {\n>> L1585:         cfg = getConfig();\n   L1586:       } catch (err) {\n   L1587:         renderRuntimeWindowReview({",
+    "   L1588:           severity: 'major',\n   L1589:           ui_color: 'red',\n>> L1590:           category: 'runtime_window_review_failed',\n   L1591:           message: 'Runtime window review failed before request.',\n   L1592:           reason: err.message,",
+    "   L1589:           ui_color: 'red',\n   L1590:           category: 'runtime_window_review_failed',\n>> L1591:           message: 'Runtime window review failed before request.',\n   L1592:           reason: err.message,\n   L1593:           mismatches: {}",
+    "   L1597:     \n   L1598:       try {\n>> L1599:         const response = await fetch('/api/review-runtime-window', {\n   L1600:           method: 'POST',\n   L1601:           headers: { 'Content-Type': 'application/json' },",
+    "   L1606:     \n   L1607:         if (!response.ok || !result.ok) {\n>> L1608:           throw new Error(result.error || 'Runtime review request failed.');\n   L1609:         }\n   L1610:     ",
+    "   L1614:           severity: 'major',\n   L1615:           ui_color: 'red',\n>> L1616:           category: 'runtime_window_review_failed',\n   L1617:           message: 'Runtime window review request failed.',\n   L1618:           reason: err.message,",
+    "   L1615:           ui_color: 'red',\n   L1616:           category: 'runtime_window_review_failed',\n>> L1617:           message: 'Runtime window review request failed.',\n   L1618:           reason: err.message,\n   L1619:           mismatches: {}",
+    "   L1622:     }\n   L1623:     \n>> L1624:     window.runRuntimeWindowReviewCheck = runRuntimeWindowReviewCheck;\n   L1625: \n   L1626:     function runChecks(navigate = true) {",
+    "   L1624:     window.runRuntimeWindowReviewCheck = runRuntimeWindowReviewCheck;\n   L1625: \n>> L1626:     function runChecks(navigate = true) {\n   L1627:       const cfg = getConfig();\n   L1628:       checksOutput.innerHTML = '';",
+    "   L1625: \n   L1626:     function runChecks(navigate = true) {\n>> L1627:       const cfg = getConfig();\n   L1628:       checksOutput.innerHTML = '';\n   L1629:       const checks = [];",
+    "   L1629:       const checks = [];\n   L1630:     \n>> L1631:       runRuntimeWindowReviewCheck();\n   L1632: \n   L1633:       if (/^[A-Za-z0-9_.-]+$/.test(cfg.run_name || '')) {",
+    "   L1695:         } else {\n   L1696:           checks.push(makeCheck(\n>> L1697:             'warn',\n   L1698:             'tref is after tstart.',\n   L1699:             'This is unusual; confirm it is intentional.'",
+    "   L1785: \n   L1786:       // Manual-mode identity checks.\n>> L1787:       if (cfg.preprocess_mode === 'hydromt_build') {\n   L1788:         checks.push(makeCheck(\n   L1789:           'good',",
+    "   L1795:           'bad',\n   L1796:           'Manual preprocess mode is not hydromt_build.',\n>> L1797:           `Current preprocess_mode = ${cfg.preprocess_mode}. Manual v1.1 should stay hydromt_build.`\n   L1798:         ));\n   L1799:       }",
+    "   L1799:       }\n   L1800: \n>> L1801:       if (cfg.pipeline_mode === 'preflight_only') {\n   L1802:         checks.push(makeCheck(\n   L1803:           'good',",
+    "   L1802:         checks.push(makeCheck(\n   L1803:           'good',\n>> L1804:           'Manual hidden pipeline_mode default is safe.',\n   L1805:           'Submit/build actions are chosen by the final Submit tab buttons.'\n   L1806:         ));",
+    "   L1807:       } else {\n   L1808:         checks.push(makeCheck(\n>> L1809:           'warn',\n   L1810:           'Hidden pipeline_mode is not the safe default.',\n   L1811:           `Current pipeline_mode = ${cfg.pipeline_mode}. The Submit tab will still override it when staging.`",
+    "   L1808:         checks.push(makeCheck(\n   L1809:           'warn',\n>> L1810:           'Hidden pipeline_mode is not the safe default.',\n   L1811:           `Current pipeline_mode = ${cfg.pipeline_mode}. The Submit tab will still override it when staging.`\n   L1812:         ));",
+    "   L1809:           'warn',\n   L1810:           'Hidden pipeline_mode is not the safe default.',\n>> L1811:           `Current pipeline_mode = ${cfg.pipeline_mode}. The Submit tab will still override it when staging.`\n   L1812:         ));\n   L1813:       }",
+    "   L1830:       }\n   L1831: \n>> L1832:       if (catalogList.length === 1 && String(catalogList[0]).trim() === 'artifact_data') {\n   L1833:         checks.push(makeCheck(\n   L1834:           'warn',",
+    "   L1832:       if (catalogList.length === 1 && String(catalogList[0]).trim() === 'artifact_data') {\n   L1833:         checks.push(makeCheck(\n>> L1834:           'warn',\n   L1835:           'data_catalogs still uses artifact_data.',\n   L1836:           'This is okay for a tiny artifact test, but probably wrong for a real Harris County run.'",
+    "   L1833:         checks.push(makeCheck(\n   L1834:           'warn',\n>> L1835:           'data_catalogs still uses artifact_data.',\n   L1836:           'This is okay for a tiny artifact test, but probably wrong for a real Harris County run.'\n   L1837:         ));",
+    "   L1886:         } else {\n   L1887:           checks.push(makeCheck(\n>> L1888:             'warn',\n   L1889:             'Landcover roughness is enabled but no reclass/source config is set.',\n   L1890:             'Either browse/select a reclass table/source, or disable use_landcover_roughness_if_available.'",
+    "   L1936:         } else if (cfg.rainfall_kind === 'event_catalog_aorc') {\n   L1937:           checks.push(makeCheck(\n>> L1938:             'warn',\n   L1939:             'Rainfall kind is event_catalog_aorc in Manual Mode.',\n   L1940:             'That reduced-event workflow is usually cleaner in Override/hybrid mode.'",
+    "   L1949:       } else {\n   L1950:         checks.push(makeCheck(\n>> L1951:           'warn',\n   L1952:           'Rainfall is disabled.',\n   L1953:           'Confirm this is intentional for the event.'",
+    "   L1957:       // Water-level consistency.\n   L1958:       if (cfg.use_waterlevel_boundary) {\n>> L1959:         if (cfg.waterlevel_source_kind === 'native_sfincs') {\n   L1960:           checks.push(makeCheck(\n   L1961:             'warn',",
+    "   L1959:         if (cfg.waterlevel_source_kind === 'native_sfincs') {\n   L1960:           checks.push(makeCheck(\n>> L1961:             'warn',\n   L1962:             'Water-level source kind is native_sfincs in Manual Mode.',\n   L1963:             'Native SFINCS files are usually better handled in Override Mode.'",
+    "   L1960:           checks.push(makeCheck(\n   L1961:             'warn',\n>> L1962:             'Water-level source kind is native_sfincs in Manual Mode.',\n   L1963:             'Native SFINCS files are usually better handled in Override Mode.'\n   L1964:           ));",
+    "   L1980:       // Discharge consistency.\n   L1981:       if (cfg.use_discharge_boundary) {\n>> L1982:         if (cfg.discharge_source_kind === 'native_sfincs') {\n   L1983:           checks.push(makeCheck(\n   L1984:             'warn',",
+    "   L1982:         if (cfg.discharge_source_kind === 'native_sfincs') {\n   L1983:           checks.push(makeCheck(\n>> L1984:             'warn',\n   L1985:             'Discharge source kind is native_sfincs in Manual Mode.',\n   L1986:             'Native SFINCS files are usually better handled in Override Mode.'",
+    "   L1983:           checks.push(makeCheck(\n   L1984:             'warn',\n>> L1985:             'Discharge source kind is native_sfincs in Manual Mode.',\n   L1986:             'Native SFINCS files are usually better handled in Override Mode.'\n   L1987:           ));",
+    "   L2043:       // Subgrid consistency.\n   L2044:       if (cfg.use_subgrid) {\n>> L2045:         if (cfg.subgrid_source_kind === 'premade_sbgfile') {\n   L2046:           if (!isBlank(cfg.subgrid_native_file_path)) {\n   L2047:             checks.push(makeCheck(",
+    "   L2057:             ));\n   L2058:           }\n>> L2059:         } else if (cfg.subgrid_source_kind === 'none') {\n   L2060:           checks.push(makeCheck(\n   L2061:             'warn',",
+    "   L2059:         } else if (cfg.subgrid_source_kind === 'none') {\n   L2060:           checks.push(makeCheck(\n>> L2061:             'warn',\n   L2062:             'use_subgrid is true but subgrid_source_kind is none.',\n   L2063:             'Choose hydromt_generate or disable use_subgrid.'",
+    "   L2060:           checks.push(makeCheck(\n   L2061:             'warn',\n>> L2062:             'use_subgrid is true but subgrid_source_kind is none.',\n   L2063:             'Choose hydromt_generate or disable use_subgrid.'\n   L2064:           ));",
+    "   L2067:             'good',\n   L2068:             'Subgrid settings are structurally plausible.',\n>> L2069:             `subgrid_source_kind = ${cfg.subgrid_source_kind}`\n   L2070:           ));\n   L2071:         }",
+    "   L2072:       } else {\n   L2073:         checks.push(makeCheck(\n>> L2074:           'warn',\n   L2075:           'Subgrid is disabled.',\n   L2076:           'This may be intentional, but most Harris County runs should use subgrid.'",
+    "   L2089:       if (cfg.use_infiltration && cfg.infiltration_mode === 'none') {\n   L2090:         checks.push(makeCheck(\n>> L2091:           'warn',\n   L2092:           'Infiltration is enabled but infiltration_mode is none.',\n   L2093:           'Choose a real infiltration mode or disable use_infiltration.'",
+    "   L2095:       } else if (!cfg.use_infiltration && cfg.infiltration_mode !== 'none') {\n   L2096:         checks.push(makeCheck(\n>> L2097:           'warn',\n   L2098:           'Infiltration mode is set but use_infiltration is false.',\n   L2099:           `infiltration_mode = ${cfg.infiltration_mode}`",
+    "   L2153:         } else {\n   L2154:           checks.push(makeCheck(\n>> L2155:             'warn',\n   L2156:             'Structures are enabled but no structure source/path is selected.',\n   L2157:             'Disable use_structures or configure thin dams, weirs, drainage structures, or culverts.'",
+    "   L2162:       if (cfg.use_obs_points && isBlank(cfg.obs_points_path)) {\n   L2163:         checks.push(makeCheck(\n>> L2164:           'warn',\n   L2165:           'Observation points are enabled but obs_points_path is blank.',\n   L2166:           'Set obs_points_path or disable use_obs_points.'",
+    "   L2170:       if (cfg.use_obs_lines && isBlank(cfg.obs_lines_path)) {\n   L2171:         checks.push(makeCheck(\n>> L2172:           'warn',\n   L2173:           'Observation lines are enabled but obs_lines_path is blank.',\n   L2174:           'Set obs_lines_path or disable use_obs_lines.'",
+    "   L2202:         } else {\n   L2203:           checks.push(makeCheck(\n>> L2204:             'warn',\n   L2205:             'SFINCS container path does not end in .sif.',\n   L2206:             containerPath",
+    "   L2215:       }\n   L2216: \n>> L2217:       if (String(cfg.output_root || '').startsWith('/proj/') && !cfg.allow_writes_inside_proj) {\n   L2218:         checks.push(makeCheck(\n   L2219:           'bad',",
+    "   L2218:         checks.push(makeCheck(\n   L2219:           'bad',\n>> L2220:           'output_root is inside /proj but allow_writes_inside_proj is false.',\n   L2221:           'Either enable allow_writes_inside_proj or choose a /work run root.'\n   L2222:         ));",
+    "   L2219:           'bad',\n   L2220:           'output_root is inside /proj but allow_writes_inside_proj is false.',\n>> L2221:           'Either enable allow_writes_inside_proj or choose a /work run root.'\n   L2222:         ));\n   L2223:       }",
+    "   L2223:       }\n   L2224: \n>> L2225:       if (cfg.overwrite_existing_run) {\n   L2226:         checks.push(makeCheck(\n   L2227:           'warn',",
+    "   L2225:       if (cfg.overwrite_existing_run) {\n   L2226:         checks.push(makeCheck(\n>> L2227:           'warn',\n   L2228:           'overwrite_existing_run is true.',\n   L2229:           'Only use this when intentionally replacing a prior run folder.'",
+    "   L2226:         checks.push(makeCheck(\n   L2227:           'warn',\n>> L2228:           'overwrite_existing_run is true.',\n   L2229:           'Only use this when intentionally replacing a prior run folder.'\n   L2230:         ));",
+    "   L2233: \n   L2234:       const forcingOn = Boolean(cfg.use_rainfall || cfg.use_waterlevel_boundary || cfg.use_discharge_boundary || cfg.use_wind || cfg.use_pressure);\n>> L2235:       if (!cfg.require_at_least_one_forcing || forcingOn || cfg.allow_missing_model_inputs) {\n   L2236:         checks.push(makeCheck('good', 'Forcing safety check passed.', `forcing enabled = ${forcingOn}`));\n   L2237:       } else {",
+    "   L2236:         checks.push(makeCheck('good', 'Forcing safety check passed.', `forcing enabled = ${forcingOn}`));\n   L2237:       } else {\n>> L2238:         checks.push(makeCheck('bad', 'No forcing is enabled.', 'Turn on at least one forcing or intentionally relax require_at_least_one_forcing / allow_missing_model_inputs.'));\n   L2239:       }\n   L2240: ",
+    "   L2239:       }\n   L2240: \n>> L2241:       if (cfg.preprocess_mode === 'hybrid' || cfg.preprocess_mode === 'native_sfincs_assembly') {\n   L2242:         checks.push(makeCheck('warn', 'This preprocess mode usually belongs in Override Mode.', `preprocess_mode = ${cfg.preprocess_mode}; manual mode no longer exposes full native-file routing controls.`));\n   L2243:       } else {",
+    "   L2240: \n   L2241:       if (cfg.preprocess_mode === 'hybrid' || cfg.preprocess_mode === 'native_sfincs_assembly') {\n>> L2242:         checks.push(makeCheck('warn', 'This preprocess mode usually belongs in Override Mode.', `preprocess_mode = ${cfg.preprocess_mode}; manual mode no longer exposes full native-file routing controls.`));\n   L2243:       } else {\n   L2244:         checks.push(makeCheck('good', 'Manual preprocess mode is clean.', `preprocess_mode = ${cfg.preprocess_mode}`));",
+    "   L2242:         checks.push(makeCheck('warn', 'This preprocess mode usually belongs in Override Mode.', `preprocess_mode = ${cfg.preprocess_mode}; manual mode no longer exposes full native-file routing controls.`));\n   L2243:       } else {\n>> L2244:         checks.push(makeCheck('good', 'Manual preprocess mode is clean.', `preprocess_mode = ${cfg.preprocess_mode}`));\n   L2245:       }\n   L2246: ",
+    "   L2245:       }\n   L2246: \n>> L2247:       if (cfg.subgrid_source_kind === 'premade_sbgfile' && !cfg.subgrid_native_file_path) {\n   L2248:         checks.push(makeCheck('bad', 'Pre-made subgrid selected but no subgrid file path is set.', 'Set subgrid_native_file_path or switch subgrid_source_kind back to hydromt_generate.'));\n   L2249:       } else if (cfg.subgrid_source_kind === 'premade_sbgfile') {",
+    "   L2246: \n   L2247:       if (cfg.subgrid_source_kind === 'premade_sbgfile' && !cfg.subgrid_native_file_path) {\n>> L2248:         checks.push(makeCheck('bad', 'Pre-made subgrid selected but no subgrid file path is set.', 'Set subgrid_native_file_path or switch subgrid_source_kind back to hydromt_generate.'));\n   L2249:       } else if (cfg.subgrid_source_kind === 'premade_sbgfile') {\n   L2250:         checks.push(makeCheck('warn', 'Pre-made subgrid path is set.', 'This UI field may need a backend/schema hook before the runner uses it.'));",
+    "   L2247:       if (cfg.subgrid_source_kind === 'premade_sbgfile' && !cfg.subgrid_native_file_path) {\n   L2248:         checks.push(makeCheck('bad', 'Pre-made subgrid selected but no subgrid file path is set.', 'Set subgrid_native_file_path or switch subgrid_source_kind back to hydromt_generate.'));\n>> L2249:       } else if (cfg.subgrid_source_kind === 'premade_sbgfile') {\n   L2250:         checks.push(makeCheck('warn', 'Pre-made subgrid path is set.', 'This UI field may need a backend/schema hook before the runner uses it.'));\n   L2251:       }",
+    "   L2248:         checks.push(makeCheck('bad', 'Pre-made subgrid selected but no subgrid file path is set.', 'Set subgrid_native_file_path or switch subgrid_source_kind back to hydromt_generate.'));\n   L2249:       } else if (cfg.subgrid_source_kind === 'premade_sbgfile') {\n>> L2250:         checks.push(makeCheck('warn', 'Pre-made subgrid path is set.', 'This UI field may need a backend/schema hook before the runner uses it.'));\n   L2251:       }\n   L2252: ",
+    "   L2251:       }\n   L2252: \n>> L2253:       if (cfg.pipeline_mode === 'submit_slurm_chain') {\n   L2254:         checks.push(makeCheck(\n   L2255:           'warn',",
+    "   L2253:       if (cfg.pipeline_mode === 'submit_slurm_chain') {\n   L2254:         checks.push(makeCheck(\n>> L2255:           'warn',\n   L2256:           'Submit mode is selected in the config.',\n   L2257:           'Use the Final submit tab buttons so the Flask backend runs preflight/build/submit in order.'",
+    "   L2261:           'good',\n   L2262:           'Submit is not selected in the config.',\n>> L2263:           `pipeline_mode = ${cfg.pipeline_mode}. Use the Final submit tab buttons when ready.`\n   L2264:         ));\n   L2265:       }",
+    "   L2268:         checks.push(makeCheck('good', 'Strict schema validation is on.', 'Useful for final configs.'));\n   L2269:       } else {\n>> L2270:         checks.push(makeCheck('warn', 'Strict schema validation is off.', 'Good during editing; turn on later if you want typo/type issues to fail.'));\n   L2271:       }\n   L2272: ",
+    "   L2285:       if (lastLoadedUnmatchedKeys.length > 0) {\n   L2286:         checks.push(makeCheck(\n>> L2287:           'warn',\n   L2288:           'Loaded config has extra backend keys preserved.',\n   L2289:           `${lastLoadedUnmatchedKeys.length} key(s): ${lastLoadedUnmatchedKeys.slice(0, 12).join(', ')}${lastLoadedUnmatchedKeys.length > 12 ? ', ...' : ''}`",
+    "   L2299: \n   L2300:       const badCount = checks.filter(c => c.classList.contains('bad')).length;\n>> L2301:       const warnCount = checks.filter(c => c.classList.contains('warn')).length;\n   L2302:     \n   L2303:       const summary = makeCheck(",
+    "   L2302:     \n   L2303:       const summary = makeCheck(\n>> L2304:         badCount > 0 ? 'bad' : warnCount > 0 ? 'warn' : 'good',\n   L2305:         'Manual page checks complete.',\n   L2306:         `${badCount} fail(s), ${warnCount} warning(s), ${checks.length} total check(s).`",
+    "   L2304:         badCount > 0 ? 'bad' : warnCount > 0 ? 'warn' : 'good',\n   L2305:         'Manual page checks complete.',\n>> L2306:         `${badCount} fail(s), ${warnCount} warning(s), ${checks.length} total check(s).`\n   L2307:       );\n   L2308:     ",
+    "   L2315:     }\n   L2316: \n>> L2317:     async function saveConfig(confirmUpdate = false) {\n   L2318:       const cfg = getConfig();\n   L2319:     ",
+    "   L2316: \n   L2317:     async function saveConfig(confirmUpdate = false) {\n>> L2318:       const cfg = getConfig();\n   L2319:     \n   L2320:       const response = await fetch('/api/save-config', {",
+    "   L2318:       const cfg = getConfig();\n   L2319:     \n>> L2320:       const response = await fetch('/api/save-config', {\n   L2321:         method: 'POST',\n   L2322:         headers: {",
+    "   L2335:     \n   L2336:         if (data.run_state && data.run_state.has_real_run) {\n>> L2337:           message += '\\n\\nWarning: this run folder also appears to contain real run artifacts. Updating run_config.json could make the saved config differ from what was actually run.';\n   L2338:         }\n   L2339:     ",
+    "   L2339:     \n   L2340:         if (confirm(message)) {\n>> L2341:           return saveConfig(true);\n   L2342:         }\n   L2343:     ",
+    "   L2346:     \n   L2347:       if (!response.ok || !data.ok) {\n>> L2348:         const message = data.message || data.error || `Save failed with HTTP ${response.status}`;\n   L2349:         alert(message);\n   L2350:         throw new Error(message);",
+    "   L2348:         const message = data.message || data.error || `Save failed with HTTP ${response.status}`;\n   L2349:         alert(message);\n>> L2350:         throw new Error(message);\n   L2351:       }\n   L2352:     ",
+    "   L2360: }\n   L2361: \n>> L2362:     async function loadConfigFromFile(file) {\n   L2363:       if (!file) return;\n   L2364:       const text = await file.text();",
+    "   L2374:     \n   L2375:       // Reset preserved extras each time a new file is loaded.\n>> L2376:       extraLoadedConfig = {};\n   L2377:       lastLoadedUnmatchedKeys = [];\n   L2378:     ",
+    "   L2378:     \n   L2379:       Object.entries(cfg).forEach(([key, value]) => {\n>> L2380:         if (setFieldValue(key, value)) {\n   L2381:           matched += 1;\n   L2382:         } else if (!MANUAL_STRIP_LOADED_KEYS.has(key) && !(key in MANUAL_FIXED_CONFIG)) {",
+    "   L2380:         if (setFieldValue(key, value)) {\n   L2381:           matched += 1;\n>> L2382:         } else if (!MANUAL_STRIP_LOADED_KEYS.has(key) && !(key in MANUAL_FIXED_CONFIG)) {\n   L2383:           unmatched.push(key);\n   L2384:           extraLoadedConfig[key] = value;",
+    "   L2382:         } else if (!MANUAL_STRIP_LOADED_KEYS.has(key) && !(key in MANUAL_FIXED_CONFIG)) {\n   L2383:           unmatched.push(key);\n>> L2384:           extraLoadedConfig[key] = value;\n   L2385:         }\n   L2386:       });",
+    "   L2388:       lastLoadedUnmatchedKeys = unmatched;\n   L2389:     \n>> L2390:       updatePreview();\n   L2391:     \n   L2392:       alert(",
+    "   L2399:     tabs.forEach(tab => tab.addEventListener('click', () => showTab(tab.dataset.tab)));\n   L2400:     document.querySelectorAll('[data-key]').forEach(el => {\n>> L2401:       el.addEventListener('input', updatePreview);\n   L2402:       el.addEventListener('change', updatePreview);\n   L2403:     });",
+    "   L2400:     document.querySelectorAll('[data-key]').forEach(el => {\n   L2401:       el.addEventListener('input', updatePreview);\n>> L2402:       el.addEventListener('change', updatePreview);\n   L2403:     });\n   L2404:     document.getElementById('save-config-button').addEventListener('click', saveConfig);",
+    "   L2402:       el.addEventListener('change', updatePreview);\n   L2403:     });\n>> L2404:     document.getElementById('save-config-button').addEventListener('click', saveConfig);\n   L2405:     document.getElementById('load-config-input').addEventListener('change', event => loadConfigFromFile(event.target.files[0]));\n   L2406:     document.getElementById('check-button').addEventListener('click', () => runChecks(true));",
+    "   L2403:     });\n   L2404:     document.getElementById('save-config-button').addEventListener('click', saveConfig);\n>> L2405:     document.getElementById('load-config-input').addEventListener('change', event => loadConfigFromFile(event.target.files[0]));\n   L2406:     document.getElementById('check-button').addEventListener('click', () => runChecks(true));\n   L2407:     document.getElementById('check-button-2').addEventListener('click', () => runChecks(false));",
+    "   L2404:     document.getElementById('save-config-button').addEventListener('click', saveConfig);\n   L2405:     document.getElementById('load-config-input').addEventListener('change', event => loadConfigFromFile(event.target.files[0]));\n>> L2406:     document.getElementById('check-button').addEventListener('click', () => runChecks(true));\n   L2407:     document.getElementById('check-button-2').addEventListener('click', () => runChecks(false));\n   L2408: ",
+    "   L2405:     document.getElementById('load-config-input').addEventListener('change', event => loadConfigFromFile(event.target.files[0]));\n   L2406:     document.getElementById('check-button').addEventListener('click', () => runChecks(true));\n>> L2407:     document.getElementById('check-button-2').addEventListener('click', () => runChecks(false));\n   L2408: \n   L2409:     // Expose Manual Mode hooks for reusable static helpers such as pipeline_actions.js.",
+    "   L2408: \n   L2409:     // Expose Manual Mode hooks for reusable static helpers such as pipeline_actions.js.\n>> L2410:     window.getConfig = getConfig;\n   L2411:     window.setFieldValue = setFieldValue;\n   L2412:     window.updatePreview = updatePreview;",
+    "   L2409:     // Expose Manual Mode hooks for reusable static helpers such as pipeline_actions.js.\n   L2410:     window.getConfig = getConfig;\n>> L2411:     window.setFieldValue = setFieldValue;\n   L2412:     window.updatePreview = updatePreview;\n   L2413:     window.runChecks = runChecks;",
+    "   L2410:     window.getConfig = getConfig;\n   L2411:     window.setFieldValue = setFieldValue;\n>> L2412:     window.updatePreview = updatePreview;\n   L2413:     window.runChecks = runChecks;\n   L2414:     window.showTab = showTab;",
+    "   L2411:     window.setFieldValue = setFieldValue;\n   L2412:     window.updatePreview = updatePreview;\n>> L2413:     window.runChecks = runChecks;\n   L2414:     window.showTab = showTab;\n   L2415:     window.getExtraLoadedConfig = () => ({ ...extraLoadedConfig });",
+    "   L2413:     window.runChecks = runChecks;\n   L2414:     window.showTab = showTab;\n>> L2415:     window.getExtraLoadedConfig = () => ({ ...extraLoadedConfig });\n   L2416:     window.applyManualFixedConfig = applyManualFixedConfig;\n   L2417:     window.MANUAL_FIXED_CONFIG = MANUAL_FIXED_CONFIG;",
+    "   L2415:     window.getExtraLoadedConfig = () => ({ ...extraLoadedConfig });\n   L2416:     window.applyManualFixedConfig = applyManualFixedConfig;\n>> L2417:     window.MANUAL_FIXED_CONFIG = MANUAL_FIXED_CONFIG;\n   L2418: \n   L2419: ",
+    "   L2418: \n   L2419: \n>> L2420:     updatePreview();\n   L2421:   </script>\n   L2422: <script src=\"static/launcher_defaults.js\"></script>"
+  ]
+}

@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sfincs Web launcher guide</title>
+
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --panel-soft: #f9fbff;
+      --text: #172033;
+      --muted: #475467;
+      --border: #d9e1ec;
+      --accent: #2563eb;
+      --accent-soft: #e8f0ff;
+      --shadow: 0 18px 45px rgba(21, 34, 66, 0.10);
+      --radius: 22px;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.13), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(15, 118, 110, 0.08), transparent 30rem),
+        var(--bg);
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 32px 0 54px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .back-link {
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 24px rgba(21, 34, 66, 0.06);
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.90);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.045em;
+      line-height: 1;
+    }
+
+    .byline {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      font-weight: 650;
+    }
+
+    .description {
+      margin: 14px 0 0;
+      color: var(--muted);
+      max-width: 760px;
+      font-size: 1.04rem;
+      line-height: 1.6;
+    }
+
+    .tabbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 10px 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(246, 248, 251, 0.96),
+        rgba(246, 248, 251, 0.78)
+      );
+      backdrop-filter: blur(8px);
+      margin-bottom: 14px;
+    }
+
+    .tabbar {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.90);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 10px;
+      box-shadow: 0 12px 34px rgba(21, 34, 66, 0.08);
+    }
+
+    .tab-button {
+      appearance: none;
+      border: 0;
+      border-radius: 16px;
+      padding: 12px 10px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      color: var(--muted);
+      background: transparent;
+      transition: 0.15s ease;
+    }
+
+    .tab-button:hover {
+      color: var(--text);
+      background: var(--panel-soft);
+    }
+
+    .tab-button.active {
+      color: #ffffff;
+      background: var(--accent);
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 32px rgba(21, 34, 66, 0.08);
+      padding: 34px;
+      min-height: 420px;
+    }
+
+    .tab-section {
+      display: none;
+    }
+
+    .tab-section.active {
+      display: block;
+      animation: fadeIn 0.18s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .coming-soon {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.25rem;
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    @media (max-width: 960px) {
+      .tabbar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: min(100% - 22px, 1120px);
+        padding-top: 18px;
+      }
+
+      .hero,
+      .panel {
+        padding: 22px;
+      }
+
+      .tabbar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="back-link" href="/">← Back to launcher</a>
+    </div>
+
+    <header class="hero">
+      <h1>Sfincs Web launcher guide</h1>
+      <p class="byline">Reichen Schaller</p>
+      <p class="description">
+        The Sfincs intro tab is for someone brand new to SFINCS. The other tabs are for learning how to use each launcher mode, including manual setup, override runs, batch generation, the guided wizard, and run comparison.
+      </p>
+    </header>
+
+    <div class="tabbar-wrap">
+      <nav class="tabbar" aria-label="Guide tabs">
+        <button class="tab-button" type="button" data-tab="intro">Sfincs intro</button>
+        <button class="tab-button" type="button" data-tab="manual">Manual</button>
+        <button class="tab-button" type="button" data-tab="override">Override</button>
+        <button class="tab-button" type="button" data-tab="batch">Batch</button>
+        <button class="tab-button" type="button" data-tab="wizard">Wizard</button>
+        <button class="tab-button" type="button" data-tab="compare">Comparison</button>
+      </nav>
+    </div>
+
+    <main class="panel">
+      <section class="tab-section" id="tab-intro" data-title="Sfincs intro">
+        <h2>Sfincs intro</h2>
+        <p class="coming-soon">Coming Soon</p>
+      </section>
+
+      <section class="tab-section" id="tab-manual" data-title="Manual">
+        <h2>Manual</h2>
+        <p class="coming-soon">Coming Soon</p>
+      </section>
+
+<!--- ----------------------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------------------- -->
+    <section class="tab-section" id="tab-override" data-title="Override">
+      <style>
+        .guide-section {
+          display: grid;
+          gap: 24px;
+        }
+    
+        .guide-lede {
+          color: #344054;
+          font-size: 1.04rem;
+          line-height: 1.65;
+          max-width: 900px;
+          margin: 0;
+        }
+    
+        .guide-card {
+          background: var(--panel-soft);
+          border: 1px solid var(--border);
+          border-radius: 20px;
+          padding: 22px;
+        }
+    
+        .guide-card h3 {
+          margin: 0 0 12px;
+          font-size: 1.28rem;
+          letter-spacing: -0.02em;
+        }
+    
+        .guide-card h4 {
+          margin: 18px 0 8px;
+          font-size: 1.04rem;
+        }
+    
+        .guide-card p {
+          margin: 0 0 12px;
+          color: #344054;
+          line-height: 1.62;
+        }
+    
+        .guide-card p:last-child {
+          margin-bottom: 0;
+        }
+    
+        .guide-grid-2 {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+        }
+    
+        .mini-card {
+          background: #ffffff;
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          padding: 16px;
+        }
+    
+        .mini-card h4 {
+          margin-top: 0;
+        }
+    
+        .guide-table-wrap {
+          overflow-x: auto;
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          background: #ffffff;
+        }
+    
+        .guide-table {
+          width: 100%;
+          border-collapse: collapse;
+          min-width: 760px;
+          font-size: 0.94rem;
+        }
+    
+        .guide-table th,
+        .guide-table td {
+          padding: 12px 14px;
+          border-bottom: 1px solid var(--border);
+          vertical-align: top;
+          text-align: left;
+        }
+    
+        .guide-table th {
+          background: #f4f7fb;
+          color: var(--text);
+          font-weight: 800;
+        }
+    
+        .guide-table tr:last-child td {
+          border-bottom: 0;
+        }
+    
+        .guide-table code,
+        .inline-code {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+          font-size: 0.92em;
+          background: #eef3ff;
+          border: 1px solid #d8e4ff;
+          border-radius: 7px;
+          padding: 1px 6px;
+          color: #1f3d75;
+          white-space: nowrap;
+        }
+    
+        .guide-steps {
+          margin: 0;
+          padding-left: 1.2rem;
+          color: #344054;
+          line-height: 1.65;
+        }
+    
+        .guide-steps li {
+          margin-bottom: 10px;
+        }
+    
+        .guide-steps li:last-child {
+          margin-bottom: 0;
+        }
+    
+        .callout {
+          border-left: 5px solid var(--accent);
+          background: var(--accent-soft);
+          border-radius: 16px;
+          padding: 16px 18px;
+          color: var(--text);
+        }
+    
+        .callout strong {
+          color: var(--text);
+        }
+    
+        .callout p {
+          margin: 0;
+          color: var(--text);
+        }
+    
+        .image-placeholder {
+          border: 2px dashed #b8c6dc;
+          background:
+            linear-gradient(135deg, rgba(37, 99, 235, 0.06), rgba(15, 118, 110, 0.04));
+          border-radius: 20px;
+          padding: 22px;
+          color: #344054;
+        }
+    
+        .image-placeholder strong {
+          display: block;
+          color: var(--text);
+          font-size: 1.02rem;
+          margin-bottom: 6px;
+        }
+    
+        .workflow-checklist {
+          display: grid;
+          gap: 10px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+    
+        .workflow-checklist li {
+          display: grid;
+          grid-template-columns: 34px 1fr;
+          gap: 10px;
+          align-items: start;
+          color: #344054;
+          line-height: 1.55;
+        }
+    
+        .workflow-checklist > li > span:first-child {
+          width: 28px;
+          height: 28px;
+          display: inline-grid;
+          place-items: center;
+          border-radius: 999px;
+          background: var(--accent);
+          color: #ffffff;
+          font-weight: 800;
+          font-size: 0.85rem;
+        }
+    
+        @media (max-width: 800px) {
+          .guide-grid-2 {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style>
+    
+      <div class="guide-section">
+        <div>
+          <h2>Override</h2>
+          <p class="guide-lede">
+            Override Mode is for runs where some or most of the SFINCS input files already exist.
+            Instead of building everything from source data, you select native SFINCS files from a static folder and/or an event folder, let the launcher detect them, choose which ones to use, and then finish the remaining setup in a simplified manual-style workflow.
+          </p>
+        </div>
+    
+        <div class="guide-card">
+          <h3>Static files vs. event files</h3>
+          <p>
+            Override Mode separates native SFINCS inputs into two practical groups: static files and event files. Static files describe the physical makeup of the model domain that is mostly constant in time. Event files describe the forcing or initial conditions for one specific storm, flood, tide period, or scenario.
+          </p>
+          <p>
+            This split matters because you often want to reuse the same physical model setup for many different events. For example, the topography, bathymetry, mask, roughness, boundary locations, source locations, and observation locations may stay the same, while the rainfall, water-level boundary, discharge time series, wind, pressure, or restart state changes event to event.
+          </p>
+        
+          <div class="guide-grid-2">
+            <div class="mini-card">
+              <h4>Static files</h4>
+              <p>
+                Static files describe things inherent to the model area or model design. These are the pieces that usually do not change just because the event changes.
+              </p>
+              <p>
+                Examples include topography/bathymetry, active-cell masks, grid index files, subgrid tables, roughness, infiltration layers, boundary/source geometry, observation points, cross-sections, and structures.
+              </p>
+            </div>
+        
+            <div class="mini-card">
+              <h4>Event files</h4>
+              <p>
+                Event files describe what happens during a specific run period. These are usually time-dependent files or initial-state files.
+              </p>
+              <p>
+                Examples include water-level boundary time series, discharge time series, rainfall, wind, atmospheric pressure, wave-related forcing, and restart or initial water-level files.
+              </p>
+            </div>
+          </div>
+        
+          <div class="callout">
+            <p>
+              <strong>Note:</strong> this Override guide focuses on the special file-detection and override workflow. For a deeper review of the normal launcher tabs and settings, use the Manual section of this guide.
+            </p>
+          </div>
+        </div>
+    
+        <figure class="image-placeholder">
+          <strong>Image 1 — Override folder selection</strong>
+          Add a screenshot showing the Static folder and Event folder inputs before detection. The example can show a Harvey 2017 setup where the static folder supplies the fixed model files and the event folder supplies the event-specific files.
+        </figure>
+    
+        <div class="guide-card">
+          <h3>How Override differs from Manual</h3>
+          <p>
+            Override Mode is basically Manual Mode with an extra native-file step at the beginning. In Manual Mode, you mostly enter settings directly. In Override Mode, you first choose static and/or event folders, detect native SFINCS files, and select which detected files should override the normal generated inputs.
+          </p>
+          <p>
+            After the override files are selected, the page becomes closer to a stripped-down Manual Mode. You still choose the run name, output folder, timing, resources, advanced settings, review checks, and submit behavior. The difference is that some settings may already be controlled by selected native files.
+          </p>
+          <p>
+            When a selected native file controls part of the setup, the matching manual control may become hidden, locked, or greyed out. This is intentional. It prevents the page from suggesting that a setting is editable when the chosen override file is actually controlling it.
+          </p>
+        
+          <div class="callout">
+            <p>
+              <strong>Important:</strong> detecting a file is not always the same as using it. Detection finds possible files. The selected override list decides which files are actually copied into the run and pointed to by the generated <span class="inline-code">sfincs.inp</span>.
+            </p>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <h3>Normal Override workflow checklist</h3>
+          <ul class="workflow-checklist">
+            <li>
+              <span>1</span>
+              <div>Choose the static native SFINCS folder and/or event native SFINCS folder.</div>
+            </li>
+            <li>
+              <span>2</span>
+              <div>Click Detect Files and confirm the expected files appear.</div>
+            </li>
+            <li>
+              <span>3</span>
+              <div>Select the detected files that should actually be used as overrides.</div>
+            </li>
+            <li>
+              <span>4</span>
+              <div>Review hidden, locked, or greyed-out controls so you understand what the selected files now control.</div>
+            </li>
+            <li>
+              <span>5</span>
+              <div>Set the run name, output folder, timing, resources, and remaining editable settings.</div>
+            </li>
+            <li>
+              <span>6</span>
+              <div>Inspect <span class="inline-code">sfincs.inp</span>-related settings and Advanced Config before running.</div>
+            </li>
+            <li>
+              <span>7</span>
+              <div>Read the review checks and fix missing-file, invalid-config, timing, or overwrite warnings before moving on.</div>
+            </li>
+            <li>
+
+              <span>8</span>
+
+              <div>Optionally use Save Config if you want to pause, make a reusable template, or later restore the setup with Load Config.</div>
+
+            </li>
+
+            <li>
+
+              <span>9</span>
+
+              <div>Run preflight. Preflight validates the setup and records the current page config/scaffold for the run workflow.</div>
+
+            </li>
+
+            <li>
+
+              <span>10</span>
+
+              <div>Build the Slurm scripts and confirm the scaffold was created correctly.</div>
+
+            </li>
+
+            <li>
+
+              <span>11</span>
+
+              <div>Submit the run only after the folders, overrides, timing, resources, and warnings look correct.</div>
+
+            </li>
+
+            <li>
+
+              <span>12</span>
+
+              <div>After the jobs finish, check logs and outputs such as <span class="inline-code">sfincs_map.nc</span>, <span class="inline-code">sfincs_his.nc</span>, and postprocessing products.</div>
+
+            </li>
+          </ul>
+        </div>
+    
+    
+        <div class="guide-card">
+          <h3>Native SFINCS files available for override</h3>
+          <p>
+            These tables are a launcher-oriented reference for native SFINCS files. They are not meant to teach every file from scratch. If you are using Override Mode, the assumption is that your files already came from a trusted SFINCS setup, preprocessing workflow, or previous run.
+          </p>
+          <p>
+            Some files are normally static, some are normally event-specific, and a few can be either depending on the workflow. The launcher should eventually expose all of these as possible native override options, but a project setup may only use a small subset.
+          </p>
+        
+          <h4>Static / physical setup files</h4>
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>File / pointer</th>
+                  <th>Usual role</th>
+                  <th>Usually changes event to event?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>sfincs.dep</code> / <code>depfile</code></td>
+                  <td>Topography/bathymetry or depth/elevation at grid cells.</td>
+                  <td>No, unless rebuilding the physical domain.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.msk</code> / <code>mskfile</code></td>
+                  <td>Active/inactive/boundary-cell mask.</td>
+                  <td>No.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.ind</code> / <code>indexfile</code></td>
+                  <td>Index file used with binary grid-style inputs.</td>
+                  <td>No.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.sbg</code> or subgrid NetCDF / <code>sbgfile</code></td>
+                  <td>Subgrid table information for subgrid SFINCS runs.</td>
+                  <td>No.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.manning</code>, <code>sfincs.man</code> / <code>manningfile</code></td>
+                  <td>Spatially varying Manning roughness.</td>
+                  <td>No, unless roughness assumptions change.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.qinf</code> / <code>qinffile</code></td>
+                  <td>Spatially varying constant infiltration rate.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.scs</code> / <code>scsfile</code></td>
+                  <td>Curve Number infiltration layer.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.smax</code> / <code>smaxfile</code></td>
+                  <td>Maximum soil moisture storage for Curve Number recovery method.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.seff</code> / <code>sefffile</code></td>
+                  <td>Effective soil moisture storage at start.</td>
+                  <td>Sometimes; may be event/initial-condition dependent.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.ks</code> / <code>ksfile</code></td>
+                  <td>Saturated hydraulic conductivity for infiltration methods.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.sigma</code> / <code>sigmafile</code></td>
+                  <td>Green-Ampt suction-head related infiltration input.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.psi</code> / <code>psifile</code></td>
+                  <td>Green-Ampt soil moisture deficit input.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.f0</code> / <code>f0file</code></td>
+                  <td>Horton maximum initial infiltration capacity.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.fc</code> / <code>fcfile</code></td>
+                  <td>Horton minimum/asymptotic infiltration capacity.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.kd</code> / <code>kdfile</code></td>
+                  <td>Horton decay constant.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.vol</code> / <code>volfile</code></td>
+                  <td>Spatially varying storage volume, such as green infrastructure storage.</td>
+                  <td>Usually no.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
+          <h4>Geometry, output-request, and structure files</h4>
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>File / pointer</th>
+                  <th>Usual role</th>
+                  <th>Usually changes event to event?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>sfincs.bnd</code> / <code>bndfile</code></td>
+                  <td>Water-level boundary point locations.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.src</code> / <code>srcfile</code></td>
+                  <td>Source/discharge point locations.</td>
+                  <td>Usually no.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.obs</code> / <code>obsfile</code></td>
+                  <td>Observation point locations for history output.</td>
+                  <td>Usually no, but can change for validation-output reruns.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.crs</code> / <code>crsfile</code></td>
+                  <td>Cross-section lines for discharge output.</td>
+                  <td>Usually no, but can change for validation-output reruns.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.thd</code> / <code>thdfile</code></td>
+                  <td>Thin dams, treated like fully blocking barriers.</td>
+                  <td>No.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.weir</code> / <code>weirfile</code></td>
+                  <td>Weirs or levee-like barriers with a height and coefficient.</td>
+                  <td>No.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.drn</code> / <code>drnfile</code></td>
+                  <td>Drainage pumps, culverts, or check valves.</td>
+                  <td>Usually no, unless testing structure scenarios.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
+          <h4>Event forcing and initial-state files</h4>
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>File / pointer</th>
+                  <th>Usual role</th>
+                  <th>Usually changes event to event?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>sfincs.bzs</code> / <code>bzsfile</code></td>
+                  <td>Water-level boundary time series.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.bzi</code> / <code>bzifile</code></td>
+                  <td>Quickly varying water-level or wave-related boundary time series.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs_netbndbzsbzifile.nc</code> / <code>netbndbzsbzifile</code></td>
+                  <td>NetCDF package containing boundary locations and water-level/wave forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.dis</code> / <code>disfile</code></td>
+                  <td>Discharge/source time series.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs_netsrcdisfile.nc</code> / <code>netsrcdisfile</code></td>
+                  <td>NetCDF package containing source locations and discharge forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.ini</code> / <code>inifile</code></td>
+                  <td>Spatially varying initial water level.</td>
+                  <td>Often yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.rst</code> / <code>rstfile</code></td>
+                  <td>Restart file from a previous SFINCS run.</td>
+                  <td>Yes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
+          <h4>Meteo forcing files</h4>
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>File / pointer</th>
+                  <th>Usual role</th>
+                  <th>Usually changes event to event?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>sfincs.spw</code> / <code>spwfile</code></td>
+                  <td>Spiderweb wind, pressure, and sometimes rainfall forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>spiderweb.nc</code> / <code>netspwfile</code></td>
+                  <td>NetCDF spiderweb forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.amu</code> / <code>amufile</code></td>
+                  <td>Delft3D-meteo style wind speed in x-direction.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.amv</code> / <code>amvfile</code></td>
+                  <td>Delft3D-meteo style wind speed in y-direction.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.amp</code> / <code>ampfile</code></td>
+                  <td>Delft3D-meteo style atmospheric pressure.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.ampr</code> / <code>amprfile</code></td>
+                  <td>Delft3D-meteo style gridded precipitation.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.wnd</code> / <code>wndfile</code></td>
+                  <td>Spatially uniform wind forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs.prcp</code> / <code>precipfile</code></td>
+                  <td>Spatially uniform precipitation forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs_netamuamvfile.nc</code> / <code>netamuamvfile</code></td>
+                  <td>NetCDF wind forcing with both x and y wind components.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs_netampfile.nc</code> / <code>netampfile</code></td>
+                  <td>NetCDF atmospheric pressure forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+                <tr>
+                  <td><code>sfincs_netamprfile.nc</code>, <code>precip_2d.nc</code> / <code>netamprfile</code></td>
+                  <td>NetCDF precipitation forcing.</td>
+                  <td>Yes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
+          <h4>Special file</h4>
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>File / pointer</th>
+                  <th>Usual role</th>
+                  <th>Override note</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>sfincs.inp</code></td>
+                  <td>Main SFINCS input file. It contains model settings and file pointers.</td>
+                  <td>
+                    Treat this as special. The launcher can read it to populate timing/settings, but directly overriding it should be an intentional reproduction choice.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Custom <code>*file</code> keys</td>
+                  <td>Project-specific or future SFINCS input files referenced by <code>sfincs.inp</code>.</td>
+                  <td>
+                    The launcher should only allow these if the backend resolver knows how to copy them and validate the final file pointer.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    
+        <figure class="image-placeholder">
+          <strong>Image 2 — Detected native files</strong>
+          Add a screenshot after clicking the detection button. The screenshot should show detected static files, detected event files, and the checkboxes or controls used to select which detected files will become active overrides.
+        </figure>
+    
+        <div class="guide-card">
+          <h3>Step-by-step Override workflow</h3>
+    
+          <ol class="guide-steps">
+            <li>
+              <strong>Choose the static and/or event folders.</strong>
+              Start by selecting the folder that contains the static native files, the folder that contains the event native files, or both. For example, a Harvey 2017 example might use a trusted static model folder plus a Harvey-specific event folder.
+            </li>
+    
+            <li>
+              <strong>Detect available native files.</strong>
+              Use the detection button to scan the selected folders. This lets the page find files such as <span class="inline-code">sfincs.dep</span>, <span class="inline-code">sfincs.msk</span>, <span class="inline-code">sfincs.bzs</span>, <span class="inline-code">sfincs.dis</span>, and <span class="inline-code">precip_2d.nc</span>.
+            </li>
+    
+            <li>
+              <strong>Select the files you actually want to override with.</strong>
+              Detection only finds candidates. The selected override list is what tells the launcher which native files should be copied into the run folder and referenced by the generated model input.
+            </li>
+    
+            <li>
+              <strong>Review fields that become hidden, locked, or greyed out.</strong>
+              If a selected native file already supplies part of the model, the corresponding manual control may no longer matter. In that case, the launcher may hide it, lock it, or grey it out so the page does not imply that changing the field will affect the run.
+            </li>
+    
+            <li>
+              <strong>Set the run identity and output location.</strong>
+              Choose a clear run name and a run output folder. The run folder is where the launcher writes the final config, scripts, logs, copied native inputs, SFINCS outputs, and postprocessing outputs.
+            </li>
+    
+            <li>
+              <strong>Check the timing and model settings.</strong>
+              If a detected <span class="inline-code">sfincs.inp</span> is available, the launcher may use it to fill timing fields like reference time, start time, and stop time. Even when <span class="inline-code">sfincs.inp</span> itself is overridden, the model settings and advanced config area should stay visible because those settings are important to inspect before running.
+            </li>
+    
+            <li>
+              <strong>Set resources and submit behavior.</strong>
+              Choose the Slurm resources for preprocessing, SFINCS, and postprocessing. The correct values depend on model size, event length, output frequency, and how heavy postprocessing will be.
+            </li>
+    
+            <li>
+              <strong>Use Advanced Config only for settings you understand.</strong>
+              Advanced Config is for SFINCS keys or backend settings that are not exposed as normal page controls. This is useful for expert edits, but it expects valid syntax and assumes you know what the keys mean.
+            </li>
+    
+            <li>
+              <strong>Run the review checks.</strong>
+              Before submitting, review the detected files, selected overrides, model timing, output folder, overwrite behavior, resources, and any warnings. Page-level checks are helpful, but the backend preflight is still the real check before a run should be submitted.
+            </li>
+    
+            <li>
+
+              <strong>Use Save/Load only when useful; then preflight, build, and submit.</strong>
+
+              Save Config is mainly for pausing your work, making a reusable template, or coming back later with Load Config. You do not need to manually save before a normal run. Running backend preflight records the current page setup and creates the config/scaffold needed for the run workflow. Build Scripts prepares the Slurm scripts, and Submit launches the jobs. A scaffold is not completed model output; real outputs only exist after the jobs finish.
+
+            </li>
+          </ol>
+        </div>
+        <div class="guide-card">
+
+          <h3>Save Config and Load Config</h3>
+
+          <p>
+
+            Save Config and Load Config are convenience tools, not required steps for every run. Use Save Config when you want to pause and come back later, create a reusable template, duplicate a setup, or share the setup with someone else.
+
+          </p>
+
+          <p>
+
+            Load Config restores a saved JSON setup back into the page. This is useful when you want to continue a previous setup without re-entering all folders, overrides, timing, resources, and advanced settings by hand.
+
+          </p>
+
+          <p>
+
+            For a normal one-off run, you do not need to click Save Config before running. Running backend preflight sends the current page setup to the backend and records the config/scaffold needed for that run workflow.
+
+          </p>
+
+        </div>
+
+
+
+
+    
+        <figure class="image-placeholder">
+          <strong>Image 3 — Hidden or greyed-out controls</strong>
+          Add a screenshot showing a setting that becomes locked, hidden, or greyed out because a selected native override file already controls that part of the setup.
+        </figure>
+    
+        <div class="guide-card">
+          <h3>About <span class="inline-code">sfincs.inp</span> in Override Mode</h3>
+          <p>
+            <span class="inline-code">sfincs.inp</span> is different from the other native files because it controls the run settings and points to the other input files. In Override Mode, the safer pattern is usually to let the launcher generate a fresh <span class="inline-code">sfincs.inp</span> from the page settings, while using detected native files for the model inputs.
+          </p>
+          <p>
+            You may still use a detected <span class="inline-code">sfincs.inp</span> as a reference for timing or settings. Directly overriding <span class="inline-code">sfincs.inp</span> should be treated as an intentional reproduction choice, not the default beginner path.
+          </p>
+    
+          <div class="callout">
+            <p>
+              <strong>Why the settings stay visible:</strong> even when <span class="inline-code">sfincs.inp</span> is selected or parsed, the model settings and Advanced Config areas remain visible so you can inspect important values before running.
+            </p>
+          </div>
+        </div>
+    
+        <div class="guide-card">
+          <h3>Advanced Config</h3>
+          <p>
+            Advanced Config is a raw settings area for keys that are not represented by the normal page controls. Use it for deliberate SFINCS or backend settings that you understand, such as projection behavior, numerical controls, output options, or specialized forcing switches.
+          </p>
+          <p>
+            The main rule is simple: if you are not sure what a key does, do not change it here. A typo, wrong value type, missing comma, or outdated setting can change the run or make it fail before SFINCS starts.
+          </p>
+        </div>
+    
+        <figure class="image-placeholder">
+          <strong>Image 4 — Advanced Config and model settings</strong>
+          Add a screenshot showing the model settings and Advanced Config area. The screenshot should make clear that this section is for checking or editing important SFINCS settings, not for casual changes.
+        </figure>
+    
+        <div class="guide-card">
+          <h3>Review checks</h3>
+          <p>
+            The review section is the “slow down and check yourself” part of the workflow. It should summarize the run name, output folder, selected static/event folders, detected files, selected overrides, timing, resources, overwrite behavior, and any warnings.
+          </p>
+          <p>
+            These warnings are general checks. They do not mean every run is wrong, but they point to things that deserve attention before you submit. Missing file pointers, suspicious empty fields, invalid JSON, overwrite warnings, and mismatched static/event choices should not be ignored.
+          </p>
+        
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>Review item</th>
+                  <th>What it is checking</th>
+                  <th>Why it matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Run name and output folder</td>
+                  <td>Where the run will be written.</td>
+                  <td>Prevents accidentally overwriting or confusing runs.</td>
+                </tr>
+                <tr>
+                  <td>Static/event folder choices</td>
+                  <td>Which native files are being pulled from which folders.</td>
+                  <td>Prevents mixing the wrong physical setup with the wrong event.</td>
+                </tr>
+                <tr>
+                  <td>Selected override files</td>
+                  <td>Which detected files are actually active overrides.</td>
+                  <td>Detection alone does not mean a file is being used.</td>
+                </tr>
+                <tr>
+                  <td>Timing fields</td>
+                  <td>Reference time, start time, stop time, and output intervals.</td>
+                  <td>Bad timing can make forcing files misalign or shorten the run accidentally.</td>
+                </tr>
+                <tr>
+                  <td>Advanced Config</td>
+                  <td>Raw advanced settings and JSON syntax.</td>
+                  <td>A typo or invalid value can break the run or change model behavior.</td>
+                </tr>
+                <tr>
+                  <td>File-pointer checks</td>
+                  <td>Whether files referenced by <code>sfincs.inp</code> will exist in the run folder.</td>
+                  <td>SFINCS should not be submitted with missing declared inputs.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="guide-card">
+          <h3>Preflight, build scripts, and submit</h3>
+          <p>
+
+            The submit section turns the reviewed page settings into backend actions. Treat Preflight, Build Scripts, and Submit as separate steps, not one giant button.
+
+          </p>
+
+          <p>
+
+            Run backend preflight first. Preflight validates the current setup and records the config/scaffold needed by the run workflow. Build Scripts then prepares the Slurm scripts. Submit launches the Slurm chain.
+
+          </p>
+        
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>Button / action</th>
+                  <th>What it does</th>
+                  <th>What to check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+
+                  <td>Preflight</td>
+
+                  <td>Runs backend validation and records the current page setup for the run workflow.</td>
+
+                  <td>Fix errors before moving on. Warnings should be read, not skipped blindly.</td>
+
+                </tr>
+                <tr>
+                  <td>Build scripts</td>
+                  <td>Creates the run-folder scaffold and Slurm scripts.</td>
+                  <td>A scaffold is normal. It is not completed model output.</td>
+                </tr>
+                <tr>
+                  <td>Submit</td>
+                  <td>Submits the Slurm workflow for preprocessing, SFINCS, and postprocessing.</td>
+                  <td>Only submit after the config, review checks, and output folder look correct.</td>
+                </tr>
+                <tr>
+                  <td>Check status/logs</td>
+                  <td>Looks at job status, launcher logs, Slurm logs, and model outputs.</td>
+                  <td>If a job fails, logs are usually the fastest way to identify the failed stage.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
+          <div class="callout">
+            <p>
+              <strong>Scaffold vs. real output:</strong> after Build Scripts, it is normal to see folders like scripts, logs, model, and postprocess. That does not mean the model has run yet. Real outputs appear only after the submitted jobs complete.
+            </p>
+          </div>
+        </div>
+    
+        <figure class="image-placeholder">
+          <strong>Image 5 — Final review before submit</strong>
+          Add a screenshot of the review area showing run name, output folder, selected static/event folders, selected overrides, resources, and submit buttons.
+        </figure>
+    
+        
+      </div>
+    </section>
+    
+    
+<!--- ----------------------------------------------------------------------------------------------------------------- -->
+<!--- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!--- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!--- ----------------------------------------------------------------------------------------------------------------- -->    
+      <section class="tab-section" id="tab-batch" data-title="Batch">
+        <h2>Batch</h2>
+        <p class="coming-soon">Coming Soon</p>
+      </section>
+
+      <section class="tab-section" id="tab-wizard" data-title="Wizard">
+        <h2>Wizard</h2>
+        <p class="coming-soon">Coming Soon</p>
+      </section>
+
+      <section class="tab-section" id="tab-compare" data-title="Comparison">
+        <h2>Comparison</h2>
+        <p class="coming-soon">Coming Soon</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const VALID_TABS = ["intro", "manual", "override", "batch", "wizard", "compare"];
+
+    const TAB_ALIASES = {
+      sfincs: "intro",
+      general: "intro",
+      home: "intro",
+      guided: "wizard",
+      guide: "wizard",
+      comparison: "compare",
+      "compare-runs": "compare",
+      compare_runs: "compare",
+      results: "compare",
+      result: "compare"
+    };
+
+    function normalizeTab(raw) {
+      if (!raw) return "intro";
+
+      const cleaned = String(raw).trim().toLowerCase().replace(/^#/, "");
+      const normalized = TAB_ALIASES[cleaned] || cleaned;
+
+      return VALID_TABS.includes(normalized) ? normalized : "intro";
+    }
+
+    function getInitialTab() {
+      const params = new URLSearchParams(window.location.search);
+      return normalizeTab(params.get("tab") || window.location.hash);
+    }
+
+    function setActiveTab(tab, updateUrl = true) {
+      const active = normalizeTab(tab);
+
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        const isActive = button.dataset.tab === active;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      document.querySelectorAll(".tab-section").forEach((section) => {
+        const isActive = section.id === `tab-${active}`;
+        section.classList.toggle("active", isActive);
+        section.setAttribute("aria-hidden", isActive ? "false" : "true");
+      });
+
+      if (updateUrl) {
+        const newUrl = `${window.location.pathname}?tab=${encodeURIComponent(active)}`;
+        window.history.replaceState({}, "", newUrl);
+      }
+
+      const activeSection = document.querySelector(`#tab-${active}`);
+      if (activeSection && activeSection.dataset.title) {
+        document.title = `${activeSection.dataset.title} · Sfincs Web launcher guide`;
+      }
+    }
+
+    document.querySelectorAll(".tab-button").forEach((button) => {
+      button.addEventListener("click", () => setActiveTab(button.dataset.tab));
+    });
+
+    window.addEventListener("hashchange", () => {
+      setActiveTab(getInitialTab());
+    });
+
+    setActiveTab(getInitialTab(), false);
+  </script>
+</body>
+</html>

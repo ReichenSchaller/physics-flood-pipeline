@@ -1,0 +1,2057 @@
+=== BACKEND HYDROMT CATALOG AUDIT ===
+timestamp: 20260612_174808
+report: /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/backend_hydromt_catalog_audit_20260612_174808.txt
+
+================ PATHS ================
+OK   PIPELINE_ROOT                    dir                /proj/zefflab/projects/Flooding/pipeline
+OK   WEB_ROOT                         dir                /proj/zefflab/projects/Flooding/pipeline/web_launcher
+OK   APP_PATH                         file  80664        /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+OK   MANUAL_HTML                      file  140463       /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+OK   PREPROCESS_PATH                  file  99604        /proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py
+OK   RUNNER_CORE_PATH                 file  26551        /proj/zefflab/projects/Flooding/pipeline/code/runner_core.py
+OK   PIPELINE_RUNNER_PATH             file  4483         /proj/zefflab/projects/Flooding/pipeline/code/pipeline_runner.py
+OK   CONFIG_SCHEMA_PATH               file  19759        /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py
+OK   STATIC_CATALOG                   dir                /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county
+OK   EVENT_CATALOG                    dir                /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms
+OK   STATIC hydromt YAML              file  5370         /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata/hydromt_data.yml
+OK   EVENT hydromt YAML               file  5370         /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_metadata/hydromt_data.yml
+OK   EVENT runtime CSV                file  269          /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_runtime_window/event_runtime_window.csv
+
+================ LATEST RUN CONFIG ================
+latest_run_config: /proj/zefflab/projects/Flooding/sfincs_runs/harvey_2017_mrms_manual_002/run_config.json
+
+Current data_catalogs:
+[
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms",
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+]
+
+Existing hydromt_catalog_paths in config:
+null
+
+Derived hydromt catalog YAMLs from data_catalogs:
+[
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_metadata/hydromt_data.yml",
+  "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata/hydromt_data.yml"
+]
+
+Recommended normalized backend split:
+{
+  "data_catalogs": [
+    "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms",
+    "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+  ],
+  "hydromt_catalog_paths": [
+    "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_metadata/hydromt_data.yml",
+    "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata/hydromt_data.yml"
+  ]
+}
+
+================ YAML SOURCE INSPECTION ================
+
+--- /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_metadata/hydromt_data.yml ---
+L1     galveston_bay                driver=raster   path=Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif WINDOWS_PATH
+L19    gcn250                       driver=raster   path=Z:\projects\sfincs\data\soil\gcn250\{variable}.tif WINDOWS_PATH
+L32    harvey_bc_discharge          driver=vector   path=Z:\projects\sfincs\data\gages\Harvey\reservoir_coords.csv WINDOWS_PATH
+L48    harvey_bc_waterlevel         driver=vector   path=Z:\users\lelise\data\gages\Harvey\gage_coords.csv WINDOWS_PATH
+L65    hcfcd_bathy                  driver=raster   path=Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt WINDOWS_PATH
+L81    hcfcd_dams                   driver=vector   path=Z:\projects\sfincs\data\structures\AB_dams.shp WINDOWS_PATH
+L89    houston_domain               driver=vector   path=Z:\projects\sfincs\data\mask\houston\houston_model.shp WINDOWS_PATH
+L98    houston_outflow_bc           driver=vector   path=Z:\projects\sfincs\data\mask\houston\houston_outflow_bc.shp WINDOWS_PATH
+L108   houston_wl_bc                driver=vector   path=Z:\projects\sfincs\data\mask\houston\houston_wl_bc.shp WINDOWS_PATH
+L118   mrms_tc_harvey               driver=netcdf   path=Z:\users\lelise\data\meteo\mrms\harvey_mrms.nc WINDOWS_PATH
+L131   ned_10m_houston              driver=raster   path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif WINDOWS_PATH
+L149   ned_2m_houston               driver=raster   path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif WINDOWS_PATH
+L167   nlcd_2016                    driver=raster   path=Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img WINDOWS_PATH
+L176   nlcd_mapping_mean            driver=csv      path=Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv WINDOWS_PATH
+
+WARNING: This YAML contains Windows Z:\ paths. Passing it to HydroMT may expose a next-layer path-translation problem.
+Windows-path sources:
+  - galveston_bay: Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif
+  - gcn250: Z:\projects\sfincs\data\soil\gcn250\{variable}.tif
+  - harvey_bc_discharge: Z:\projects\sfincs\data\gages\Harvey\reservoir_coords.csv
+  - harvey_bc_waterlevel: Z:\users\lelise\data\gages\Harvey\gage_coords.csv
+  - hcfcd_bathy: Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt
+  - hcfcd_dams: Z:\projects\sfincs\data\structures\AB_dams.shp
+  - houston_domain: Z:\projects\sfincs\data\mask\houston\houston_model.shp
+  - houston_outflow_bc: Z:\projects\sfincs\data\mask\houston\houston_outflow_bc.shp
+  - houston_wl_bc: Z:\projects\sfincs\data\mask\houston\houston_wl_bc.shp
+  - mrms_tc_harvey: Z:\users\lelise\data\meteo\mrms\harvey_mrms.nc
+  - ned_10m_houston: Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif
+  - ned_2m_houston: Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif
+  - nlcd_2016: Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img
+  - nlcd_mapping_mean: Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv
+
+--- /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata/hydromt_data.yml ---
+L1     galveston_bay                driver=raster   path=Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif WINDOWS_PATH
+L19    gcn250                       driver=raster   path=Z:\projects\sfincs\data\soil\gcn250\{variable}.tif WINDOWS_PATH
+L32    harvey_bc_discharge          driver=vector   path=Z:\projects\sfincs\data\gages\Harvey\reservoir_coords.csv WINDOWS_PATH
+L48    harvey_bc_waterlevel         driver=vector   path=Z:\users\lelise\data\gages\Harvey\gage_coords.csv WINDOWS_PATH
+L65    hcfcd_bathy                  driver=raster   path=Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt WINDOWS_PATH
+L81    hcfcd_dams                   driver=vector   path=Z:\projects\sfincs\data\structures\AB_dams.shp WINDOWS_PATH
+L89    houston_domain               driver=vector   path=Z:\projects\sfincs\data\mask\houston\houston_model.shp WINDOWS_PATH
+L98    houston_outflow_bc           driver=vector   path=Z:\projects\sfincs\data\mask\houston\houston_outflow_bc.shp WINDOWS_PATH
+L108   houston_wl_bc                driver=vector   path=Z:\projects\sfincs\data\mask\houston\houston_wl_bc.shp WINDOWS_PATH
+L118   mrms_tc_harvey               driver=netcdf   path=Z:\users\lelise\data\meteo\mrms\harvey_mrms.nc WINDOWS_PATH
+L131   ned_10m_houston              driver=raster   path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif WINDOWS_PATH
+L149   ned_2m_houston               driver=raster   path=Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif WINDOWS_PATH
+L167   nlcd_2016                    driver=raster   path=Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img WINDOWS_PATH
+L176   nlcd_mapping_mean            driver=csv      path=Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv WINDOWS_PATH
+
+WARNING: This YAML contains Windows Z:\ paths. Passing it to HydroMT may expose a next-layer path-translation problem.
+Windows-path sources:
+  - galveston_bay: Z:\projects\sfincs\data\topobathy\noaa_nos\Galveston_DEM\galveston_bay_G260_2018_edited.tif
+  - gcn250: Z:\projects\sfincs\data\soil\gcn250\{variable}.tif
+  - harvey_bc_discharge: Z:\projects\sfincs\data\gages\Harvey\reservoir_coords.csv
+  - harvey_bc_waterlevel: Z:\users\lelise\data\gages\Harvey\gage_coords.csv
+  - hcfcd_bathy: Z:\projects\sfincs\data\topobathy\hecras_bathy\hcfcd\bathy_m_utm\hcfcd_channal_bathy_2m.vrt
+  - hcfcd_dams: Z:\projects\sfincs\data\structures\AB_dams.shp
+  - houston_domain: Z:\projects\sfincs\data\mask\houston\houston_model.shp
+  - houston_outflow_bc: Z:\projects\sfincs\data\mask\houston\houston_outflow_bc.shp
+  - houston_wl_bc: Z:\projects\sfincs\data\mask\houston\houston_wl_bc.shp
+  - mrms_tc_harvey: Z:\users\lelise\data\meteo\mrms\harvey_mrms.nc
+  - ned_10m_houston: Z:\projects\sfincs\data\topobathy\usgs_ned\NED_10m\NED_10m_HoustonTX.tif
+  - ned_2m_houston: Z:\projects\sfincs\data\topobathy\usgs_ned\NED_1m\HoustonTX\projected_2m\usgs_ned_2m_houston.tif
+  - nlcd_2016: Z:\projects\sfincs\data\lulc\nlcd\NLCD_2016_Land_Cover\NLCD_2016_Land_Cover_L48_20190424.img
+  - nlcd_mapping_mean: Z:\projects\sfincs\data\lulc\nlcd\nlcd_mapping_mean.csv
+
+================ CODE SUPPORT SUMMARY ================
+
+--- GREP SUMMARY: /proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py ---
+data_catalogs                          13
+hydromt_catalog_paths                  0
+data_libs                              1
+DataCatalog                            0
+from_predefined_catalogs               0
+SfincsModel                            6
+build_elevation_list                   3
+hydromt_dem_sources                    5
+setup_dep                              2
+setup_subgrid                          4
+NO hydromt_catalog_paths
+
+--- GREP SUMMARY: /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py ---
+data_catalogs                          10
+hydromt_catalog_paths                  0
+data_libs                              0
+DataCatalog                            0
+from_predefined_catalogs               0
+SfincsModel                            0
+build_elevation_list                   0
+hydromt_dem_sources                    2
+setup_dep                              0
+setup_subgrid                          0
+NO hydromt_catalog_paths
+
+--- GREP SUMMARY: /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py ---
+data_catalogs                          2
+hydromt_catalog_paths                  0
+data_libs                              0
+DataCatalog                            0
+from_predefined_catalogs               0
+SfincsModel                            0
+build_elevation_list                   0
+hydromt_dem_sources                    2
+setup_dep                              0
+setup_subgrid                          0
+NO hydromt_catalog_paths
+
+--- GREP SUMMARY: /proj/zefflab/projects/Flooding/pipeline/code/runner_core.py ---
+data_catalogs                          7
+hydromt_catalog_paths                  0
+data_libs                              0
+DataCatalog                            0
+from_predefined_catalogs               0
+SfincsModel                            0
+build_elevation_list                   0
+hydromt_dem_sources                    0
+setup_dep                              0
+setup_subgrid                          0
+NO hydromt_catalog_paths
+
+--- GREP SUMMARY: /proj/zefflab/projects/Flooding/pipeline/code/pipeline_runner.py ---
+data_catalogs                          0
+hydromt_catalog_paths                  0
+data_libs                              0
+DataCatalog                            0
+from_predefined_catalogs               0
+SfincsModel                            0
+build_elevation_list                   0
+hydromt_dem_sources                    0
+setup_dep                              0
+setup_subgrid                          0
+NO hydromt_catalog_paths
+
+================ PREPROCESS_STAGE CATALOG CONTEXT ================
+
+--- CODE CONTEXT: /proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py ---
+
+### around line 354
+     330: 
+     331:     out: list[Path] = []
+     332:     seen = set()
+     333:     for p in roots:
+     334:         rp = p.resolve()
+     335:         if rp not in seen:
+     336:             seen.add(rp)
+     337:             out.append(rp)
+     338: 
+     339:     return out
+     340: 
+     341: def sfincs_override_search_roots(cfg: dict[str, Any]) -> list[Path]:
+     342:     roots: list[Path] = []
+     343: 
+     344:     for item in cfg_get(cfg, "native_sfincs_input_dirs", []) or []:
+     345:         p = Path(item)
+     346:         if p.exists():
+     347:             roots.append(p)
+     348: 
+     349:     for item in cfg_get(cfg, "sfincs_file_override_search_dirs", []) or []:
+     350:         p = Path(item)
+     351:         if p.exists():
+     352:             roots.append(p)
+     353: 
+>>   354:     for item in cfg_get(cfg, "data_catalogs", []) or []:
+     355:         p = Path(str(item))
+     356:         if p.exists():
+     357:             roots.append(p)
+     358: 
+     359:     out: list[Path] = []
+     360:     seen = set()
+     361:     for p in roots:
+     362:         rp = p.resolve()
+     363:         if rp not in seen:
+     364:             seen.add(rp)
+     365:             out.append(rp)
+     366:     return out
+     367: 
+     368: 
+     369: def find_sfincs_override_candidates(search_roots: list[Path], filenames: list[str], max_hits: int = 25) -> list[Path]:
+     370:     """
+     371:     Find override candidates using filename priority.
+     372: 
+     373:     Example:
+     374:       ["sfincs.manning", "sfincs.man"]
+     375: 
+     376:     If sfincs.manning exists, return only sfincs.manning matches.
+     377:     Only search sfincs.man if no sfincs.manning exists anywhere.
+     378: 
+
+### around line 950
+     926:         event_dirs = cfg_get(cfg, "native_event_sfincs_input_dirs", []) or []
+     927:         other_dirs = cfg_get(cfg, "native_sfincs_input_dirs", []) or []
+     928:     
+     929:         all_native_dirs = static_dirs + event_dirs + other_dirs
+     930:     
+     931:         if not all_native_dirs:
+     932:             failures.append(
+     933:                 "MISSING REQUIRED: no native SFINCS input directories configured for native_sfincs_assembly"
+     934:             )
+     935:         else:
+     936:             for folder in all_native_dirs:
+     937:                 folder_path = Path(folder)
+     938:                 if folder_path.exists():
+     939:                     print(f"FOUND: native SFINCS input dir: {folder_path}")
+     940:                 else:
+     941:                     failures.append(f"MISSING REQUIRED: native SFINCS input dir: {folder_path}")
+     942:     
+     943:         if failures:
+     944:             raise FileNotFoundError("\n".join(failures))
+     945:     
+     946:         print("NATIVE SFINCS ASSEMBLY MODE: skipping HydroMT region/DEM/elevation-source validation.")
+     947:         return
+     948: 
+     949:     if mode == "hybrid":
+>>   950:         event_catalogs = cfg_get(cfg, "data_catalogs", []) or []
+     951:         static_dirs = cfg_get(cfg, "native_static_sfincs_input_dirs", []) or []
+     952: 
+     953:         if not event_catalogs:
+     954:             failures.append("MISSING REQUIRED: data_catalogs is empty for hybrid mode")
+     955:         else:
+     956:             event_catalog = Path(event_catalogs[0])
+     957:             if event_catalog.exists():
+     958:                 print(f"FOUND: hybrid event catalog: {event_catalog}")
+     959:             else:
+     960:                 failures.append(f"MISSING REQUIRED: hybrid event catalog: {event_catalog}")
+     961: 
+     962:         if not static_dirs:
+     963:             failures.append("MISSING REQUIRED: native_static_sfincs_input_dirs is empty for hybrid mode")
+     964:         else:
+     965:             static_dir = Path(static_dirs[0])
+     966:             if static_dir.exists():
+     967:                 print(f"FOUND: hybrid static PPP dir: {static_dir}")
+     968:             else:
+     969:                 failures.append(f"MISSING REQUIRED: hybrid static PPP dir: {static_dir}")
+     970: 
+     971:         if failures:
+     972:             raise FileNotFoundError("\n".join(failures))
+     973: 
+     974:         print("HYBRID MODE: skipping HydroMT region/DEM/elevation-source validation.")
+
+### around line 1024
+    1000:         msg = f"UNKNOWN region_mode: {region_mode}"
+    1001:         print(msg)
+    1002:         failures.append(msg)
+    1003: 
+    1004:     # DEM raw paths are useful sanity checks, even though HydroMT actually uses source names.
+    1005:     dem_paths = cfg_path_list(cfg, "dem_paths")
+    1006:     if dem_paths:
+    1007:         for i, path in enumerate(dem_paths, start=1):
+    1008:             if path.exists():
+    1009:                 print(f"FOUND: dem_paths[{i}]: {path}")
+    1010:             elif allow_missing:
+    1011:                 print(f"WARNING: dem_paths[{i}] missing but allow_missing_model_inputs=True: {path}")
+    1012:             else:
+    1013:                 msg = f"MISSING REQUIRED: dem_paths[{i}]: {path}"
+    1014:                 print(msg)
+    1015:                 failures.append(msg)
+    1016:     elif allow_missing:
+    1017:         print("WARNING: dem_paths list is empty but allow_missing_model_inputs=True")
+    1018:     else:
+    1019:         msg = "MISSING REQUIRED: dem_paths list is empty"
+    1020:         print(msg)
+    1021:         failures.append(msg)
+    1022: 
+    1023:     # HydroMT source names are required for actual HydroMT build.
+>>  1024:     elevation_sources = build_elevation_list(cfg, raise_if_missing=False)
+    1025:     if elevation_sources:
+    1026:         print(f"FOUND/SET: HydroMT elevation sources: {elevation_sources}")
+    1027:     elif allow_missing:
+    1028:         print("WARNING: no HydroMT elevation sources configured but allow_missing_model_inputs=True")
+    1029:     else:
+    1030:         msg = (
+    1031:             "MISSING REQUIRED: no hydromt_dem_sources/hydromt_bathy_sources configured. "
+    1032:             "Raw DEM paths alone are not enough; HydroMT needs catalog source names."
+    1033:         )
+    1034:         print(msg)
+    1035:         failures.append(msg)
+    1036: 
+    1037:     # Forcing sanity.
+    1038:     forcing_enabled = any([
+    1039:         bool(cfg_get(cfg, "use_rainfall", False)),
+    1040:         bool(cfg_get(cfg, "use_waterlevel_boundary", False)),
+    1041:         bool(cfg_get(cfg, "use_discharge_boundary", False)),
+    1042:         bool(cfg_get(cfg, "use_wind", False)),
+    1043:         bool(cfg_get(cfg, "use_pressure", False)),
+    1044:     ])
+    1045:     if cfg_get(cfg, "require_at_least_one_forcing", True) and not forcing_enabled and not allow_missing:
+    1046:         msg = "MISSING REQUIRED: no forcing toggles are enabled"
+    1047:         print(msg)
+    1048:         failures.append(msg)
+
+### around line 1169
+    1145:         "soil_storage_path",
+    1146:         "wind_path",
+    1147:         "pressure_path",
+    1148:         "thin_dam_path",
+    1149:         "weir_path",
+    1150:         "drainage_structure_path",
+    1151:         "culvert_path",
+    1152:         "obs_points_path",
+    1153:         "obs_lines_path",
+    1154:         "outflow_boundary_polygon_path",
+    1155:         "subgrid_river_path",
+    1156:         "discharge_points_csv_path",
+    1157:         "discharge_timeseries_csv_path",
+    1158:         "thin_dam_native_file_path",
+    1159:         "weir_native_file_path",
+    1160:         "drainage_structure_native_file_path",
+    1161:         "culvert_native_file_path",
+    1162:     ]
+    1163: 
+    1164:     inventory: dict[str, Any] = {
+    1165:         "created_at": now_iso(),
+    1166:         "configured_paths": {},
+    1167:         "configured_path_lists": {},
+    1168:         "hydromt_sources": {
+>>  1169:             "data_catalogs": cfg_get(cfg, "data_catalogs", []),
+    1170:             "hydromt_dem_sources": cfg_get(cfg, "hydromt_dem_sources", []),
+    1171:             "hydromt_bathy_sources": cfg_get(cfg, "hydromt_bathy_sources", []),
+    1172:             "hydromt_roughness_sources": cfg_get(cfg, "hydromt_roughness_sources", []),
+    1173:             "rainfall_source": cfg_get(cfg, "rainfall_source"),
+    1174:             "waterlevel_source": cfg_get(cfg, "waterlevel_source"),
+    1175:             "discharge_source": cfg_get(cfg, "discharge_source"),
+    1176:         },
+    1177:     }
+    1178: 
+    1179:     for key in path_keys:
+    1180:         value = cfg_get(cfg, key)
+    1181:         if value is None or str(value).strip() == "":
+    1182:             inventory["configured_paths"][key] = {"path": None, "exists": False}
+    1183:         else:
+    1184:             p = Path(value)
+    1185:             inventory["configured_paths"][key] = {
+    1186:                 "path": str(p),
+    1187:                 "exists": p.exists(),
+    1188:                 "is_file": p.is_file() if p.exists() else False,
+    1189:                 "is_dir": p.is_dir() if p.exists() else False,
+    1190:             }
+    1191: 
+    1192:     for key in ["dem_paths", "bathy_paths"]:
+    1193:         values = cfg_get(cfg, key, []) or []
+
+### around line 1248
+    1224: 
+    1225:     try:
+    1226:         with timing_block("HydroMT logging: import hydromt._utils.log"):
+    1227:             from hydromt._utils import log
+    1228: 
+    1229:         with timing_block("HydroMT logging: initialize_logging"):
+    1230:             log.initialize_logging()
+    1231: 
+    1232:         with timing_block("HydroMT logging: set log level"):
+    1233:             log.set_log_level(log_level=20)
+    1234: 
+    1235:         with timing_block("HydroMT logging: add file handler"):
+    1236:             log._add_filehandler(log_file)
+    1237: 
+    1238:         print(f"HydroMT logging initialized: {log_file}")
+    1239: 
+    1240:     except Exception as exc:
+    1241:         print("WARNING: Could not initialize HydroMT logging helper.")
+    1242:         print(f"Reason: {exc}")
+    1243:         print("Continuing; Python/Slurm stdout logs will still be available.")
+    1244: 
+    1245: def import_hydromt_sfincs():
+    1246:     """Import HydroMT-SFINCS only inside the Slurm preprocessing job."""
+    1247:     try:
+>>  1248:         from hydromt_sfincs import SfincsModel
+    1249:     except Exception as exc:
+    1250:         raise ImportError(
+    1251:             "Could not import hydromt_sfincs. Make sure the Slurm job activated the sfincs conda env."
+    1252:         ) from exc
+    1253:     return SfincsModel
+    1254: 
+    1255: 
+    1256: def initialize_sfincs_model(cfg: dict[str, Any]):
+    1257:     """Initialize SfincsModel."""
+    1258:     print_section("HYDROMT: INITIALIZE SFINCS MODEL")
+    1259: 
+    1260:     SfincsModel = import_hydromt_sfincs()
+    1261:     data_catalogs = cfg_get(cfg, "data_catalogs", []) or []
+    1262:     root = model_root(cfg)
+    1263:     mode = "w+" if cfg_get(cfg, "overwrite_existing_run", False) else "w"
+    1264:     write_gis = cfg_get(cfg, "write_gis", True)
+    1265: 
+    1266:     print(f"Model root:   {root}")
+    1267:     print(f"Mode:         {mode}")
+    1268:     print(f"Write GIS:    {write_gis}")
+    1269:     print(f"Data catalogs:{data_catalogs}")
+    1270: 
+    1271:     sf = SfincsModel(
+    1272:         data_libs=data_catalogs,
+
+### around line 1301
+    1277:     return sf
+    1278: 
+    1279: 
+    1280: # ============================================================
+    1281: # HYDROMT SETUP HELPERS
+    1282: # ============================================================
+    1283: 
+    1284: def get_region_dict(cfg: dict[str, Any]) -> dict[str, Any]:
+    1285:     region_mode = cfg_get(cfg, "region_mode", "geom")
+    1286:     if region_mode == "geom":
+    1287:         return {"geom": str(cfg_path(cfg, "region_path"))}
+    1288:     if region_mode == "bbox":
+    1289:         return {"bbox": cfg_get(cfg, "region_bbox")}
+    1290:     raise ValueError(f"Unsupported region_mode: {region_mode}")
+    1291: 
+    1292: 
+    1293: def build_elevation_list(cfg: dict[str, Any], raise_if_missing: bool = True) -> list[dict[str, Any]]:
+    1294:     elevation_list: list[dict[str, Any]] = []
+    1295:     elevation_list.extend(cfg_get(cfg, "hydromt_dem_sources", []) or [])
+    1296:     elevation_list.extend(cfg_get(cfg, "hydromt_bathy_sources", []) or [])
+    1297: 
+    1298:     if raise_if_missing and not elevation_list:
+    1299:         raise ValueError(
+    1300:             "No HydroMT elevation/topobathy sources configured.\n"
+>>  1301:             "Set hydromt_dem_sources and/or hydromt_bathy_sources in the launcher.\n"
+    1302:             "Raw DEM paths are used for validation, but HydroMT setup needs catalog source names."
+    1303:         )
+    1304:     return elevation_list
+    1305: 
+    1306: 
+    1307: def build_roughness_list(cfg: dict[str, Any]) -> list[dict[str, Any]]:
+    1308:     roughness_list = cfg_get(cfg, "hydromt_roughness_sources", []) or []
+    1309:     if roughness_list:
+    1310:         return roughness_list
+    1311: 
+    1312:     landcover_path = cfg_path(cfg, "landcover_path")
+    1313:     reclass_table = cfg_path(cfg, "landcover_reclass_table")
+    1314:     use_landcover = cfg_get(cfg, "use_landcover_roughness_if_available", True)
+    1315: 
+    1316:     if landcover_path and reclass_table and use_landcover:
+    1317:         # This assumes landcover_source exists in the HydroMT data catalog.
+    1318:         return [{
+    1319:             "lulc": cfg_get(cfg, "landcover_source", "landcover"),
+    1320:             "reclass_table": str(reclass_table),
+    1321:         }]
+    1322: 
+    1323:     return []
+    1324: 
+    1325: 
+
+### around line 1386
+    1362: 
+    1363:     print("Updating SFINCS config:")
+    1364:     for key, val in cfdict.items():
+    1365:         print(f"  {key}: {val}")
+    1366: 
+    1367:     if hasattr(sf, "config") and hasattr(sf.config, "update"):
+    1368:         sf.config.update(cfdict)
+    1369:         return
+    1370: 
+    1371:     if hasattr(sf, "setup_config"):
+    1372:         sf.setup_config(**cfdict)
+    1373:         return
+    1374: 
+    1375:     if hasattr(sf, "set_config"):
+    1376:         for key, val in cfdict.items():
+    1377:             sf.set_config(key, val)
+    1378:         return
+    1379: 
+    1380:     raise AttributeError("Could not find supported SFINCS config update method")
+    1381: 
+    1382: 
+    1383: def setup_elevation(sf, cfg: dict[str, Any]) -> list[dict[str, Any]]:
+    1384:     print_section("HYDROMT: ELEVATION / TOPOBATHY")
+    1385: 
+>>  1386:     elevation_list = build_elevation_list(cfg, raise_if_missing=True)
+    1387:     print("Elevation/topobathy sources:")
+    1388:     for item in elevation_list:
+    1389:         print(f"  {item}")
+    1390: 
+    1391:     buffer_cells = cfg_get(cfg, "elevation_buffer_cells", 1)
+    1392: 
+    1393:     if hasattr(sf, "elevation") and hasattr(sf.elevation, "create"):
+    1394:         sf.elevation.create(elevation_list=elevation_list, buffer_cells=buffer_cells)
+    1395:         return elevation_list
+    1396: 
+    1397:     if hasattr(sf, "setup_dep"):
+    1398:         sf.setup_dep(datasets_dep=elevation_list, buffer_cells=buffer_cells)
+    1399:         return elevation_list
+    1400: 
+    1401:     raise AttributeError("Could not find supported elevation/topobathy setup method")
+    1402: 
+    1403: 
+    1404: def setup_mask(sf, cfg: dict[str, Any]) -> None:
+    1405:     print_section("HYDROMT: MASK / BOUNDARIES")
+    1406: 
+    1407:     active_zmin = cfg_get(cfg, "active_zmin", -5.0)
+    1408:     fill_area = cfg_get(cfg, "mask_fill_area_km2", None)
+    1409:     drop_area = cfg_get(cfg, "mask_drop_area_km2", None)
+    1410: 
+
+### around line 1515
+    1491:                 datasets_rgh=roughness_list,
+    1492:                 manning_land=cfg_get(cfg, "manning_land", 0.04),
+    1493:                 manning_sea=cfg_get(cfg, "manning_sea", 0.02),
+    1494:                 rgh_lev_land=cfg_get(cfg, "roughness_land_level_m", 0.0),
+    1495:             )
+    1496:             return roughness_list
+    1497: 
+    1498:         raise AttributeError("Could not find supported roughness setup method")
+    1499: 
+    1500:     print("No spatial roughness configured; using constant Manning fallback if possible.")
+    1501:     manning = cfg_get(cfg, "manning_uniform", 0.04)
+    1502: 
+    1503:     if hasattr(sf, "config") and hasattr(sf.config, "update"):
+    1504:         sf.config.update({"manning": manning})
+    1505:     elif hasattr(sf, "setup_config"):
+    1506:         sf.setup_config(manning=manning)
+    1507:     elif hasattr(sf, "set_config"):
+    1508:         sf.set_config("manning", manning)
+    1509:     else:
+    1510:         print("WARNING: Could not set constant Manning through known config methods")
+    1511: 
+    1512:     return []
+    1513: 
+    1514: 
+>>  1515: def setup_subgrid(sf, cfg: dict[str, Any], elevation_list: list[dict[str, Any]], roughness_list: list[dict[str, Any]]) -> None:
+    1516:     print_section("HYDROMT: SUBGRID")
+    1517: 
+    1518:     if not cfg_get(cfg, "use_subgrid", False):
+    1519:         print("Skipping subgrid because use_subgrid=False")
+    1520:         return
+    1521: 
+    1522:     print("Creating subgrid tables. This may be slow for large domains/high-res DEMs.")
+    1523: 
+    1524:     nr_pixels = cfg_get(cfg, "subgrid_nr_pixels", 6)
+    1525:     write_dep_tif = cfg_get(cfg, "subgrid_write_dep_tif", True)
+    1526:     write_man_tif = cfg_get(cfg, "subgrid_write_man_tif", True)
+    1527: 
+    1528:     if hasattr(sf, "subgrid") and hasattr(sf.subgrid, "create"):
+    1529:         sf.subgrid.create(
+    1530:             elevation_list=elevation_list,
+    1531:             roughness_list=roughness_list if roughness_list else None,
+    1532:             nr_subgrid_pixels=nr_pixels,
+    1533:             write_dep_tif=write_dep_tif,
+    1534:             write_man_tif=write_man_tif,
+    1535:         )
+    1536:         return
+    1537: 
+    1538:     if hasattr(sf, "setup_subgrid"):
+    1539:         sf.setup_subgrid(
+
+### around line 2037
+    2013: def build_model_hydromt(cfg: dict[str, Any], config_path: Path) -> None:
+    2014: 
+    2015:     with timing_block("initialize HydroMT logging"):
+    2016:         initialize_hydromt_logging(cfg)
+    2017: 
+    2018:     with timing_block("initialize SFINCS model"):
+    2019:         sf = initialize_sfincs_model(cfg)
+    2020: 
+    2021:     with timing_block("setup grid"):
+    2022:         setup_grid(sf, cfg)
+    2023: 
+    2024:     with timing_block("setup time and SFINCS config"):
+    2025:         setup_time_and_config(sf, cfg)
+    2026: 
+    2027:     with timing_block("setup elevation / topobathy"):
+    2028:         elevation_list = setup_elevation(sf, cfg)
+    2029: 
+    2030:     with timing_block("setup active mask and boundary cells"):
+    2031:         setup_mask(sf, cfg)
+    2032: 
+    2033:     with timing_block("setup roughness / landcover"):
+    2034:         roughness_list = setup_roughness(sf, cfg)
+    2035: 
+    2036:     with timing_block("setup subgrid"):
+>>  2037:         setup_subgrid(
+    2038:             sf,
+    2039:             cfg,
+    2040:             elevation_list=elevation_list,
+    2041:             roughness_list=roughness_list,
+    2042:         )
+    2043: 
+    2044:     with timing_block("setup forcing"):
+    2045:         setup_forcing(sf, cfg)
+    2046: 
+    2047:     with timing_block("setup infiltration"):
+    2048:         setup_infiltration(sf, cfg)
+    2049: 
+    2050:     with timing_block("setup structures and observations"):
+    2051:         setup_structures_and_observations(sf, cfg)
+    2052: 
+    2053:     with timing_block("save preprocessing diagnostic plots"):
+    2054:         save_diagnostic_plots(sf, cfg)
+    2055: 
+    2056:     with timing_block("write model files"):
+    2057:         write_model(sf, cfg)
+    2058: 
+    2059:     if cfg_get(cfg, "use_discharge_boundary", False) and cfg_get(cfg, "discharge_source_kind", "geodataset") == "csv":
+    2060:         with timing_block("write CSV discharge files"):
+    2061:             write_native_discharge_from_csv(cfg)
+
+### around line 2210
+    2186:                 s = str(item or "").strip()
+    2187:                 if s:
+    2188:                     values.append(s)
+    2189:             continue
+    2190: 
+    2191:         s = str(raw or "").strip()
+    2192:         if s:
+    2193:             values.append(s)
+    2194: 
+    2195:     return values
+    2196: 
+    2197: 
+    2198: def resolve_hybrid_event_file(
+    2199:     *,
+    2200:     cfg: dict[str, Any],
+    2201:     event_catalog: Path,
+    2202:     cfg_keys: tuple[str, ...],
+    2203:     default_relative: str,
+    2204:     label: str,
+    2205:     patterns: tuple[str, ...] = (),
+    2206: ) -> Path:
+    2207:     """
+    2208:     Resolve a reduced-event file inside an event catalog.
+    2209: 
+>>  2210:     The launcher passes data_catalogs as an event catalog folder. Individual
+    2211:     hybrid writers need the actual file inside that folder.
+    2212:     """
+    2213:     event_catalog = Path(event_catalog)
+    2214: 
+    2215:     for raw in iter_cfg_path_values(cfg, cfg_keys):
+    2216:         # Ignore source-name labels like "geodataset"; only treat path-looking
+    2217:         # values as explicit file paths.
+    2218:         if not cfg_value_looks_like_path(raw):
+    2219:             continue
+    2220: 
+    2221:         candidate = Path(raw)
+    2222:         if not candidate.is_absolute():
+    2223:             candidate = event_catalog / candidate
+    2224: 
+    2225:         if candidate.is_file():
+    2226:             return candidate
+    2227: 
+    2228:         if candidate.is_dir():
+    2229:             raise IsADirectoryError(
+    2230:                 f"{label} config value points to a directory, not a file: {candidate}"
+    2231:             )
+    2232: 
+    2233:         raise FileNotFoundError(
+    2234:             f"{label} config value looks like a path but does not exist: {candidate}"
+
+### around line 2334
+    2310:     expected_cols = [1, 2, 3, 4]
+    2311:     missing_cols = [c for c in expected_cols if c not in wide.columns]
+    2312:     if missing_cols:
+    2313:         raise ValueError(f"BZS file is missing columns {missing_cols}")
+    2314: 
+    2315:     wide = pad_hybrid_wide_timeseries_to_model_window(
+    2316:         wide=wide,
+    2317:         expected_cols=expected_cols,
+    2318:         tstop_seconds=hybrid_tstop_seconds(cfg),
+    2319:         label="BZS",
+    2320:     )
+    2321: 
+    2322:     with dst.open("w", encoding="utf-8") as f:
+    2323:         for t, row in wide.iterrows():
+    2324:             vals = " ".join(f"{float(row[c]):.6f}" for c in expected_cols)
+    2325:             f.write(f"{float(t):.1f} {vals}\n")
+    2326: 
+    2327:     print(f"Wrote {dst}")
+    2328: 
+    2329: 
+    2330: def resolve_hybrid_discharge_csv(event_catalog: Path, cfg: dict[str, Any]) -> Path:
+    2331:     """
+    2332:     Resolve the reduced-event discharge CSV used to write sfincs.dis.
+    2333: 
+>>  2334:     The launcher passes data_catalogs as an event catalog folder. This helper
+    2335:     finds the actual discharge timeseries CSV inside that folder.
+    2336:     """
+    2337:     event_catalog = Path(event_catalog)
+    2338: 
+    2339:     explicit = cfg_path(cfg, "discharge_timeseries_csv_path")
+    2340:     if explicit is not None:
+    2341:         if explicit.is_file():
+    2342:             return explicit
+    2343:         if explicit.is_dir():
+    2344:             raise IsADirectoryError(
+    2345:                 f"discharge_timeseries_csv_path points to a directory, not a CSV file: {explicit}"
+    2346:             )
+    2347:         raise FileNotFoundError(
+    2348:             f"discharge_timeseries_csv_path does not exist: {explicit}"
+    2349:         )
+    2350: 
+    2351:     # Backward-compatible support for discharge_source if someone uses it as a
+    2352:     # relative/absolute CSV path. Ignore blank values and source-name strings.
+    2353:     raw_source = str(cfg_get(cfg, "discharge_source", "") or "").strip()
+    2354:     if raw_source:
+    2355:         candidate = Path(raw_source)
+    2356:         if not candidate.is_absolute():
+    2357:             candidate = event_catalog / candidate
+    2358: 
+
+### around line 2746
+    2722:         print("MAJOR RUNTIME WINDOW MISMATCH")
+    2723:         print("Severity: MAJOR / RED")
+    2724:         print("The requested config runtime differs from the effective hybrid runtime.")
+    2725:         print("This changes the physical event duration.")
+    2726:         print("")
+    2727:         for key, info in mismatches.items():
+    2728:             print(f"{key}:")
+    2729:             print(f"  requested: {info['requested_raw']}  -> {info['requested_normalized']}")
+    2730:             print(f"  effective: {info['effective_raw']}  -> {info['effective_normalized']}")
+    2731:         print("")
+    2732:         print(f"Wrote runtime audit: {audit_path}")
+    2733:         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    2734:         print("")
+    2735:     else:
+    2736:         print(f"Runtime window audit: OK ({audit_path})")
+    2737: 
+    2738:     print(f"Using tref:   {cfg_get(cfg, 'tref')}")
+    2739:     print(f"Using tstart: {cfg_get(cfg, 'tstart')}")
+    2740:     print(f"Using tstop:  {cfg_get(cfg, 'tstop')}")
+    2741: 
+    2742: 
+    2743: def build_model_hybrid(cfg: dict[str, Any], config_path: Path) -> None:
+    2744:     print_section("HYBRID PREPROCESS START")
+    2745: 
+>>  2746:     event_catalogs = cfg_get(cfg, "data_catalogs", []) or []
+    2747:     static_dirs = cfg_get(cfg, "native_static_sfincs_input_dirs", []) or []
+    2748: 
+    2749:     if not event_catalogs:
+    2750:         raise RuntimeError("Hybrid mode requires DATA_CATALOGS[0] to be the event catalog folder.")
+    2751:     if not static_dirs:
+    2752:         raise RuntimeError("Hybrid mode requires NATIVE_STATIC_SFINCS_INPUT_DIRS[0] to be the static PPP folder.")
+    2753: 
+    2754:     event_catalog = Path(event_catalogs[0])
+    2755:     static_dir = Path(static_dirs[0])
+    2756: 
+    2757:     print(f"Event catalog: {event_catalog}")
+    2758:     print(f"Static PPP:    {static_dir}")
+    2759:     print(f"Model root:    {model_root(cfg)}")
+    2760: 
+    2761:     if not event_catalog.exists():
+    2762:         raise FileNotFoundError(f"Hybrid event catalog does not exist: {event_catalog}")
+    2763:     if not static_dir.exists():
+    2764:         raise FileNotFoundError(f"Hybrid static PPP folder does not exist: {static_dir}")
+    2765: 
+    2766:     with timing_block("apply event runtime window"):
+    2767:         apply_hybrid_runtime_window(cfg, event_catalog)
+    2768: 
+    2769:     with timing_block("write native sfincs.inp"):
+    2770:         write_native_sfincs_inp_from_config(cfg)
+
+================ APP DETECTOR CONTEXT ================
+
+--- CODE CONTEXT: /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py ---
+
+### around line 481
+     461:     try:
+     462:         iso_text = text.replace("Z", "+00:00")
+     463:         parsed = datetime.fromisoformat(iso_text)
+     464:         return parsed.strftime("%Y-%m-%d %H:%M:%S")
+     465:     except ValueError:
+     466:         return text
+     467: 
+     468: 
+     469: # ---------------------------------------------------------------------
+     470: # Data catalog detection / autofill helpers
+     471: # ---------------------------------------------------------------------
+     472: 
+     473: 
+     474: def _catalog_warning(warnings: list[str], message: str) -> None:
+     475:     if message not in warnings:
+     476:         warnings.append(message)
+     477: 
+     478: 
+     479: def _catalog_path_list_from_config(cfg: dict[str, Any]) -> tuple[list[Path], list[str]]:
+     480:     """
+>>   481:     Read data_catalogs from a Manual/Override config and return safe existing
+     482:     catalog directories plus human-readable warnings.
+     483: 
+     484:     This accepts the same formats as the runtime-window review:
+     485:       - actual JSON list
+     486:       - stringified JSON list
+     487:       - comma/newline separated paths
+     488:     """
+     489:     warnings: list[str] = []
+     490:     catalog_paths: list[Path] = []
+     491: 
+     492:     raw_catalogs = _review_runtime_normalize_path_list(cfg.get("data_catalogs"))
+     493: 
+     494:     for raw_catalog in raw_catalogs:
+     495:         text = str(raw_catalog).strip()
+     496: 
+     497:         if not text:
+     498:             continue
+     499: 
+     500:         if not text.startswith("/"):
+     501:             _catalog_warning(
+
+### around line 586
+     566: 
+     567:     if not row:
+     568:         return {}
+     569: 
+     570:     return {
+     571:         "tref": row.get("tref") or "",
+     572:         "tstart": row.get("tstart") or "",
+     573:         "tstop": (
+     574:             row.get("tstop_recommended_end_exclusive")
+     575:             or row.get("tstop")
+     576:             or ""
+     577:         ),
+     578:         "raw": row,
+     579:     }
+     580: 
+     581: 
+     582: def _detect_one_data_catalog(root: Path) -> dict[str, Any]:
+     583:     """
+     584:     Inspect one catalog-like folder and return a mode-neutral description.
+     585: 
+>>   586:     Manual Mode can use suggested_config to fill source paths.
+     587:     Override Mode can use the same response to validate/classify event catalogs
+     588:     without changing its native static override behavior.
+     589:     """
+     590:     found: dict[str, Any] = {
+     591:         "runtime_csv": _catalog_first_match(root, [
+     592:             "event_runtime_window/event_runtime_window.csv",
+     593:         ]),
+     594:         "region_path": _catalog_first_match(root, [
+     595:             "region_geom/*.shp",
+     596:             "region_geom/*.geojson",
+     597:             "region_geom/*.gpkg",
+     598:             "region/*.shp",
+     599:             "region/*.geojson",
+     600:             "region/*.gpkg",
+     601:         ]),
+     602:         "dem_path": _catalog_first_match(root, [
+     603:             "topobathy/HCFCD_DEM_5m_UTM.tif",
+     604:             "topobathy/*.tif",
+     605:             "dem/*.tif",
+     606:             "elevation/*.tif",
+
+### around line 670
+     650:             "event_precip/*.tif",
+     651:             "precip/*.nc",
+     652:             "rainfall/*.nc",
+     653:         ]),
+     654:         "waterlevel_path": _catalog_first_match(root, [
+     655:             "event_waterlevel/*.csv",
+     656:             "event_boundary_table/*.csv",
+     657:             "waterlevel/*.csv",
+     658:             "boundary_waterlevel/*.csv",
+     659:         ]),
+     660:         "discharge_timeseries_csv_path": _catalog_first_match(root, [
+     661:             "event_discharge/*.csv",
+     662:             "discharge/*.csv",
+     663:             "source_discharge/*.csv",
+     664:         ]),
+     665:         "discharge_points_csv_path": _catalog_first_match(root, [
+     666:             "event_source_table/*.csv",
+     667:             "source_points_static/*.csv",
+     668:             "discharge_points/*.csv",
+     669:         ]),
+>>   670:         "curve_number_path": _catalog_first_match(root, [
+     671:             "curve_number/cn_avg.tif",
+     672:             "curve_number/*avg*.tif",
+     673:             "curve_number/*.tif",
+     674:             "scs_infiltration/*cn*.tif",
+     675:             "infiltration/*cn*.tif",
+     676:         ]),
+     677:         "obs_points_lite_path": _catalog_first_match(root, [
+     678:             "event_validation_points/profiles/lite/*.xy",
+     679:             "event_validation_points/profiles/lite/*.csv",
+     680:             "obs_points/lite/*.xy",
+     681:             "obs_points/*.xy",
+     682:         ]),
+     683:         "obs_points_validation_path": _catalog_first_match(root, [
+     684:             "event_validation_points/profiles/validation/*.xy",
+     685:             "event_validation_points/profiles/validation/*.csv",
+     686:         ]),
+     687:         "obs_points_full_candidates_path": _catalog_first_match(root, [
+     688:             "event_validation_points/profiles/full_candidates/*.xy",
+     689:             "event_validation_points/profiles/full_candidates/*.csv",
+     690:         ]),
+
+### around line 728
+     708:             "sfincs.obs",
+     709:             "sfincs.crs",
+     710:             "sfincs.thd",
+     711:             "sfincs.weir",
+     712:             "sfincs.drn",
+     713:         ]),
+     714:     }
+     715: 
+     716:     roles: list[str] = []
+     717: 
+     718:     if (
+     719:         found["runtime_csv"]
+     720:         or found["rainfall_path"]
+     721:         or found["waterlevel_path"]
+     722:         or found["discharge_timeseries_csv_path"]
+     723:     ):
+     724:         roles.append("event")
+     725: 
+     726:     if (
+     727:         found["region_path"]
+>>   728:         or found["dem_path"]
+     729:         or found["landcover_path"]
+     730:         or found["thin_dam_path"]
+     731:     ):
+     732:         roles.append("static")
+     733: 
+     734:     if (
+     735:         found["obs_points_lite_path"]
+     736:         or found["obs_points_validation_path"]
+     737:         or found["obs_points_full_candidates_path"]
+     738:         or found["obs_lines_reviewed_path"]
+     739:         or found["obs_lines_reviewed_plus_path"]
+     740:     ):
+     741:         roles.append("validation")
+     742: 
+     743:     native_names = {Path(path).name for path in found["native_sfincs_files"]}
+     744:     if {"sfincs.inp", "sfincs.dep", "sfincs.msk"} & native_names:
+     745:         roles.append("native_sfincs_package")
+     746: 
+     747:     if not roles:
+     748:         roles.append("unknown")
+
+### around line 784
+     764: 
+     765:     suggested_config: dict[str, Any] = {}
+     766: 
+     767:     def choose_found(key: str) -> str:
+     768:         for item in catalogs:
+     769:             value = item.get("found", {}).get(key)
+     770:             if value:
+     771:                 return value
+     772:         return ""
+     773: 
+     774:     def choose_runtime_values() -> dict[str, Any]:
+     775:         for item in catalogs:
+     776:             values = item.get("runtime_values") or {}
+     777:             if values.get("tref") or values.get("tstart") or values.get("tstop"):
+     778:                 return values
+     779:         return {}
+     780: 
+     781:     runtime_values = choose_runtime_values()
+     782: 
+     783:     if runtime_values.get("tref"):
+>>   784:         suggested_config["tref"] = _review_runtime_normalize_time(runtime_values["tref"])
+     785:     if runtime_values.get("tstart"):
+     786:         suggested_config["tstart"] = _review_runtime_normalize_time(runtime_values["tstart"])
+     787:     if runtime_values.get("tstop"):
+     788:         suggested_config["tstop"] = _review_runtime_normalize_time(runtime_values["tstop"])
+     789: 
+     790:     region_path = choose_found("region_path")
+     791:     if region_path:
+     792:         suggested_config["region_mode"] = "geom"
+     793:         suggested_config["region_path"] = region_path
+     794: 
+     795:     dem_path = choose_found("dem_path")
+     796:     if dem_path:
+     797:         suggested_config["dem_paths"] = [dem_path]
+     798: 
+     799:         # Backend contract:
+     800:         # preprocess_stage.py validates raw dem_paths, but HydroMT build also requires
+     801:         # a nonempty hydromt_dem_sources/hydromt_bathy_sources list. For curated local
+     802:         # topobathy rasters, use the local raster path itself as the elevation entry.
+     803:         suggested_config["hydromt_dem_sources"] = [
+     804:             {
+
+### around line 828
+     808:         ]
+     809: 
+     810:         # The HCFCD_DEM_5m_UTM topobathy is already the active integrated
+     811:         # elevation/topobathy source. Do not also add legacy bathy ingredients by default.
+     812:         suggested_config["hydromt_bathy_sources"] = []
+     813:         suggested_config["bathy_paths"] = []
+     814: 
+     815:     landcover_path = choose_found("landcover_path")
+     816:     if landcover_path:
+     817:         suggested_config["landcover_path"] = landcover_path
+     818:         suggested_config["landcover_source"] = "local_file"
+     819:         suggested_config["use_landcover_roughness_if_available"] = True
+     820:         suggested_config["use_spatially_variable_roughness"] = True
+     821: 
+     822:     landcover_reclass_table = choose_found("landcover_reclass_table")
+     823:     if landcover_reclass_table:
+     824:         suggested_config["landcover_reclass_table"] = landcover_reclass_table
+     825: 
+     826:     thin_dam_path = choose_found("thin_dam_path")
+     827:     if thin_dam_path:
+>>   828:         suggested_config["use_structures"] = True
+     829:         suggested_config["thin_dam_source_kind"] = "geodataframe"
+     830:         suggested_config["thin_dam_path"] = thin_dam_path
+     831: 
+     832:     weir_path = choose_found("weir_path")
+     833:     if weir_path:
+     834:         suggested_config["use_structures"] = True
+     835:         suggested_config["weir_source_kind"] = "geodataframe"
+     836:         suggested_config["weir_path"] = weir_path
+     837: 
+     838:     drainage_structure_path = choose_found("drainage_structure_path")
+     839:     if drainage_structure_path:
+     840:         suggested_config["use_structures"] = True
+     841:         suggested_config["drainage_structure_source_kind"] = "geodataframe"
+     842:         suggested_config["drainage_structure_path"] = drainage_structure_path
+     843: 
+     844:     curve_number_path = choose_found("curve_number_path")
+     845:     if curve_number_path:
+     846:         suggested_config["use_infiltration"] = True
+     847:         suggested_config["infiltration_mode"] = "curve_number"
+     848:         suggested_config["curve_number_path"] = curve_number_path
+
+### around line 870
+     850:         suggested_config["qinf_zmin_m"] = 0.0
+     851:         suggested_config["scs_initial_abstraction_factor"] = 0.2
+     852: 
+     853:     rainfall_path = choose_found("rainfall_path")
+     854:     if rainfall_path:
+     855:         suggested_config["use_rainfall"] = True
+     856:         suggested_config["rainfall_kind"] = "spatial"
+     857:         suggested_config["rainfall_path"] = rainfall_path
+     858:         suggested_config["rainfall_source"] = "local_file"
+     859: 
+     860:     waterlevel_path = choose_found("waterlevel_path")
+     861:     if waterlevel_path:
+     862:         suggested_config["use_waterlevel_boundary"] = True
+     863:         suggested_config["waterlevel_source_kind"] = "event_catalog_csv"
+     864:         suggested_config["waterlevel_path"] = waterlevel_path
+     865:         suggested_config["waterlevel_source"] = "local_file"
+     866: 
+     867:     discharge_timeseries_csv_path = choose_found("discharge_timeseries_csv_path")
+     868:     if discharge_timeseries_csv_path:
+     869:         suggested_config["use_discharge_boundary"] = True
+>>   870:         suggested_config["discharge_source_kind"] = "event_catalog_csv"
+     871:         suggested_config["discharge_timeseries_csv_path"] = discharge_timeseries_csv_path
+     872:         suggested_config["discharge_source"] = "local_file"
+     873: 
+     874:     discharge_points_csv_path = choose_found("discharge_points_csv_path")
+     875:     if discharge_points_csv_path:
+     876:         suggested_config["discharge_points_csv_path"] = discharge_points_csv_path
+     877: 
+     878:     obs_points_path = (
+     879:         choose_found("obs_points_validation_path")
+     880:         or choose_found("obs_points_lite_path")
+     881:         or choose_found("obs_points_full_candidates_path")
+     882:     )
+     883:     if obs_points_path:
+     884:         suggested_config["use_obs_points"] = True
+     885:         suggested_config["obs_points_path"] = obs_points_path
+     886: 
+     887:     obs_lines_path = (
+     888:         choose_found("obs_lines_reviewed_plus_path")
+     889:         or choose_found("obs_lines_reviewed_path")
+     890:     )
+
+### around line 921
+     901:     if native_catalogs:
+     902:         _catalog_warning(
+     903:             warnings,
+     904:             "One or more selected catalogs look like native SFINCS packages. Manual Mode should usually use source catalogs; native packages belong in Override Mode.",
+     905:         )
+     906: 
+     907:     return {
+     908:         "catalogs": catalogs,
+     909:         "suggested_config": suggested_config,
+     910:         "warnings": warnings,
+     911:     }
+     912: 
+     913: 
+     914: def _review_runtime_check_from_config(cfg):
+     915:     requested = {
+     916:         "tref": cfg.get("tref"),
+     917:         "tstart": cfg.get("tstart"),
+     918:         "tstop": cfg.get("tstop"),
+     919:     }
+     920: 
+>>   921:     data_catalogs = _review_runtime_normalize_path_list(cfg.get("data_catalogs"))
+     922: 
+     923:     audit = {
+     924:         "status": "ok",
+     925:         "severity": "ok",
+     926:         "ui_color": "green",
+     927:         "category": "runtime_window_match",
+     928:         "message": "No hybrid runtime-window mismatch detected.",
+     929:         "reason": "This check compares requested config times against the selected event catalog runtime CSV before preprocessing.",
+     930:         "requested": requested,
+     931:         "effective": dict(requested),
+     932:         "mismatches": {},
+     933:         "event_catalog": "",
+     934:         "runtime_source_csv": "",
+     935:     }
+     936: 
+     937:     if not data_catalogs:
+     938:         audit.update({
+     939:             "status": "not_applicable",
+     940:             "severity": "ok",
+     941:             "ui_color": "green",
+
+### around line 967
+     947: 
+     948:     catalog_paths, warnings = _catalog_path_list_from_config(cfg)
+     949: 
+     950:     runtime_path = None
+     951:     event_catalog = None
+     952: 
+     953:     for catalog_path in catalog_paths:
+     954:         candidate = catalog_path / "event_runtime_window" / "event_runtime_window.csv"
+     955:         if candidate.exists():
+     956:             runtime_path = candidate
+     957:             event_catalog = catalog_path
+     958:             break
+     959: 
+     960:     if runtime_path is None:
+     961:         audit.update({
+     962:             "status": "major_warning",
+     963:             "severity": "major",
+     964:             "ui_color": "red",
+     965:             "category": "runtime_window_unverified",
+     966:             "message": "Could not verify the runtime window because no selected catalog contains event_runtime_window/event_runtime_window.csv.",
+>>   967:             "reason": "The runtime-window review scanned all selected data_catalogs instead of assuming the first catalog is the event catalog."
+     968:             + (f" Warnings: {'; '.join(warnings)}" if warnings else ""),
+     969:             "event_catalog": "",
+     970:             "runtime_source_csv": "",
+     971:         })
+     972:         return audit
+     973: 
+     974:     audit["event_catalog"] = str(event_catalog)
+     975:     audit["runtime_source_csv"] = str(runtime_path)
+     976: 
+     977:     with runtime_path.open("r", encoding="utf-8", newline="") as f:
+     978:         reader = csv.DictReader(f)
+     979:         row = next(reader, None)
+     980: 
+     981:     if not row:
+     982:         audit.update({
+     983:             "status": "major_warning",
+     984:             "severity": "major",
+     985:             "ui_color": "red",
+     986:             "category": "runtime_window_unverified",
+     987:             "message": "Could not verify the runtime window because the event runtime CSV has no rows.",
+
+### around line 1066
+    1046:             "ok": True,
+    1047:             "audit": audit,
+    1048:         })
+    1049:     except Exception as exc:
+    1050:         return jsonify({
+    1051:             "ok": False,
+    1052:             "error": str(exc),
+    1053:             "audit": {
+    1054:                 "status": "major_warning",
+    1055:                 "severity": "major",
+    1056:                 "ui_color": "red",
+    1057:                 "category": "runtime_window_review_failed",
+    1058:                 "message": "Runtime window review check failed.",
+    1059:                 "reason": str(exc),
+    1060:             },
+    1061:         }), 500
+    1062: 
+    1063: 
+    1064: @app.post("/api/detect-data-catalogs")
+    1065: @app.post("/api/detect-manual-catalogs")
+>>  1066: def api_detect_data_catalogs():
+    1067:     payload = request.get_json(silent=True) or {}
+    1068:     cfg = payload.get("config") or {}
+    1069: 
+    1070:     if not isinstance(cfg, dict):
+    1071:         return jsonify({
+    1072:             "ok": False,
+    1073:             "error": "Request must contain a JSON object named config.",
+    1074:         }), 400
+    1075: 
+    1076:     try:
+    1077:         result = detect_data_catalogs_from_config(cfg)
+    1078:         return jsonify({
+    1079:             "ok": True,
+    1080:             **result,
+    1081:         })
+    1082:     except Exception as exc:
+    1083:         return jsonify({
+    1084:             "ok": False,
+    1085:             "error": str(exc),
+    1086:             "catalogs": [],
+
+================ CONFIG SCHEMA / RUNNER CONTEXT ================
+
+--- CODE CONTEXT: /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py ---
+
+### around line 3
+       1: """
+       2: Author: Reichen Schaller
+>>     3: Configuration schema/defaults for the SFINCS pipeline runner.
+       4: 
+       5: This file intentionally contains no Slurm submission or model-running logic.
+       6: It defines the settings vocabulary that the runner and future launcher app can
+       7: share.
+       8: """
+       9: 
+      10: from __future__ import annotations
+      11: 
+      12: from pathlib import Path
+      13: from typing import Any
+      14: 
+      15: 
+      16: VALID_RUNNER_MODES = {"preflight", "build_scripts", "submit"}
+      17: 
+      18: PIPELINE_MODE_BY_RUNNER_MODE = {
+      19:     "preflight": "preflight_only",
+      20:     "build_scripts": "build_scripts_only",
+      21:     "submit": "submit_slurm_chain",
+
+### around line 125
+     107: 
+     108:         # Pipeline control
+     109:         "pipeline_mode": "preflight_only",
+     110:         "preprocess_mode": "hybrid",
+     111:         "run_preprocessing_job": True,
+     112:         "run_sfincs_job": True,
+     113:         "run_postprocessing_job": True,
+     114:         "submit_with_dependencies": True,
+     115:         "dependency_type": "afterok",
+     116: 
+     117:         # Runtime machinery
+     118:         "preprocess_stage_script": str(code_dir / "preprocess_stage.py"),
+     119:         "postprocess_stage_script": str(code_dir / "postprocess_stage.py"),
+     120:         "conda_env_path": str(Path(conda_python).parent.parent),
+     121:         "conda_python": conda_python,
+     122:         "sfincs_container_path": str(pipeline_root / "containers" / SFINCS_CONTAINER_FILENAME),
+     123:         "apptainer_module": "apptainer",
+     124:         "anaconda_module": "anaconda",
+>>   125:         "bash_strict_mode": True,
+     126: 
+     127:         # Slurm general
+     128:         "slurm_account": None,
+     129:         "slurm_partition": None,
+     130:         "slurm_qos": None,
+     131:         "slurm_email": None,
+     132:         "slurm_mail_type": "END,FAIL",
+     133:         "slurm_extra_directives": [],
+     134: 
+     135:         # Resources
+     136:         "preprocess_time": "01:00:00",
+     137:         "preprocess_nodes": 1,
+     138:         "preprocess_ntasks": 1,
+     139:         "preprocess_cpus_per_task": 4,
+     140:         "preprocess_mem": "16G",
+     141: 
+     142:         "sfincs_time": "04:00:00",
+     143:         "sfincs_nodes": 1,
+
+### around line 178
+     160:         "native_event_sfincs_input_dirs": [],
+     161:         "native_sfincs_input_dirs": [],
+     162: 
+     163:         # Forcing defaults
+     164:         "use_rainfall": True,
+     165:         "use_waterlevel_boundary": True,
+     166:         "use_discharge_boundary": True,
+     167:         "use_wind": False,
+     168:         "use_pressure": False,
+     169:         "require_at_least_one_forcing": True,
+     170: 
+     171:         # Safety/debug
+     172:         "print_config_summary": True,
+     173:         "validate_paths_before_submit": True,
+     174:         "stop_if_required_path_missing": True,
+     175:         "save_config_json": True,
+     176:         "save_job_ids": True,
+     177:         "print_optional_path_warnings": True,
+>>   178:         "warn_unknown_config_keys": True,
+     179:         "strict_schema_validation": False,
+     180:         "warn_schema_type_mismatches": True,
+     181:     }
+     182: 
+     183: 
+     184: # ==============================================================================
+     185: # GENERATED SCHEMA METADATA
+     186: # ==============================================================================
+     187: # Generated from:
+     188: #   /proj/zefflab/projects/Flooding/sfincs_runs/harris_harvey_2017_runner_submit_001/run_config.json
+     189: # Created:
+     190: #   2026-05-27T11:33:24
+     191: #
+     192: # These keys are known to appear in successful config-driven pipeline runs.
+     193: # They are separated from default_config() so older/specialized configs can carry
+     194: # stage-specific keys without being falsely reported as unknown.
+     195: 
+     196: OPTIONAL_CONFIG_KEYS = {
+
+### around line 333
+     315:     "runner_file",
+     316:     "runner_python",
+     317:     "runner_python_version",
+     318:     "save_data_inventory",
+     319:     "scs_initial_abstraction_factor",
+     320:     "sfincs_file_override_fail_on_multiple_matches",
+     321:     "sfincs_file_override_targets",
+     322:     "sfincs_file_overrides",
+     323:     "soil_storage_path",
+     324:     "source_config_path",
+     325:     "store_cumulative_precip",
+     326:     "store_hmax_subgrid",
+     327:     "store_max_flux",
+     328:     "store_max_velocity",
+     329:     "store_velocity",
+     330:     "store_wet_duration",
+     331:     "streamflow_data_path",
+     332:     "streamflow_site_info_path",
+>>   333:     "strict_schema_validation",
+     334:     "subgrid_nr_pixels",
+     335:     "subgrid_river_path",
+     336:     "subgrid_river_source",
+     337:     "subgrid_use_rivers",
+     338:     "subgrid_write_dep_tif",
+     339:     "subgrid_write_man_tif",
+     340:     "thin_dam_native_file_path",
+     341:     "thin_dam_path",
+     342:     "thin_dam_source_kind",
+     343:     "tref",
+     344:     "tstart",
+     345:     "tstop",
+     346:     "use_infiltration",
+     347:     "use_landcover_roughness_if_available",
+     348:     "use_obs_lines",
+     349:     "use_obs_points",
+     350:     "use_sfincs_file_overrides",
+     351:     "use_spatially_variable_roughness",
+
+### around line 372
+     354:     "warn_schema_type_mismatches",
+     355:     "warn_unknown_config_keys",
+     356:     "waterlevel_boundary_zmax",
+     357:     "waterlevel_clip_to_model_time",
+     358:     "waterlevel_path",
+     359:     "waterlevel_source",
+     360:     "waterlevel_source_kind",
+     361:     "waterlevel_variable",
+     362:     "weir_native_file_path",
+     363:     "weir_path",
+     364:     "weir_source_kind",
+     365:     "wind_path",
+     366:     "wind_source",
+     367: }
+     368: 
+     369: SCHEMA_BOOL_KEYS = {
+     370:     "allow_missing_model_inputs",
+     371:     "allow_writes_inside_proj",
+>>   372:     "bash_strict_mode",
+     373:     "discharge_clip_to_model_time",
+     374:     "grid_rotated",
+     375:     "overwrite_existing_run",
+     376:     "postprocess_create_summary_json",
+     377:     "postprocess_create_summary_txt",
+     378:     "postprocess_list_output_variables",
+     379:     "postprocess_make_quicklook_plots",
+     380:     "postprocess_plot_final_water_level",
+     381:     "postprocess_plot_max_flood_depth",
+     382:     "postprocess_plot_max_water_level",
+     383:     "postprocess_plot_obs_hydrographs",
+     384:     "postprocess_result_map_show_boundaries",
+     385:     "postprocess_result_map_show_dep_layer",
+     386:     "postprocess_result_map_show_layout_legend",
+     387:     "postprocess_result_map_show_model_features",
+     388:     "postprocess_result_map_show_obs",
+     389:     "postprocess_use_basemap",
+     390:     "postprocess_use_basemap_on_result_maps",
+
+### around line 436
+     418:     "submit_with_dependencies",
+     419:     "use_discharge_boundary",
+     420:     "use_infiltration",
+     421:     "use_landcover_roughness_if_available",
+     422:     "use_obs_lines",
+     423:     "use_obs_points",
+     424:     "use_pressure",
+     425:     "use_rainfall",
+     426:     "use_sfincs_file_overrides",
+     427:     "use_spatially_variable_roughness",
+     428:     "use_structures",
+     429:     "use_subgrid",
+     430:     "use_waterlevel_boundary",
+     431:     "use_wind",
+     432:     "validate_paths_before_submit",
+     433:     "waterlevel_clip_to_model_time",
+     434: }
+     435: 
+>>   436: SCHEMA_INT_KEYS = {
+     437:     "dthisout_s",
+     438:     "dtout_s",
+     439:     "dtrstout_s",
+     440:     "elevation_buffer_cells",
+     441:     "grid_dx_m",
+     442:     "grid_dy_m",
+     443:     "grid_resolution_m",
+     444:     "meteo_update_interval_s",
+     445:     "postprocess_basemap_zoomlevel",
+     446:     "postprocess_cpus_per_task",
+     447:     "postprocess_max_plot_cells",
+     448:     "postprocess_nodes",
+     449:     "postprocess_ntasks",
+     450:     "preprocess_cpus_per_task",
+     451:     "preprocess_nodes",
+     452:     "preprocess_ntasks",
+     453:     "sfincs_cpus_per_task",
+     454:     "sfincs_nodes",
+
+### around line 477
+     459: SCHEMA_FLOAT_KEYS = {
+     460:     "active_zmin",
+     461:     "dem_zmin",
+     462:     "dtmaxout_s",
+     463:     "manning_land",
+     464:     "manning_sea",
+     465:     "manning_uniform",
+     466:     "mask_drop_area_km2",
+     467:     "mask_fill_area_km2",
+     468:     "postprocess_result_map_alpha",
+     469:     "postprocess_result_map_background_fade_alpha",
+     470:     "qinf_mm_hr",
+     471:     "qinf_zmin_m",
+     472:     "roughness_land_level_m",
+     473:     "scs_initial_abstraction_factor",
+     474:     "waterlevel_boundary_zmax",
+     475: }
+     476: 
+>>   477: SCHEMA_STR_KEYS = {
+     478:     "_source_config_path",
+     479:     "anaconda_module",
+     480:     "apptainer_module",
+     481:     "conda_env_path",
+     482:     "conda_python",
+     483:     "created_at",
+     484:     "created_by_user",
+     485:     "culvert_source_kind",
+     486:     "data_root",
+     487:     "dependency_type",
+     488:     "discharge_points_name_column",
+     489:     "discharge_points_x_column",
+     490:     "discharge_points_y_column",
+     491:     "discharge_source",
+     492:     "discharge_source_kind",
+     493:     "discharge_time_column",
+     494:     "discharge_time_format",
+     495:     "discharge_units",
+
+### around line 550
+     532:     "sfincs_mem",
+     533:     "sfincs_omp_places",
+     534:     "sfincs_omp_proc_bind",
+     535:     "sfincs_time",
+     536:     "slurm_mail_type",
+     537:     "source_config_path",
+     538:     "subgrid_river_source",
+     539:     "thin_dam_source_kind",
+     540:     "tref",
+     541:     "tstart",
+     542:     "tstop",
+     543:     "waterlevel_source",
+     544:     "waterlevel_source_kind",
+     545:     "waterlevel_variable",
+     546:     "weir_source_kind",
+     547:     "wind_source",
+     548: }
+     549: 
+>>   550: SCHEMA_LIST_KEYS = {
+     551:     "bathy_paths",
+     552:     "data_catalogs",
+     553:     "dem_paths",
+     554:     "discharge_value_columns",
+     555:     "hydromt_bathy_sources",
+     556:     "hydromt_dem_sources",
+     557:     "hydromt_roughness_sources",
+     558:     "native_event_sfincs_input_dirs",
+     559:     "native_sfincs_input_dirs",
+     560:     "native_static_sfincs_input_dirs",
+     561:     "postprocess_bedlevel_var_candidates",
+     562:     "postprocess_depth_var_candidates",
+     563:     "postprocess_max_depth_var_candidates",
+     564:     "postprocess_max_waterlevel_var_candidates",
+     565:     "postprocess_waterlevel_var_candidates",
+     566:     "run_tags",
+     567:     "slurm_extra_directives",
+     568: }
+
+### around line 638
+     620:     "runner_file",
+     621:     "runner_python",
+     622:     "sfincs_container_path",
+     623:     "soil_storage_path",
+     624:     "source_config_path",
+     625:     "streamflow_data_path",
+     626:     "streamflow_site_info_path",
+     627:     "subgrid_river_path",
+     628:     "thin_dam_native_file_path",
+     629:     "thin_dam_path",
+     630:     "waterlevel_path",
+     631:     "weir_native_file_path",
+     632:     "weir_path",
+     633:     "wind_path",
+     634: }
+     635: 
+     636: 
+     637: def known_config_keys(pipeline_root: Path | None = None) -> set[str]:
+>>   638:     """Return all config keys known to the runner schema."""
+     639:     root = pipeline_root or Path("/proj/zefflab/projects/Flooding/pipeline")
+     640:     return set(default_config(root)) | set(OPTIONAL_CONFIG_KEYS)
+     641: 
+     642: 
+     643: def unknown_config_keys(cfg: dict[str, Any], pipeline_root: Path | None = None) -> list[str]:
+     644:     """Return config keys not currently known to the runner schema."""
+     645:     return sorted(set(cfg) - known_config_keys(pipeline_root))
+     646: 
+     647: 
+     648: def schema_type_warnings(cfg: dict[str, Any]) -> list[str]:
+     649:     """Return non-fatal type warnings for obviously malformed config values."""
+     650:     warnings: list[str] = []
+     651: 
+     652:     def warn(key: str, expected: str, actual: Any) -> None:
+     653:         warnings.append(
+     654:             f"SCHEMA TYPE WARNING: {key} expected {expected}, got {type(actual).__name__}: {actual!r}"
+     655:         )
+     656: 
+
+### around line 677
+     659:             warn(key, "bool", cfg[key])
+     660: 
+     661:     for key in SCHEMA_INT_KEYS:
+     662:         if key in cfg and cfg[key] is not None and not (isinstance(cfg[key], int) and not isinstance(cfg[key], bool)):
+     663:             warn(key, "int", cfg[key])
+     664: 
+     665:     for key in SCHEMA_FLOAT_KEYS:
+     666:         if key in cfg and cfg[key] is not None and not isinstance(cfg[key], (int, float)):
+     667:             warn(key, "float-compatible number", cfg[key])
+     668: 
+     669:     for key in SCHEMA_STR_KEYS:
+     670:         if key in cfg and cfg[key] is not None and not isinstance(cfg[key], str):
+     671:             warn(key, "str", cfg[key])
+     672: 
+     673:     for key in SCHEMA_LIST_KEYS:
+     674:         if key in cfg and cfg[key] is not None and not isinstance(cfg[key], list):
+     675:             warn(key, "list", cfg[key])
+     676: 
+>>   677:     for key in SCHEMA_DICT_KEYS:
+     678:         if key in cfg and cfg[key] is not None and not isinstance(cfg[key], dict):
+     679:             warn(key, "dict", cfg[key])
+     680: 
+     681:     return warnings
+... context output truncated
+
+--- CODE CONTEXT: /proj/zefflab/projects/Flooding/pipeline/code/runner_core.py ---
+
+### around line 24
+       6: This file is deliberately the "middle" of the backend:
+       7: - no HTML/UI code
+       8: - no direct SFINCS model logic
+       9: - no Slurm script text except calls into slurm_tools.py
+      10: """
+      11: 
+      12: from __future__ import annotations
+      13: 
+      14: import json
+      15: import os
+      16: import re
+      17: import shutil
+      18: import sys
+      19: from copy import deepcopy
+      20: from datetime import datetime
+      21: from pathlib import Path
+      22: from typing import Any
+      23: 
+>>    24: from config_schema import (
+      25:     DEFAULT_STATIC_PPP_DIR,
+      26:     HYBRID_ALWAYS_REQUIRED_EVENT_FILES,
+      27:     HYBRID_FORCING_EVENT_FILES,
+      28:     HYBRID_STATIC_REQUIRED_FILES,
+      29:     PIPELINE_MODE_BY_RUNNER_MODE,
+      30:     SFINCS_CONTAINER_FILENAME,
+      31:     VALID_DEPENDENCY_TYPES,
+      32:     VALID_PIPELINE_MODES,
+      33:     VALID_PREPROCESS_MODES,
+      34: )
+      35: 
+      36: 
+      37: def print_section(title: str) -> None:
+      38:     print("\n" + "=" * 78)
+      39:     print(title)
+      40:     print("=" * 78)
+      41: 
+      42: 
+
+### around line 182
+     164:         out["conda_env_path"] = "/users/e/p/epsilon/sfincs_project/envs/sfincs"
+     165: 
+     166:     # If a hybrid config has no static dir, use current Harris PPP default.
+     167:     if out.get("preprocess_mode") == "hybrid" and not out.get("native_static_sfincs_input_dirs"):
+     168:         out["native_static_sfincs_input_dirs"] = [DEFAULT_STATIC_PPP_DIR]
+     169: 
+     170:     return out
+     171: 
+     172: 
+     173: def run_paths(cfg: dict[str, Any]) -> dict[str, Path]:
+     174:     output_root = Path(str(cfg["output_root"])).expanduser()
+     175:     run_root = output_root / str(cfg["run_name"])
+     176:     return {
+     177:         "run_root": run_root,
+     178:         "model_root": run_root / "model",
+     179:         "scripts_root": run_root / "scripts",
+     180:         "logs_root": run_root / "logs",
+     181:         "postprocess_root": run_root / "postprocess",
+>>   182:         "config_json_path": run_root / "run_config.json",
+     183:         "job_ids_path": run_root / "job_ids.txt",
+     184:         "preprocess_slurm_path": run_root / "scripts" / "preprocess_job.sl",
+     185:         "sfincs_slurm_path": run_root / "scripts" / "sfincs_job.sl",
+     186:         "postprocess_slurm_path": run_root / "scripts" / "postprocess_job.sl",
+     187:     }
+     188: 
+     189: 
+     190: def validate_run_name(run_name: str) -> None:
+     191:     if not re.fullmatch(r"[A-Za-z0-9_.-]+", run_name):
+     192:         raise ValueError(
+     193:             "run_name should only contain letters, numbers, underscores, dashes, or periods.\n"
+     194:             f"Bad run_name: {run_name!r}"
+     195:         )
+     196: 
+     197: 
+     198: def _as_path_list(value: Any) -> list[Path]:
+     199:     if value is None:
+     200:         return []
+
+### around line 234
+     216:         failures.append(msg)
+     217: 
+     218: 
+     219: def _check_existing_run_folder(cfg: dict[str, Any], runner_mode: str, failures: list[str]) -> None:
+     220:     paths = run_paths(cfg)
+     221:     run_root = paths["run_root"]
+     222:     overwrite = bool(cfg.get("overwrite_existing_run", False))
+     223:     run_state = inspect_run_root_for_scaffold(run_root)
+     224: 
+     225:     if not run_state["exists"]:
+     226:         return
+     227: 
+     228:     if overwrite:
+     229:         print(f"WARNING: run folder exists and overwrite_existing_run=True: {run_root}")
+     230:         return
+     231: 
+     232:     if not run_state["has_real_run"]:
+     233:         print(
+>>   234:             "NOTE: run folder exists but only contains allowed "
+     235:             f"saved-config/build-script scaffold; continuing: {run_root}"
+     236:         )
+     237:         return
+     238: 
+     239:     examples = "\n".join(
+     240:         f"  - {p}" for p in run_state["artifact_paths"][:10]
+     241:     )
+     242: 
+     243:     msg = (
+     244:         "RUN FOLDER EXISTS and appears to contain real run artifacts, "
+     245:         "not just saved-config/build-script scaffold.\n"
+     246:         f"Run folder: {run_root}\n"
+     247:         "Use a new run_name, or set overwrite_existing_run=True only if intentional.\n"
+     248:         f"Example artifacts:\n{examples}"
+     249:     )
+     250: 
+     251:     if runner_mode == "preflight":
+     252:         print("WARNING: " + msg)
+
+### around line 307
+     289:                 _check_path(static_dir / rel, f"HYBRID STATIC FILE {rel}", True, failures)
+     290: 
+     291: 
+     292: def _validate_hydromt_or_native_inputs(cfg: dict[str, Any], failures: list[str]) -> None:
+     293:     preprocess_mode = cfg.get("preprocess_mode")
+     294:     if preprocess_mode == "hydromt_build":
+     295:         print("\nHydroMT-build input checks:")
+     296:         region_mode = cfg.get("region_mode")
+     297:         if region_mode == "geom":
+     298:             region_path = cfg.get("region_path")
+     299:             if region_path:
+     300:                 _check_path(Path(str(region_path)), "REGION_PATH", True, failures)
+     301:             elif not cfg.get("allow_missing_model_inputs", False):
+     302:                 failures.append("MISSING REQUIRED: region_path is blank for hydromt_build geom mode")
+     303:         elif region_mode == "bbox":
+     304:             if cfg.get("region_bbox") is None and not cfg.get("allow_missing_model_inputs", False):
+     305:                 failures.append("MISSING REQUIRED: region_bbox is None for hydromt_build bbox mode")
+     306:         else:
+>>   307:             failures.append(f"UNKNOWN region_mode for hydromt_build: {region_mode!r}")
+     308:     elif preprocess_mode == "native_sfincs_assembly":
+     309:         print("\nNative assembly input checks:")
+     310:         print("NOTE: first runner pass does not deeply validate native assembly overrides yet.")
+     311:     elif preprocess_mode == "hybrid":
+     312:         _validate_hybrid_inputs(cfg, failures)
+     313: 
+     314: def inspect_run_root_for_scaffold(run_root: Path) -> dict[str, Any]:
+     315:     """
+     316:     Classify an existing run folder.
+     317: 
+     318:     Allowed scaffold/progress:
+     319:       - run_config.json
+     320:       - saved_config.json
+     321:       - launcher_config.json
+     322:       - scripts/*.sl or scripts/*.sh
+     323:       - empty logs/
+     324:       - empty model/
+     325:       - empty postprocess/
+
+### around line 347
+     329:       - preprocess_failed.json / postprocess_failed.json
+     330:       - any model files
+     331:       - any logs
+     332:       - any postprocess outputs
+     333:       - unknown top-level files/folders
+     334:     """
+     335:     if not run_root.exists():
+     336:         return {
+     337:             "exists": False,
+     338:             "has_real_run": False,
+     339:             "allowed_scaffold_paths": [],
+     340:             "artifact_paths": [],
+     341:         }
+     342: 
+     343:     if not run_root.is_dir():
+     344:         return {
+     345:             "exists": True,
+     346:             "has_real_run": True,
+>>   347:             "allowed_scaffold_paths": [],
+     348:             "artifact_paths": [str(run_root)],
+     349:         }
+     350: 
+     351:     allowed_scaffold_paths = []
+     352:     artifact_paths = []
+     353: 
+     354:     allowed_top_files = {
+     355:         "run_config.json",
+     356:         "saved_config.json",
+     357:         "launcher_config.json",
+     358:     }
+     359: 
+     360:     allowed_top_dirs = {
+     361:         "scripts",
+     362:         "logs",
+     363:         "model",
+     364:         "postprocess",
+     365:     }
+
+### around line 394
+     376:             allowed_scaffold_paths.append(str(child))
+     377:             continue
+     378: 
+     379:         if child.is_file():
+     380:             artifact_paths.append(str(child))
+     381:             continue
+     382: 
+     383:         if child.is_dir() and name not in allowed_top_dirs:
+     384:             artifact_paths.append(str(child))
+     385:             continue
+     386: 
+     387:         if child.is_dir() and name == "scripts":
+     388:             bad_script_contents = []
+     389: 
+     390:             for p in child.rglob("*"):
+     391:                 if p.name.startswith("."):
+     392:                     continue
+     393: 
+>>   394:                 if p.is_file() and p.suffix in allowed_script_suffixes:
+     395:                     allowed_scaffold_paths.append(str(p))
+     396:                 elif p.is_file():
+     397:                     bad_script_contents.append(str(p))
+     398: 
+     399:             if bad_script_contents:
+     400:                 artifact_paths.extend(bad_script_contents[:10])
+     401:             else:
+     402:                 allowed_scaffold_paths.append(str(child))
+     403: 
+     404:             continue
+     405: 
+     406:         if child.is_dir() and name in {"logs", "model", "postprocess"}:
+     407:             visible_files = [
+     408:                 p for p in child.rglob("*")
+     409:                 if p.is_file() and not p.name.startswith(".")
+     410:             ]
+     411: 
+     412:             if visible_files:
+
+### around line 432
+     414:             else:
+     415:                 allowed_scaffold_paths.append(str(child))
+     416: 
+     417:             continue
+     418: 
+     419:     return {
+     420:         "exists": True,
+     421:         "has_real_run": bool(artifact_paths),
+     422:         "allowed_scaffold_paths": allowed_scaffold_paths,
+     423:         "artifact_paths": artifact_paths,
+     424:     }
+     425: 
+     426: 
+     427: def validate_schema_hardening(cfg: dict[str, Any]) -> list[str]:
+     428:     """Print non-fatal schema warnings and return fatal schema failures."""
+     429:     failures: list[str] = []
+     430: 
+     431:     try:
+>>   432:         from config_schema import schema_type_warnings, unknown_config_keys
+     433:     except Exception as exc:
+     434:         print(f"SCHEMA WARNING: unable to import schema metadata checks: {exc}")
+     435:         return failures
+     436: 
+     437:     pipeline_root = Path(cfg.get("project_root", "/proj/zefflab/projects/Flooding/pipeline"))
+     438: 
+     439:     unknown = unknown_config_keys(cfg, pipeline_root)
+     440:     if unknown:
+     441:         print()
+     442:         print("Schema unknown-key check:")
+     443:         print(f"UNKNOWN CONFIG KEYS: {len(unknown)}")
+     444:         for key in unknown:
+     445:             print(f"  - {key}")
+     446: 
+     447:         if bool(cfg.get("strict_schema_validation", False)):
+     448:             failures.append(f"Unknown config keys present: {', '.join(unknown)}")
+     449:         elif bool(cfg.get("warn_unknown_config_keys", True)):
+     450:             print("WARNING: unknown config keys were found, but strict_schema_validation=False so this is non-fatal.")
+
+### around line 475
+     457:             print()
+     458:             print("Schema type check warnings:")
+     459:             for warning in warnings:
+     460:                 print(warning)
+     461: 
+     462:             if bool(cfg.get("strict_schema_validation", False)):
+     463:                 failures.extend(warnings)
+     464:         else:
+     465:             print("Schema type check: no obvious type mismatches found.")
+     466: 
+     467:     return failures
+     468: 
+     469: 
+     470: def validate_config(cfg: dict[str, Any], runner_mode: str) -> None:
+     471:     """Validate config values and paths. Raises on failure."""
+     472:     print_section("VALIDATION")
+     473: 
+     474:     failures: list[str] = []
+>>   475:     failures.extend(validate_schema_hardening(cfg))
+     476: 
+     477: 
+     478:     validate_run_name(str(cfg.get("run_name", "")))
+     479: 
+     480:     preprocess_mode = cfg.get("preprocess_mode")
+     481:     if preprocess_mode not in VALID_PREPROCESS_MODES:
+     482:         failures.append(f"preprocess_mode must be one of {sorted(VALID_PREPROCESS_MODES)}, got {preprocess_mode!r}")
+     483:     
+     484:     if bool(cfg.get("use_sfincs_file_overrides", False)) and preprocess_mode == "hydromt_build":
+     485:         failures.append(
+     486:             "Invalid config: use_sfincs_file_overrides=True with preprocess_mode='hydromt_build'. "
+     487:             "Override Mode must use preprocess_mode='native_sfincs_assembly'. "
+     488:             "Use Manual Mode if you want to run a HydroMT build."
+     489:         )
+     490: 
+     491:     pipeline_mode = cfg.get("pipeline_mode")
+     492:     if pipeline_mode not in VALID_PIPELINE_MODES:
+     493:         failures.append(f"pipeline_mode must be one of {sorted(VALID_PIPELINE_MODES)}, got {pipeline_mode!r}")
+
+### around line 641
+     623:         raise FileExistsError(
+     624:             "Run folder already exists and appears to contain real run artifacts, "
+     625:             "not just saved-config/build-script scaffold.\n"
+     626:             f"Run folder: {run_root}\n"
+     627:             "Change run_name or explicitly enable overwrite_existing_run=True.\n"
+     628:             f"Example artifacts:\n{examples}"
+     629:         )
+     630: 
+     631:     if run_state["exists"] and not overwrite and not run_state["has_real_run"]:
+     632:         print(
+     633:             "NOTE: reusing existing saved-config/build-script scaffold folder: "
+     634:             f"{run_root}"
+     635:         )
+     636: 
+     637:     for key in ["run_root", "model_root", "scripts_root", "logs_root", "postprocess_root"]:
+     638:         paths[key].mkdir(parents=True, exist_ok=True)
+     639:         print(f"{key}: {paths[key]}")
+     640: 
+>>   641: def write_frozen_run_config(cfg: dict[str, Any], runner_file: Path) -> Path:
+     642:     print_section("WRITE FROZEN RUN CONFIG")
+     643: 
+     644:     paths = run_paths(cfg)
+     645:     frozen = deepcopy(cfg)
+     646: 
+     647:     # Do not preserve private/temporary keys from the user-loaded config.
+     648:     frozen.pop("_source_config_path", None)
+     649: 
+     650:     frozen["runner_file"] = str(runner_file.resolve())
+     651:     frozen["created_at"] = datetime.now().isoformat(timespec="seconds")
+     652:     frozen["created_by_user"] = os.environ.get("USER", "unknown")
+     653:     frozen["runner_python"] = sys.executable
+     654:     frozen["runner_python_version"] = sys.version
+     655:     frozen["source_config_path"] = cfg.get("_source_config_path")
+     656: 
+     657:     out_path = paths["config_json_path"]
+     658:     with out_path.open("w", encoding="utf-8") as f:
+     659:         json.dump(json_safe(frozen), f, indent=2)
+
+--- CODE CONTEXT: /proj/zefflab/projects/Flooding/pipeline/code/pipeline_runner.py ---
+
+### around line 18
+       1: #!/usr/bin/env python3
+       2: """
+       3: Author: Reichen Schaller
+       4: Command-line entry point for the config-driven SFINCS pipeline runner.
+       5: 
+       6: The future HTML launcher should create/edit config JSON files and call this
+       7: runner. Batch tools can also call this runner directly on many config files.
+       8: """
+       9: 
+      10: from __future__ import annotations
+      11: 
+      12: import argparse
+      13: import json
+      14: import sys
+      15: from pathlib import Path
+      16: from typing import Any
+      17: 
+>>    18: from config_schema import VALID_RUNNER_MODES, default_config
+      19: from runner_core import (
+      20:     apply_cli_overrides,
+      21:     apply_defaults,
+      22:     load_config_json,
+      23:     prepare_run_folders,
+      24:     print_config_summary,
+      25:     print_runner_complete,
+      26:     resolve_runtime_paths,
+      27:     set_pipeline_mode_from_runner_mode,
+      28:     validate_config,
+      29:     write_frozen_run_config,
+      30: )
+      31: from slurm_tools import submit_slurm_chain, write_job_ids, write_slurm_scripts
+      32: 
+      33: 
+      34: def parse_set_value(raw: str) -> Any:
+      35:     """Parse --set values.
+      36: 
+
+### around line 128
+     110: 
+     111:     cfg = load_config_json(config_path)
+     112:     cfg = apply_defaults(cfg, default_config(pipeline_root))
+     113:     cfg = apply_cli_overrides(cfg, parse_overrides(args.set))
+     114:     cfg = resolve_runtime_paths(cfg, pipeline_root)
+     115:     cfg = set_pipeline_mode_from_runner_mode(cfg, args.mode)
+     116: 
+     117:     if bool(cfg.get("print_config_summary", True)):
+     118:         print_config_summary(cfg, args.mode)
+     119: 
+     120:     if bool(cfg.get("validate_paths_before_submit", True)):
+     121:         validate_config(cfg, args.mode)
+     122: 
+     123:     if args.mode == "preflight":
+     124:         print_runner_complete(cfg, args.mode, job_ids=None)
+     125:         return 0
+     126: 
+     127:     prepare_run_folders(cfg)
+>>   128:     write_frozen_run_config(cfg, runner_file)
+     129:     write_slurm_scripts(cfg)
+     130: 
+     131:     if args.mode == "build_scripts":
+     132:         print_runner_complete(cfg, args.mode, job_ids=None)
+     133:         return 0
+     134: 
+     135:     job_ids = submit_slurm_chain(cfg)
+     136:     write_job_ids(cfg, job_ids)
+     137:     print_runner_complete(cfg, args.mode, job_ids=job_ids)
+     138:     return 0
+     139: 
+     140: 
+     141: def main(argv: list[str] | None = None) -> int:
+     142:     parser = build_parser()
+     143:     args = parser.parse_args(argv)
+     144: 
+     145:     try:
+     146:         return run_from_args(args)
+
+================ ENV PROBES ================
+
+--- PYTHON PROBE: web_launcher env ---
+python: /proj/zefflab/projects/Flooding/pipeline/envs/web_launcher/bin/python
+hydromt: FAIL ModuleNotFoundError: No module named 'hydromt'
+hydromt_sfincs: FAIL ModuleNotFoundError: No module named 'hydromt_sfincs'
+xarray: FAIL ModuleNotFoundError: No module named 'xarray'
+geopandas: FAIL ModuleNotFoundError: No module named 'geopandas'
+exit_code=0
+
+--- PYTHON PROBE: sfincs backend env ---
+probe failed: Command '['/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python', '-c', '\n\nimport sys\n\nprint("python:", sys.executable)\n\nfor mod in ["hydromt", "hydromt_sfincs", "xarray", "geopandas"]:\n\n    try:\n\n        m = __import__(mod)\n\n        print(f"{mod}: OK version={getattr(m, \'__version__\', \'?\')}")\n\n    except Exception as exc:\n\n        print(f"{mod}: FAIL {type(exc).__name__}: {exc}")\n\n']' timed out after 45 seconds
+
+================ PATCH DIAGNOSIS ================
+PATCH NEEDED: preprocess_stage.py does not yet appear to support hydromt_catalog_paths.
+PATCH NEEDED: app.py detector does not yet appear to suggest hydromt_catalog_paths.
+PATCH LIKELY: config_schema.py may need hydromt_catalog_paths added so schema warnings do not complain.
+
+Recommended backend behavior:
+1. Keep data_catalogs as directory roots for launcher detection and runtime-window review.
+2. Add/derive hydromt_catalog_paths from those roots:
+   - event_metadata/hydromt_data.yml
+   - static_metadata/hydromt_data.yml
+3. In preprocess_stage.py, pass hydromt_catalog_paths to HydroMT/data_libs, not raw data_catalogs directory roots.
+4. If hydromt_catalog_paths is absent, derive it internally from data_catalogs for backward compatibility.
+5. Keep runtime-window review scanning data_catalogs directories.

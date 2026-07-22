@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SFINCS Compare Runs</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --good: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+      --border: #374151;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #0f172a 48%, #020617 100%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    label {
+      display: block;
+      font-weight: 650;
+      margin: 14px 0 7px;
+    }
+
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      background: #020617;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+
+    button {
+      border: 0;
+      border-radius: 13px;
+      padding: 11px 14px;
+      background: var(--accent);
+      color: #00111f;
+      font-weight: 750;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button.secondary {
+      background: #334155;
+      color: var(--text);
+    }
+
+    button.danger {
+      background: #7f1d1d;
+      color: #fee2e2;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .row > * {
+      flex: 1;
+    }
+
+    .run-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .run-item {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #0c4a6e;
+      color: #e0f2fe;
+      white-space: nowrap;
+    }
+
+    .path {
+      overflow-wrap: anywhere;
+      color: #cbd5e1;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .search-results {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 260px;
+      display: none;
+      scrollbar-width: thin;
+    }
+
+    .search-hit {
+      padding: 11px 12px;
+      background: #020617;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .search-hit:hover {
+      background: #0f172a;
+    }
+
+    .search-hit:last-child {
+      border-bottom: 0;
+    }
+    
+    .search-meta {
+      padding: 8px 12px;
+      background: #0f172a;
+      color: var(--muted);
+      font-size: 12px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .search-meta {
+      padding: 8px 12px;
+      background: #0f172a;
+      color: var(--muted);
+      font-size: 12px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin: 12px 0;
+      color: #dbeafe;
+    }
+
+    .recommend-box {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    .future {
+      opacity: 0.74;
+      border-style: dashed;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .error {
+      color: #fecaca;
+      background: rgba(127, 29, 29, 0.35);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 12px;
+      display: none;
+      white-space: pre-wrap;
+    }
+
+    .help-button {
+
+      position: fixed;
+
+      left: 18px;
+
+      bottom: 18px;
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 1px solid var(--border);
+
+      background: #ffffff;
+
+      color: #173f73;
+
+      display: grid;
+
+      place-items: center;
+
+      font-weight: 900;
+
+      box-shadow: 0 12px 28px rgba(24, 39, 75, 0.18);
+
+      text-decoration: none;
+
+      z-index: 50;
+
+    }
+
+
+
+    .help-button:hover {
+
+      border-color: var(--accent);
+
+      color: #315f9f;
+
+    }
+
+
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .run-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Compare Runs</h1>
+        <p>Pick completed SFINCS run folders, choose a comparison level, submit a Slurm compare job, then view a clean result page.</p>
+      </div>
+      <div>
+        <a href="/">← Back to launcher</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>1. Select runs</h2>
+        <p>The first run is the baseline. Every other selected run is compared against it.</p>
+
+        <label for="searchRoot">Search root</label>
+        <div class="row">
+          <input id="searchRoot" value="/proj/zefflab/projects/Flooding/sfincs_runs">
+          <button class="secondary" type="button"
+                  data-browse-target="searchRoot"
+                  data-browse-mode="directory"
+                  data-browse-start="/proj/zefflab/projects/Flooding/sfincs_runs">
+            Browse
+          </button>
+        </div>
+        <p class="muted">Pick a folder that contains run folders. Default is the shared sfincs_runs folder.</p>
+        
+        <label for="runSearch">Search run folders</label>
+        <div class="row">
+          <input id="runSearch" placeholder="Example: override_006, harvey, /proj/.../sfincs_runs/run_name">
+          <button class="secondary" onclick="searchRuns()">Search</button>
+        </div>
+
+        <div id="searchResults" class="search-results"></div>
+
+        <label for="manualPath">Or paste a run folder path</label>
+        <div class="row">
+          <input id="manualPath" placeholder="/proj/zefflab/projects/Flooding/sfincs_runs/...">
+          <button class="secondary" onclick="addManualRun()">Add</button>
+        </div>
+
+        <div id="runList" class="run-list"></div>
+
+        <div class="note">
+          Current cap is 12 runs. This first version compares baseline-vs-each-other, not every pair.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. Compare settings</h2>
+
+        <label for="level">Comparison level</label>
+        <select id="level" onchange="refreshRecommendation()">
+          <option value="quick">Quick — config, files, NetCDF metadata</option>
+          <option value="standard">Standard — selected physical variables</option>
+          <option value="full">Full — all numeric NetCDF variables</option>
+        </select>
+
+        <div class="card future" style="margin-top: 14px; box-shadow: none;">
+          <strong>Later visual layer</strong>
+          <p class="muted">
+            Reserved for time-stepped difference heatmaps, timestep spacing, and optional map/satellite overlay.
+          </p>
+        </div>
+
+        <label>Recommended Slurm settings</label>
+        <div id="recommendBox" class="recommend-box">Select at least two runs.</div>
+
+        <label for="mem">Memory</label>
+        <input id="mem" placeholder="Example: 64G">
+
+        <label for="cpus">CPUs per task</label>
+        <input id="cpus" placeholder="Example: 2" type="number" min="1" step="1">
+
+        <label for="time">Wall time</label>
+        <input id="time" placeholder="Example: 00:45:00">
+
+        <div class="footer-actions">
+          <button onclick="submitCompare()">Submit Compare Job</button>
+          <button class="secondary" onclick="refreshRecommendation()">Refresh recommendation</button>
+        </div>
+
+        <div id="errorBox" class="error"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="static/path_browser.js"></script>
+  
+  <script>
+    const selectedRuns = [];
+    const MAX_RUNS = 12;
+
+    function showError(message) {
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = message;
+    }
+
+    function clearError() {
+      const box = document.getElementById("errorBox");
+      box.style.display = "none";
+      box.textContent = "";
+    }
+
+    function shortName(path) {
+      const parts = String(path).split("/").filter(Boolean);
+      return parts.length ? parts[parts.length - 1] : path;
+    }
+
+    function renderRuns() {
+      const list = document.getElementById("runList");
+      list.innerHTML = "";
+
+      selectedRuns.forEach((path, index) => {
+        const item = document.createElement("div");
+        item.className = "run-item";
+
+        const badge = document.createElement("div");
+        badge.className = "badge";
+        badge.textContent = index === 0 ? "Baseline" : `Run ${index + 1}`;
+
+        const body = document.createElement("div");
+        body.innerHTML = `<div><strong>${shortName(path)}</strong></div><div class="path">${path}</div>`;
+
+        const remove = document.createElement("button");
+        remove.className = "danger";
+        remove.textContent = "Remove";
+        remove.onclick = () => {
+          selectedRuns.splice(index, 1);
+          renderRuns();
+          refreshRecommendation();
+        };
+
+        item.appendChild(badge);
+        item.appendChild(body);
+        item.appendChild(remove);
+        list.appendChild(item);
+      });
+    }
+
+    function addRun(path) {
+      clearError();
+
+      path = String(path || "").trim();
+      if (!path) {
+        showError("No run path provided.");
+        return;
+      }
+
+      if (selectedRuns.includes(path)) {
+        showError("That run is already selected.");
+        return;
+      }
+
+      if (selectedRuns.length >= MAX_RUNS) {
+        showError(`Run cap reached: ${MAX_RUNS}`);
+        return;
+      }
+
+      selectedRuns.push(path);
+      renderRuns();
+      refreshRecommendation();
+    }
+
+    function addManualRun() {
+      const input = document.getElementById("manualPath");
+      addRun(input.value);
+      input.value = "";
+    }
+
+    function getSearchRoot() {
+      return document.getElementById("searchRoot").value.trim();
+    }
+    
+    async function searchRuns() {
+      clearError();
+    
+      const q = document.getElementById("runSearch").value.trim();
+      const root = getSearchRoot();
+      const box = document.getElementById("searchResults");
+      const signature = `${root}||${q}`;
+    
+      // Toggle closed if the same search is already open.
+      if (box.style.display === "block" && box.dataset.lastQuery === signature) {
+        box.style.display = "none";
+        return;
+      }
+    
+      box.dataset.lastQuery = signature;
+      box.style.display = "block";
+      box.innerHTML = `<div class="search-hit muted">Searching...</div>`;
+    
+      try {
+        const url =
+          `/api/compare/search-runs?q=${encodeURIComponent(q)}&root=${encodeURIComponent(root)}`;
+    
+        const res = await fetch(url);
+        const data = await res.json();
+    
+        if (!res.ok) {
+          throw new Error(data.message || "Search failed");
+        }
+    
+        if (!data.runs || data.runs.length === 0) {
+          box.innerHTML = `<div class="search-hit muted">No matching run folders found. Click Search again to close.</div>`;
+          return;
+        }
+    
+        box.innerHTML =
+          `<div class="search-meta">${data.runs.length} result(s). Click Search again to close this list.</div>`;
+    
+        data.runs.forEach(run => {
+          const hit = document.createElement("div");
+          hit.className = "search-hit";
+          hit.innerHTML =
+            `<strong>${run.name}</strong>` +
+            `<div class="path">${run.path}</div>` +
+            `<div class="muted">${run.summary || ""}</div>`;
+          hit.onclick = () => addRun(run.path);
+          box.appendChild(hit);
+        });
+    
+      } catch (err) {
+        box.innerHTML = "";
+        showError(err.message);
+      }
+    }
+
+    async function refreshRecommendation() {
+      clearError();
+
+      const level = document.getElementById("level").value;
+      const box = document.getElementById("recommendBox");
+
+      if (selectedRuns.length < 2) {
+        box.textContent = "Select at least two runs.";
+        return;
+      }
+
+      box.textContent = "Getting recommendation...";
+
+      try {
+        const res = await fetch("/api/compare/recommend", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            level,
+            runs: selectedRuns
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Recommendation failed");
+        }
+
+        document.getElementById("mem").value = data.recommended_mem;
+        document.getElementById("cpus").value = data.recommended_cpus;
+        document.getElementById("time").value = data.recommended_time;
+
+        box.textContent =
+          `level: ${data.level}\n` +
+          `runs: ${data.run_count}\n` +
+          `comparisons: ${data.comparisons}\n` +
+          `recommended_mem: ${data.recommended_mem}\n` +
+          `recommended_cpus: ${data.recommended_cpus}\n` +
+          `recommended_time: ${data.recommended_time}\n` +
+          `chunk_mb: ${data.chunk_mb}\n\n` +
+          `${data.note}`;
+
+      } catch (err) {
+        box.textContent = "Could not get recommendation.";
+        showError(err.message);
+      }
+    }
+
+    async function submitCompare() {
+      clearError();
+
+      if (selectedRuns.length < 2) {
+        showError("Select at least two runs before submitting.");
+        return;
+      }
+
+      const level = document.getElementById("level").value;
+      const mem = document.getElementById("mem").value.trim();
+      const cpus = Number(document.getElementById("cpus").value);
+      const time = document.getElementById("time").value.trim();
+
+      try {
+        const res = await fetch("/api/compare/submit", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            level,
+            runs: selectedRuns,
+            mem,
+            cpus,
+            time
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Submit failed");
+        }
+
+        const jobDir = encodeURIComponent(data.job_dir);
+        window.location.href = `/compare/status?job_dir=${jobDir}`;
+
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    document.getElementById("runSearch").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        searchRuns();
+      }
+    });
+
+    document.getElementById("manualPath").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        addManualRun();
+      }
+    });
+  </script>
+  <a class="help-button" href="guide.html" title="Open launcher guide">?</a>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "browseAllowedRoots": "/proj/zefflab/projects/Flooding,/users/e/p/epsilon,/work/users/e/p/epsilon",
+  "catalogRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+  "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+  "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+  "contextilyPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs_contextily/bin/python",
+  "dataRoot": "/users/e/p/epsilon/Data/Data/harris_county",
+  "eventCatalogRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs/events",
+  "nativeSfincsRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs/static",
+  "overrideSourceRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+  "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+  "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+  "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+}

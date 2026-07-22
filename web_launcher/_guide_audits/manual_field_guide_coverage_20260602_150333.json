@@ -1,0 +1,4857 @@
+{
+  "manual_html": "/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html",
+  "guide_html": "/proj/zefflab/projects/Flooding/pipeline/web_launcher/guide.html",
+  "generated": "2026-06-02T15:03:33",
+  "tabs": [
+    {
+      "tab_id": "tab-0",
+      "label": "0 Run identity",
+      "guide_panel": "run_identity",
+      "start_line": 528,
+      "control_count": 10,
+      "mentioned_count": 3,
+      "missing_count": 7,
+      "controls": [
+        {
+          "line": 534,
+          "tag": "input",
+          "key": "event_name",
+          "id": "",
+          "data_key": "event_name",
+          "name": "",
+          "type": "",
+          "value": "harvey_2017",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes event_name",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 535,
+          "tag": "input",
+          "key": "run_series",
+          "id": "",
+          "data_key": "run_series",
+          "name": "",
+          "type": "",
+          "value": "manual_001",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "run_series",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 536,
+          "tag": "input",
+          "key": "run_name",
+          "id": "",
+          "data_key": "run_name",
+          "name": "",
+          "type": "",
+          "value": "harris_harvey_2017_manual_001",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "run_name",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 537,
+          "tag": "input",
+          "key": "project_root",
+          "id": "",
+          "data_key": "project_root",
+          "name": "",
+          "type": "",
+          "value": "/proj/zefflab/projects/Flooding/pipeline",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "project_root",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 538,
+          "tag": "input",
+          "key": "output_root",
+          "id": "",
+          "data_key": "output_root",
+          "name": "",
+          "type": "",
+          "value": "/proj/zefflab/projects/Flooding/sfincs_runs",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "output_root",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 540,
+          "tag": "select",
+          "key": "overwrite_existing_run",
+          "id": "",
+          "data_key": "overwrite_existing_run",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "overwrite_existing_run",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 541,
+          "tag": "select",
+          "key": "allow_writes_inside_proj",
+          "id": "",
+          "data_key": "allow_writes_inside_proj",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "allow_writes_inside_proj",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 542,
+          "tag": "select",
+          "key": "allow_missing_model_inputs",
+          "id": "",
+          "data_key": "allow_missing_model_inputs",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "allow_missing_model_inputs",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 543,
+          "tag": "input",
+          "key": "run_description",
+          "id": "",
+          "data_key": "run_description",
+          "name": "",
+          "type": "",
+          "value": "Manual launcher SFINCS pipeline run.",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "run_description",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 544,
+          "tag": "textarea",
+          "key": "run_tags",
+          "id": "",
+          "data_key": "run_tags",
+          "name": "",
+          "type": "",
+          "value": "[\"manual\", \"sfincs\", \"harris_county\"]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "run_tags",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-1",
+      "label": "1 Pipeline",
+      "guide_panel": "pipeline",
+      "start_line": 551,
+      "control_count": 5,
+      "mentioned_count": 0,
+      "missing_count": 5,
+      "controls": [
+        {
+          "line": 557,
+          "tag": "select",
+          "key": "run_preprocessing_job",
+          "id": "",
+          "data_key": "run_preprocessing_job",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes run_preprocessing_job",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 558,
+          "tag": "select",
+          "key": "run_sfincs_job",
+          "id": "",
+          "data_key": "run_sfincs_job",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "run_sfincs_job",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 559,
+          "tag": "select",
+          "key": "run_postprocessing_job",
+          "id": "",
+          "data_key": "run_postprocessing_job",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "run_postprocessing_job",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 560,
+          "tag": "select",
+          "key": "submit_with_dependencies",
+          "id": "",
+          "data_key": "submit_with_dependencies",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "submit_with_dependencies",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 561,
+          "tag": "select",
+          "key": "dependency_type",
+          "id": "",
+          "data_key": "dependency_type",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "dependency_type",
+          "options": [
+            {
+              "value": "",
+              "label": "afterok",
+              "selected": true
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-2",
+      "label": "2 Slurm general",
+      "guide_panel": "slurm_general",
+      "start_line": 568,
+      "control_count": 7,
+      "mentioned_count": 1,
+      "missing_count": 6,
+      "controls": [
+        {
+          "line": 574,
+          "tag": "input",
+          "key": "slurm_account",
+          "id": "",
+          "data_key": "slurm_account",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes slurm_account",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 575,
+          "tag": "input",
+          "key": "slurm_partition",
+          "id": "",
+          "data_key": "slurm_partition",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "slurm_partition",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 576,
+          "tag": "input",
+          "key": "slurm_qos",
+          "id": "",
+          "data_key": "slurm_qos",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "slurm_qos",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 577,
+          "tag": "input",
+          "key": "slurm_email",
+          "id": "",
+          "data_key": "slurm_email",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "slurm_email",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 578,
+          "tag": "input",
+          "key": "slurm_mail_type",
+          "id": "",
+          "data_key": "slurm_mail_type",
+          "name": "",
+          "type": "",
+          "value": "END,FAIL",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "slurm_mail_type",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 579,
+          "tag": "textarea",
+          "key": "slurm_extra_directives",
+          "id": "",
+          "data_key": "slurm_extra_directives",
+          "name": "",
+          "type": "",
+          "value": "[]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "slurm_extra_directives",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 580,
+          "tag": "select",
+          "key": "bash_strict_mode",
+          "id": "",
+          "data_key": "bash_strict_mode",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "bash_strict_mode",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-3",
+      "label": "3 Stage resources",
+      "guide_panel": "stage_resources",
+      "start_line": 587,
+      "control_count": 18,
+      "mentioned_count": 0,
+      "missing_count": 18,
+      "controls": [
+        {
+          "line": 593,
+          "tag": "input",
+          "key": "preprocess_time",
+          "id": "",
+          "data_key": "preprocess_time",
+          "name": "",
+          "type": "",
+          "value": "01:00:00",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes preprocess_time",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 594,
+          "tag": "input",
+          "key": "preprocess_nodes",
+          "id": "",
+          "data_key": "preprocess_nodes",
+          "name": "",
+          "type": "",
+          "value": "1",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "preprocess_nodes",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 595,
+          "tag": "input",
+          "key": "preprocess_ntasks",
+          "id": "",
+          "data_key": "preprocess_ntasks",
+          "name": "",
+          "type": "",
+          "value": "1",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "preprocess_ntasks",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 596,
+          "tag": "input",
+          "key": "preprocess_cpus_per_task",
+          "id": "",
+          "data_key": "preprocess_cpus_per_task",
+          "name": "",
+          "type": "",
+          "value": "4",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "preprocess_cpus_per_task",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 597,
+          "tag": "input",
+          "key": "preprocess_mem",
+          "id": "",
+          "data_key": "preprocess_mem",
+          "name": "",
+          "type": "",
+          "value": "16G",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "preprocess_mem",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 598,
+          "tag": "input",
+          "key": "sfincs_time",
+          "id": "",
+          "data_key": "sfincs_time",
+          "name": "",
+          "type": "",
+          "value": "04:00:00",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_time",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 599,
+          "tag": "input",
+          "key": "sfincs_nodes",
+          "id": "",
+          "data_key": "sfincs_nodes",
+          "name": "",
+          "type": "",
+          "value": "1",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_nodes",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 600,
+          "tag": "input",
+          "key": "sfincs_ntasks",
+          "id": "",
+          "data_key": "sfincs_ntasks",
+          "name": "",
+          "type": "",
+          "value": "1",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_ntasks",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 601,
+          "tag": "input",
+          "key": "sfincs_cpus_per_task",
+          "id": "",
+          "data_key": "sfincs_cpus_per_task",
+          "name": "",
+          "type": "",
+          "value": "8",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_cpus_per_task",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 602,
+          "tag": "input",
+          "key": "sfincs_mem",
+          "id": "",
+          "data_key": "sfincs_mem",
+          "name": "",
+          "type": "",
+          "value": "32G",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_mem",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 603,
+          "tag": "input",
+          "key": "postprocess_time",
+          "id": "",
+          "data_key": "postprocess_time",
+          "name": "",
+          "type": "",
+          "value": "01:00:00",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_time",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 604,
+          "tag": "input",
+          "key": "postprocess_nodes",
+          "id": "",
+          "data_key": "postprocess_nodes",
+          "name": "",
+          "type": "",
+          "value": "1",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_nodes",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 605,
+          "tag": "input",
+          "key": "postprocess_ntasks",
+          "id": "",
+          "data_key": "postprocess_ntasks",
+          "name": "",
+          "type": "",
+          "value": "1",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_ntasks",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 606,
+          "tag": "input",
+          "key": "postprocess_cpus_per_task",
+          "id": "",
+          "data_key": "postprocess_cpus_per_task",
+          "name": "",
+          "type": "",
+          "value": "2",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_cpus_per_task",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 607,
+          "tag": "input",
+          "key": "postprocess_mem",
+          "id": "",
+          "data_key": "postprocess_mem",
+          "name": "",
+          "type": "",
+          "value": "24G",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_mem",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 608,
+          "tag": "select",
+          "key": "sfincs_use_openmp_threads",
+          "id": "",
+          "data_key": "sfincs_use_openmp_threads",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_use_openmp_threads",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 609,
+          "tag": "input",
+          "key": "sfincs_omp_proc_bind",
+          "id": "",
+          "data_key": "sfincs_omp_proc_bind",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_omp_proc_bind",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 610,
+          "tag": "input",
+          "key": "sfincs_omp_places",
+          "id": "",
+          "data_key": "sfincs_omp_places",
+          "name": "",
+          "type": "",
+          "value": "cores",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_omp_places",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-4",
+      "label": "4 Data catalogs",
+      "guide_panel": "data_catalogs",
+      "start_line": 617,
+      "control_count": 1,
+      "mentioned_count": 1,
+      "missing_count": 0,
+      "controls": [
+        {
+          "line": 623,
+          "tag": "textarea",
+          "key": "data_catalogs",
+          "id": "",
+          "data_key": "data_catalogs",
+          "name": "",
+          "type": "",
+          "value": "[\"artifact_data\"]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes data_catalogs",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-5",
+      "label": "5 Required inputs",
+      "guide_panel": "required_inputs",
+      "start_line": 630,
+      "control_count": 6,
+      "mentioned_count": 1,
+      "missing_count": 5,
+      "controls": [
+        {
+          "line": 636,
+          "tag": "select",
+          "key": "region_mode",
+          "id": "",
+          "data_key": "region_mode",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes region_mode",
+          "options": [
+            {
+              "value": "",
+              "label": "geom",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "bbox",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 637,
+          "tag": "input",
+          "key": "region_path",
+          "id": "",
+          "data_key": "region_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "region_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 638,
+          "tag": "textarea",
+          "key": "region_bbox",
+          "id": "",
+          "data_key": "region_bbox",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "region_path region_bbox",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 639,
+          "tag": "textarea",
+          "key": "dem_paths",
+          "id": "",
+          "data_key": "dem_paths",
+          "name": "",
+          "type": "",
+          "value": "[]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "dem_paths",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 640,
+          "tag": "textarea",
+          "key": "hydromt_dem_sources",
+          "id": "",
+          "data_key": "hydromt_dem_sources",
+          "name": "",
+          "type": "",
+          "value": "[ {\"elevation\": \"merit_hydro\", \"zmin\": 0.001} ]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "hydromt_dem_sources",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 643,
+          "tag": "select",
+          "key": "require_at_least_one_forcing",
+          "id": "",
+          "data_key": "require_at_least_one_forcing",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "require_at_least_one_forcing",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-6",
+      "label": "6 Optional inputs",
+      "guide_panel": "optional_inputs",
+      "start_line": 650,
+      "control_count": 27,
+      "mentioned_count": 0,
+      "missing_count": 27,
+      "controls": [
+        {
+          "line": 656,
+          "tag": "textarea",
+          "key": "bathy_paths",
+          "id": "",
+          "data_key": "bathy_paths",
+          "name": "",
+          "type": "",
+          "value": "[]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes bathy_paths",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 657,
+          "tag": "textarea",
+          "key": "hydromt_bathy_sources",
+          "id": "",
+          "data_key": "hydromt_bathy_sources",
+          "name": "",
+          "type": "",
+          "value": "[ {\"elevation\": \"gebco\"} ]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "hydromt_bathy_sources",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 660,
+          "tag": "input",
+          "key": "landcover_path",
+          "id": "",
+          "data_key": "landcover_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "landcover_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 661,
+          "tag": "input",
+          "key": "landcover_source",
+          "id": "",
+          "data_key": "landcover_source",
+          "name": "",
+          "type": "",
+          "value": "vito_2015",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "landcover_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 662,
+          "tag": "input",
+          "key": "landcover_reclass_table",
+          "id": "",
+          "data_key": "landcover_reclass_table",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "landcover_reclass_table",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 663,
+          "tag": "textarea",
+          "key": "hydromt_roughness_sources",
+          "id": "",
+          "data_key": "hydromt_roughness_sources",
+          "name": "",
+          "type": "",
+          "value": "[]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "landcover_reclass_table hydromt_roughness_sources",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 664,
+          "tag": "input",
+          "key": "rainfall_path",
+          "id": "",
+          "data_key": "rainfall_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "landcover_reclass_table hydromt_roughness_sources [] rainfall_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 665,
+          "tag": "input",
+          "key": "rainfall_source",
+          "id": "",
+          "data_key": "rainfall_source",
+          "name": "",
+          "type": "",
+          "value": "era5_hourly",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "rainfall_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 666,
+          "tag": "input",
+          "key": "rainfall_variable",
+          "id": "",
+          "data_key": "rainfall_variable",
+          "name": "",
+          "type": "",
+          "value": "precip",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "rainfall_variable",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 667,
+          "tag": "input",
+          "key": "waterlevel_path",
+          "id": "",
+          "data_key": "waterlevel_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "waterlevel_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 668,
+          "tag": "input",
+          "key": "waterlevel_source",
+          "id": "",
+          "data_key": "waterlevel_source",
+          "name": "",
+          "type": "",
+          "value": "gtsmv3_eu_era5",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "waterlevel_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 669,
+          "tag": "input",
+          "key": "waterlevel_variable",
+          "id": "",
+          "data_key": "waterlevel_variable",
+          "name": "",
+          "type": "",
+          "value": "zeta",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "waterlevel_variable",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 670,
+          "tag": "input",
+          "key": "discharge_source",
+          "id": "",
+          "data_key": "discharge_source",
+          "name": "",
+          "type": "",
+          "value": "discharge_forcing",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 671,
+          "tag": "input",
+          "key": "streamflow_site_info_path",
+          "id": "",
+          "data_key": "streamflow_site_info_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "streamflow_site_info_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 672,
+          "tag": "input",
+          "key": "streamflow_data_path",
+          "id": "",
+          "data_key": "streamflow_data_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "streamflow_data_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 673,
+          "tag": "input",
+          "key": "hydrography_path",
+          "id": "",
+          "data_key": "hydrography_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "hydrography_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 674,
+          "tag": "input",
+          "key": "hydrography_source",
+          "id": "",
+          "data_key": "hydrography_source",
+          "name": "",
+          "type": "",
+          "value": "nhdplus_or_enhdplus",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "hydrography_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 675,
+          "tag": "input",
+          "key": "obs_points_path",
+          "id": "",
+          "data_key": "obs_points_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "obs_points_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 676,
+          "tag": "input",
+          "key": "obs_lines_path",
+          "id": "",
+          "data_key": "obs_lines_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "obs_points_path obs_lines_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 677,
+          "tag": "select",
+          "key": "thin_dam_source_kind",
+          "id": "",
+          "data_key": "thin_dam_source_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "obs_points_path obs_lines_path thin_dam_source_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "geodataframe",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 678,
+          "tag": "input",
+          "key": "thin_dam_path",
+          "id": "",
+          "data_key": "thin_dam_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "thin_dam_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 679,
+          "tag": "select",
+          "key": "weir_source_kind",
+          "id": "",
+          "data_key": "weir_source_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "weir_source_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "geodataframe",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 680,
+          "tag": "input",
+          "key": "weir_path",
+          "id": "",
+          "data_key": "weir_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "weir_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 681,
+          "tag": "select",
+          "key": "drainage_structure_source_kind",
+          "id": "",
+          "data_key": "drainage_structure_source_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "drainage_structure_source_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "geodataframe",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 682,
+          "tag": "input",
+          "key": "drainage_structure_path",
+          "id": "",
+          "data_key": "drainage_structure_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "drainage_structure_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 683,
+          "tag": "select",
+          "key": "culvert_source_kind",
+          "id": "",
+          "data_key": "culvert_source_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "culvert_source_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "geodataframe",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 684,
+          "tag": "input",
+          "key": "culvert_path",
+          "id": "",
+          "data_key": "culvert_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "culvert_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-7",
+      "label": "7 Model settings",
+      "guide_panel": "model_settings",
+      "start_line": 691,
+      "control_count": 18,
+      "mentioned_count": 3,
+      "missing_count": 15,
+      "controls": [
+        {
+          "line": 697,
+          "tag": "input",
+          "key": "grid_resolution_m",
+          "id": "",
+          "data_key": "grid_resolution_m",
+          "name": "",
+          "type": "",
+          "value": "50",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes grid_resolution_m",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 698,
+          "tag": "input",
+          "key": "grid_dx_m",
+          "id": "",
+          "data_key": "grid_dx_m",
+          "name": "",
+          "type": "",
+          "value": "100",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "grid_dx_m",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 699,
+          "tag": "input",
+          "key": "grid_dy_m",
+          "id": "",
+          "data_key": "grid_dy_m",
+          "name": "",
+          "type": "",
+          "value": "100",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "grid_dy_m",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 700,
+          "tag": "input",
+          "key": "grid_crs",
+          "id": "",
+          "data_key": "grid_crs",
+          "name": "",
+          "type": "",
+          "value": "utm",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "grid_crs",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 701,
+          "tag": "select",
+          "key": "grid_rotated",
+          "id": "",
+          "data_key": "grid_rotated",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "grid_rotated",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 702,
+          "tag": "input",
+          "key": "grid_rotation_deg",
+          "id": "",
+          "data_key": "grid_rotation_deg",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "grid_rotation_deg",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 703,
+          "tag": "input",
+          "key": "tref",
+          "id": "",
+          "data_key": "tref",
+          "name": "",
+          "type": "",
+          "value": "2017-08-22 00:00:00",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "tref",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 704,
+          "tag": "input",
+          "key": "tstart",
+          "id": "",
+          "data_key": "tstart",
+          "name": "",
+          "type": "",
+          "value": "2017-08-22 00:00:00",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "tstart",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 705,
+          "tag": "input",
+          "key": "tstop",
+          "id": "",
+          "data_key": "tstop",
+          "name": "",
+          "type": "",
+          "value": "2017-09-17 01:00:00",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "tstop",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 706,
+          "tag": "select",
+          "key": "use_rainfall",
+          "id": "",
+          "data_key": "use_rainfall",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_rainfall",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 707,
+          "tag": "select",
+          "key": "use_waterlevel_boundary",
+          "id": "",
+          "data_key": "use_waterlevel_boundary",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_waterlevel_boundary",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 708,
+          "tag": "select",
+          "key": "use_discharge_boundary",
+          "id": "",
+          "data_key": "use_discharge_boundary",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_discharge_boundary",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 709,
+          "tag": "select",
+          "key": "use_infiltration",
+          "id": "",
+          "data_key": "use_infiltration",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_infiltration",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 710,
+          "tag": "select",
+          "key": "use_wind",
+          "id": "",
+          "data_key": "use_wind",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_wind",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 711,
+          "tag": "select",
+          "key": "use_pressure",
+          "id": "",
+          "data_key": "use_pressure",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_pressure",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 712,
+          "tag": "select",
+          "key": "use_structures",
+          "id": "",
+          "data_key": "use_structures",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_structures",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 713,
+          "tag": "select",
+          "key": "use_obs_points",
+          "id": "",
+          "data_key": "use_obs_points",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_obs_points",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 714,
+          "tag": "select",
+          "key": "use_obs_lines",
+          "id": "",
+          "data_key": "use_obs_lines",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_obs_lines",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-8",
+      "label": "8 Elevation/mask",
+      "guide_panel": "elevation_mask",
+      "start_line": 721,
+      "control_count": 9,
+      "mentioned_count": 0,
+      "missing_count": 9,
+      "controls": [
+        {
+          "line": 727,
+          "tag": "input",
+          "key": "dem_zmin",
+          "id": "",
+          "data_key": "dem_zmin",
+          "name": "",
+          "type": "",
+          "value": "0.001",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes dem_zmin",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 728,
+          "tag": "input",
+          "key": "elevation_buffer_cells",
+          "id": "",
+          "data_key": "elevation_buffer_cells",
+          "name": "",
+          "type": "",
+          "value": "1",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "elevation_buffer_cells",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 729,
+          "tag": "input",
+          "key": "active_zmin",
+          "id": "",
+          "data_key": "active_zmin",
+          "name": "",
+          "type": "",
+          "value": "-5.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "active_zmin",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 730,
+          "tag": "input",
+          "key": "mask_fill_area_km2",
+          "id": "",
+          "data_key": "mask_fill_area_km2",
+          "name": "",
+          "type": "",
+          "value": "10.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "mask_fill_area_km2",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 731,
+          "tag": "input",
+          "key": "mask_drop_area_km2",
+          "id": "",
+          "data_key": "mask_drop_area_km2",
+          "name": "",
+          "type": "",
+          "value": "0.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "mask_drop_area_km2",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 732,
+          "tag": "input",
+          "key": "waterlevel_boundary_zmax",
+          "id": "",
+          "data_key": "waterlevel_boundary_zmax",
+          "name": "",
+          "type": "",
+          "value": "-5.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "waterlevel_boundary_zmax",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 733,
+          "tag": "select",
+          "key": "reset_waterlevel_boundary",
+          "id": "",
+          "data_key": "reset_waterlevel_boundary",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "reset_waterlevel_boundary",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 734,
+          "tag": "input",
+          "key": "outflow_boundary_polygon_path",
+          "id": "",
+          "data_key": "outflow_boundary_polygon_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "outflow_boundary_polygon_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 735,
+          "tag": "select",
+          "key": "reset_outflow_boundary",
+          "id": "",
+          "data_key": "reset_outflow_boundary",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "reset_outflow_boundary",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-9",
+      "label": "9 Roughness",
+      "guide_panel": "roughness",
+      "start_line": 742,
+      "control_count": 5,
+      "mentioned_count": 0,
+      "missing_count": 5,
+      "controls": [
+        {
+          "line": 748,
+          "tag": "input",
+          "key": "manning_uniform",
+          "id": "",
+          "data_key": "manning_uniform",
+          "name": "",
+          "type": "",
+          "value": "0.04",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes manning_uniform",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 749,
+          "tag": "input",
+          "key": "manning_land",
+          "id": "",
+          "data_key": "manning_land",
+          "name": "",
+          "type": "",
+          "value": "0.04",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "manning_land",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 750,
+          "tag": "input",
+          "key": "manning_sea",
+          "id": "",
+          "data_key": "manning_sea",
+          "name": "",
+          "type": "",
+          "value": "0.02",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "manning_sea",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 751,
+          "tag": "input",
+          "key": "roughness_land_level_m",
+          "id": "",
+          "data_key": "roughness_land_level_m",
+          "name": "",
+          "type": "",
+          "value": "0.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "roughness_land_level_m",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 752,
+          "tag": "select",
+          "key": "use_landcover_roughness_if_available",
+          "id": "",
+          "data_key": "use_landcover_roughness_if_available",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_landcover_roughness_if_available",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-10",
+      "label": "10 Subgrid",
+      "guide_panel": "subgrid",
+      "start_line": 759,
+      "control_count": 10,
+      "mentioned_count": 1,
+      "missing_count": 9,
+      "controls": [
+        {
+          "line": 773,
+          "tag": "select",
+          "key": "use_subgrid",
+          "id": "",
+          "data_key": "use_subgrid",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes use_subgrid",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 784,
+          "tag": "select",
+          "key": "subgrid_source_kind",
+          "id": "",
+          "data_key": "subgrid_source_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "subgrid_source_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "hydromt_generate",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "premade_sbgfile",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "none",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 793,
+          "tag": "input",
+          "key": "subgrid_native_file_path",
+          "id": "",
+          "data_key": "subgrid_native_file_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Backend support may need to be added for this new key.",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 797,
+          "tag": "input",
+          "key": "subgrid_nr_pixels",
+          "id": "",
+          "data_key": "subgrid_nr_pixels",
+          "name": "",
+          "type": "",
+          "value": "6",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "subgrid_nr_pixels",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 804,
+          "tag": "select",
+          "key": "subgrid_write_dep_tif",
+          "id": "",
+          "data_key": "subgrid_write_dep_tif",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "subgrid_write_dep_tif",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 815,
+          "tag": "select",
+          "key": "subgrid_write_man_tif",
+          "id": "",
+          "data_key": "subgrid_write_man_tif",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "subgrid_write_man_tif",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 826,
+          "tag": "select",
+          "key": "subgrid_use_rivers",
+          "id": "",
+          "data_key": "subgrid_use_rivers",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "subgrid_use_rivers",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 834,
+          "tag": "input",
+          "key": "subgrid_river_path",
+          "id": "",
+          "data_key": "subgrid_river_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "subgrid_use_rivers false true Use river network information in subgrid generation when supported by the preprocessing path.",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 838,
+          "tag": "input",
+          "key": "subgrid_river_source",
+          "id": "",
+          "data_key": "subgrid_river_source",
+          "name": "",
+          "type": "",
+          "value": "river_network_for_subgrid",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "subgrid_river_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 845,
+          "tag": "select",
+          "key": "use_spatially_variable_roughness",
+          "id": "",
+          "data_key": "use_spatially_variable_roughness",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "use_spatially_variable_roughness",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-11",
+      "label": "11 Forcing",
+      "guide_panel": "forcing",
+      "start_line": 858,
+      "control_count": 21,
+      "mentioned_count": 0,
+      "missing_count": 21,
+      "controls": [
+        {
+          "line": 868,
+          "tag": "select",
+          "key": "rainfall_kind",
+          "id": "",
+          "data_key": "rainfall_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes rainfall_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "spatial",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "uniform",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "event_catalog_aorc",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 879,
+          "tag": "input",
+          "key": "rainfall_uniform_mm_hr",
+          "id": "",
+          "data_key": "rainfall_uniform_mm_hr",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "rainfall_uniform_mm_hr",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 886,
+          "tag": "select",
+          "key": "rainfall_clip_to_model_time",
+          "id": "",
+          "data_key": "rainfall_clip_to_model_time",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "rainfall_clip_to_model_time",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 897,
+          "tag": "select",
+          "key": "waterlevel_source_kind",
+          "id": "",
+          "data_key": "waterlevel_source_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "waterlevel_source_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "geodataset",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "cora",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "event_catalog_csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 911,
+          "tag": "select",
+          "key": "waterlevel_clip_to_model_time",
+          "id": "",
+          "data_key": "waterlevel_clip_to_model_time",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "waterlevel_clip_to_model_time",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 922,
+          "tag": "select",
+          "key": "discharge_source_kind",
+          "id": "",
+          "data_key": "discharge_source_kind",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_source_kind",
+          "options": [
+            {
+              "value": "",
+              "label": "geodataset",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "event_catalog_csv",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 935,
+          "tag": "select",
+          "key": "discharge_clip_to_model_time",
+          "id": "",
+          "data_key": "discharge_clip_to_model_time",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_clip_to_model_time",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 945,
+          "tag": "input",
+          "key": "discharge_points_csv_path",
+          "id": "",
+          "data_key": "discharge_points_csv_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_points_csv_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 951,
+          "tag": "input",
+          "key": "discharge_points_x_column",
+          "id": "",
+          "data_key": "discharge_points_x_column",
+          "name": "",
+          "type": "",
+          "value": "x",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_points_x_column",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 957,
+          "tag": "input",
+          "key": "discharge_points_y_column",
+          "id": "",
+          "data_key": "discharge_points_y_column",
+          "name": "",
+          "type": "",
+          "value": "y",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_points_y_column",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 963,
+          "tag": "input",
+          "key": "discharge_points_name_column",
+          "id": "",
+          "data_key": "discharge_points_name_column",
+          "name": "",
+          "type": "",
+          "value": "name",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_points_name_column",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 969,
+          "tag": "input",
+          "key": "discharge_timeseries_csv_path",
+          "id": "",
+          "data_key": "discharge_timeseries_csv_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_timeseries_csv_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 975,
+          "tag": "input",
+          "key": "discharge_time_column",
+          "id": "",
+          "data_key": "discharge_time_column",
+          "name": "",
+          "type": "",
+          "value": "time",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_time_column",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 981,
+          "tag": "textarea",
+          "key": "discharge_value_columns",
+          "id": "",
+          "data_key": "discharge_value_columns",
+          "name": "",
+          "type": "",
+          "value": "[]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_value_columns",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 987,
+          "tag": "input",
+          "key": "discharge_time_format",
+          "id": "",
+          "data_key": "discharge_time_format",
+          "name": "",
+          "type": "",
+          "value": "auto",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_time_format",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 993,
+          "tag": "input",
+          "key": "discharge_units",
+          "id": "",
+          "data_key": "discharge_units",
+          "name": "",
+          "type": "",
+          "value": "m3/s",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "discharge_units",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 999,
+          "tag": "input",
+          "key": "meteo_update_interval_s",
+          "id": "",
+          "data_key": "meteo_update_interval_s",
+          "name": "",
+          "type": "",
+          "value": "1800",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "meteo_update_interval_s",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1005,
+          "tag": "input",
+          "key": "wind_path",
+          "id": "",
+          "data_key": "wind_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "wind_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1011,
+          "tag": "input",
+          "key": "pressure_path",
+          "id": "",
+          "data_key": "pressure_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "pressure_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1017,
+          "tag": "input",
+          "key": "wind_source",
+          "id": "",
+          "data_key": "wind_source",
+          "name": "",
+          "type": "",
+          "value": "wind_forcing",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "wind_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1023,
+          "tag": "input",
+          "key": "pressure_source",
+          "id": "",
+          "data_key": "pressure_source",
+          "name": "",
+          "type": "",
+          "value": "pressure_forcing",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "pressure_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-12",
+      "label": "12 Infiltration",
+      "guide_panel": "infiltration",
+      "start_line": 1032,
+      "control_count": 18,
+      "mentioned_count": 0,
+      "missing_count": 18,
+      "controls": [
+        {
+          "line": 1041,
+          "tag": "select",
+          "key": "infiltration_mode",
+          "id": "",
+          "data_key": "infiltration_mode",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes infiltration_mode",
+          "options": [
+            {
+              "value": "",
+              "label": "none",
+              "selected": true
+            },
+            {
+              "value": "",
+              "label": "constant",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "spatial_constant",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "curve_number",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "curve_number_with_ks",
+              "selected": false
+            },
+            {
+              "value": "",
+              "label": "native_sfincs",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1052,
+          "tag": "input",
+          "key": "qinf_mm_hr",
+          "id": "",
+          "data_key": "qinf_mm_hr",
+          "name": "",
+          "type": "",
+          "value": "0.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "qinf_mm_hr",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1053,
+          "tag": "input",
+          "key": "qinf_zmin_m",
+          "id": "",
+          "data_key": "qinf_zmin_m",
+          "name": "",
+          "type": "",
+          "value": "0.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "qinf_zmin_m",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1054,
+          "tag": "input",
+          "key": "scs_initial_abstraction_factor",
+          "id": "",
+          "data_key": "scs_initial_abstraction_factor",
+          "name": "",
+          "type": "",
+          "value": "0.2",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "scs_initial_abstraction_factor",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1055,
+          "tag": "input",
+          "key": "infiltration_path",
+          "id": "",
+          "data_key": "infiltration_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "infiltration_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1056,
+          "tag": "input",
+          "key": "curve_number_path",
+          "id": "",
+          "data_key": "curve_number_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "curve_number_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1057,
+          "tag": "input",
+          "key": "hsg_path",
+          "id": "",
+          "data_key": "hsg_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "hsg_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1058,
+          "tag": "input",
+          "key": "soil_storage_path",
+          "id": "",
+          "data_key": "soil_storage_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "soil_storage_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1060,
+          "tag": "input",
+          "key": "qinf_path",
+          "id": "",
+          "data_key": "qinf_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "qinf_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1061,
+          "tag": "input",
+          "key": "smax_path",
+          "id": "",
+          "data_key": "smax_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "smax_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1062,
+          "tag": "input",
+          "key": "seff_path",
+          "id": "",
+          "data_key": "seff_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "seff_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1063,
+          "tag": "input",
+          "key": "ks_path",
+          "id": "",
+          "data_key": "ks_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "ks_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1065,
+          "tag": "input",
+          "key": "sigma_path",
+          "id": "",
+          "data_key": "sigma_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sigma_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1066,
+          "tag": "input",
+          "key": "psi_path",
+          "id": "",
+          "data_key": "psi_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "psi_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1068,
+          "tag": "input",
+          "key": "f0_path",
+          "id": "",
+          "data_key": "f0_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "f0_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1069,
+          "tag": "input",
+          "key": "fc_path",
+          "id": "",
+          "data_key": "fc_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "fc_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1070,
+          "tag": "input",
+          "key": "kd_path",
+          "id": "",
+          "data_key": "kd_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "kd_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1072,
+          "tag": "input",
+          "key": "vol_path",
+          "id": "",
+          "data_key": "vol_path",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "vol_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-13",
+      "label": "13 Output",
+      "guide_panel": "output",
+      "start_line": 1079,
+      "control_count": 11,
+      "mentioned_count": 0,
+      "missing_count": 11,
+      "controls": [
+        {
+          "line": 1085,
+          "tag": "input",
+          "key": "output_format",
+          "id": "",
+          "data_key": "output_format",
+          "name": "",
+          "type": "",
+          "value": "net",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes output_format",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1086,
+          "tag": "input",
+          "key": "dtout_s",
+          "id": "",
+          "data_key": "dtout_s",
+          "name": "",
+          "type": "",
+          "value": "3600",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "dtout_s",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1087,
+          "tag": "input",
+          "key": "dthisout_s",
+          "id": "",
+          "data_key": "dthisout_s",
+          "name": "",
+          "type": "",
+          "value": "900",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "dthisout_s",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1088,
+          "tag": "input",
+          "key": "dtmaxout_s",
+          "id": "",
+          "data_key": "dtmaxout_s",
+          "name": "",
+          "type": "",
+          "value": "99999.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "dtmaxout_s",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1089,
+          "tag": "input",
+          "key": "dtrstout_s",
+          "id": "",
+          "data_key": "dtrstout_s",
+          "name": "",
+          "type": "",
+          "value": "259200",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "dtrstout_s",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1090,
+          "tag": "select",
+          "key": "store_wet_duration",
+          "id": "",
+          "data_key": "store_wet_duration",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "store_wet_duration",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1091,
+          "tag": "select",
+          "key": "store_velocity",
+          "id": "",
+          "data_key": "store_velocity",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "store_velocity",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1092,
+          "tag": "select",
+          "key": "store_max_velocity",
+          "id": "",
+          "data_key": "store_max_velocity",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "store_max_velocity",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1093,
+          "tag": "select",
+          "key": "store_max_flux",
+          "id": "",
+          "data_key": "store_max_flux",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "store_max_flux",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1094,
+          "tag": "select",
+          "key": "store_cumulative_precip",
+          "id": "",
+          "data_key": "store_cumulative_precip",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "store_cumulative_precip",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1095,
+          "tag": "select",
+          "key": "store_hmax_subgrid",
+          "id": "",
+          "data_key": "store_hmax_subgrid",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "store_hmax_subgrid",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-14",
+      "label": "14 Advanced",
+      "guide_panel": "advanced",
+      "start_line": 1102,
+      "control_count": 1,
+      "mentioned_count": 0,
+      "missing_count": 1,
+      "controls": [
+        {
+          "line": 1110,
+          "tag": "textarea",
+          "key": "advanced_config",
+          "id": "",
+          "data_key": "advanced_config",
+          "name": "",
+          "type": "",
+          "value": "{ \"mmax\": 997, \"nmax\": 1012, \"dx\": 100, \"dy\": 100, \"x0\": 211971.0, \"y0\": 3261293.0, \"rotation\": 0, \"epsg\": 32615, \"latitude\": 0.0, \"tspinup\": 86400, \"trstout\": -999.0, \"dtwnd\": ...",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes advanced_config",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-15",
+      "label": "15 Postprocess",
+      "guide_panel": "postprocess",
+      "start_line": 1154,
+      "control_count": 27,
+      "mentioned_count": 0,
+      "missing_count": 27,
+      "controls": [
+        {
+          "line": 1160,
+          "tag": "select",
+          "key": "postprocess_create_summary_txt",
+          "id": "",
+          "data_key": "postprocess_create_summary_txt",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes postprocess_create_summary_txt",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1161,
+          "tag": "select",
+          "key": "postprocess_create_summary_json",
+          "id": "",
+          "data_key": "postprocess_create_summary_json",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_create_summary_json",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1162,
+          "tag": "select",
+          "key": "postprocess_list_output_variables",
+          "id": "",
+          "data_key": "postprocess_list_output_variables",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_list_output_variables",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1163,
+          "tag": "select",
+          "key": "postprocess_make_quicklook_plots",
+          "id": "",
+          "data_key": "postprocess_make_quicklook_plots",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_make_quicklook_plots",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1164,
+          "tag": "select",
+          "key": "postprocess_plot_max_water_level",
+          "id": "",
+          "data_key": "postprocess_plot_max_water_level",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_plot_max_water_level",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1165,
+          "tag": "select",
+          "key": "postprocess_plot_max_flood_depth",
+          "id": "",
+          "data_key": "postprocess_plot_max_flood_depth",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_plot_max_flood_depth",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1166,
+          "tag": "select",
+          "key": "postprocess_plot_final_water_level",
+          "id": "",
+          "data_key": "postprocess_plot_final_water_level",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_plot_final_water_level",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1167,
+          "tag": "select",
+          "key": "postprocess_plot_obs_hydrographs",
+          "id": "",
+          "data_key": "postprocess_plot_obs_hydrographs",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_plot_obs_hydrographs",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1168,
+          "tag": "select",
+          "key": "postprocess_use_basemap",
+          "id": "",
+          "data_key": "postprocess_use_basemap",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_use_basemap",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1169,
+          "tag": "input",
+          "key": "postprocess_basemap_source",
+          "id": "",
+          "data_key": "postprocess_basemap_source",
+          "name": "",
+          "type": "",
+          "value": "sat",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_basemap_source",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1170,
+          "tag": "input",
+          "key": "postprocess_basemap_zoomlevel",
+          "id": "",
+          "data_key": "postprocess_basemap_zoomlevel",
+          "name": "",
+          "type": "",
+          "value": "14",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_basemap_zoomlevel",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1171,
+          "tag": "select",
+          "key": "postprocess_use_rotated_map_plots",
+          "id": "",
+          "data_key": "postprocess_use_rotated_map_plots",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_use_rotated_map_plots",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1172,
+          "tag": "select",
+          "key": "postprocess_use_basemap_on_result_maps",
+          "id": "",
+          "data_key": "postprocess_use_basemap_on_result_maps",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_use_basemap_on_result_maps",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1173,
+          "tag": "input",
+          "key": "postprocess_result_map_alpha",
+          "id": "",
+          "data_key": "postprocess_result_map_alpha",
+          "name": "",
+          "type": "",
+          "value": "1.0",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_result_map_alpha",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1174,
+          "tag": "input",
+          "key": "postprocess_result_map_background_fade_alpha",
+          "id": "",
+          "data_key": "postprocess_result_map_background_fade_alpha",
+          "name": "",
+          "type": "",
+          "value": "0.35",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_result_map_background_fade_alpha",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1175,
+          "tag": "select",
+          "key": "postprocess_result_map_show_model_features",
+          "id": "",
+          "data_key": "postprocess_result_map_show_model_features",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_result_map_show_model_features",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1176,
+          "tag": "select",
+          "key": "postprocess_result_map_show_obs",
+          "id": "",
+          "data_key": "postprocess_result_map_show_obs",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_result_map_show_obs",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1177,
+          "tag": "select",
+          "key": "postprocess_result_map_show_boundaries",
+          "id": "",
+          "data_key": "postprocess_result_map_show_boundaries",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_result_map_show_boundaries",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1178,
+          "tag": "select",
+          "key": "postprocess_result_map_show_dep_layer",
+          "id": "",
+          "data_key": "postprocess_result_map_show_dep_layer",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_result_map_show_dep_layer",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1179,
+          "tag": "select",
+          "key": "postprocess_result_map_show_layout_legend",
+          "id": "",
+          "data_key": "postprocess_result_map_show_layout_legend",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_result_map_show_layout_legend",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1180,
+          "tag": "textarea",
+          "key": "postprocess_waterlevel_var_candidates",
+          "id": "",
+          "data_key": "postprocess_waterlevel_var_candidates",
+          "name": "",
+          "type": "",
+          "value": "[\"zs\", \"waterlevel\", \"water_level\"]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_waterlevel_var_candidates",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1181,
+          "tag": "textarea",
+          "key": "postprocess_bedlevel_var_candidates",
+          "id": "",
+          "data_key": "postprocess_bedlevel_var_candidates",
+          "name": "",
+          "type": "",
+          "value": "[\"zb\", \"bedlevel\", \"bed_level\", \"dep\"]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_bedlevel_var_candidates",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1182,
+          "tag": "textarea",
+          "key": "postprocess_depth_var_candidates",
+          "id": "",
+          "data_key": "postprocess_depth_var_candidates",
+          "name": "",
+          "type": "",
+          "value": "[\"h\", \"depth\", \"flood_depth\"]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_depth_var_candidates",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1183,
+          "tag": "textarea",
+          "key": "postprocess_max_waterlevel_var_candidates",
+          "id": "",
+          "data_key": "postprocess_max_waterlevel_var_candidates",
+          "name": "",
+          "type": "",
+          "value": "[\"zsmax\", \"max_zs\", \"waterlevel_max\"]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_max_waterlevel_var_candidates",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1184,
+          "tag": "textarea",
+          "key": "postprocess_max_depth_var_candidates",
+          "id": "",
+          "data_key": "postprocess_max_depth_var_candidates",
+          "name": "",
+          "type": "",
+          "value": "[\"hmax\", \"max_h\", \"flood_depth_max\"]",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_max_depth_var_candidates",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1185,
+          "tag": "input",
+          "key": "postprocess_matplotlib_backend",
+          "id": "",
+          "data_key": "postprocess_matplotlib_backend",
+          "name": "",
+          "type": "",
+          "value": "Agg",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_matplotlib_backend",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1186,
+          "tag": "input",
+          "key": "postprocess_max_plot_cells",
+          "id": "",
+          "data_key": "postprocess_max_plot_cells",
+          "name": "",
+          "type": "",
+          "value": "2000000",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_max_plot_cells",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-16",
+      "label": "16 Safety/debug",
+      "guide_panel": "safety_debug",
+      "start_line": 1193,
+      "control_count": 10,
+      "mentioned_count": 0,
+      "missing_count": 10,
+      "controls": [
+        {
+          "line": 1199,
+          "tag": "select",
+          "key": "print_config_summary",
+          "id": "",
+          "data_key": "print_config_summary",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes print_config_summary",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1200,
+          "tag": "select",
+          "key": "validate_paths_before_submit",
+          "id": "",
+          "data_key": "validate_paths_before_submit",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "validate_paths_before_submit",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1201,
+          "tag": "select",
+          "key": "stop_if_required_path_missing",
+          "id": "",
+          "data_key": "stop_if_required_path_missing",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "stop_if_required_path_missing",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1202,
+          "tag": "select",
+          "key": "save_data_inventory",
+          "id": "",
+          "data_key": "save_data_inventory",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "save_data_inventory",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1203,
+          "tag": "select",
+          "key": "save_config_json",
+          "id": "",
+          "data_key": "save_config_json",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "save_config_json",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1204,
+          "tag": "select",
+          "key": "save_job_ids",
+          "id": "",
+          "data_key": "save_job_ids",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "save_job_ids",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1205,
+          "tag": "select",
+          "key": "print_optional_path_warnings",
+          "id": "",
+          "data_key": "print_optional_path_warnings",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "print_optional_path_warnings",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1206,
+          "tag": "select",
+          "key": "warn_unknown_config_keys",
+          "id": "",
+          "data_key": "warn_unknown_config_keys",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "warn_unknown_config_keys",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1207,
+          "tag": "select",
+          "key": "strict_schema_validation",
+          "id": "",
+          "data_key": "strict_schema_validation",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "strict_schema_validation",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1208,
+          "tag": "select",
+          "key": "warn_schema_type_mismatches",
+          "id": "",
+          "data_key": "warn_schema_type_mismatches",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "warn_schema_type_mismatches",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-17",
+      "label": "17 Backend paths",
+      "guide_panel": "backend_paths",
+      "start_line": 1215,
+      "control_count": 10,
+      "mentioned_count": 3,
+      "missing_count": 7,
+      "controls": [
+        {
+          "line": 1229,
+          "tag": "select",
+          "key": "prefer_pipeline_bundle_runtime_paths",
+          "id": "",
+          "data_key": "prefer_pipeline_bundle_runtime_paths",
+          "name": "",
+          "type": "",
+          "value": "true",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Setting Value Notes prefer_pipeline_bundle_runtime_paths",
+          "options": [
+            {
+              "value": "true",
+              "label": "true",
+              "selected": true
+            },
+            {
+              "value": "false",
+              "label": "false",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1239,
+          "tag": "input",
+          "key": "anaconda_module",
+          "id": "",
+          "data_key": "anaconda_module",
+          "name": "",
+          "type": "",
+          "value": "anaconda",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "anaconda_module",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1245,
+          "tag": "input",
+          "key": "apptainer_module",
+          "id": "",
+          "data_key": "apptainer_module",
+          "name": "",
+          "type": "",
+          "value": "apptainer",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "apptainer_module",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1251,
+          "tag": "input",
+          "key": "preprocess_stage_script",
+          "id": "",
+          "data_key": "preprocess_stage_script",
+          "name": "",
+          "type": "",
+          "value": "/proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "preprocess_stage_script",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1257,
+          "tag": "input",
+          "key": "postprocess_stage_script",
+          "id": "",
+          "data_key": "postprocess_stage_script",
+          "name": "",
+          "type": "",
+          "value": "/proj/zefflab/projects/Flooding/pipeline/code/postprocess_stage.py",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "postprocess_stage_script",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1263,
+          "tag": "input",
+          "key": "conda_env_path",
+          "id": "",
+          "data_key": "conda_env_path",
+          "name": "",
+          "type": "",
+          "value": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "conda_env_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 1269,
+          "tag": "input",
+          "key": "conda_python",
+          "id": "",
+          "data_key": "conda_python",
+          "name": "",
+          "type": "",
+          "value": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "conda_python",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 1275,
+          "tag": "input",
+          "key": "sfincs_container_path",
+          "id": "",
+          "data_key": "sfincs_container_path",
+          "name": "",
+          "type": "",
+          "value": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "sfincs_container_path",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 1282,
+          "tag": "select",
+          "key": "preprocess_enable_hydromt_file_logging",
+          "id": "",
+          "data_key": "preprocess_enable_hydromt_file_logging",
+          "name": "",
+          "type": "",
+          "value": "false",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "preprocess_enable_hydromt_file_logging",
+          "options": [
+            {
+              "value": "false",
+              "label": "false",
+              "selected": true
+            },
+            {
+              "value": "true",
+              "label": "true",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        },
+        {
+          "line": 1293,
+          "tag": "select",
+          "key": "(unnamed select)",
+          "id": "",
+          "data_key": "",
+          "name": "",
+          "type": "",
+          "value": "",
+          "placeholder": "",
+          "disabled": true,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "preprocess timing report",
+          "options": [
+            {
+              "value": "",
+              "label": "backend hook needed",
+              "selected": false
+            }
+          ],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-check",
+      "label": "Check all",
+      "guide_panel": "check_all",
+      "start_line": 1305,
+      "control_count": 1,
+      "mentioned_count": 0,
+      "missing_count": 1,
+      "controls": [
+        {
+          "line": 1313,
+          "tag": "button",
+          "key": "check-button-2",
+          "id": "check-button-2",
+          "data_key": "",
+          "name": "",
+          "type": "button",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Run page checks",
+          "data_pipeline_action": "",
+          "data_requires_preflight": "",
+          "onclick": "",
+          "options": [],
+          "mentioned_in_matching_guide_panel": false
+        }
+      ]
+    },
+    {
+      "tab_id": "tab-submit",
+      "label": "Submit",
+      "guide_panel": "submit",
+      "start_line": 1321,
+      "control_count": 3,
+      "mentioned_count": 3,
+      "missing_count": 0,
+      "controls": [
+        {
+          "line": 1350,
+          "tag": "button",
+          "key": "Run backend preflight",
+          "id": "",
+          "data_key": "",
+          "name": "",
+          "type": "button",
+          "value": "",
+          "placeholder": "",
+          "disabled": false,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Run backend preflight",
+          "data_pipeline_action": "preflight",
+          "data_requires_preflight": "",
+          "onclick": "",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 1356,
+          "tag": "button",
+          "key": "Build Slurm scripts",
+          "id": "",
+          "data_key": "",
+          "name": "",
+          "type": "button",
+          "value": "",
+          "placeholder": "",
+          "disabled": true,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Build Slurm scripts",
+          "data_pipeline_action": "build_scripts",
+          "data_requires_preflight": "true",
+          "onclick": "",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        },
+        {
+          "line": 1364,
+          "tag": "button",
+          "key": "Submit Slurm chain",
+          "id": "",
+          "data_key": "",
+          "name": "",
+          "type": "button",
+          "value": "",
+          "placeholder": "",
+          "disabled": true,
+          "hidden": false,
+          "readonly": false,
+          "label_guess": "Submit Slurm chain",
+          "data_pipeline_action": "submit",
+          "data_requires_preflight": "true",
+          "onclick": "",
+          "options": [],
+          "mentioned_in_matching_guide_panel": true
+        }
+      ]
+    }
+  ]
+}

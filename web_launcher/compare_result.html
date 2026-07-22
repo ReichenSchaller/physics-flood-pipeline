@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Results</title>
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #111827;
+      --panel2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --good: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+      --border: #374151;
+    }
+
+    body {
+      margin: 0;
+      background: #020617;
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 32px 24px 70px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: -0.03em;
+    }
+
+    h2 { margin-top: 0; font-size: 20px; }
+    h3 { margin-bottom: 8px; }
+    p { color: var(--muted); line-height: 1.5; }
+    a { color: var(--accent); text-decoration: none; }
+
+    .card {
+      background: rgba(17, 24, 39, 0.96);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric .value {
+      font-size: 23px;
+      font-weight: 850;
+      margin-top: 6px;
+    }
+
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+
+    .mono {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 9px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: #cbd5e1;
+      background: #0f172a;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .table-wrap {
+      max-height: 420px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-top: 10px;
+    }
+
+    .path {
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #1e293b;
+      color: #cbd5e1;
+    }
+
+    .future {
+      border-style: dashed;
+      opacity: 0.8;
+    }
+
+    .error {
+      color: #fecaca;
+      background: rgba(127, 29, 29, 0.35);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      padding: 12px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+    }
+
+    select, button {
+      background: #020617;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      color: #00111f;
+      font-weight: 800;
+      border: 0;
+    }
+
+    details {
+      background: #0b1120;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 12px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .control-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .control-row > * {
+      min-width: 220px;
+    }
+
+    .takeaway-list {
+      margin: 10px 0 0;
+      padding-left: 22px;
+      color: #cbd5e1;
+      line-height: 1.55;
+    }
+
+    .pair-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 18px;
+    }
+
+    .pair-tab {
+      background: #0f172a;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 850;
+    }
+
+    .pair-tab.active {
+      background: var(--accent);
+      color: #00111f;
+      border-color: var(--accent);
+    }
+
+    .pair-panel {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #0b1120;
+    }
+
+    .pair-panel.empty {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .run-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0 16px;
+    }
+
+    .run-meta-box {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .run-meta-box .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .subtab {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 9px 12px;
+      font-weight: 850;
+    }
+
+    .subtab.active {
+      background: var(--accent);
+      color: #00111f;
+      border-color: var(--accent);
+    }
+
+    .pair-section {
+      display: none;
+    }
+
+    .pair-section.active {
+      display: block;
+    }
+
+    .section-card {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    
+    .help-button {
+
+      position: fixed;
+
+      left: 18px;
+
+      bottom: 18px;
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 1px solid var(--border);
+
+      background: #ffffff;
+
+      color: #173f73;
+
+      display: grid;
+
+      place-items: center;
+
+      font-weight: 900;
+
+      box-shadow: 0 12px 28px rgba(24, 39, 75, 0.18);
+
+      text-decoration: none;
+
+      z-index: 50;
+
+    }
+
+
+
+    .help-button:hover {
+
+      border-color: var(--accent);
+
+      color: #315f9f;
+
+    }
+
+
+
+    @media (max-width: 900px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .summary-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Compare Results</h1>
+        <p id="subtitle">Loading result...</p>
+      </div>
+      <div>
+        <a href="/compare">New compare</a>
+        ·
+        <a href="/">Launcher</a>
+      </div>
+    </div>
+
+    <div id="content"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const jobDir = params.get("job_dir");
+    const pairDetails = {};
+    let compareResult = null;
+    let activePairIndex = null;
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function fmt(value) {
+      if (value === null || value === undefined) return "";
+      if (typeof value === "number") {
+        if (Math.abs(value) >= 1000 || Math.abs(value) < 0.001 && value !== 0) {
+          return value.toExponential(4);
+        }
+        return value.toPrecision(6);
+      }
+      return String(value);
+    }
+
+    function boolClass(value) {
+      return value ? "good" : "bad";
+    }
+
+    function metric(label, value, cls="") {
+      return `
+        <div class="metric">
+          <div class="label">${esc(label)}</div>
+          <div class="value ${cls}">${esc(value)}</div>
+        </div>
+      `;
+    }
+
+    function isSfincsOutputNetcdf(file) {
+      return file === "sfincs_map.nc" || file === "sfincs_his.nc";
+    }
+
+    function formatPct(value, digits=1) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "n/a";
+      return Number(value).toFixed(digits) + "%";
+    }
+
+    function formatGB(value, digits=3) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "n/a";
+      return Number(value).toFixed(digits) + " GB";
+    }
+
+    function pathBaseName(value) {
+      const parts = String(value || "").split("/").filter(Boolean);
+      return parts.length ? parts[parts.length - 1] : String(value || "");
+    }
+
+    function shortRunName(name, maxPrefix=28) {
+      const text = String(name || "").trim();
+      if (!text) return "run";
+
+      const m = text.match(/([_.-]?)([0-9]{3,4})$/);
+      if (m && text.length > maxPrefix + 6) {
+        return text.slice(0, maxPrefix).replace(/[_.\- ]+$/g, "") + "..." + m[2];
+      }
+
+      if (text.length <= maxPrefix + 10) return text;
+      return text.slice(0, maxPrefix).replace(/[_.\- ]+$/g, "") + "..." + text.slice(-8);
+    }
+
+    function baselineDisplay(pair) {
+      return pair.baseline_display || shortRunName(pair.baseline_name || pathBaseName(pair.old_run));
+    }
+
+    function comparisonDisplay(pair) {
+      return pair.comparison_display || shortRunName(pair.comparison_name || pathBaseName(pair.new_run));
+    }
+
+    function pairDisplay(pair) {
+      return pair.display_label || pair.label || `${baselineDisplay(pair)} vs ${comparisonDisplay(pair)}`;
+    }
+
+    function renderUtil(note, pairs=[]) {
+      if (!note) return "";
+
+      const cpuValue = note.max_pair_average_cpu_cores_used == null
+        ? "n/a"
+        : `${Number(note.max_pair_average_cpu_cores_used).toFixed(2)} / ${note.requested_cpus}`;
+
+      const pairRows = pairs.map(pair => {
+        const usage = pair.usage || {};
+        return `
+          <tr>
+            <td>${esc(pairDisplay(pair))}</td>
+            <td>${esc(usage.elapsed_raw || "n/a")}</td>
+            <td>${esc(formatGB(usage.max_rss_gb))}</td>
+            <td>${esc(usage.average_cpu_cores_used == null ? "n/a" : Number(usage.average_cpu_cores_used).toFixed(2))}</td>
+            <td>${esc(formatPct(usage.cpu_utilization_percent_of_request))}</td>
+          </tr>
+        `;
+      }).join("");
+
+      return `
+        <div class="card">
+          <h2>Utilization summary</h2>
+          <div class="summary-grid">
+            ${metric("Requested RAM", note.requested_mem)}
+            ${metric("RAM used", `${formatGB(note.max_pair_process_rss_gb)} / ${note.requested_mem || "n/a"}`)}
+            ${metric("RAM use %", formatPct(note.approx_mem_utilization_percent, 2))}
+            ${metric("Requested CPUs", note.requested_cpus)}
+            ${metric("CPU used", cpuValue)}
+            ${metric("CPU use %", formatPct(note.max_pair_cpu_utilization_percent_of_request, 1))}
+          </div>
+
+          ${(note.recommendation || note.cpu_recommendation) ? `
+            <ul class="takeaway-list">
+              ${note.recommendation ? `<li>${esc(note.recommendation)}</li>` : ""}
+              ${note.cpu_recommendation ? `<li>${esc(note.cpu_recommendation)}</li>` : ""}
+            </ul>
+          ` : ""}
+
+          <h3>Pair utilization</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pair</th>
+                  <th>Elapsed</th>
+                  <th>Peak RAM</th>
+                  <th>Avg CPU cores</th>
+                  <th>CPU % of request</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${pairRows || `<tr><td colspan="5">No pair utilization data available.</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+
+          <p>${esc(note.note || "")}</p>
+          ${note.cpu_note ? `<p>${esc(note.cpu_note)}</p>` : ""}
+        </div>
+      `;
+    }
+
+    function renderTakeaways(data) {
+      const pairs = data.pairs || [];
+      const items = [];
+
+      for (const pair of pairs) {
+        const s = pair.summary || {};
+        const label = pairDisplay(pair);
+        const warnings = s.warnings || [];
+
+        for (const warning of warnings) {
+          items.push(`${label}: ${warning}`);
+        }
+
+        if (Number(s.inp_diff_count || 0) > 0) {
+          items.push(`${label}: ${s.inp_diff_count} sfincs.inp difference(s) found.`);
+        }
+
+        if (Number(s.physical_nonzero_count || 0) > 0) {
+          items.push(`${label}: ${s.physical_nonzero_count} physical NetCDF difference(s) found.`);
+        }
+
+        if (Number(s.shape_mismatch_count || 0) > 0) {
+          items.push(`${label}: ${s.shape_mismatch_count} NetCDF shape mismatch(es) found.`);
+        }
+      }
+
+      if (!items.length) {
+        items.push("No major warnings were reported by the comparison summary.");
+      }
+
+      return `
+        <div class="card">
+          <h2>Important takeaways</h2>
+          <ul class="takeaway-list">
+            ${items.map(item => `<li>${esc(item)}</li>`).join("")}
+          </ul>
+        </div>
+      `;
+    }
+
+    function renderPairTabs(pairs) {
+      if (!pairs.length) return `<p>No pair comparisons were found in the result JSON.</p>`;
+
+      return pairs.map(pair => `
+        <button
+          class="pair-tab"
+          data-pair-index="${esc(pair.pair_index)}"
+          data-result-file="${esc(pair.result_file)}"
+          title="${esc(pairDisplay(pair))}"
+        >
+          ${esc(pairDisplay(pair))}
+        </button>
+      `).join("");
+    }
+
+    function bindPairTabs() {
+      document.querySelectorAll(".pair-tab").forEach(button => {
+        button.addEventListener("click", () => {
+          selectPair(Number(button.dataset.pairIndex), button.dataset.resultFile);
+        });
+      });
+    }
+
+    function updatePairTabs(pairIndex) {
+      document.querySelectorAll(".pair-tab").forEach(button => {
+        button.classList.toggle("active", Number(button.dataset.pairIndex) === Number(pairIndex));
+      });
+    }
+
+    function renderPairSummary(pair) {
+      const s = pair.summary || {};
+      const warnings = s.warnings || [];
+
+      return `
+        <div class="section-card">
+          <h2>${esc(pairDisplay(pair))}</h2>
+
+          <div class="run-meta">
+            <div class="run-meta-box">
+              <div class="label">Baseline run</div>
+              <div class="path">${esc(pair.old_run)}</div>
+            </div>
+            <div class="run-meta-box">
+              <div class="label">Compared run</div>
+              <div class="path">${esc(pair.new_run)}</div>
+            </div>
+          </div>
+
+          <div class="summary-grid">
+            ${metric("Clean physical match", s.clean_physical_match, boolClass(s.clean_physical_match))}
+            ${metric("sfincs.inp diffs", s.inp_diff_count ?? "n/a", Number(s.inp_diff_count || 0) === 0 ? "good" : "warn")}
+            ${metric("Physical diffs", s.physical_nonzero_count ?? "n/a", Number(s.physical_nonzero_count || 0) === 0 ? "good" : "bad")}
+            ${metric("Shape mismatches", s.shape_mismatch_count ?? "n/a", Number(s.shape_mismatch_count || 0) === 0 ? "good" : "bad")}
+          </div>
+
+          ${warnings.length ? `
+            <h3>Warnings</h3>
+            <ul class="takeaway-list">
+              ${warnings.map(w => `<li>${esc(w)}</li>`).join("")}
+            </ul>
+          ` : ""}
+        </div>
+      `;
+    }
+
+    async function selectPair(pairIndex, resultFile) {
+      activePairIndex = pairIndex;
+      updatePairTabs(pairIndex);
+
+      const target = document.getElementById("pair-panel");
+      const pair = (compareResult && compareResult.pairs || []).find(p => Number(p.pair_index) === Number(pairIndex));
+
+      if (!target) return;
+
+      if (!pair) {
+        target.innerHTML = `<div class="error">Could not find pair ${esc(pairIndex)} in result JSON.</div>`;
+        return;
+      }
+
+      if (pairDetails[pairIndex]) {
+        target.classList.remove("empty");
+        target.innerHTML = renderPairSummary(pair) + renderPairDetail(pairIndex, pairDetails[pairIndex]);
+        showPairSection(pairIndex, "overview");
+        return;
+      }
+
+      target.classList.remove("empty");
+      target.innerHTML = renderPairSummary(pair) + `<p>Loading pair comparison...</p>`;
+
+      try {
+        const res = await fetch(`/api/compare/pair-result?job_dir=${encodeURIComponent(jobDir)}&file=${encodeURIComponent(resultFile)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to load pair detail.");
+        }
+
+        pairDetails[pairIndex] = data;
+        target.innerHTML = renderPairSummary(pair) + renderPairDetail(pairIndex, data);
+        showPairSection(pairIndex, "overview");
+
+      } catch (err) {
+        target.innerHTML = renderPairSummary(pair) + `<div class="error">${esc(err.message)}</div>`;
+      }
+    }
+
+    async function loadPairDetail(pairIndex, resultFile) {
+      return selectPair(pairIndex, resultFile);
+    }
+
+    function showPairSection(pairIndex, sectionName) {
+      const shell = document.getElementById(`pair-detail-shell-${pairIndex}`);
+      if (!shell) return;
+
+      shell.querySelectorAll(".pair-section").forEach(section => {
+        section.classList.toggle("active", section.dataset.section === sectionName);
+      });
+
+      shell.querySelectorAll(".subtab").forEach(button => {
+        button.classList.toggle("active", button.dataset.section === sectionName);
+      });
+    }
+
+    function renderPairDetail(pairIndex, data) {
+      return `
+        <div id="pair-detail-shell-${pairIndex}">
+          <div class="subtabs">
+            <button class="subtab active" data-section="overview" onclick="showPairSection(${pairIndex}, 'overview')">Overview</button>
+            <button class="subtab" data-section="inp" onclick="showPairSection(${pairIndex}, 'inp')">sfincs.inp</button>
+            <button class="subtab" data-section="files" onclick="showPairSection(${pairIndex}, 'files')">Input files</button>
+            <button class="subtab" data-section="netcdf" onclick="showPairSection(${pairIndex}, 'netcdf')">NetCDF outputs</button>
+          </div>
+
+          <div class="pair-section active" data-section="overview">
+            ${renderPairOverview(data)}
+          </div>
+
+          <div class="pair-section" data-section="inp">
+            ${renderImportantInp(data)}
+            ${renderInpDiffs(data)}
+          </div>
+
+          <div class="pair-section" data-section="files">
+            ${renderByteFiles(data)}
+          </div>
+
+          <div class="pair-section" data-section="netcdf">
+            ${renderNetcdfControls(pairIndex, data)}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPairOverview(data) {
+      const s = data.summary || {};
+      const warnings = s.warnings || [];
+
+      return `
+        <div class="section-card">
+          <h3>Pair overview</h3>
+          <div class="summary-grid">
+            ${metric("Clean physical match", s.clean_physical_match ?? "n/a", s.clean_physical_match ? "good" : "bad")}
+            ${metric("sfincs.inp diffs", s.inp_diff_count ?? "n/a", Number(s.inp_diff_count || 0) === 0 ? "good" : "warn")}
+            ${metric("Physical diffs", s.physical_nonzero_count ?? "n/a", Number(s.physical_nonzero_count || 0) === 0 ? "good" : "bad")}
+            ${metric("Shape mismatches", s.shape_mismatch_count ?? "n/a", Number(s.shape_mismatch_count || 0) === 0 ? "good" : "bad")}
+          </div>
+
+          ${warnings.length ? `
+            <h3>Warnings</h3>
+            <ul class="takeaway-list">
+              ${warnings.map(w => `<li>${esc(w)}</li>`).join("")}
+            </ul>
+          ` : `<p class="good">No pair warnings reported.</p>`}
+        </div>
+      `;
+    }
+
+    function renderImportantInp(data) {
+      const rows = (data.inp && data.inp.important_rows) || [];
+
+      return `
+        <div class="section-card">
+          <h3>Important sfincs.inp keys side-by-side</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Same?</th>
+                  <th>Baseline</th>
+                  <th>Compared run</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.length ? rows.map(row => `
+                  <tr>
+                    <td><code>${esc(row.key)}</code></td>
+                    <td class="${row.same ? "good" : "bad"}">${esc(row.same)}</td>
+                    <td>${esc(row.old)}</td>
+                    <td>${esc(row.new)}</td>
+                  </tr>
+                `).join("") : `<tr><td colspan="4">No important sfincs.inp rows were reported.</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderInpDiffs(data) {
+      const diffs = (data.inp && data.inp.diffs) || [];
+
+      if (!diffs.length) {
+        return `
+          <div class="section-card">
+            <h3>All sfincs.inp diffs</h3>
+            <p class="good">No meaningful key/value differences after normalization.</p>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="section-card">
+          <h3>All sfincs.inp diffs (${diffs.length})</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Important?</th>
+                  <th>Baseline</th>
+                  <th>Compared run</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${diffs.map(row => `
+                  <tr>
+                    <td><code>${esc(row.key)}</code></td>
+                    <td>${esc(row.important)}</td>
+                    <td>${esc(row.old)}</td>
+                    <td>${esc(row.new)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderByteFiles(data) {
+      const rows = data.byte_files || [];
+
+      return `
+        <div class="section-card">
+          <h3>File existence, size, and byte identity</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>File</th>
+                  <th>Baseline exists</th>
+                  <th>Compared exists</th>
+                  <th>Baseline size</th>
+                  <th>Compared size</th>
+                  <th>Byte-identical</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.length ? rows.map(row => `
+                  <tr>
+                    <td><code>${esc(row.file)}</code></td>
+                    <td>${esc(row.old_exists)}</td>
+                    <td>${esc(row.new_exists)}</td>
+                    <td>${esc(row.old_size)}</td>
+                    <td>${esc(row.new_size)}</td>
+                    <td class="${row.byte_identical === true ? "good" : row.byte_identical === false ? "warn" : ""}">${esc(row.byte_identical)}</td>
+                  </tr>
+                `).join("") : `<tr><td colspan="6">No byte-file rows were reported.</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function allVariables(data) {
+      const out = [];
+
+      for (const [file, nc] of Object.entries(data.netcdf || {})) {
+        if (!isSfincsOutputNetcdf(file)) continue;
+
+        for (const row of (nc.variables || [])) {
+          out.push({file, ...row});
+        }
+      }
+
+      return out;
+    }
+
+    function renderNetcdfControls(pairIndex, data) {
+      return `
+        <div class="section-card">
+          <h3>SFINCS output NetCDF comparison</h3>
+          <p>
+            These are the numeric output comparisons from the pair result.
+            Mean absolute difference is the closest current metric to average flood-height difference for water variables.
+          </p>
+          ${renderNetcdfFileTables(data)}
+        </div>
+      `;
+    }
+
+    function showVariableDetail(pairIndex) {
+      const data = pairDetails[pairIndex];
+      const vars = allVariables(data);
+      const select = document.getElementById(`varSelect-${pairIndex}`);
+      const target = document.getElementById(`varDetail-${pairIndex}`);
+      const idx = select.value;
+
+      if (idx === "") {
+        target.textContent = "Select a variable to inspect its metrics.";
+        return;
+      }
+
+      const v = vars[Number(idx)];
+      target.textContent =
+        `file: ${v.file}\n` +
+        `variable: ${v.name}\n` +
+        `category: ${v.category}\n` +
+        `units: ${v.units}\n` +
+        `shape: ${JSON.stringify(v.shape)}\n` +
+        `finite_overlap: ${v.finite_overlap}\n` +
+        `max_abs: ${fmt(v.max_abs)}\n` +
+        `mean_abs: ${fmt(v.mean_abs)}\n` +
+        `rmse: ${fmt(v.rmse)}\n` +
+        `p95: ${fmt(v.p95)}\n` +
+        `p99: ${fmt(v.p99)}\n` +
+        `max_mm: ${fmt(v.max_mm)}\n` +
+        `mean_mm: ${fmt(v.mean_mm)}\n` +
+        `rmse_mm: ${fmt(v.rmse_mm)}\n` +
+        `p95_mm: ${fmt(v.p95_mm)}\n` +
+        `p99_mm: ${fmt(v.p99_mm)}\n` +
+        `meter_like: ${v.meter_like}\n` +
+        `rain_like: ${v.rain_like}\n` +
+        `percentiles_approx: ${v.percentiles_approx}`;
+    }
+
+    function renderNetcdfFileTables(data) {
+      let html = "";
+
+      for (const [file, nc] of Object.entries(data.netcdf || {})) {
+        if (!isSfincsOutputNetcdf(file)) continue;
+
+        const rows = nc.variables || [];
+        const skipped = nc.skipped_numeric || [];
+        const onlyOld = nc.only_old || [];
+        const onlyNew = nc.only_new || [];
+
+        html += `
+          <div class="section-card">
+            <h3>${esc(file)} (${rows.length} compared variable rows)</h3>
+
+            <div class="summary-grid">
+              ${metric("Baseline exists", nc.old_exists)}
+              ${metric("Compared exists", nc.new_exists)}
+              ${metric("Baseline only", onlyOld.length)}
+              ${metric("Compared only", onlyNew.length)}
+            </div>
+
+            ${onlyOld.length ? `<p>Only in baseline run: <span class="path">${esc(onlyOld.join(", "))}</span></p>` : ""}
+            ${onlyNew.length ? `<p>Only in compared run: <span class="path">${esc(onlyNew.join(", "))}</span></p>` : ""}
+            ${skipped.length ? `<p>Skipped numeric variables: <span class="path">${esc(skipped.join(", "))}</span></p>` : ""}
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th>Category</th>
+                    <th>Units</th>
+                    <th>Shape</th>
+                    <th>Max abs</th>
+                    <th>Mean abs</th>
+                    <th>RMSE</th>
+                    <th>p95</th>
+                    <th>p99</th>
+                    <th>Max mm</th>
+                    <th>Mean mm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows.length ? rows.map(row => `
+                    <tr>
+                      <td><code>${esc(row.name)}</code></td>
+                      <td>${esc(row.category)}</td>
+                      <td>${esc(row.units)}</td>
+                      <td>${esc(JSON.stringify(row.shape || row.old_shape || ""))}</td>
+                      <td>${esc(fmt(row.max_abs))}</td>
+                      <td>${esc(fmt(row.mean_abs))}</td>
+                      <td>${esc(fmt(row.rmse))}</td>
+                      <td>${esc(fmt(row.p95))}</td>
+                      <td>${esc(fmt(row.p99))}</td>
+                      <td>${esc(fmt(row.max_mm))}</td>
+                      <td>${esc(fmt(row.mean_mm))}</td>
+                    </tr>
+                  `).join("") : `<tr><td colspan="11">No comparable numeric variable rows were reported for this file.</td></tr>`}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      return html || `<p>No NetCDF comparison tables were reported.</p>`;
+    }
+
+    async function loadResult() {
+      const content = document.getElementById("content");
+
+      if (!jobDir) {
+        content.innerHTML = `<div class="error">Missing job_dir.</div>`;
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/compare/result?job_dir=${encodeURIComponent(jobDir)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to load result.");
+        }
+
+        compareResult = data;
+        const pairs = data.pairs || [];
+        const baselineName = pairs.length ? baselineDisplay(pairs[0]) : shortRunName(pathBaseName(data.baseline));
+
+        document.getElementById("subtitle").textContent =
+          `${data.level} compare · ${pairs.length} pair(s)`;
+
+        content.innerHTML = `
+          <div class="card">
+            <h2>Job summary</h2>
+            <div class="summary-grid">
+              ${metric("Level", data.level)}
+              ${metric("Pairs", pairs.length)}
+              ${metric("Mode", data.comparison_mode)}
+              ${metric("Status", data.status, data.status === "done" ? "good" : "warn")}
+            </div>
+
+            <div class="run-meta">
+              <div class="run-meta-box">
+                <div class="label">Baseline run</div>
+                <div class="path">${esc(baselineName)}</div>
+              </div>
+              <div class="run-meta-box">
+                <div class="label">Job folder</div>
+                <div class="path">${esc(jobDir)}</div>
+              </div>
+            </div>
+          </div>
+
+          ${renderUtil(data.utilization_note, pairs)}
+
+          ${renderTakeaways(data)}
+
+          <div class="card">
+            <h2>Pair comparisons</h2>
+            <p>Click a pair tab to view its comparison. The sections inside the pair switch between overview, sfincs.inp, input files, and NetCDF outputs.</p>
+            <div class="pair-tabs">
+              ${renderPairTabs(pairs)}
+            </div>
+            <div id="pair-panel" class="pair-panel empty">
+              Select a pair tab above to view its comparison.
+            </div>
+          </div>
+        `;
+
+        bindPairTabs();
+
+      } catch (err) {
+        content.innerHTML = `<div class="error">${esc(err.message)}</div>`;
+      }
+    }
+    loadResult();
+  </script>
+  <a class="help-button" href="guide.html" title="Open launcher guide">?</a>
+</body>
+</html>

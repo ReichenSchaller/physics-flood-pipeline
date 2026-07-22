@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Job Status</title>
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --good: #22c55e;
+      --bad: #ef4444;
+      --border: #374151;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at top, #172554 0, #020617 55%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .card {
+      width: min(720px, calc(100vw - 36px));
+      background: rgba(17, 24, 39, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .bar-shell {
+      height: 18px;
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 22px 0 12px;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+      transition: width 0.5s ease;
+    }
+
+    .sparkle {
+      font-size: 40px;
+      margin-bottom: 10px;
+      animation: bob 1.6s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .mono {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px;
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .error {
+      display: none;
+      margin-top: 16px;
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      background: rgba(127, 29, 29, 0.35);
+      color: #fecaca;
+      padding: 12px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="sparkle">🌊</div>
+    <h1>Compare job running</h1>
+    <p id="message">Starting...</p>
+
+    <div class="bar-shell">
+      <div id="bar" class="bar"></div>
+    </div>
+
+    <p id="progressText">0%</p>
+
+    <div class="mono" id="jobDir"></div>
+
+    <p style="margin-top: 18px;">
+      <a href="/compare">Start another compare</a>
+      ·
+      <a href="/">Back to launcher</a>
+    </p>
+
+    <div id="errorBox" class="error"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const jobDir = params.get("job_dir");
+
+    document.getElementById("jobDir").textContent = jobDir || "No job_dir provided.";
+
+    function setProgress(value) {
+      const pct = Math.max(0, Math.min(100, Math.round(value * 100)));
+      document.getElementById("bar").style.width = `${pct}%`;
+      document.getElementById("progressText").textContent = `${pct}%`;
+    }
+    
+    function displayProgressForStatus(data) {
+      const status = data.status || "";
+      const totalPairs = Number(data.total_pairs || 0);
+      const currentPair = Number(data.current_pair || 0);
+    
+      if (["created", "submitted", "pending", "queued"].includes(status)) {
+        return 0;
+      }
+    
+      if (status === "running") {
+        if (totalPairs <= 1) {
+          return 0.50;
+        }
+    
+        if (currentPair > 0) {
+          // Equal jumps as it moves pair-to-pair.
+          // Example for 3 pairs: pair 1 -> ~28%, pair 2 -> ~50%, pair 3 -> ~72%.
+          return 0.10 + ((currentPair - 0.5) / totalPairs) * 0.70;
+        }
+    
+        return 0.10;
+      }
+    
+      if (status === "assembling") {
+        return 0.80;
+      }
+    
+      if (status === "done") {
+        return 1.0;
+      }
+    
+      if (["failed", "submit_failed", "error"].includes(status)) {
+        return 0;
+      }
+    
+      return Number(data.progress || 0);
+    }
+
+    function showError(text) {
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = text;
+    }
+
+    async function poll() {
+      if (!jobDir) {
+        showError("Missing job_dir in URL.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/compare/status?job_dir=${encodeURIComponent(jobDir)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Status check failed.");
+        }
+
+        document.getElementById("message").textContent = data.message || data.status || "Running...";
+        setProgress(displayProgressForStatus(data));
+
+        if (data.status === "done" && data.has_result) {
+          document.getElementById("message").textContent = "Finished. Loading results...";
+          setProgress(1);
+          setTimeout(() => {
+            window.location.href = `/compare/result?job_dir=${encodeURIComponent(jobDir)}`;
+          }, 600);
+          return;
+        }
+
+        if (["failed", "submit_failed", "error"].includes(data.status)) {
+          showError(JSON.stringify(data, null, 2));
+          return;
+        }
+
+        setTimeout(poll, 3000);
+
+      } catch (err) {
+        showError(err.message);
+        setTimeout(poll, 6000);
+      }
+    }
+
+    poll();
+  </script>
+</body>
+</html>

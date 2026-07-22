@@ -1,0 +1,2775 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SFINCS Launcher - Override Mode</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --panel-2: #f0f3f8;
+      --text: #172033;
+      --muted: #667085;
+      --line: #d9dee8;
+      --accent: #315f9f;
+      --accent-2: #173f73;
+      --good: #18794e;
+      --warn: #b25e09;
+      --bad: #b42318;
+      --radius: 18px;
+      --shadow: 0 12px 28px rgba(24, 39, 75, 0.08);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, #102a4f, #315f9f);
+      color: white;
+      padding: 24px clamp(18px, 4vw, 54px);
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 24px;
+      align-items: center;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.15; }
+    h1 { font-size: clamp(1.9rem, 3vw, 3rem); letter-spacing: -0.04em; }
+    h2 { font-size: 1.35rem; margin-bottom: 8px; }
+    h3 { font-size: 1.05rem; margin-bottom: 8px; }
+
+
+    .runner-output {
+      background: #101828;
+      color: #d0d5dd;
+      border-radius: 16px;
+      padding: 16px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      max-height: 620px;
+      overflow: auto;
+      margin-top: 14px;
+    }
+    
+    .submit-review-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    
+    .submit-review-row {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: var(--panel-2);
+    }
+    
+    .submit-review-row strong {
+      color: #263248;
+    }
+
+
+    .subtitle {
+      margin: 12px 0 0;
+      max-width: 900px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1rem;
+    }
+
+    .status-box {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius);
+      padding: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 7px 0;
+      font-size: 0.88rem;
+    }
+
+    .status-row:last-child { border-bottom: 0; }
+    .status-row span:first-child { color: rgba(255, 255, 255, 0.7); }
+    .status-row span:last-child { text-align: right; font-family: var(--mono); }
+
+    main {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 22px clamp(18px, 4vw, 54px) 54px;
+    }
+
+    a { color: inherit; }
+
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .left-actions, .right-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .back-link, button, .file-label {
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 800;
+      font-family: inherit;
+      font-size: 0.92rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--text);
+      box-shadow: 0 6px 14px rgba(24, 39, 75, 0.06);
+    }
+
+    button.primary, .file-label.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+    }
+
+    button.secondary { background: var(--panel-2); }
+    button:disabled, .disabled-button { opacity: 0.45; cursor: not-allowed; }
+    input[type="file"] { display: none; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .panel + .panel { margin-top: 18px; }
+
+    .step-strip-wrap, .manual-tab-strip-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(246, 247, 251, 0.94);
+      backdrop-filter: blur(10px);
+      padding: 10px 0 14px;
+      margin: -10px 0 14px;
+    }
+
+    .manual-tab-strip-wrap {
+      top: 54px;
+      z-index: 18;
+      margin-top: 12px;
+    }
+
+    .step-strip, .manual-tab-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+    }
+
+    .step-tab, .manual-tab {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      background: white;
+      color: #344054;
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-weight: 850;
+      font-size: 0.84rem;
+      box-shadow: 0 4px 10px rgba(24, 39, 75, 0.04);
+    }
+
+    .manual-tab { font-size: 0.8rem; padding: 8px 11px; }
+
+    .step-tab.active, .manual-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .step-tab.submit-tab.active { background: var(--bad); border-color: var(--bad); }
+
+    .step-panel, .manual-panel { display: none; }
+    .step-panel.active, .manual-panel.active { display: block; }
+
+    .section-intro {
+      color: var(--muted);
+      margin: 0 0 16px;
+      max-width: 940px;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: #edf4ff;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: #27476f;
+      margin: 16px 0;
+    }
+
+    .callout.warn {
+      border-left-color: var(--warn);
+      background: #fff7ed;
+      color: #7a3e00;
+    }
+
+    label {
+      display: block;
+      color: #344054;
+      font-size: 0.82rem;
+      font-weight: 850;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 9px 11px;
+      background: white;
+      color: var(--text);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    
+    .long-page-textarea {
+      min-height: 760px;
+      max-height: none;
+      resize: vertical;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    
+    .short-textarea { min-height: 58px; }
+    .medium-textarea { min-height: 180px; }
+
+    .field-note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .source-box {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+    
+    #override-sections {
+      margin-top: 18px;
+    }
+    
+    .source-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    
+    .source-row:first-child {
+      margin-top: 0;
+    }
+    
+    .source-row button {
+      white-space: nowrap;
+    }
+
+    .override-section {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: white;
+      margin-bottom: 20px;
+    }
+
+    .override-section-header {
+      padding: 16px;
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .override-section-header p { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+    .override-table, .config-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: white;
+    }
+
+    .config-table {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .override-table th, .override-table td, .config-table th, .config-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .override-table th, .config-table th {
+      color: #344054;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      background: #fbfcff;
+    }
+
+    .config-table th { background: var(--panel-2); }
+    .override-table tr:last-child td, .config-table tr:last-child td { border-bottom: 0; }
+    .override-table td:first-child { width: 260px; }
+    .override-table td:last-child { width: 120px; text-align: center; }
+    .config-table td:first-child { width: 250px; font-weight: 850; color: #263248; }
+    .config-table td:nth-child(2) { width: 42%; }
+    .config-table td:last-child { color: var(--muted); font-size: 0.88rem; }
+
+    .file-name {
+      font-family: var(--mono);
+      font-weight: 900;
+      color: #263248;
+      font-size: 0.92rem;
+    }
+
+    .aliases {
+      margin-top: 3px;
+      font-family: var(--mono);
+      color: var(--muted);
+      font-size: 0.74rem;
+    }
+
+    .file-desc { color: var(--muted); font-size: 0.9rem; }
+
+    .row-found { background: #f0fbf4; }
+    .row-manual { background: #fff8ec; }
+    .row-off { background: #fffafa; }
+
+    .detect-badge {
+      display: inline-block;
+      margin-top: 6px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      background: #ffeceb;
+      color: var(--bad);
+    }
+
+    .detect-badge.found { background: #eaf6ef; color: var(--good); }
+    .detect-badge.manual { background: #fff4e5; color: var(--warn); }
+
+    .locked-row {
+      background: #f3f6fb;
+      opacity: 0.72;
+    }
+
+    .locked-row td:first-child::after {
+      content: " locked";
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-left: 8px;
+    }
+
+    .locked-row input,
+    .locked-row select,
+    .locked-row textarea {
+      background: #eef2f7;
+      color: #667085;
+    }
+
+    .hidden-tabs-note {
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      background: #fbfcff;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .switch {
+      position: relative;
+      width: 52px;
+      height: 30px;
+      display: inline-block;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #e7b6b2;
+      border-radius: 999px;
+      transition: 160ms ease;
+      border: 1px solid #d79d98;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      width: 24px;
+      height: 24px;
+      left: 2px;
+      top: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: 160ms ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+    }
+
+    .switch input:checked + .slider {
+      background: #88d4a5;
+      border-color: #59b879;
+    }
+
+    .switch input:checked + .slider:before { transform: translateX(22px); }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 0;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 750;
+    }
+
+    .pill.good { color: var(--good); background: #eaf6ef; border-color: #badfca; }
+    .pill.warn { color: var(--warn); background: #fff4e5; border-color: #ffd6a7; }
+    .pill.bad { color: var(--bad); background: #ffeceb; border-color: #ffbdb8; }
+
+    .side-panel { position: sticky; top: 18px; }
+
+    .config-preview {
+      background: #101828;
+      color: #d0d5dd;
+      border-radius: 16px;
+      padding: 16px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      max-height: 560px;
+      overflow: auto;
+    }
+
+    .path-preview {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      background: var(--panel-2);
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .checks-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .check-item {
+      display: grid;
+      grid-template-columns: 100px minmax(0, 1fr);
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: var(--panel-2);
+    }
+
+    .check-item.good { border-color: #badfca; background: #f0fbf4; }
+    .check-item.warn { border-color: #ffd6a7; background: #fff8ec; }
+    .check-item.bad { border-color: #ffbdb8; background: #fff0ef; }
+    .check-status { font-weight: 900; }
+    .check-item.good .check-status { color: var(--good); }
+    .check-item.warn .check-status { color: var(--warn); }
+    .check-item.bad .check-status { color: var(--bad); }
+
+    .submit-placeholder {
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--panel-2);
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+      padding: 30px;
+    }
+
+    .help-button {
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--accent-2);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      z-index: 50;
+    }
+
+    .help-button:hover { border-color: var(--accent); color: var(--accent); }
+
+    .mono { font-family: var(--mono); }
+    .muted { color: var(--muted); }
+
+    @media (max-width: 1180px) {
+      .header-grid, .layout, .source-box { grid-template-columns: 1fr; }
+      .side-panel { position: static; }
+    }
+
+    @media (max-width: 780px) {
+      .override-table, .override-table thead, .override-table tbody, .override-table tr, .override-table th, .override-table td,
+      .config-table, .config-table thead, .config-table tbody, .config-table tr, .config-table th, .config-table td { display: block; }
+      .override-table thead, .config-table thead { display: none; }
+      .override-table tr, .config-table tr { border-bottom: 1px solid var(--line); }
+      .override-table tr:last-child, .config-table tr:last-child { border-bottom: 0; }
+      .override-table td, .config-table td { border-bottom: 0; width: auto !important; text-align: left !important; }
+    }
+  </style>
+
+<!-- BEGIN visible scrollbar patch -->
+<style>
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    overflow-y: scroll;
+  }
+
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #9ca3af #e5e7eb;
+  }
+
+  *::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #e5e7eb;
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #9ca3af;
+    border: 3px solid #e5e7eb;
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
+
+  .tab-strip-wrap,
+  .tabs-scroll,
+  .table-scroll,
+  .config-table-wrap,
+  .output-box,
+  pre {
+    scrollbar-width: auto;
+  }
+
+  .tab-strip-wrap {
+    overflow-x: scroll;
+  }
+</style>
+<!-- END visible scrollbar patch -->
+
+</head>
+<body>
+  <header>
+    <div class="header-grid">
+      <div>
+        <h1>Override Mode</h1>
+        <p class="subtitle">Use already-processed SFINCS input files. Give the launcher one source path, detect known SFINCS filenames, confirm the override switches, then continue into a Manual Mode-style config where irrelevant tabs are hidden or greyed out.</p>
+      </div>
+      <div class="status-box" aria-label="Override mode summary">
+        <div class="status-row"><span>Config format</span><span>normal JSON</span></div>
+        <div class="status-row"><span>Maintainer</span><span>Reichen Schaller</span></div>
+        <div class="status-row"><span>Version</span><span>v1.1 (5/28/26)</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="top-actions">
+      <div class="left-actions">
+        <a class="back-link" href="index.html">← Back to main menu</a>
+        <button class="secondary" type="button" id="check-button-top">Run page checks</button>
+      </div>
+      <div class="right-actions">
+        <button class="secondary" type="button" data-new-run-button>
+          New run / wipe page
+        </button>
+        <button class="primary" type="button" id="save-config-button">Save config</button>
+        <label class="file-label" for="load-config-input">Load config</label>
+        <input id="load-config-input" type="file" accept=".json,application/json" />
+      </div>
+     </div>
+
+    <div class="layout">
+      <section>
+        <div class="step-strip-wrap">
+          <nav class="step-strip" aria-label="Override workflow steps">
+            <button class="step-tab active" data-step="step-overrides" type="button">1 Detect + overrides</button>
+            <button class="step-tab" data-step="step-manual" type="button">2 Stripped manual config</button>
+            <button class="step-tab" data-step="step-check" type="button">3 Review checks</button>
+            <button class="step-tab submit-tab" data-step="step-submit" type="button">4 Submit</button>
+          </nav>
+        </div>
+
+        <!-- STEP 1: DETECT + OVERRIDES START -->
+        <div class="panel step-panel active" id="step-overrides">
+          <h2>1. Detect source files and confirm overrides</h2>
+          <p class="section-intro">Enter the source folder containing already-processed SFINCS inputs. Detection checks for known SFINCS filenames and flips matching override switches green. Files not recognized here are not treated as SFINCS-readable override inputs.</p>
+
+        <div class="source-box">
+          <div style="grid-column: 1 / -1;">
+            <label for="source-path">Sources</label>
+        
+            <div id="source-list">
+              <div class="source-row">
+                <input id="source-path"
+                       class="source-path-input"
+                       value=""
+                       placeholder="/path/to/folder/with/sfincs/files" />
+        
+                <button class="secondary" type="button"
+                        data-browse-target="source-path"
+                        data-browse-mode="directory"
+                        data-browse-start="/proj/zefflab/projects/Flooding">
+                  Browse
+                </button>
+              </div>
+            </div>
+        
+            <p class="field-note">
+              Add one or more folders. For example, use one static SFINCS folder and one event folder, then click Detect all.
+            </p>
+        
+            <div class="button-row">
+              <button class="secondary" type="button" id="add-source-button">+ Add source</button>
+              <button class="primary" type="button" id="detect-button-main">Detect all</button>
+              <button class="secondary" type="button" id="all-off-button">Turn all off</button>
+              <button class="secondary" type="button" id="detected-on-button">Reapply detected</button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="override-sections"></div>
+        
+        <div class="button-row">
+          <button class="primary" type="button" id="confirm-overrides-button">
+            Confirm overrides → stripped manual config
+          </button>
+        </div> 
+        
+        </div> 
+        <!-- STEP 1: DETECT + OVERRIDES END -->
+
+        <!-- STEP 2: STRIPPED MANUAL CONFIG START -->
+        <div class="panel step-panel" id="step-manual">
+          <h2>2. Stripped manual config</h2>
+          
+
+          <div id="hidden-tabs-note" class="hidden-tabs-note">No manual tabs are hidden yet. Confirm overrides to update this section.</div><p class="section-intro">This keeps the same style as Manual Mode. Source/path rows can grey out when selected override files already provide that product. Master toggles such as use_infiltration, use_wind, and use_pressure stay editable so you can still decide whether those products are active.</p>
+
+          <div class="manual-tab-strip-wrap">
+            <nav class="manual-tab-strip" aria-label="Override-aware manual configuration tabs">
+              <button class="manual-tab active" data-manual-tab="manual-0" type="button">0 Run identity</button>
+              <button class="manual-tab" data-manual-tab="manual-1" type="button">1 Pipeline</button>
+              <button class="manual-tab" data-manual-tab="manual-2" type="button">2 Slurm general</button>
+              <button class="manual-tab" data-manual-tab="manual-3" type="button">3 Stage resources</button>
+              <button class="manual-tab" data-manual-tab="manual-4" type="button">4 Data catalogs</button>
+              <button class="manual-tab" data-manual-tab="manual-5" type="button">5 Required inputs</button>
+              <button class="manual-tab" data-manual-tab="manual-6" type="button">6 Optional inputs</button>
+              <button class="manual-tab" data-manual-tab="manual-7" type="button">7 Model settings</button>
+              <button class="manual-tab" data-manual-tab="manual-8" type="button">8 Elevation/mask</button>
+              <button class="manual-tab" data-manual-tab="manual-9" type="button">9 Roughness</button>
+              <button class="manual-tab" data-manual-tab="manual-10" type="button">10 Subgrid</button>
+              <button class="manual-tab" data-manual-tab="manual-11" type="button">11 Forcing</button>
+              <button class="manual-tab" data-manual-tab="manual-12" type="button">12 Infiltration</button>
+              <button class="manual-tab" data-manual-tab="manual-13" type="button">13 Output</button>
+              <button class="manual-tab" data-manual-tab="manual-14" type="button">14 Advanced</button>
+              <button class="manual-tab" data-manual-tab="manual-15" type="button">15 Postprocess</button>
+              <button class="manual-tab" data-manual-tab="manual-16" type="button">16 Safety/debug</button>
+              <button class="manual-tab" data-manual-tab="manual-17" type="button">17 Backend paths</button>
+            </nav>
+          </div>
+
+          <div class="manual-panel active" id="manual-0">
+            <h2>0. Run identity / output locations</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr><td>run_name</td><td><input data-key="run_name" data-type="string" value="sfincs_override_001"></td><td>Name for the output run folder.</td></tr>
+              <tr><td>project_root</td><td><input data-key="project_root" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline"></td><td>Shared pipeline root.</td></tr>
+              <tr><td>output_root</td><td><input data-key="output_root" data-type="string" value="/proj/zefflab/projects/Flooding/sfincs_runs"></td><td>Root where the backend will create the run folder.</td></tr>
+              <tr><td>overwrite_existing_run</td><td><select data-key="overwrite_existing_run" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Keep false unless intentionally replacing a run.</td></tr>
+              <tr><td>run_description</td><td><input data-key="run_description" data-type="string" value="Override-mode SFINCS run."></td><td>Short description.</td></tr>
+              <tr><td>run_tags</td><td><textarea class="short-textarea" data-key="run_tags" data-type="json">["override", "sfincs"]</textarea></td><td>JSON list of tags.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-1">
+            <h2>1. Pipeline control</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr><td>run_preprocessing_job</td><td><select data-key="run_preprocessing_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 1.</td></tr>
+              <tr><td>run_sfincs_job</td><td><select data-key="run_sfincs_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 2.</td></tr>
+              <tr><td>run_postprocessing_job</td><td><select data-key="run_postprocessing_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 3.</td></tr>
+              <tr><td>submit_with_dependencies</td><td><select data-key="submit_with_dependencies" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Usually true.</td></tr>
+              <tr><td>dependency_type</td><td><select data-key="dependency_type" data-type="string"><option selected>afterok</option></select></td><td>Supported dependency style.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-2">
+            <h2>2. Slurm general settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr><td>slurm_account</td><td><input data-key="slurm_account" data-type="nullable" value=""></td><td>Leave blank unless needed.</td></tr>
+              <tr><td>slurm_partition</td><td><input data-key="slurm_partition" data-type="nullable" value=""></td><td>Leave blank for default partition.</td></tr>
+              <tr><td>slurm_qos</td><td><input data-key="slurm_qos" data-type="nullable" value=""></td><td>Leave blank unless needed.</td></tr>
+              <tr><td>slurm_email</td><td><input data-key="slurm_email" data-type="nullable" value=""></td><td>Optional email notifications.</td></tr>
+              <tr><td>slurm_mail_type</td><td><input data-key="slurm_mail_type" data-type="string" value="END,FAIL"></td><td>Used only if slurm_email is set.</td></tr>
+              <tr><td>slurm_extra_directives</td><td><textarea class="short-textarea" data-key="slurm_extra_directives" data-type="json">[]</textarea></td><td>JSON list of extra #SBATCH lines.</td></tr>
+              <tr><td>bash_strict_mode</td><td><select data-key="bash_strict_mode" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Usually true.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-3">
+            <h2>3. Slurm resources by stage</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr><td>preprocess_time</td><td><input data-key="preprocess_time" data-type="string" value="01:00:00"></td><td>Native assembly preprocessing is usually light.</td></tr>
+              <tr><td>preprocess_nodes</td><td><input data-key="preprocess_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+              <tr><td>preprocess_ntasks</td><td><input data-key="preprocess_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+              <tr><td>preprocess_cpus_per_task</td><td><input data-key="preprocess_cpus_per_task" data-type="int" value="2"></td><td>CPUs for native assembly.</td></tr>
+              <tr><td>preprocess_mem</td><td><input data-key="preprocess_mem" data-type="string" value="8G"></td><td>Memory request.</td></tr>
+              <tr><td>sfincs_time</td><td><input data-key="sfincs_time" data-type="string" value="04:00:00"></td><td>Solver wall time.</td></tr>
+              <tr><td>sfincs_nodes</td><td><input data-key="sfincs_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+              <tr><td>sfincs_ntasks</td><td><input data-key="sfincs_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+              <tr><td>sfincs_cpus_per_task</td><td><input data-key="sfincs_cpus_per_task" data-type="int" value="16"></td><td>OpenMP threads.</td></tr>
+              <tr><td>sfincs_mem</td><td><input data-key="sfincs_mem" data-type="string" value="16G"></td><td>Solver memory request.</td></tr>
+              <tr><td>postprocess_time</td><td><input data-key="postprocess_time" data-type="string" value="01:00:00"></td><td>Postprocessing wall time.</td></tr>
+              <tr><td>postprocess_nodes</td><td><input data-key="postprocess_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+              <tr><td>postprocess_ntasks</td><td><input data-key="postprocess_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+              <tr><td>postprocess_cpus_per_task</td><td><input data-key="postprocess_cpus_per_task" data-type="int" value="2"></td><td>Postprocess CPUs.</td></tr>
+              <tr><td>postprocess_mem</td><td><input data-key="postprocess_mem" data-type="string" value="24G"></td><td>Postprocess memory request.</td></tr>
+              <tr><td>sfincs_use_openmp_threads</td><td><select data-key="sfincs_use_openmp_threads" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Usually true.</td></tr>
+              <tr><td>sfincs_omp_proc_bind</td><td><input data-key="sfincs_omp_proc_bind" data-type="string" value="true"></td><td>OpenMP binding.</td></tr>
+              <tr><td>sfincs_omp_places</td><td><input data-key="sfincs_omp_places" data-type="string" value="cores"></td><td>OpenMP places.</td></tr>
+            </tbody></table>
+          </div>
+
+            <div class="manual-panel" id="manual-4">
+              <h2>4. Data / event catalogs</h2>
+              <p class="section-intro">
+                Add one or more data/event catalog folders here. For normal reduced-event runs, use folders like
+                <span class="mono">events_reduced/harvey_2017</span>. If this field is blank, the launcher uses
+                pure native SFINCS assembly. If this field is filled, the launcher quietly switches to hybrid mode.
+              </p>
+            
+              <table class="config-table">
+                <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>data_catalogs</td>
+                    <td>
+                      <textarea class="short-textarea"
+                                data-key="data_catalogs"
+                                data-type="string"
+                                placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced/harvey_2017"></textarea>
+                    </td>
+                    <td>
+                      One plain path, newline-separated paths, comma-separated paths, or a JSON list is accepted.
+                      This replaces run-by-run editing of data_root.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          <div class="manual-panel" id="manual-5" data-hide-when="geometry">
+            <h2>5. Required input data</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="geometry"><td>region_mode</td><td><select data-key="region_mode" data-type="string"><option selected>geom</option><option>bbox</option></select></td><td>Locked if geometry/topobathy files are overridden.</td></tr>
+              <tr data-lock="geometry"><td>region_path</td><td><input data-key="region_path" data-type="nullable" value=""></td><td>Region geometry path.</td></tr>
+              <tr data-lock="geometry"><td>region_bbox</td><td><textarea class="short-textarea" data-key="region_bbox" data-type="nullable_json"></textarea></td><td>Optional bbox JSON.</td></tr>
+              <tr data-lock="geometry"><td>dem_paths</td><td><textarea class="short-textarea" data-key="dem_paths" data-type="json">[]</textarea></td><td>DEM paths.</td></tr>
+              <tr data-lock="geometry"><td>hydromt_dem_sources</td><td><textarea data-key="hydromt_dem_sources" data-type="json">[]</textarea></td><td>HydroMT DEM sources.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-6" data-hide-when="optionalInputs">
+            <h2>6. Optional / additional input data</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="geometry"><td>bathy_paths</td><td><textarea class="short-textarea" data-key="bathy_paths" data-type="json">[]</textarea></td><td>Locked if topobathy is supplied by native files.</td></tr>
+              <tr data-lock="roughness"><td>landcover_path</td><td><input data-key="landcover_path" data-type="nullable" value=""></td><td>Locked if roughness is supplied by native files.</td></tr>
+              <tr data-lock="roughness"><td>landcover_source</td><td><input data-key="landcover_source" data-type="string" value=""></td><td>Landcover source.</td></tr>
+              <tr data-lock="eventForcing"><td>rainfall_path</td><td><input data-key="rainfall_path" data-type="nullable" value=""></td><td>Locked if rainfall files are overridden.</td></tr>
+              <tr data-lock="eventForcing"><td>waterlevel_path</td><td><input data-key="waterlevel_path" data-type="nullable" value=""></td><td>Locked if water-level series are overridden.</td></tr>
+              <tr data-lock="eventForcing"><td>discharge_source</td><td><input data-key="discharge_source" data-type="string" value=""></td><td>Locked if discharge files are overridden.</td></tr>
+              <tr data-lock="obsPoints"><td>obs_points_path</td><td><input data-key="obs_points_path" data-type="nullable" value=""></td><td>Locked if sfincs.obs is overridden.</td></tr>
+              <tr data-lock="obsLines"><td>obs_lines_path</td><td><input data-key="obs_lines_path" data-type="nullable" value=""></td><td>Locked if sfincs.crs is overridden.</td></tr>
+              <tr data-lock="thinDam"><td>thin_dam_path</td><td><input data-key="thin_dam_path" data-type="nullable" value=""></td><td>Locked if sfincs.thd is overridden.</td></tr>
+              <tr data-lock="weir"><td>weir_path</td><td><input data-key="weir_path" data-type="nullable" value=""></td><td>Locked if sfincs.weir is overridden.</td></tr>
+              <tr data-lock="drainage"><td>drainage_structure_path</td><td><input data-key="drainage_structure_path" data-type="nullable" value=""></td><td>Locked if sfincs.drn is overridden.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-7" data-hide-when="modelSettings">
+            <h2>7. Normal model settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="geometry"><td>grid_resolution_m</td><td><input data-key="grid_resolution_m" data-type="float" value="100"></td><td>Locked if grid files are overridden.</td></tr>
+              <tr data-lock="geometry"><td>grid_dx_m</td><td><input data-key="grid_dx_m" data-type="float" value="100"></td><td>Locked if grid files are overridden.</td></tr>
+              <tr data-lock="geometry"><td>grid_dy_m</td><td><input data-key="grid_dy_m" data-type="float" value="100"></td><td>Locked if grid files are overridden.</td></tr>
+              <tr data-lock="geometry"><td>grid_crs</td><td><input data-key="grid_crs" data-type="string" value="utm"></td><td>Locked if grid files are overridden.</td></tr>
+              <tr data-lock="eventForcing"><td>use_rainfall</td><td><select data-key="use_rainfall" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if rainfall is overridden.</td></tr>
+              <tr data-lock="eventForcing"><td>use_waterlevel_boundary</td><td><select data-key="use_waterlevel_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if water levels are overridden.</td></tr>
+              <tr data-lock="eventForcing"><td>use_discharge_boundary</td><td><select data-key="use_discharge_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if discharge is overridden.</td></tr>
+              <tr><td>use_infiltration</td><td><select data-key="use_infiltration" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Master toggle for writing/using infiltration inputs. This stays editable even when native infiltration files are selected.</td></tr>
+              <tr data-lock="obsPoints"><td>use_obs_points</td><td><select data-key="use_obs_points" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if observations are overridden.</td></tr>
+              <tr data-lock="structures"><td>use_structures</td><td><select data-key="use_structures" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if structure files are overridden.</td></tr>
+              <tr data-lock="sfincsInp"><td>tref</td><td><input data-key="tref" data-type="string" value=""></td><td>Reference time.</td></tr>
+              <tr data-lock="sfincsInp"><td>tstart</td><td><input data-key="tstart" data-type="string" value=""></td><td>Start time.</td></tr>
+              <tr data-lock="sfincsInp"><td>tstop</td><td><input data-key="tstop" data-type="string" value=""></td><td>Stop time.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-8" data-hide-when="elevationMask">
+            <h2>8. Elevation / mask / boundary settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="geometry"><td>dem_zmin</td><td><input data-key="dem_zmin" data-type="float" value="0.001"></td><td>Locked if elevation/mask is overridden.</td></tr>
+              <tr data-lock="geometry"><td>active_zmin</td><td><input data-key="active_zmin" data-type="float" value="-5.0"></td><td>Locked if mask is overridden.</td></tr>
+              <tr data-lock="geometry"><td>mask_fill_area_km2</td><td><input data-key="mask_fill_area_km2" data-type="float" value="10.0"></td><td>Locked if mask is overridden.</td></tr>
+              <tr data-lock="boundaryGeometry"><td>waterlevel_boundary_zmax</td><td><input data-key="waterlevel_boundary_zmax" data-type="float" value="-5.0"></td><td>Locked if boundary geometry is overridden.</td></tr>
+              <tr data-lock="boundaryGeometry"><td>reset_waterlevel_boundary</td><td><select data-key="reset_waterlevel_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if boundary geometry is overridden.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-9" data-hide-when="roughness">
+            <h2>9. Roughness settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="roughness"><td>manning_uniform</td><td><input data-key="manning_uniform" data-type="float" value="0.04"></td><td>Locked if sfincs.manning is overridden.</td></tr>
+              <tr data-lock="roughness"><td>manning_land</td><td><input data-key="manning_land" data-type="float" value="0.04"></td><td>Locked if spatial roughness is overridden.</td></tr>
+              <tr data-lock="roughness"><td>manning_sea</td><td><input data-key="manning_sea" data-type="float" value="0.02"></td><td>Locked if spatial roughness is overridden.</td></tr>
+              <tr data-lock="roughness"><td>use_landcover_roughness_if_available</td><td><select data-key="use_landcover_roughness_if_available" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if spatial roughness is overridden.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-10" data-hide-when="subgrid">
+            <h2>10. Subgrid settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="subgrid"><td>use_subgrid</td><td><select data-key="use_subgrid" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if sfincs.sbg is overridden.</td></tr>
+              <tr data-lock="subgrid"><td>subgrid_nr_pixels</td><td><input data-key="subgrid_nr_pixels" data-type="int" value="6"></td><td>Locked if pre-made subgrid is overridden.</td></tr>
+              <tr data-lock="subgrid"><td>subgrid_write_dep_tif</td><td><select data-key="subgrid_write_dep_tif" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if subgrid is overridden.</td></tr>
+              <tr data-lock="subgrid"><td>subgrid_write_man_tif</td><td><select data-key="subgrid_write_man_tif" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if subgrid is overridden.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-11" data-hide-when="eventForcingFull">
+            <h2>11. Forcing settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="rainfall"><td>rainfall_kind</td><td><select data-key="rainfall_kind" data-type="string"><option selected>spatial</option><option>uniform</option><option>event_catalog_aorc</option></select></td><td>Locked if rainfall file is overridden.</td></tr>
+              <tr data-lock="rainfall"><td>rainfall_uniform_mm_hr</td><td><input data-key="rainfall_uniform_mm_hr" data-type="nullable_float" value=""></td><td>Locked if rainfall file is overridden.</td></tr>
+              <tr data-lock="waterlevel"><td>waterlevel_source_kind</td><td><select data-key="waterlevel_source_kind" data-type="string"><option selected>geodataset</option><option>csv</option><option>event_catalog_csv</option><option>native_sfincs</option></select></td><td>Locked if sfincs.bzs is overridden.</td></tr>
+              <tr data-lock="discharge"><td>discharge_source_kind</td><td><select data-key="discharge_source_kind" data-type="string"><option selected>geodataset</option><option>csv</option><option>event_catalog_csv</option><option>native_sfincs</option></select></td><td>Locked if sfincs.dis is overridden.</td></tr>
+              <tr data-lock="discharge"><td>discharge_points_csv_path</td><td><input data-key="discharge_points_csv_path" data-type="nullable" value=""></td><td>Locked if discharge native files are overridden.</td></tr>
+              <tr data-lock="discharge"><td>discharge_timeseries_csv_path</td><td><input data-key="discharge_timeseries_csv_path" data-type="nullable" value=""></td><td>Locked if discharge native files are overridden.</td></tr>
+              <tr><td>use_wind</td><td><select data-key="use_wind" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Master toggle for wind forcing. Leave false unless the selected event catalog or manual input provides wind.</td></tr>
+              <tr><td>use_pressure</td><td><select data-key="use_pressure" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Master toggle for pressure forcing. Leave false unless the selected event catalog or manual input provides pressure.</td></tr>
+              <tr data-lock="meteo"><td>wind_path</td><td><input data-key="wind_path" data-type="nullable" value=""></td><td>Locked if wind files are overridden.</td></tr>
+              <tr data-lock="meteo"><td>pressure_path</td><td><input data-key="pressure_path" data-type="nullable" value=""></td><td>Locked if pressure files are overridden.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-12" data-hide-when="infiltration">
+            <h2>12. Infiltration settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="infiltration"><td>infiltration_mode</td><td><select data-key="infiltration_mode" data-type="string"><option selected>none</option><option>constant</option><option>spatial_constant</option><option>curve_number</option><option>curve_number_with_ks</option><option>native_sfincs</option></select></td><td>Locked if native infiltration files are overridden.</td></tr>
+              <tr data-lock="infiltration"><td>qinf_mm_hr</td><td><input data-key="qinf_mm_hr" data-type="float" value="0.0"></td><td>Constant infiltration rate if using scalar constant infiltration.</td></tr>
+              <tr data-lock="infiltration"><td>curve_number_path</td><td><input data-key="curve_number_path" data-type="nullable" value=""></td><td>HydroMT/Curve Number source path when building infiltration.</td></tr>
+            
+              <tr data-lock="infiltration"><td>qinf_path</td><td><input data-key="qinf_path" data-type="nullable" value=""></td><td>Manual SFINCS qinf file. Copies to sfincs.qinf and writes qinffile.</td></tr>
+              <tr data-lock="infiltration"><td>smax_path</td><td><input data-key="smax_path" data-type="nullable" value=""></td><td>Manual maximum soil storage file. Copies to sfincs.smax and writes smaxfile.</td></tr>
+              <tr data-lock="infiltration"><td>seff_path</td><td><input data-key="seff_path" data-type="nullable" value=""></td><td>Manual initial/effective soil storage file. Copies to sfincs.seff and writes sefffile.</td></tr>
+              <tr data-lock="infiltration"><td>ks_path</td><td><input data-key="ks_path" data-type="nullable" value=""></td><td>Manual saturated hydraulic conductivity file. Copies to sfincs.ks and writes ksfile.</td></tr>
+            
+              <tr data-lock="infiltration"><td>sigma_path</td><td><input data-key="sigma_path" data-type="nullable" value=""></td><td>Manual Green-Ampt sigma file. Copies to sfincs.sigma and writes sigmafile.</td></tr>
+              <tr data-lock="infiltration"><td>psi_path</td><td><input data-key="psi_path" data-type="nullable" value=""></td><td>Manual Green-Ampt psi file. Copies to sfincs.psi and writes psifile.</td></tr>
+            
+              <tr data-lock="infiltration"><td>f0_path</td><td><input data-key="f0_path" data-type="nullable" value=""></td><td>Manual Horton f0 file. Copies to sfincs.f0 and writes f0file.</td></tr>
+              <tr data-lock="infiltration"><td>fc_path</td><td><input data-key="fc_path" data-type="nullable" value=""></td><td>Manual Horton fc file. Copies to sfincs.fc and writes fcfile.</td></tr>
+              <tr data-lock="infiltration"><td>kd_path</td><td><input data-key="kd_path" data-type="nullable" value=""></td><td>Manual Horton decay coefficient file. Copies to sfincs.kd and writes kdfile.</td></tr>
+            
+              <tr data-lock="infiltration"><td>vol_path</td><td><input data-key="vol_path" data-type="nullable" value=""></td><td>Manual storage volume file. Copies to sfincs.vol and writes volfile.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-13">
+            <h2>13. SFINCS output settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr data-lock="sfincsInp"><td>output_format</td><td><input data-key="output_format" data-type="string" value="net"></td><td>Output format.</td></tr>
+              <tr data-lock="sfincsInp"><td>dtout_s</td><td><input data-key="dtout_s" data-type="int" value="3600"></td><td>Map output interval.</td></tr>
+              <tr data-lock="sfincsInp"><td>dthisout_s</td><td><input data-key="dthisout_s" data-type="int" value="900"></td><td>History output interval.</td></tr>
+              <tr data-lock="sfincsInp"><td>dtmaxout_s</td><td><input data-key="dtmaxout_s" data-type="float" value="99999.0"></td><td>Maximum output interval.</td></tr>
+              <tr data-lock="sfincsInp"><td>dtrstout_s</td><td><input data-key="dtrstout_s" data-type="int" value="259200"></td><td>Restart output interval.</td></tr>              
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-14">
+            <h2>14. Generated sfincs.inp / advanced tuning</h2>
+            <p class="section-intro">
+              These keys are written into the generated <span class="mono">sfincs.inp</span> when the
+              <span class="mono">sfincs.inp</span> override switch is off. If you turn on the
+              <span class="mono">sfincs.inp</span> file override, this section is locked because the imported file controls these settings instead.
+            </p>
+
+
+
+            <table class="config-table">
+              <thead>
+                <tr><th>Setting</th><th>Value</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr data-lock="sfincsInp">
+                  <td>advanced_config</td>
+                  <td>
+                    <textarea class="long-page-textarea" data-key="advanced_config" data-type="json">{
+  "mmax": 997,
+  "nmax": 1012,
+  "dx": 100,
+  "dy": 100,
+  "x0": 211971.0,
+  "y0": 3261293.0,
+  "rotation": 0,
+  "epsg": 32615,
+  "latitude": 0.0,
+
+  "tspinup": 86400,
+  "trstout": -999.0,
+  "dtwnd": 1800.0,
+
+  "alpha": 0.5,
+  "theta": 1,
+  "huthresh": 0.05,
+  "manning": 0.04,
+  "zsini": -0.5,
+  "rhoa": 1.25,
+  "rhow": 1024.0,
+  "dtmax": 60.0,
+  "advection": 2,
+
+  "baro": 0,
+  "pavbnd": 0,
+  "gapres": 101200.0,
+
+  "stopdepth": 100,
+  "crsgeo": 0,
+  "coriolis": 0,
+  "btfilter": 60.0,
+  "viscosity": 1,
+
+  "inputformat": "bin",
+  "cdnrb": 3,
+  "cdwnd": "0.0 28.0 50.0",
+  "cdval": "0.001 0.0025 0.0015",
+  "min_lev_hmax": -20
+}</textarea>
+                  </td>
+                  <td>
+                    Must be valid JSON. These are raw/generated <span class="mono">sfincs.inp</span>
+                    controls. Grid-shape/location keys like <span class="mono">mmax</span>,
+                    <span class="mono">nmax</span>, <span class="mono">dx</span>, <span class="mono">dy</span>,
+                    <span class="mono">x0</span>, and <span class="mono">y0</span> should match the native static files you are importing.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="manual-panel" id="manual-15">
+            <h2>15. Post-processing settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr><td>postprocess_create_summary_txt</td><td><select data-key="postprocess_create_summary_txt" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Create summary text.</td></tr>
+              <tr><td>postprocess_create_summary_json</td><td><select data-key="postprocess_create_summary_json" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Create summary JSON.</td></tr>
+              <tr><td>postprocess_make_quicklook_plots</td><td><select data-key="postprocess_make_quicklook_plots" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Make quicklook plots.</td></tr>
+              <tr><td>postprocess_use_basemap</td><td><select data-key="postprocess_use_basemap" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use basemap.</td></tr>
+              <tr><td>postprocess_basemap_source</td><td><input data-key="postprocess_basemap_source" data-type="nullable" value="sat"></td><td>Basemap source.</td></tr>
+              <tr><td>postprocess_basemap_zoomlevel</td><td><input data-key="postprocess_basemap_zoomlevel" data-type="string_or_number" value="14"></td><td>Basemap zoom.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-16">
+            <h2>16. Safety / debug settings</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr><td>allow_writes_inside_proj</td><td><select data-key="allow_writes_inside_proj" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Shared project runs use /proj.</td></tr>
+              <tr><td>print_config_summary</td><td><select data-key="print_config_summary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Print backend summary.</td></tr>
+              <tr><td>validate_paths_before_submit</td><td><select data-key="validate_paths_before_submit" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Path safety validation.</td></tr>
+              <tr><td>stop_if_required_path_missing</td><td><select data-key="stop_if_required_path_missing" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stop on missing required paths.</td></tr>
+              <tr><td>sfincs_file_override_fail_on_multiple_matches</td><td><select data-key="sfincs_file_override_fail_on_multiple_matches" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Keep true to avoid ambiguous file copies.</td></tr>
+              <tr><td>strict_schema_validation</td><td><select data-key="strict_schema_validation" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Turn on for final configs once schema support is complete.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="manual-panel" id="manual-17">
+            <h2>17. Backend paths / advanced runtime</h2>
+            <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+              <tr><td>preprocess_stage_script</td><td><input data-key="preprocess_stage_script" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py"></td><td>Shared backend script.</td></tr>
+              <tr><td>postprocess_stage_script</td><td><input data-key="postprocess_stage_script" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/code/postprocess_stage.py"></td><td>Shared backend script.</td></tr>
+              <tr><td>conda_env_path</td><td><input data-key="conda_env_path" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/envs/sfincs"></td><td>Shared bundled SFINCS/HydroMT environment.</td></tr>
+              <tr><td>conda_python</td><td><input data-key="conda_python" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python"></td><td>Shared bundled Python path for backend stages.</td></tr>
+              <tr><td>sfincs_container_path</td><td><input data-key="sfincs_container_path" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"></td><td>SFINCS Apptainer image.</td></tr>
+              <tr><td>preprocess_enable_hydromt_file_logging</td><td><select data-key="preprocess_enable_hydromt_file_logging" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Keep false by default; HydroMT file logging is slow.</td></tr>
+            </tbody></table>
+          </div>
+
+          <div class="button-row">
+            <button class="primary" type="button" id="go-check-button">Next: review checks →</button>
+          </div>
+        </div>
+        <!-- STEP 2: STRIPPED MANUAL CONFIG END -->
+
+        <!-- STEP 3: REVIEW CHECKS START -->
+        <div class="panel step-panel" id="step-check">
+          <h2>3. Review checks</h2>
+          <p class="section-intro">These are quick page-level checks. Later, this should call the real backend preflight and show stdout/stderr.</p>
+          <div class="button-row">
+            <button class="primary" type="button" id="check-button-main">Run page checks</button>
+          </div>
+          <div id="runtime-window-review-output"></div>
+          <div id="checks-output" class="checks-list"></div>
+        </div>
+        <!-- STEP 3: REVIEW CHECKS END -->
+
+        <!-- STEP 4: SUBMIT START -->
+        <div class="panel step-panel" id="step-submit">
+          <h2>4. Final submit</h2>
+          <p class="section-intro">
+            This sends the current page config to Flask, saves a staged JSON config, and calls
+            <span class="mono">pipeline_runner.py</span> with a safe whitelisted mode.
+            Run backend preflight first, then build scripts, then submit.
+          </p>
+
+          <div class="callout warn">
+            If you previously saved progress using the same <span class="mono">run_name</span>,
+            the final run folder may already exist. For build/submit, use a new run name unless
+            you intentionally set <span class="mono">overwrite_existing_run=true</span>.
+          </div>
+
+          <div class="submit-review-grid">
+            <div class="submit-review-row">
+              <strong>Action order</strong>
+              <span>Preflight → Build Scripts → Submit Slurm Chain</span>
+            </div>
+            <div class="submit-review-row">
+              <strong>Runner target</strong>
+              <span class="mono">/proj/zefflab/projects/Flooding/pipeline/code/pipeline_runner.py</span>
+            </div>
+            <div class="submit-review-row">
+              <strong>Config behavior</strong>
+              <span>Uses a staged config under <span class="mono">_launcher_configs</span>, not the final run folder.</span>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button class="primary" type="button"
+                    data-pipeline-action="preflight"
+                    data-output-target="runner-output">
+              Run backend preflight
+            </button>
+
+            <button class="secondary" type="button"
+                    data-pipeline-action="build_scripts"
+                    data-output-target="runner-output"
+                    data-requires-preflight="true"
+                    disabled>
+              Build Slurm scripts
+            </button>
+
+            <button class="primary" type="button"
+                    data-pipeline-action="submit"
+                    data-output-target="runner-output"
+                    data-requires-preflight="true"
+                    disabled>
+              Submit Slurm chain
+            </button>
+          </div>
+
+          <pre id="runner-output" class="runner-output">Backend runner output will appear here.</pre>
+        </div>
+        <!-- STEP 4: SUBMIT END -->
+      </section>
+
+      <aside class="side-panel">
+        <section class="panel">
+          <h2>Detection summary</h2>
+          <div class="pill-row">
+            <span class="pill good" id="count-on">0 on</span>
+            <span class="pill bad" id="count-off">0 off</span>
+            <span class="pill warn" id="count-found">0 found</span>
+          </div>
+          <p class="muted">Detected files turn sliders green. Manual slider changes are preserved in the saved JSON.</p>
+        </section>
+
+        <section class="panel">
+          <h2>Planned config path</h2>
+          <div id="side-run-root-preview" class="path-preview"></div>
+          <p class="field-note">The backend will eventually create this run folder and write <span class="mono">run_config.json</span> there.</p>
+        </section>
+
+        <section class="panel">
+          <h2>Live JSON preview</h2>
+          <pre id="config-preview" class="config-preview"></pre>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <a class="help-button" href="guide.html?tab=override" title="Open launcher guide">?</a>
+
+  <script>
+    const FILE_GROUPS = [
+      {
+        id: 'static',
+        title: 'Static files',
+        description: 'Files that usually define model geometry, grid/topobathy, roughness, subgrid, boundaries, source points, observations, and structures.',
+        entries: [
+          { key: 'depfile', primary: 'sfincs.dep', aliases: [], desc: 'Depth / bed-level input.' },
+          { key: 'mskfile', primary: 'sfincs.msk', aliases: [], desc: 'Active/inactive mask.' },
+          { key: 'indexfile', primary: 'sfincs.ind', aliases: [], desc: 'Binary index file.' },
+          { key: 'sbgfile', primary: 'sfincs.sbg', aliases: ['sfincs_subgrid.nc'], desc: 'Subgrid data file.' },
+          { key: 'manningfile', primary: 'sfincs.manning', aliases: ['sfincs.man'], desc: 'Spatial Manning roughness.' },
+          { key: 'scsfile', primary: 'sfincs.scs', aliases: [], desc: 'SCS infiltration/storage input.' },
+          { key: 'bndfile', primary: 'sfincs.bnd', aliases: [], desc: 'Water-level boundary point geometry.' },
+          { key: 'srcfile', primary: 'sfincs.src', aliases: [], desc: 'Discharge/source point geometry.' },
+          { key: 'obsfile', primary: 'sfincs.obs', aliases: [], desc: 'Observation point geometry.' },
+          { key: 'crsfile', primary: 'sfincs.crs', aliases: [], desc: 'Cross-section / observation line geometry.' },
+          { key: 'thdfile', primary: 'sfincs.thd', aliases: [], desc: 'Thin-dam barrier file.' },
+          { key: 'weirfile', primary: 'sfincs.weir', aliases: [], desc: 'Weir structure file.' },
+          { key: 'drnfile', primary: 'sfincs.drn', aliases: [], desc: 'Drainage structure file.' }
+        ]
+      },
+      {
+        id: 'event',
+        title: 'Event files',
+        description: 'Files that usually change from event to event: water-level series, discharge series, rainfall, wind/pressure, restart, and initial-condition data.',
+        entries: [
+          { key: 'bzsfile', primary: 'sfincs.bzs', aliases: [], desc: 'Water-level boundary time series.' },
+          { key: 'disfile', primary: 'sfincs.dis', aliases: [], desc: 'Discharge/source time series.' },
+          { key: 'netamprfile', primary: 'precip_2d.nc', aliases: ['sfincs_netampr.nc', 'sfincs_netamprfile.nc'], desc: 'NetCDF gridded rainfall.' },
+          { key: 'precipfile', primary: 'sfincs.prcp', aliases: [], desc: 'Text rainfall input.' },
+          { key: 'amprfile', primary: 'sfincs.ampr', aliases: [], desc: 'Spatial rainfall grid input.' },
+          { key: 'amufile', primary: 'sfincs.amu', aliases: [], desc: 'Wind U-component grid.' },
+          { key: 'amvfile', primary: 'sfincs.amv', aliases: [], desc: 'Wind V-component grid.' },
+          { key: 'ampfile', primary: 'sfincs.amp', aliases: [], desc: 'Pressure grid.' },
+          { key: 'wndfile', primary: 'sfincs.wnd', aliases: [], desc: 'Wind time-series file.' },
+          { key: 'spwfile', primary: 'sfincs.spw', aliases: [], desc: 'Spiderweb forcing file.' },
+          { key: 'netspwfile', primary: 'spiderweb.nc', aliases: ['sfincs_netspwfile.nc'], desc: 'NetCDF spiderweb forcing.' },
+          { key: 'netamuamvfile', primary: 'sfincs_netamuamvfile.nc', aliases: [], desc: 'NetCDF wind-vector forcing.' },
+          { key: 'netampfile', primary: 'sfincs_netampfile.nc', aliases: [], desc: 'NetCDF pressure forcing.' },
+          { key: 'rstfile', primary: 'sfincs.rst', aliases: [], desc: 'Restart file.' },
+          { key: 'inifile', primary: 'sfincs.ini', aliases: [], desc: 'Initial-condition file.' }
+        ]
+      },
+      {
+        id: 'other',
+        title: 'Other / rare files',
+        description: 'Less common native SFINCS files. Keep these off unless the source folder actually contains them and you mean to use them.',
+        entries: [
+          { key: 'sfincs.inp', primary: 'sfincs.inp', aliases: [], desc: 'Full SFINCS input template. Usually leave off so the backend writes a compatible current input file.', special: true },
+          { key: 'qinffile', primary: 'sfincs.qinf', aliases: [], desc: 'Infiltration flux file.' },
+          { key: 'smaxfile', primary: 'sfincs.smax', aliases: [], desc: 'Maximum soil storage file.' },
+          { key: 'sefffile', primary: 'sfincs.seff', aliases: [], desc: 'Effective storage file.' },
+          { key: 'ksfile', primary: 'sfincs.ks', aliases: [], desc: 'Hydraulic conductivity file.' },
+          { key: 'sigmafile', primary: 'sfincs.sigma', aliases: [], desc: 'Green-Ampt sigma file.' },
+          { key: 'psifile', primary: 'sfincs.psi', aliases: [], desc: 'Green-Ampt psi file.' },
+          { key: 'f0file', primary: 'sfincs.f0', aliases: [], desc: 'Horton f0 infiltration file.' },
+          { key: 'fcfile', primary: 'sfincs.fc', aliases: [], desc: 'Horton fc infiltration file.' },
+          { key: 'kdfile', primary: 'sfincs.kd', aliases: [], desc: 'Drainage coefficient file.' },
+          { key: 'volfile', primary: 'sfincs.vol', aliases: [], desc: 'Storage volume file.' },
+          { key: 'bzifile', primary: 'sfincs.bzi', aliases: [], desc: 'Boundary initial water-level file.' },
+          { key: 'netbndbzsbzifile', primary: 'sfincs_netbndbzsbzifile.nc', aliases: [], desc: 'Combined boundary NetCDF.' },
+          { key: 'netsrcdisfile', primary: 'sfincs_netsrcdisfile.nc', aliases: [], desc: 'Combined source/discharge NetCDF.' }
+        ]
+      }
+    ];
+
+    const BASE_DEFAULTS = {
+      use_sfincs_file_overrides: true,
+      native_static_sfincs_input_dirs: [],
+      native_event_sfincs_input_dirs: [],
+      native_sfincs_input_dirs: [],
+      output_format: 'net',
+      postprocess_max_plot_cells: 2000000
+    };
+
+    const stepTabs = document.querySelectorAll('.step-tab');
+    const stepPanels = document.querySelectorAll('.step-panel');
+    const manualTabs = document.querySelectorAll('.manual-tab');
+    const manualPanels = document.querySelectorAll('.manual-panel');
+    const overrideSections = document.getElementById('override-sections');
+    const preview = document.getElementById('config-preview');
+    const checksOutput = document.getElementById('checks-output');
+    const countOn = document.getElementById('count-on');
+    const countOff = document.getElementById('count-off');
+    const countFound = document.getElementById('count-found');
+    const sideRunRootPreview = document.getElementById('side-run-root-preview');
+    const hiddenTabsNote = document.getElementById('hidden-tabs-note');
+    const detectionState = {};
+    const importedNativeValues = {};
+    
+    let sourceCounter = 1;
+
+
+      function hasNativeInfiltrationOverride(map) {
+        return Boolean(
+          map.scsfile ||
+          map.qinffile ||
+          map.smaxfile ||
+          map.sefffile ||
+          map.ksfile ||
+          map.sigmafile ||
+          map.psifile ||
+          map.f0file ||
+          map.fcfile ||
+          map.kdfile ||
+          map.volfile
+        );
+      }
+
+      function normalizePathListValue(value) {
+        if (Array.isArray(value)) {
+          return value.map((v) => String(v || "").trim()).filter(Boolean);
+        }
+
+        const raw = String(value || "").trim();
+        if (!raw) return [];
+
+        if (raw.startsWith("[")) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) {
+              return parsed.map((v) => String(v || "").trim()).filter(Boolean);
+            }
+          } catch (err) {
+            // Fall through to plain-text parsing.
+          }
+        }
+
+        return raw
+          .split(/\r?\n|,/)
+          .map((v) => String(v || "").trim())
+          .filter(Boolean);
+      }
+
+    function getSourcePaths() {
+      const paths = [...document.querySelectorAll('.source-path-input')]
+        .map(input => input.value.trim())
+        .filter(Boolean);
+    
+      return [...new Set(paths)];
+    }
+    
+    function addSourceRow(value = '') {
+      const list = document.getElementById('source-list');
+      const inputId = `source-path-extra-${sourceCounter++}`;
+    
+      const row = document.createElement('div');
+      row.className = 'source-row extra-source-row';
+    
+      const input = document.createElement('input');
+      input.id = inputId;
+      input.className = 'source-path-input';
+      input.value = value;
+      input.placeholder = '/path/to/another/source/folder';
+    
+      const browse = document.createElement('button');
+      browse.className = 'secondary';
+      browse.type = 'button';
+      browse.textContent = 'Browse';
+      browse.dataset.browseTarget = inputId;
+      browse.dataset.browseMode = 'directory';
+      browse.dataset.browseStart = '/proj/zefflab/projects/Flooding';
+    
+      const remove = document.createElement('button');
+      remove.className = 'secondary';
+      remove.type = 'button';
+      remove.textContent = 'Remove';
+      remove.addEventListener('click', () => {
+        row.remove();
+        updatePreview();
+      });
+    
+      input.addEventListener('input', updatePreview);
+      input.addEventListener('change', updatePreview);
+    
+      row.appendChild(input);
+      row.appendChild(browse);
+      row.appendChild(remove);
+      list.appendChild(row);
+    
+      updatePreview();
+    }
+    
+    function resetSourceRows(paths) {
+      document.querySelectorAll('.extra-source-row').forEach(row => row.remove());
+    
+      const first = document.getElementById('source-path');
+      first.value = paths[0] || '';
+    
+      paths.slice(1).forEach(path => addSourceRow(path));
+    
+      updatePreview();
+    }
+    
+    function parentDir(pathText) {
+      const idx = pathText.lastIndexOf('/');
+      return idx > 0 ? pathText.slice(0, idx) : pathText;
+    }
+    
+    function rootsForSelectedGroup(groupId) {
+      const roots = new Set();
+      const keys = selectedKeys(groupId);
+    
+      keys.forEach(key => {
+        const pathText = detectionState[key]?.path || '';
+        if (pathText) roots.add(parentDir(pathText));
+      });
+    
+      // Fallback for manually enabled switches that were not detected.
+      if (roots.size === 0 && keys.length > 0) {
+        getSourcePaths().forEach(path => roots.add(path));
+      }
+    
+      return [...roots];
+    }
+    
+    function allEntries() {
+      return FILE_GROUPS.flatMap(group => group.entries.map(entry => ({ ...entry, group: group.id })));
+    }
+
+    function showStep(stepId) {
+      stepTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.step === stepId));
+      stepPanels.forEach(panel => panel.classList.toggle('active', panel.id === stepId));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (stepId === 'step-manual') applyOverrideManualVisibility();
+      if (stepId === 'step-check') runChecks(false);
+    }
+
+    function showManualTab(tabId) {
+      manualTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.manualTab === tabId));
+      manualPanels.forEach(panel => panel.classList.toggle('active', panel.id === tabId));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderOverrideTables() {
+      overrideSections.innerHTML = '';
+      FILE_GROUPS.forEach(group => {
+        const section = document.createElement('section');
+        section.className = 'override-section';
+        section.innerHTML = `
+          <div class="override-section-header">
+            <div>
+              <h3>${group.title}</h3>
+              <p>${group.description}</p>
+            </div>
+            <div class="button-row" style="margin:0;">
+              <button class="secondary" type="button" data-group-off="${group.id}">All off</button>
+              <button class="secondary" type="button" data-group-on="${group.id}">All on</button>
+            </div>
+          </div>
+          <table class="override-table">
+            <thead><tr><th>File name</th><th>Short description</th><th>Override?</th></tr></thead>
+            <tbody>${group.entries.map(entry => rowHtml(entry, group.id)).join('')}</tbody>
+          </table>
+        `;
+        overrideSections.appendChild(section);
+      });
+
+      document.querySelectorAll('[data-override-key]').forEach(input => {
+        input.addEventListener('change', () => {
+          const key = input.dataset.overrideKey;
+          if (!detectionState[key]) detectionState[key] = { found: false, filename: '', manual: true };
+          detectionState[key].manual = true;
+          updateRowState(key);
+          updatePreview();
+        });
+      });
+
+      document.querySelectorAll('[data-group-on]').forEach(btn => btn.addEventListener('click', () => setGroup(btn.dataset.groupOn, true)));
+      document.querySelectorAll('[data-group-off]').forEach(btn => btn.addEventListener('click', () => setGroup(btn.dataset.groupOff, false)));
+    }
+
+    function rowHtml(entry, groupId) {
+      const aliasText = entry.aliases.length ? `<div class="aliases">also detects: ${entry.aliases.join(', ')}</div>` : '';
+      const specialText = entry.special ? '<div class="aliases">special / usually leave off</div>' : '';
+      return `
+        <tr data-row-key="${entry.key}" class="row-off">
+          <td>
+            <div class="file-name">${entry.primary}</div>
+            ${aliasText}
+            ${specialText}
+            <div class="aliases">config key: ${entry.key}</div>
+            <span class="detect-badge" data-badge-key="${entry.key}">not detected</span>
+          </td>
+          <td class="file-desc">${entry.desc}</td>
+          <td>
+            <label class="switch" title="Override ${entry.primary}">
+              <input type="checkbox" data-override-key="${entry.key}" data-group="${groupId}">
+              <span class="slider"></span>
+            </label>
+          </td>
+        </tr>
+      `;
+    }
+
+    function filenameSetFromManifest(text) {
+      const names = new Set();
+      text.split(/\r?\n/).forEach(line => {
+        const cleaned = line.trim();
+        if (!cleaned) return;
+        const base = cleaned.split('/').pop();
+        if (base) names.add(base);
+      });
+      return names;
+    }
+
+    async function detectFiles() {
+      const sourcePaths = getSourcePaths();
+    
+      if (!sourcePaths.length) {
+        alert('Add at least one source folder first.');
+        return;
+      }
+    
+      try {
+        const response = await fetch('/api/detect-sfincs-files', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            source_paths: sourcePaths,
+            source_path: sourcePaths[0] || ''
+          })
+        });
+    
+        const result = await response.json();
+    
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || 'Detection failed.');
+        }
+    
+        allEntries().forEach(entry => {
+          const detected = result.recognized[entry.key] || {
+            found: false,
+            filename: '',
+            path: '',
+            multiple_matches: false
+          };
+    
+          detectionState[entry.key] = {
+            found: Boolean(detected.found),
+            filename: detected.filename || '',
+            path: detected.path || '',
+            manual: false,
+            multiple_matches: Boolean(detected.multiple_matches)
+          };
+    
+          const input = document.querySelector(`[data-override-key="${CSS.escape(entry.key)}"]`);
+          if (input) input.checked = Boolean(detected.found);
+    
+          updateRowState(entry.key);
+        });
+    
+        updatePreview();
+        
+        const detectedInp = result.recognized && result.recognized['sfincs.inp'];
+
+        if (detectedInp && detectedInp.found && detectedInp.parsed) {
+          applyDetectedSfincsInpDefaults(detectedInp.parsed);
+        }
+           
+        updatePreview();
+        
+        alert(
+          `Detection complete.\n\n` +
+          `Source folders: ${result.source_count}\n` +
+          `Scanned files: ${result.file_count}\n` +
+          `Recognized SFINCS override files: ${result.recognized_count}`
+        );
+    
+      } catch (err) {
+        alert(`Detection failed:\n${err.message}`);
+      }
+    }
+
+    function reapplyDetected() {
+      allEntries().forEach(entry => {
+        const input = document.querySelector(`[data-override-key="${CSS.escape(entry.key)}"]`);
+        if (input) input.checked = Boolean(detectionState[entry.key]?.found);
+        updateRowState(entry.key);
+      });
+      updatePreview();
+    }
+
+    function setGroup(groupId, checked) {
+      document.querySelectorAll(`[data-group="${CSS.escape(groupId)}"]`).forEach(input => {
+        input.checked = checked;
+        const key = input.dataset.overrideKey;
+        if (!detectionState[key]) detectionState[key] = { found: false, filename: '', manual: true };
+        detectionState[key].manual = true;
+        updateRowState(key);
+      });
+      updatePreview();
+    }
+
+    function allOff() {
+      document.querySelectorAll('[data-override-key]').forEach(input => {
+        input.checked = false;
+        const key = input.dataset.overrideKey;
+        if (!detectionState[key]) detectionState[key] = { found: false, filename: '', manual: true };
+        detectionState[key].manual = true;
+        updateRowState(key);
+      });
+      updatePreview();
+    }
+
+    function updateRowState(key) {
+      const row = document.querySelector(`[data-row-key="${CSS.escape(key)}"]`);
+      const badge = document.querySelector(`[data-badge-key="${CSS.escape(key)}"]`);
+      const input = document.querySelector(`[data-override-key="${CSS.escape(key)}"]`);
+      if (!row || !badge || !input) return;
+      const state = detectionState[key] || { found: false, filename: '', manual: false };
+      row.classList.remove('row-found', 'row-manual', 'row-off');
+      badge.classList.remove('found', 'manual');
+
+      if (input.checked && state.found) {
+        row.classList.add('row-found');
+        badge.classList.add('found');
+        badge.textContent = `detected: ${state.filename}`;
+      } else if (input.checked) {
+        row.classList.add('row-manual');
+        badge.classList.add('manual');
+        badge.textContent = 'manual on';
+      } else {
+        row.classList.add('row-off');
+        badge.textContent = state.found ? `detected but off: ${state.filename}` : 'not detected';
+      }
+    }
+
+    function overrideMap() {
+      const out = {};
+      allEntries().forEach(entry => {
+        const input = document.querySelector(`[data-override-key="${CSS.escape(entry.key)}"]`);
+        out[entry.key] = Boolean(input?.checked);
+      });
+      return out;
+    }
+
+    function selectedKeys(groupId = null) {
+      const map = overrideMap();
+      return allEntries()
+        .filter(entry => groupId === null || entry.group === groupId)
+        .filter(entry => map[entry.key])
+        .map(entry => entry.key);
+    }
+
+    function lockState() {
+      const map = overrideMap();
+
+      const rainfall = Boolean(map.netamprfile || map.precipfile || map.amprfile);
+      const waterlevel = Boolean(map.bzsfile || map.bzifile || map.netbndbzsbzifile);
+      const discharge = Boolean(map.disfile || map.netsrcdisfile);
+      const meteo = Boolean(map.amufile || map.amvfile || map.ampfile || map.wndfile || map.spwfile || map.netspwfile || map.netamuamvfile || map.netampfile);
+      const eventForcing = Boolean(rainfall || waterlevel || discharge || meteo || map.rstfile || map.inifile);
+
+      const geometry = Boolean(map.depfile || map.mskfile || map.indexfile);
+      const boundaryGeometry = Boolean(map.bndfile || map.srcfile);
+      const roughness = Boolean(map.manningfile);
+      const subgrid = Boolean(map.sbgfile);
+
+      const infiltration = Boolean(
+        map.scsfile || map.qinffile || map.smaxfile || map.sefffile ||
+        map.ksfile || map.sigmafile || map.psifile ||
+        map.f0file || map.fcfile || map.kdfile || map.volfile
+      );
+
+      const obsPoints = Boolean(map.obsfile);
+      const obsLines = Boolean(map.crsfile);
+      const thinDam = Boolean(map.thdfile);
+      const weir = Boolean(map.weirfile);
+      const drainage = Boolean(map.drnfile);
+      const structures = Boolean(thinDam || weir || drainage);
+      const obsStructures = Boolean(obsPoints || obsLines || structures);
+
+      const sfincsInp = Boolean(map['sfincs.inp']);
+      const anyOverride = Object.values(map).some(Boolean);
+
+      return {
+        sfincsInp,
+        anyOverride,
+        dataCatalogs: anyOverride,
+        geometry,
+        boundaryGeometry,
+        roughness,
+        subgrid,
+        infiltration,
+        obsPoints,
+        obsLines,
+        thinDam,
+        weir,
+        drainage,
+        structures,
+        obsStructures,
+        rainfall,
+        waterlevel,
+        discharge,
+        meteo,
+        eventForcing,
+        eventForcingFull: Boolean(rainfall && (waterlevel || discharge || meteo)),
+        optionalInputs: Boolean(geometry && boundaryGeometry && eventForcing && obsStructures),
+        elevationMask: Boolean(geometry && boundaryGeometry),
+        modelSettings: Boolean(geometry && eventForcing && roughness && subgrid)
+      };
+    }
+
+    function applyOverrideManualVisibility() {
+      const locks = lockState();
+      const hiddenLabels = [];
+      const infiltrationModeEl = document.querySelector('[data-key="infiltration_mode"]');
+      const useInfiltrationEl = document.querySelector('[data-key="use_infiltration"]');
+
+      if (locks.infiltration && infiltrationModeEl) {
+        const infiltrationEnabled = !useInfiltrationEl || String(useInfiltrationEl.value).toLowerCase() !== 'false';
+        infiltrationModeEl.value = infiltrationEnabled ? 'native_sfincs' : 'none';
+      }
+    
+      // First lock/grey individual rows based only on selected override switches.
+      document.querySelectorAll('[data-lock]').forEach(row => {
+        const lockKeys = row.dataset.lock.split(/\s+/).filter(Boolean);
+        const locked = lockKeys.some(key => locks[key]);
+    
+        row.classList.toggle('locked-row', locked);
+        row.dataset.overrideLocked = locked ? 'true' : 'false';
+    
+        row.querySelectorAll('input, select, textarea').forEach(el => {
+          el.disabled = locked;
+        });
+      });
+    
+      function panelIsFullyLocked(panel) {
+        const fieldRows = [...panel.querySelectorAll('tr')]
+          .filter(row => row.querySelector('[data-key]'));
+    
+        // Never hide panels with no editable fields.
+        if (!fieldRows.length) return false;
+    
+        // A panel is fully covered only if every editable row is actually locked.
+        // Rows without data-lock are still user-needed rows, so the tab stays visible.
+        return fieldRows.every(row => row.dataset.overrideLocked === 'true');
+      }
+    
+      manualPanels.forEach(panel => {
+        // Only panels that were intentionally marked hideable may disappear,
+        // and even then only when every editable row in that panel is locked.
+        const canHide = Boolean(panel.dataset.hideWhen);
+        const shouldHide = canHide && panelIsFullyLocked(panel);
+    
+        panel.hidden = shouldHide;
+    
+        const tab = document.querySelector(`[data-manual-tab="${CSS.escape(panel.id)}"]`);
+        if (tab) tab.hidden = shouldHide;
+    
+        if (shouldHide) {
+          hiddenLabels.push(tab ? tab.textContent.trim() : panel.id);
+        }
+      });
+    
+      const activePanel = document.querySelector('.manual-panel.active');
+      if (!activePanel || activePanel.hidden) {
+        const firstVisible = [...manualPanels].find(panel => !panel.hidden);
+        if (firstVisible) showManualTab(firstVisible.id);
+      }
+    
+      hiddenTabsNote.textContent = hiddenLabels.length
+        ? `Hidden only because every editable row in that tab is already supplied by selected override files: ${hiddenLabels.join(', ')}.`
+        : 'No manual tabs are fully hidden. Rows supplied by selected override files are greyed out, while remaining needed settings stay editable.';
+    }
+
+    function parseValue(el) {
+      const type = el.dataset.type || 'string';
+      const raw = el.value;
+      const trimmed = raw.trim();
+      if (type === 'string') return raw;
+      if (type === 'nullable') return trimmed === '' ? null : raw;
+      if (type === 'bool') return raw === 'true';
+      if (type === 'int') return trimmed === '' ? null : parseInt(trimmed, 10);
+      if (type === 'float') return trimmed === '' ? null : parseFloat(trimmed);
+      if (type === 'nullable_float') return trimmed === '' ? null : parseFloat(trimmed);
+      if (type === 'string_or_number') {
+        if (trimmed === '') return '';
+        const num = Number(trimmed);
+        return Number.isFinite(num) && String(num) === trimmed ? num : raw;
+      }
+      if (type === 'json') return JSON.parse(trimmed || 'null');
+      if (type === 'nullable_json') return trimmed === '' ? null : JSON.parse(trimmed);
+      return raw;
+    }
+
+    function stringifyForField(value, type) {
+      if (value === null || value === undefined) return '';
+      if (type === 'json' || type === 'nullable_json') return JSON.stringify(value, null, 2);
+      return String(value);
+    }
+
+    function editableValues() {
+      const cfg = {};
+      document.querySelectorAll('[data-key]').forEach(el => {
+        try {
+          cfg[el.dataset.key] = parseValue(el);
+          el.style.borderColor = '';
+        } catch (err) {
+          cfg[el.dataset.key] = `JSON_PARSE_ERROR: ${err.message}`;
+          el.style.borderColor = 'var(--bad)';
+        }
+      });
+      return cfg;
+    }
+
+    function detectionManifest() {
+      const out = {};
+      allEntries().forEach(entry => {
+        out[entry.key] = detectionState[entry.key] || { found: false, filename: '', manual: false };
+      });
+      return out;
+    }
+
+    function sourceRootsForConfig() {
+      return {
+        native_static_sfincs_input_dirs: rootsForSelectedGroup('static'),
+        native_event_sfincs_input_dirs: rootsForSelectedGroup('event'),
+        native_sfincs_input_dirs: rootsForSelectedGroup('other')
+      };
+    }
+
+    function getConfig() {
+      const cfg = {
+        ...BASE_DEFAULTS,
+        ...editableValues(),
+        ...sourceRootsForConfig(),
+        use_sfincs_file_overrides: true,
+        sfincs_file_overrides: overrideMap(),
+        override_source_path: getSourcePaths()[0] || '',
+        override_source_paths: getSourcePaths(),
+        override_detection_manifest: detectionManifest()
+      };
+    
+    
+    
+      // Smart Override assembly:
+      // - data_catalogs blank     -> native_sfincs_assembly
+      // - data_catalogs not blank -> hybrid
+      // data_root is controlled by launcher settings, not by a visible run field.
+      cfg.data_root = (
+        window.LauncherDefaults && window.LauncherDefaults.get
+          ? window.LauncherDefaults.get("dataRoot")
+          : "/proj/zefflab/projects/Flooding/Data/harris_county"
+      );
+
+      cfg.data_catalogs = normalizePathListValue(cfg.data_catalogs);
+
+      const hasDataCatalogs = Array.isArray(cfg.data_catalogs) && cfg.data_catalogs.length > 0;
+
+      cfg.pipeline_mode = 'preflight_only';
+      cfg.preprocess_mode = hasDataCatalogs ? 'hybrid' : 'native_sfincs_assembly';
+      cfg.use_sfincs_file_overrides = true;
+      if (hasNativeInfiltrationOverride(cfg.sfincs_file_overrides || {})) {
+        cfg.infiltration_mode = cfg.use_infiltration ? 'native_sfincs' : 'none';
+      }
+    
+      return cfg;
+    }
+
+
+
+    function runtimeReviewEsc(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+    
+    function renderRuntimeWindowReview(audit) {
+      const target = document.getElementById('runtime-window-review-output');
+      if (!target) return;
+    
+      const severity = String(audit.severity || 'ok').toLowerCase();
+      const isMajor = severity === 'major';
+      const mismatches = audit.mismatches || {};
+      const mismatchKeys = Object.keys(mismatches);
+    
+      const border = isMajor ? '#dc2626' : '#16a34a';
+      const background = isMajor ? '#fff1f2' : '#f0fdf4';
+      const textColor = isMajor ? '#991b1b' : '#166534';
+      const title = isMajor ? 'MAJOR RUNTIME WINDOW MISMATCH' : 'Runtime window check';
+    
+      const mismatchHtml = mismatchKeys.length ? `
+        <div style="margin-top: 0.75rem;">
+          <strong>Mismatched fields:</strong>
+          <ul style="margin-top: 0.35rem;">
+            ${mismatchKeys.map(key => {
+              const info = mismatches[key] || {};
+              return `
+                <li>
+                  <strong>${runtimeReviewEsc(key)}</strong><br>
+                  requested: <code>${runtimeReviewEsc(info.requested_raw)}</code>
+                  → <code>${runtimeReviewEsc(info.requested_normalized)}</code><br>
+                  effective: <code>${runtimeReviewEsc(info.effective_raw)}</code>
+                  → <code>${runtimeReviewEsc(info.effective_normalized)}</code>
+                </li>
+              `;
+            }).join('')}
+          </ul>
+        </div>
+      ` : '';
+    
+      target.innerHTML = `
+        <div style="
+          margin-top: 1rem;
+          padding: 1rem;
+          border: 2px solid ${border};
+          background: ${background};
+          color: ${textColor};
+          border-radius: 14px;
+          box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+        ">
+          <div style="font-weight: 800; font-size: 1.05rem;">
+            ${runtimeReviewEsc(title)}
+          </div>
+          <div style="margin-top: 0.45rem;">
+            ${runtimeReviewEsc(audit.message || '')}
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <strong>Reason:</strong> ${runtimeReviewEsc(audit.reason || '')}
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <strong>Event catalog:</strong>
+            <code>${runtimeReviewEsc(audit.event_catalog || '')}</code>
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <strong>Runtime CSV:</strong>
+            <code>${runtimeReviewEsc(audit.runtime_source_csv || '')}</code>
+          </div>
+          ${mismatchHtml}
+        </div>
+      `;
+    }
+    
+    async function runRuntimeWindowReviewCheck() {
+      const target = document.getElementById('runtime-window-review-output');
+      if (target) {
+        target.innerHTML = `
+          <div style="margin-top: 1rem; padding: 0.8rem; border-radius: 12px; background: #f8fafc; border: 1px solid #cbd5e1;">
+            Checking requested model window against hybrid event catalog window...
+          </div>
+        `;
+      }
+    
+      let cfg;
+      try {
+        cfg = getConfig();
+      } catch (err) {
+        if (target) {
+          target.innerHTML = `
+            <div style="margin-top: 1rem; padding: 1rem; border: 2px solid #dc2626; background: #fff1f2; color: #991b1b; border-radius: 14px;">
+              <strong>Runtime window review failed.</strong><br>
+              ${runtimeReviewEsc(err.message)}
+            </div>
+          `;
+        }
+        return;
+      }
+    
+      try {
+        const response = await fetch('/api/review-runtime-window', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ config: cfg })
+        });
+    
+        const result = await response.json();
+    
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || 'Runtime review request failed.');
+        }
+    
+        renderRuntimeWindowReview(result.audit || {});
+      } catch (err) {
+        renderRuntimeWindowReview({
+          severity: 'major',
+          ui_color: 'red',
+          category: 'runtime_window_review_failed',
+          message: 'Runtime window review check failed.',
+          reason: err.message,
+          mismatches: {}
+        });
+      }
+    }
+    
+    window.runRuntimeWindowReviewCheck = runRuntimeWindowReviewCheck;
+    
+    function wireRuntimeWindowReviewButton() {
+      const button = document.getElementById('check-button-main');
+      const target = document.getElementById('runtime-window-review-output');
+    
+      if (!button) {
+        console.warn('Runtime review: check-button-main was not found.');
+        return;
+      }
+    
+      if (!target) {
+        console.warn('Runtime review: runtime-window-review-output was not found.');
+        return;
+      }
+    
+      if (button.dataset.runtimeWindowReviewWired === 'true') {
+        return;
+      }
+    
+      button.dataset.runtimeWindowReviewWired = 'true';
+      button.addEventListener('click', () => {
+        console.log('Runtime review: Run page checks clicked.');
+        runRuntimeWindowReviewCheck();
+      });
+    
+      target.innerHTML = `
+        <div style="margin-top: 1rem; padding: 0.8rem; border-radius: 12px; background: #f8fafc; border: 1px solid #cbd5e1;">
+          Runtime-window review is loaded. Click <strong>Run page checks</strong> to compare requested model times against the hybrid event catalog window.
+        </div>
+      `;
+    }
+    
+    wireRuntimeWindowReviewButton();
+    
+    document.addEventListener('DOMContentLoaded', wireRuntimeWindowReviewButton);
+
+
+
+    function plannedRunRoot(cfg) {
+      const outputRoot = (cfg.output_root || '').replace(/\/+$/, '');
+      const runName = cfg.run_name || 'UNSET_RUN_NAME';
+      return outputRoot ? `${outputRoot}/${runName}` : runName;
+    }
+
+    function updatePreview() {
+      const map = overrideMap();
+      const keys = Object.keys(map);
+      const on = keys.filter(k => map[k]).length;
+      const found = keys.filter(k => detectionState[k]?.found).length;
+      countOn.textContent = `${on} on`;
+      countOff.textContent = `${keys.length - on} off`;
+      countFound.textContent = `${found} found`;
+      const cfg = getConfig();
+      sideRunRootPreview.textContent = `${plannedRunRoot(cfg)}/run_config.json`;
+      preview.textContent = JSON.stringify(cfg, null, 2);
+      applyOverrideManualVisibility();
+    }
+
+    function makeCheck(status, message, detail) {
+      const div = document.createElement('div');
+      div.className = `check-item ${status}`;
+      const label = status === 'good' ? 'OK' : status === 'warn' ? 'WARN' : 'FAIL';
+      div.innerHTML = `<div class="check-status">${label}</div><div><b>${message}</b><br><span class="muted">${detail || ''}</span></div>`;
+      return div;
+    }
+
+    function runChecks(navigate = true) {
+      const cfg = getConfig();
+      const map = cfg.sfincs_file_overrides;
+      const onKeys = Object.entries(map).filter(([, v]) => v).map(([k]) => k);
+      checksOutput.innerHTML = '';
+      const checks = [];
+      
+      function isBlank(value) {
+        return value === null || value === undefined || String(value).trim() === '';
+      }
+    
+      function looksLikeLauncherTime(value) {
+        return /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(String(value || '').trim());
+      }
+    
+      function parseLauncherTime(value) {
+        const s = String(value || '').trim();
+        if (!looksLikeLauncherTime(s)) return null;
+        return new Date(s.replace(' ', 'T') + 'Z');
+      }
+    
+      function isHarrisCountyConfig(cfg) {
+        const dataRoot = String(cfg.data_root || '');
+        const sources = Array.isArray(cfg.override_source_paths) ? cfg.override_source_paths.join(' ') : '';
+        return dataRoot.includes('/Data/harris_county') || sources.includes('/Data/harris_county');
+      }
+
+      if (/^[A-Za-z0-9_.-]+$/.test(cfg.run_name || '')) checks.push(makeCheck('good', 'run_name format is safe.', cfg.run_name));
+      else checks.push(makeCheck('bad', 'run_name has unsafe characters.', 'Use only letters, numbers, underscores, dashes, and periods.'));
+
+      if (cfg.override_source_path) checks.push(makeCheck('good', 'Source path is set.', cfg.override_source_path));
+      else checks.push(makeCheck('bad', 'Source path is blank.', 'Set the Source path before saving a real override config.'));
+
+
+
+      if (onKeys.length > 0) checks.push(makeCheck('good', 'At least one override is enabled.', `${onKeys.length} override files selected.`));
+      else checks.push(makeCheck('bad', 'No override files are enabled.', 'Detect files or manually turn on at least one override.'));
+
+      const harrisCounty = isHarrisCountyConfig(cfg);
+      
+            const reviewDataCatalogs = normalizePathListValue(cfg.data_catalogs);
+      const hasReviewDataCatalogs = reviewDataCatalogs.length > 0;
+
+      if (hasReviewDataCatalogs) {
+        checks.push(makeCheck(
+          'good',
+          'Data/event catalog selected',
+          `The backend config will use preprocess_mode = hybrid and data_catalogs = ${JSON.stringify(reviewDataCatalogs)}.`
+        ));
+      } else {
+        checks.push(makeCheck(
+          'good',
+          'No data/event catalog selected',
+          'The backend config will use preprocess_mode = native_sfincs_assembly and rely on selected native SFINCS files.'
+        ));
+      }
+
+      const nativeEventProducts = [];
+      if (map.netamprfile || map.precipfile || map.amprfile) {
+        nativeEventProducts.push('rainfall / precip_2d.nc');
+      }
+      if (map.bzsfile) {
+        nativeEventProducts.push('water-level boundary / sfincs.bzs');
+      }
+      if (map.disfile) {
+        nativeEventProducts.push('discharge boundary / sfincs.dis');
+      }
+
+      if (hasReviewDataCatalogs && nativeEventProducts.length > 0) {
+        checks.push(makeCheck(
+          'warn',
+          'Data catalog and native event overrides both selected',
+          `The data catalog can generate event forcing, but native overrides are also selected for: ${nativeEventProducts.join(', ')}. Choose one owner for each event product before submitting.`
+        ));
+      }
+      
+      const adv = cfg.advanced_config && typeof cfg.advanced_config === 'object' ? cfg.advanced_config : {};
+
+      if (map['sfincs.inp']) {
+        checks.push(makeCheck(
+          'warn',
+          'sfincs.inp override is enabled.',
+          'The imported sfincs.inp will control advanced SFINCS settings. This is okay for exact reruns, but usually keep this off if you want the backend to write a current-compatible sfincs.inp.'
+        ));
+      } else {
+        checks.push(makeCheck(
+          'good',
+          'sfincs.inp override is off.',
+          'The backend will generate sfincs.inp from the editable time/output/advanced settings.'
+        ));
+      }
+
+      if (!map['sfincs.inp']) {
+        ['tref', 'tstart', 'tstop'].forEach(key => {
+          if (isBlank(cfg[key])) {
+            checks.push(makeCheck(
+              'warn',
+              `${key} is blank.`,
+              `Because sfincs.inp override is off, native assembly must generate sfincs.inp and needs ${key}.`
+            ));
+          } else if (!looksLikeLauncherTime(cfg[key])) {
+            checks.push(makeCheck(
+              'warn',
+              `${key} has an unexpected time format.`,
+              `Use YYYY-MM-DD HH:MM:SS. Current value: ${cfg[key]}`
+            ));
+          }
+        });
+
+        const tref = parseLauncherTime(cfg.tref);
+        const tstart = parseLauncherTime(cfg.tstart);
+        const tstop = parseLauncherTime(cfg.tstop);
+
+        if (tref && tstart && tstart < tref) {
+          checks.push(makeCheck(
+            'warn',
+            'tstart is before tref.',
+            `tref=${cfg.tref}, tstart=${cfg.tstart}. This can be intentional, but check it.`
+          ));
+        }
+
+        if (tstart && tstop && tstop <= tstart) {
+          checks.push(makeCheck(
+            'bad',
+            'tstop is not after tstart.',
+            `tstart=${cfg.tstart}, tstop=${cfg.tstop}. The model window must have positive duration.`
+          ));
+        }
+
+        ['dtout_s', 'dthisout_s', 'dtmaxout_s', 'dtrstout_s'].forEach(key => {
+          const value = Number(cfg[key]);
+          if (!Number.isFinite(value)) {
+            checks.push(makeCheck(
+              'warn',
+              `${key} is not numeric.`,
+              `Current value: ${cfg[key]}`
+            ));
+          } else if (value < 0 && key !== 'dtrstout_s') {
+            checks.push(makeCheck(
+              'warn',
+              `${key} is negative.`,
+              `Current value: ${cfg[key]}. Check whether this is intentional.`
+            ));
+          } else if (value === 0 && key !== 'dtrstout_s') {
+            checks.push(makeCheck(
+              'warn',
+              `${key} is zero.`,
+              `Current value: ${cfg[key]}. Most output intervals should be positive.`
+            ));
+          }
+        });
+      }
+
+      if (harrisCounty) {
+        if (adv.epsg === 32615 && adv.crsgeo === 0 && adv.coriolis === 0) {
+          checks.push(makeCheck(
+            'good',
+            'Harris County CRS/Coriolis compatibility looks safe.',
+            'epsg=32615, crsgeo=0, coriolis=0.'
+          ));
+        } else {
+          checks.push(makeCheck(
+            'warn',
+            'Harris County CRS/Coriolis settings need review.',
+            `Current values: epsg=${adv.epsg}, crsgeo=${adv.crsgeo}, coriolis=${adv.coriolis}. For the current Harris County / EPSG:32615 setup, use epsg=32615, crsgeo=0, coriolis=0. Do not copy the old professor crsgeo=32615 setting into the current container run.`
+          ));
+        }
+
+        if (adv.baro === 0 && adv.pavbnd === 0) {
+          checks.push(makeCheck(
+            'good',
+            'Harris County pressure-boundary settings look safe.',
+            'baro=0 and pavbnd=0.'
+          ));
+        } else {
+          checks.push(makeCheck(
+            'warn',
+            'Harris County pressure-boundary settings need review.',
+            `Current values: baro=${adv.baro}, pavbnd=${adv.pavbnd}. Current Harris/professor-template convention usually uses baro=0 and pavbnd=0.`
+          ));
+        }
+      }
+
+      if (map['bzsfile'] && !map['bndfile']) {
+        checks.push(makeCheck(
+          'warn',
+          'sfincs.bzs is selected without sfincs.bnd.',
+          'The water-level time series should match the boundary geometry. Usually select both bzsfile and bndfile.'
+        ));
+      }
+
+      if (!hasReviewDataCatalogs && map['bndfile'] && !map['bzsfile'] && cfg.use_waterlevel_boundary) {
+        checks.push(makeCheck(
+          'warn',
+          'sfincs.bnd is selected but sfincs.bzs is not.',
+          'Water-level boundary geometry is present, but the time-series file is not selected.'
+        ));
+      }
+
+      if (map['disfile'] && !map['srcfile']) {
+        checks.push(makeCheck(
+          'warn',
+          'sfincs.dis is selected without sfincs.src.',
+          'The discharge time series should match the source-point geometry. Usually select both disfile and srcfile.'
+        ));
+      }
+
+      if (!hasReviewDataCatalogs && map['srcfile'] && !map['disfile'] && cfg.use_discharge_boundary) {
+        checks.push(makeCheck(
+          'warn',
+          'sfincs.src is selected but sfincs.dis is not.',
+          'Discharge source geometry is present, but the discharge time-series file is not selected.'
+        ));
+      }
+
+      if (!hasReviewDataCatalogs && cfg.use_rainfall && !map['netamprfile'] && !map['precipfile'] && !map['amprfile']) {
+        checks.push(makeCheck(
+          'warn',
+          'Rainfall is enabled but no native rainfall file is selected.',
+          'For native assembly, select precip_2d.nc / netamprfile or turn use_rainfall=false.'
+        ));
+      }
+
+      if (!hasReviewDataCatalogs && cfg.use_waterlevel_boundary && (!map['bndfile'] || !map['bzsfile'])) {
+        checks.push(makeCheck(
+          'warn',
+          'Water-level boundary is enabled but the native bnd/bzs pair is incomplete.',
+          `bndfile=${Boolean(map['bndfile'])}, bzsfile=${Boolean(map['bzsfile'])}.`
+        ));
+      }
+
+      if (!hasReviewDataCatalogs && cfg.use_discharge_boundary && (!map['srcfile'] || !map['disfile'])) {
+        checks.push(makeCheck(
+          'warn',
+          'Discharge boundary is enabled but the native src/dis pair is incomplete.',
+          `srcfile=${Boolean(map['srcfile'])}, disfile=${Boolean(map['disfile'])}.`
+        ));
+      }
+
+      if (cfg.use_subgrid && !map['sbgfile']) {
+        checks.push(makeCheck(
+          'warn',
+          'Subgrid is enabled but sfincs.sbg is not selected.',
+          'Native assembly will point sfincs.inp to sfincs.sbg when use_subgrid=true, so the file needs to be present or the toggle should be false.'
+        ));
+      }
+    
+      const infilMode = cfg.infiltration_mode || 'none';
+
+      const infilSources = {
+        qinf: Boolean(map.qinffile || cfg.qinf_path),
+        scs: Boolean(map.scsfile || cfg.curve_number_path),
+        smax: Boolean(map.smaxfile || cfg.smax_path),
+        seff: Boolean(map.sefffile || cfg.seff_path),
+        ks: Boolean(map.ksfile || cfg.ks_path),
+        greenAmptSigma: Boolean(map.sigmafile || cfg.sigma_path),
+        greenAmptPsi: Boolean(map.psifile || cfg.psi_path),
+        hortonF0: Boolean(map.f0file || cfg.f0_path),
+        hortonFc: Boolean(map.fcfile || cfg.fc_path),
+        hortonKd: Boolean(map.kdfile || cfg.kd_path),
+        storageVol: Boolean(map.volfile || cfg.vol_path),
+      };
+
+      const infilGroups = {
+        constantScalar: infilMode === 'constant',
+        qinfGrid: infilSources.qinf,
+        scsCurveNumber: infilSources.scs,
+        cnStorageRecovery: infilSources.smax || infilSources.seff || infilSources.ks,
+        greenAmpt: infilSources.greenAmptSigma || infilSources.greenAmptPsi || infilSources.ks,
+        horton: infilSources.hortonF0 || infilSources.hortonFc || infilSources.hortonKd,
+        storageVolume: infilSources.storageVol,
+      };
+
+      const activeInfilGroups = Object.entries(infilGroups)
+        .filter(([name, active]) => active)
+        .map(([name]) => name);
+
+      if (cfg.use_infiltration && infilMode === 'none' && activeInfilGroups.length > 0) {
+        checks.push(makeCheck(
+          'warn',
+          'Infiltration files are selected but infiltration_mode is none',
+          'Set infiltration_mode to the intended method, or remove the infiltration file/path selections.'
+        ));
+      }
+
+      if (cfg.use_infiltration && infilMode !== 'none' && activeInfilGroups.length === 0) {
+        checks.push(makeCheck(
+          'warn',
+          'Infiltration requested but no infiltration source is selected',
+          'Choose one infiltration source family, such as qinf, SCS/Curve Number, CN storage recovery, Green-Ampt, or Horton.'
+        ));
+      }
+
+      if (cfg.use_infiltration && activeInfilGroups.length > 1) {
+        checks.push(makeCheck(
+          'warn',
+          'Multiple infiltration source families are selected',
+          `You selected: ${activeInfilGroups.join(', ')}. Usually choose one infiltration method/source family so SFINCS is not given conflicting infiltration inputs.`
+        ));
+      }
+
+      if (cfg.use_infiltration && (infilMode === 'spatial_constant' || infilSources.qinf) && !infilSources.qinf) {
+        checks.push(makeCheck(
+          'warn',
+          'Spatial constant infiltration is missing qinf input',
+          'Select qinffile as a native override or provide qinf_path so the backend can write qinffile = sfincs.qinf.'
+        ));
+      }
+
+      if (cfg.use_infiltration && (infilMode === 'curve_number' || infilSources.scs) && !infilSources.scs) {
+        checks.push(makeCheck(
+          'warn',
+          'Curve Number infiltration is missing SCS/CN input',
+          'Select scsfile as a native override or provide curve_number_path if you want the backend/HydroMT path to build it.'
+        ));
+      }
+
+      if (cfg.use_infiltration && (infilMode === 'curve_number_with_ks' || infilGroups.cnStorageRecovery)) {
+        const missingCnRecovery = [];
+        if (!infilSources.smax) missingCnRecovery.push('smaxfile / smax_path');
+        if (!infilSources.seff) missingCnRecovery.push('sefffile / seff_path');
+        if (!infilSources.ks) missingCnRecovery.push('ksfile / ks_path');
+
+        if (missingCnRecovery.length > 0) {
+          checks.push(makeCheck(
+            'warn',
+            'Curve Number storage recovery inputs may be incomplete',
+            `Missing: ${missingCnRecovery.join(', ')}. For this native SFINCS family, keep smax, seff, and ks together unless you intentionally know otherwise.`
+          ));
+        }
+      }
+
+      if (cfg.use_infiltration && infilGroups.greenAmpt) {
+        const missingGreenAmpt = [];
+        if (!infilSources.greenAmptSigma) missingGreenAmpt.push('sigmafile / sigma_path');
+        if (!infilSources.greenAmptPsi) missingGreenAmpt.push('psifile / psi_path');
+        if (!infilSources.ks) missingGreenAmpt.push('ksfile / ks_path');
+
+        if (missingGreenAmpt.length > 0) {
+          checks.push(makeCheck(
+            'warn',
+            'Green-Ampt infiltration inputs may be incomplete',
+            `Missing: ${missingGreenAmpt.join(', ')}. Green-Ampt-style native input normally needs sigma, psi, and ks together.`
+          ));
+        }
+      }
+
+      if (cfg.use_infiltration && infilGroups.horton) {
+        const missingHorton = [];
+        if (!infilSources.hortonF0) missingHorton.push('f0file / f0_path');
+        if (!infilSources.hortonFc) missingHorton.push('fcfile / fc_path');
+        if (!infilSources.hortonKd) missingHorton.push('kdfile / kd_path');
+
+        if (missingHorton.length > 0) {
+          checks.push(makeCheck(
+            'warn',
+            'Horton infiltration inputs may be incomplete',
+            `Missing: ${missingHorton.join(', ')}. Horton-style native input normally needs f0, fc, and kd together.`
+          ));
+        }
+      }
+
+      if (cfg.use_obs_points && !map['obsfile'] && isBlank(cfg.obs_points_path)) {
+        checks.push(makeCheck(
+          'warn',
+          'Observation points are enabled but no obs source is selected.',
+          'Select sfincs.obs or provide obs_points_path.'
+        ));
+      }
+
+      if (cfg.use_structures && !map['thdfile'] && !map['weirfile'] && !map['drnfile']) {
+        checks.push(makeCheck(
+          'warn',
+          'Structures are enabled but no native structure file is selected.',
+          'Select sfincs.thd, sfincs.weir, or sfincs.drn, or turn use_structures=false.'
+        ));
+      }
+
+      Object.entries(map).forEach(([key, enabled]) => {
+        const state = detectionState[key] || {};
+        if (enabled && !state.found) {
+          checks.push(makeCheck(
+            'warn',
+            `${key} is manually enabled but was not detected.`,
+            'This can work only if the backend can find the file from the selected source folders. Otherwise preprocessing will fail.'
+          ));
+        }
+
+        if (enabled && state.multiple_matches) {
+          checks.push(makeCheck(
+            'warn',
+            `${key} has multiple detected matches.`,
+            'Narrow the source folders or keep sfincs_file_override_fail_on_multiple_matches=true so the backend refuses ambiguous copies.'
+          ));
+        }
+      });
+
+      if (cfg.overwrite_existing_run) {
+        checks.push(makeCheck(
+          'warn',
+          'overwrite_existing_run=true.',
+          'This can replace previous run products. Keep false unless you are intentionally rerunning into the same folder.'
+        ));
+      }
+
+      if (String(cfg.output_root || '').startsWith('/proj') && !cfg.allow_writes_inside_proj) {
+        checks.push(makeCheck(
+          'bad',
+          'output_root is inside /proj but allow_writes_inside_proj=false.',
+          'Shared project runs need allow_writes_inside_proj=true or a non-/proj output root.'
+        ));
+      }
+
+      const sharedCondaEnv = '/proj/zefflab/projects/Flooding/pipeline/envs/sfincs';
+      const sharedCondaPython = '/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python';
+      const oldPersonalCondaPython = '/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python';
+
+      if (String(cfg.conda_python || '') === sharedCondaPython) {
+        checks.push(makeCheck(
+          'good',
+          'conda_python points to the shared /proj environment.',
+          'The shared environment has been cloned and passed core + geospatial import checks.'
+        ));
+      } else if (String(cfg.conda_python || '') === oldPersonalCondaPython) {
+        checks.push(makeCheck(
+          'warn',
+          'conda_python still points to the old personal /users environment.',
+          'This works, but the launcher default should now use the shared /proj environment for lab portability.'
+        ));
+      } else {
+        checks.push(makeCheck(
+          'warn',
+          'conda_python points to an unexpected environment.',
+          `Current value: ${cfg.conda_python}. Expected shared path: ${sharedCondaPython}`
+        ));
+      }
+
+      if (String(cfg.conda_env_path || '') !== sharedCondaEnv) {
+        checks.push(makeCheck(
+          'warn',
+          'conda_env_path is not the shared /proj environment.',
+          `Current value: ${cfg.conda_env_path}. Expected: ${sharedCondaEnv}`
+        ));
+      }
+
+      if (cfg.strict_schema_validation) {
+        checks.push(makeCheck(
+          'warn',
+          'strict_schema_validation=true.',
+          'Keep this false until web-only keys like override_source_paths and override_detection_manifest are added to config_schema.py.'
+        ));
+      }
+
+      document.querySelectorAll('textarea[data-type="json"], textarea[data-type="nullable_json"]').forEach(el => {
+        try {
+          parseValue(el);
+          checks.push(makeCheck('good', `${el.dataset.key} is valid JSON.`, ''));
+        } catch (err) {
+          checks.push(makeCheck('bad', `${el.dataset.key} has invalid JSON.`, err.message));
+        }
+      });
+
+      checks.forEach(c => checksOutput.appendChild(c));
+      if (navigate) showStep('step-check');
+    }
+
+    async function saveConfigProgress(confirmUpdate = false) {
+      const cfg = getConfig();
+    
+      const response = await fetch('/api/save-config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          config: cfg,
+          confirm_update: confirmUpdate
+        })
+      });
+    
+      const data = await response.json().catch(() => ({}));
+    
+      if (response.status === 409 && data.needs_confirmation) {
+        let message = data.message || 'A saved config already exists. Update it?';
+    
+        if (data.run_state && data.run_state.has_real_run) {
+          message += '\n\nWarning: this run folder also appears to contain real run artifacts. Updating run_config.json could make the saved config differ from what was actually run.';
+        }
+    
+        if (confirm(message)) {
+          return saveConfigProgress(true);
+        }
+    
+        return data;
+      }
+    
+      if (!response.ok || !data.ok) {
+        const message = data.message || data.error || `Save failed with HTTP ${response.status}`;
+        alert(message);
+        throw new Error(message);
+      }
+    
+      alert(
+        data.updated_existing
+          ? `Updated saved config:\n${data.config_path}`
+          : `Saved config:\n${data.config_path}`
+      );
+    
+      return data;
+    }
+
+    function setFieldValue(key, value) {
+      const el = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+      if (!el) return false;
+      const type = el.dataset.type || 'string';
+      el.value = stringifyForField(value, type);
+      return true;
+    }
+    
+    function applyDetectedSfincsInpDefaults(parsed) {
+      if (!parsed || typeof parsed !== 'object') return;
+    
+      const uiValues = parsed.ui_values || {};
+      const advancedConfig = parsed.advanced_config || null;
+    
+      Object.entries(uiValues).forEach(([key, value]) => {
+        importedNativeValues[key] = value;
+        setFieldValue(key, value);
+      });
+    
+      if (advancedConfig && typeof advancedConfig === 'object') {
+        importedNativeValues.advanced_config = advancedConfig;
+        setFieldValue('advanced_config', advancedConfig);
+      }
+    }
+
+    async function loadConfigFromFile(file) {
+      if (!file) return;
+      const text = await file.text();
+      let cfg;
+      try { cfg = JSON.parse(text); }
+      catch (err) { alert(`Could not parse JSON file:\n${err.message}`); return; }
+
+      let matched = 0;
+      const loadedSources = Array.isArray(cfg.override_source_paths)
+        ? cfg.override_source_paths
+        : (cfg.override_source_path ? [cfg.override_source_path] : []);
+    
+      if (loadedSources.length) {
+        resetSourceRows(loadedSources);
+        matched += loadedSources.length;
+      }
+      if (cfg.sfincs_file_overrides && typeof cfg.sfincs_file_overrides === 'object') {
+        Object.entries(cfg.sfincs_file_overrides).forEach(([key, enabled]) => {
+          const input = document.querySelector(`[data-override-key="${CSS.escape(key)}"]`);
+          if (input) {
+            input.checked = Boolean(enabled);
+            if (!detectionState[key]) detectionState[key] = { found: false, filename: '', manual: true };
+            detectionState[key].manual = true;
+            updateRowState(key);
+          }
+        });
+        matched += 1;
+      }
+      Object.entries(cfg).forEach(([key, value]) => {
+        if (setFieldValue(key, value)) matched += 1;
+      });
+      updatePreview();
+      alert(`Loaded config. Matched fields: ${matched}`);
+    }
+
+    stepTabs.forEach(tab => tab.addEventListener('click', () => showStep(tab.dataset.step)));
+    manualTabs.forEach(tab => tab.addEventListener('click', () => showManualTab(tab.dataset.manualTab)));
+    document.getElementById('detect-button-main').addEventListener('click', detectFiles);
+    document.getElementById('all-off-button').addEventListener('click', allOff);
+    document.getElementById('detected-on-button').addEventListener('click', reapplyDetected);
+    document.getElementById('confirm-overrides-button').addEventListener('click', () => { applyOverrideManualVisibility(); showStep('step-manual'); });
+    document.getElementById('go-check-button').addEventListener('click', () => showStep('step-check'));
+    document.getElementById('check-button-top').addEventListener('click', () => runChecks(true));
+    document.getElementById('check-button-main').addEventListener('click', () => runChecks(false));
+    document.getElementById('save-config-button').addEventListener('click', () => saveConfigProgress(false));
+    document.getElementById('load-config-input').addEventListener('change', event => loadConfigFromFile(event.target.files[0]));
+    document.getElementById('add-source-button').addEventListener('click', () => addSourceRow(''));
+
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+      el.addEventListener('input', updatePreview);
+      el.addEventListener('change', updatePreview);
+    });
+
+    renderOverrideTables();
+    updatePreview();
+  </script>
+<script src="static/launcher_defaults.js"></script>
+<script>
+  window.CONFIG_PATH_BROWSE_SETTINGS = {
+    sectionNumbers: ["5", "6", "11", "12"],
+    specialPathKeys: ["data_catalogs", "event_catalog_paths", "reduced_event_catalog_path"],
+    defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+  };
+</script>
+<script src="static/config_path_browse_buttons.js"></script>
+<script src="static/path_browser.js"></script>
+<script src="static/pipeline_actions.js"></script>
+<script src="static/page_reset.js"></script>
+
+<!-- BEGIN runtime launcher path defaults patch -->
+<script>
+(function () {
+  "use strict";
+
+  const FIELD_TO_DEFAULT = {
+    project_root: "projectRoot",
+    conda_env_path: "condaEnvPath",
+    conda_python: "condaPython",
+    sfincs_container: "sfincsContainerPath",
+    sfincs_container_path: "sfincsContainerPath"
+  };
+
+  const BUILTIN_DEFAULTS = {
+    projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+    condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+    condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+    sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+  };
+
+  function defaultsApi() {
+    return window.SFINCS_LAUNCHER_DEFAULTS ||
+           window.SfincsLauncherDefaults ||
+           window.launcherDefaults ||
+           {};
+  }
+
+  function getLauncherDefault(key) {
+    const api = defaultsApi();
+
+    if (typeof api.getDefault === "function") {
+      return api.getDefault(key) || BUILTIN_DEFAULTS[key] || "";
+    }
+
+    if (typeof api.get === "function") {
+      return api.get(key) || BUILTIN_DEFAULTS[key] || "";
+    }
+
+    if (typeof api.getAll === "function") {
+      const all = api.getAll() || {};
+      return all[key] || BUILTIN_DEFAULTS[key] || "";
+    }
+
+    if (api.defaults && api.defaults[key]) {
+      return api.defaults[key];
+    }
+
+    return BUILTIN_DEFAULTS[key] || "";
+  }
+
+  function applyRuntimeLauncherPathDefaults(force) {
+    Object.entries(FIELD_TO_DEFAULT).forEach(([fieldKey, defaultKey]) => {
+      const input = document.querySelector(`[data-key="${fieldKey}"]`);
+      if (!input) return;
+
+      const desired = String(getLauncherDefault(defaultKey) || "").trim();
+      if (!desired) return;
+
+      const current = String(input.value || "").trim();
+      const builtin = String(BUILTIN_DEFAULTS[defaultKey] || "").trim();
+
+      const safeToApply =
+        force ||
+        !current ||
+        current === builtin ||
+        input.dataset.appliedLauncherDefault === "true";
+
+      if (!safeToApply) return;
+
+      input.value = desired;
+      input.dataset.appliedLauncherDefault = "true";
+      input.dispatchEvent(new Event("input", {bubbles: true}));
+      input.dispatchEvent(new Event("change", {bubbles: true}));
+    });
+
+    if (typeof window.updatePreview === "function") {
+      window.updatePreview();
+    }
+  }
+
+  window.applyRuntimeLauncherPathDefaults = applyRuntimeLauncherPathDefaults;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      applyRuntimeLauncherPathDefaults(false);
+    }, 0);
+  });
+
+  window.addEventListener("launcher-defaults-changed", function () {
+    applyRuntimeLauncherPathDefaults(true);
+  });
+})();
+</script>
+<!-- END runtime launcher path defaults patch -->
+
+</body>
+</html>

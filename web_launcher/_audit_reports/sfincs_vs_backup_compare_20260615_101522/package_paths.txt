@@ -1,0 +1,2 @@
+Source package: /proj/zefflab/projects/Flooding/pipeline/envs/sfincs/lib/python3.11/site-packages/hydromt_sfincs
+Backup package: /proj/zefflab/projects/Flooding/pipeline/envs/sfincs_backup/lib/python3.11/site-packages/hydromt_sfincs

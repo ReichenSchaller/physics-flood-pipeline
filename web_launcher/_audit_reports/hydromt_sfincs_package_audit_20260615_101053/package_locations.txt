@@ -1,0 +1,14 @@
+python package audit
+====================
+hydromt: 1.3.1
+hydromt-sfincs: 2.0.0rc2
+numpy: 2.4.4
+xarray: 2026.4.0
+rasterio: 1.4.4
+geopandas: 1.1.3
+
+hydromt module: /proj/zefflab/projects/Flooding/pipeline/envs/sfincs/lib/python3.11/site-packages/hydromt/__init__.py
+hydromt_sfincs module: /proj/zefflab/projects/Flooding/pipeline/envs/sfincs/lib/python3.11/site-packages/hydromt_sfincs/__init__.py
+hydromt_sfincs root: /proj/zefflab/projects/Flooding/pipeline/envs/sfincs/lib/python3.11/site-packages/hydromt_sfincs
+subgrid.py: /proj/zefflab/projects/Flooding/pipeline/envs/sfincs/lib/python3.11/site-packages/hydromt_sfincs/components/grid/subgrid.py
+subgrid exists: True

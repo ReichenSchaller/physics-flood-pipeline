@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Results</title>
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #111827;
+      --panel2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --good: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+      --border: #374151;
+    }
+
+    body {
+      margin: 0;
+      background: #020617;
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 32px 24px 70px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: -0.03em;
+    }
+
+    h2 { margin-top: 0; font-size: 20px; }
+    h3 { margin-bottom: 8px; }
+    p { color: var(--muted); line-height: 1.5; }
+    a { color: var(--accent); text-decoration: none; }
+
+    .card {
+      background: rgba(17, 24, 39, 0.96);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric .value {
+      font-size: 23px;
+      font-weight: 850;
+      margin-top: 6px;
+    }
+
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+
+    .mono {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 9px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: #cbd5e1;
+      background: #0f172a;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .table-wrap {
+      max-height: 420px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-top: 10px;
+    }
+
+    .path {
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #1e293b;
+      color: #cbd5e1;
+    }
+
+    .future {
+      border-style: dashed;
+      opacity: 0.8;
+    }
+
+    .error {
+      color: #fecaca;
+      background: rgba(127, 29, 29, 0.35);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      padding: 12px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+    }
+
+    select, button {
+      background: #020617;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      color: #00111f;
+      font-weight: 800;
+      border: 0;
+    }
+
+    details {
+      background: #0b1120;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 12px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .control-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .control-row > * {
+      min-width: 220px;
+    }
+
+    .help-button {
+
+      position: fixed;
+
+      left: 18px;
+
+      bottom: 18px;
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 1px solid var(--border);
+
+      background: #ffffff;
+
+      color: #173f73;
+
+      display: grid;
+
+      place-items: center;
+
+      font-weight: 900;
+
+      box-shadow: 0 12px 28px rgba(24, 39, 75, 0.18);
+
+      text-decoration: none;
+
+      z-index: 50;
+
+    }
+
+
+
+    .help-button:hover {
+
+      border-color: var(--accent);
+
+      color: #315f9f;
+
+    }
+
+
+
+    @media (max-width: 900px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .summary-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Compare Results</h1>
+        <p id="subtitle">Loading result...</p>
+      </div>
+      <div>
+        <a href="/compare">New compare</a>
+        ·
+        <a href="/">Launcher</a>
+      </div>
+    </div>
+
+    <div id="content"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const jobDir = params.get("job_dir");
+    const pairDetails = {};
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function fmt(value) {
+      if (value === null || value === undefined) return "";
+      if (typeof value === "number") {
+        if (Math.abs(value) >= 1000 || Math.abs(value) < 0.001 && value !== 0) {
+          return value.toExponential(4);
+        }
+        return value.toPrecision(6);
+      }
+      return String(value);
+    }
+
+    function boolClass(value) {
+      return value ? "good" : "bad";
+    }
+
+    function metric(label, value, cls="") {
+      return `
+        <div class="metric">
+          <div class="label">${esc(label)}</div>
+          <div class="value ${cls}">${esc(value)}</div>
+        </div>
+      `;
+    }
+
+    function renderUtil(note) {
+      if (!note) return "";
+
+      return `
+        <div class="card">
+          <h2>Utilization note</h2>
+          <div class="summary-grid">
+            ${metric("Requested memory", note.requested_mem)}
+            ${metric("Requested CPUs", note.requested_cpus)}
+            ${metric("Max RSS GB", Number(note.max_pair_process_rss_gb ?? 0).toFixed(3))}
+            ${metric("Mem use %", note.approx_mem_utilization_percent == null ? "n/a" : Number(note.approx_mem_utilization_percent).toFixed(2) + "%")}
+          </div>
+          <p>${esc(note.recommendation || "")}</p>
+          <div class="mono">${esc(note.note || "")}</div>
+        </div>
+      `;
+    }
+
+    function renderPairSummary(pair) {
+      const s = pair.summary || {};
+      const warnings = s.warnings || [];
+
+      let warnHtml = "";
+      if (warnings.length) {
+        warnHtml = `
+          <details open>
+            <summary>Warnings</summary>
+            <ul>${warnings.map(w => `<li>${esc(w)}</li>`).join("")}</ul>
+          </details>
+        `;
+      }
+
+      return `
+        <div class="card" id="pair-card-${pair.pair_index}">
+          <h2>${esc(pair.label)}</h2>
+          <div class="path">OLD: ${esc(pair.old_run)}</div>
+          <div class="path">NEW: ${esc(pair.new_run)}</div>
+
+          <div class="summary-grid">
+            ${metric("Clean physical match", s.clean_physical_match, boolClass(s.clean_physical_match))}
+            ${metric("INP diffs", s.inp_diff_count ?? "n/a", Number(s.inp_diff_count || 0) === 0 ? "good" : "warn")}
+            ${metric("Physical diffs", s.physical_nonzero_count ?? "n/a", Number(s.physical_nonzero_count || 0) === 0 ? "good" : "bad")}
+            ${metric("Shape mismatches", s.shape_mismatch_count ?? "n/a", Number(s.shape_mismatch_count || 0) === 0 ? "good" : "bad")}
+          </div>
+
+          ${warnHtml}
+
+          <details open>
+            <summary>Nitty-gritty details</summary>
+            <p>Load the full pair JSON to inspect config keys, files, and NetCDF variables side-by-side.</p>
+            <button onclick="loadPairDetail(${pair.pair_index}, '${esc(pair.result_file)}')">Load detailed comparison</button>
+            <div id="pair-detail-${pair.pair_index}" style="margin-top: 14px;"></div>
+          </details>
+
+          <details>
+            <summary>Pair usage</summary>
+            <div class="mono">${esc(JSON.stringify(pair.usage || {}, null, 2))}</div>
+          </details>
+        </div>
+      `;
+    }
+
+    async function loadPairDetail(pairIndex, resultFile) {
+      const target = document.getElementById(`pair-detail-${pairIndex}`);
+
+      if (pairDetails[pairIndex]) {
+        target.innerHTML = renderPairDetail(pairIndex, pairDetails[pairIndex]);
+        return;
+      }
+
+      target.innerHTML = `<p>Loading detailed pair result...</p>`;
+
+      try {
+        const res = await fetch(`/api/compare/pair-result?job_dir=${encodeURIComponent(jobDir)}&file=${encodeURIComponent(resultFile)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to load pair detail.");
+        }
+
+        pairDetails[pairIndex] = data;
+        target.innerHTML = renderPairDetail(pairIndex, data);
+
+      } catch (err) {
+        target.innerHTML = `<div class="error">${esc(err.message)}</div>`;
+      }
+    }
+
+    function renderPairDetail(pairIndex, data) {
+      return `
+        ${renderImportantInp(data)}
+        ${renderInpDiffs(data)}
+        ${renderByteFiles(data)}
+        ${renderNetcdfControls(pairIndex, data)}
+      `;
+    }
+
+    function renderImportantInp(data) {
+      const rows = (data.inp && data.inp.important_rows) || [];
+
+      return `
+        <details open>
+          <summary>Important sfincs.inp keys side-by-side</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Same?</th>
+                  <th>OLD</th>
+                  <th>NEW</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(row => `
+                  <tr>
+                    <td><code>${esc(row.key)}</code></td>
+                    <td class="${row.same ? "good" : "bad"}">${esc(row.same)}</td>
+                    <td>${esc(row.old)}</td>
+                    <td>${esc(row.new)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      `;
+    }
+
+    function renderInpDiffs(data) {
+      const diffs = (data.inp && data.inp.diffs) || [];
+
+      if (!diffs.length) {
+        return `
+          <details>
+            <summary>All sfincs.inp diffs</summary>
+            <p class="good">No meaningful key/value differences after normalization.</p>
+          </details>
+        `;
+      }
+
+      return `
+        <details>
+          <summary>All sfincs.inp diffs (${diffs.length})</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Important?</th>
+                  <th>OLD</th>
+                  <th>NEW</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${diffs.map(row => `
+                  <tr>
+                    <td><code>${esc(row.key)}</code></td>
+                    <td>${esc(row.important)}</td>
+                    <td>${esc(row.old)}</td>
+                    <td>${esc(row.new)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      `;
+    }
+
+    function renderByteFiles(data) {
+      const rows = data.byte_files || [];
+
+      return `
+        <details>
+          <summary>File existence / size / byte identity</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>File</th>
+                  <th>OLD exists</th>
+                  <th>NEW exists</th>
+                  <th>OLD size</th>
+                  <th>NEW size</th>
+                  <th>Byte-identical</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(row => `
+                  <tr>
+                    <td><code>${esc(row.file)}</code></td>
+                    <td>${esc(row.old_exists)}</td>
+                    <td>${esc(row.new_exists)}</td>
+                    <td>${esc(row.old_size)}</td>
+                    <td>${esc(row.new_size)}</td>
+                    <td class="${row.byte_identical === true ? "good" : row.byte_identical === false ? "warn" : ""}">${esc(row.byte_identical)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      `;
+    }
+
+    function allVariables(data) {
+      const out = [];
+
+      for (const [file, nc] of Object.entries(data.netcdf || {})) {
+        for (const row of (nc.variables || [])) {
+          out.push({file, ...row});
+        }
+      }
+
+      return out;
+    }
+
+    function renderNetcdfControls(pairIndex, data) {
+      const vars = allVariables(data);
+      const options = vars.map((v, i) => {
+        const label = `${v.file} · ${v.name}`;
+        return `<option value="${i}">${esc(label)}</option>`;
+      }).join("");
+
+      return `
+        <details open>
+          <summary>NetCDF variable comparison</summary>
+          <p>
+            These are the actual numeric comparison rows from the pair result. 
+            Mean absolute difference is the closest current metric to “average flood height difference” for water variables.
+          </p>
+
+          <div class="control-row">
+            <select id="varSelect-${pairIndex}" onchange="showVariableDetail(${pairIndex})">
+              <option value="">Select a variable...</option>
+              ${options}
+            </select>
+          </div>
+
+          <div id="varDetail-${pairIndex}" class="mono">Select a variable to inspect its metrics.</div>
+
+          ${renderNetcdfFileTables(data)}
+        </details>
+      `;
+    }
+
+    function showVariableDetail(pairIndex) {
+      const data = pairDetails[pairIndex];
+      const vars = allVariables(data);
+      const select = document.getElementById(`varSelect-${pairIndex}`);
+      const target = document.getElementById(`varDetail-${pairIndex}`);
+      const idx = select.value;
+
+      if (idx === "") {
+        target.textContent = "Select a variable to inspect its metrics.";
+        return;
+      }
+
+      const v = vars[Number(idx)];
+      target.textContent =
+        `file: ${v.file}\n` +
+        `variable: ${v.name}\n` +
+        `category: ${v.category}\n` +
+        `units: ${v.units}\n` +
+        `shape: ${JSON.stringify(v.shape)}\n` +
+        `finite_overlap: ${v.finite_overlap}\n` +
+        `max_abs: ${fmt(v.max_abs)}\n` +
+        `mean_abs: ${fmt(v.mean_abs)}\n` +
+        `rmse: ${fmt(v.rmse)}\n` +
+        `p95: ${fmt(v.p95)}\n` +
+        `p99: ${fmt(v.p99)}\n` +
+        `max_mm: ${fmt(v.max_mm)}\n` +
+        `mean_mm: ${fmt(v.mean_mm)}\n` +
+        `rmse_mm: ${fmt(v.rmse_mm)}\n` +
+        `p95_mm: ${fmt(v.p95_mm)}\n` +
+        `p99_mm: ${fmt(v.p99_mm)}\n` +
+        `meter_like: ${v.meter_like}\n` +
+        `rain_like: ${v.rain_like}\n` +
+        `percentiles_approx: ${v.percentiles_approx}`;
+    }
+
+    function renderNetcdfFileTables(data) {
+      let html = "";
+
+      for (const [file, nc] of Object.entries(data.netcdf || {})) {
+        const rows = nc.variables || [];
+        const skipped = nc.skipped_numeric || [];
+        const onlyOld = nc.only_old || [];
+        const onlyNew = nc.only_new || [];
+
+        html += `
+          <details>
+            <summary>${esc(file)} (${rows.length} compared variable rows)</summary>
+
+            <div class="summary-grid">
+              ${metric("OLD exists", nc.old_exists)}
+              ${metric("NEW exists", nc.new_exists)}
+              ${metric("Only OLD", onlyOld.length)}
+              ${metric("Only NEW", onlyNew.length)}
+            </div>
+
+            ${onlyOld.length ? `<p>Only in OLD: <span class="path">${esc(onlyOld.join(", "))}</span></p>` : ""}
+            ${onlyNew.length ? `<p>Only in NEW: <span class="path">${esc(onlyNew.join(", "))}</span></p>` : ""}
+            ${skipped.length ? `<p>Skipped numeric variables: <span class="path">${esc(skipped.join(", "))}</span></p>` : ""}
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th>Category</th>
+                    <th>Units</th>
+                    <th>Shape</th>
+                    <th>Max abs</th>
+                    <th>Mean abs</th>
+                    <th>RMSE</th>
+                    <th>p95</th>
+                    <th>p99</th>
+                    <th>Max mm</th>
+                    <th>Mean mm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows.map(row => `
+                    <tr>
+                      <td><code>${esc(row.name)}</code></td>
+                      <td>${esc(row.category)}</td>
+                      <td>${esc(row.units)}</td>
+                      <td>${esc(JSON.stringify(row.shape || row.old_shape || ""))}</td>
+                      <td>${esc(fmt(row.max_abs))}</td>
+                      <td>${esc(fmt(row.mean_abs))}</td>
+                      <td>${esc(fmt(row.rmse))}</td>
+                      <td>${esc(fmt(row.p95))}</td>
+                      <td>${esc(fmt(row.p99))}</td>
+                      <td>${esc(fmt(row.max_mm))}</td>
+                      <td>${esc(fmt(row.mean_mm))}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        `;
+      }
+
+      return html;
+    }
+
+    async function loadResult() {
+      const content = document.getElementById("content");
+
+      if (!jobDir) {
+        content.innerHTML = `<div class="error">Missing job_dir.</div>`;
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/compare/result?job_dir=${encodeURIComponent(jobDir)}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to load result.");
+        }
+
+        document.getElementById("subtitle").textContent =
+          `${data.level} compare · ${data.pairs.length} pair(s)`;
+
+        content.innerHTML = `
+          <div class="card">
+            <h2>Job summary</h2>
+            <div class="summary-grid">
+              ${metric("Level", data.level)}
+              ${metric("Pairs", data.pairs.length)}
+              ${metric("Mode", data.comparison_mode)}
+              ${metric("Status", data.status, data.status === "done" ? "good" : "warn")}
+            </div>
+            <p>Baseline:</p>
+            <div class="path">${esc(data.baseline)}</div>
+            <p>Job folder:</p>
+            <div class="path">${esc(jobDir)}</div>
+          </div>
+
+          ${renderUtil(data.utilization_note)}
+
+          <div class="card future">
+            <h2>Reserved future visual layer</h2>
+            <p>
+              Later this result page can add timestep-based difference heatmaps,
+              a timestep interval selector, and a map/satellite overlay.
+            </p>
+          </div>
+
+          ${(data.pairs || []).map(renderPairSummary).join("")}
+        `;
+
+      } catch (err) {
+        content.innerHTML = `<div class="error">${esc(err.message)}</div>`;
+      }
+    }
+
+    loadResult();
+  </script>
+  <a class="help-button" href="guide.html" title="Open launcher guide">?</a>
+</body>
+</html>

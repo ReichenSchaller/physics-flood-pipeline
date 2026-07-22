@@ -1,0 +1,97 @@
+=== HYDROMT YAML STATE AUDIT ===
+timestamp: 20260612_183824
+catalog_root: /proj/zefflab/projects/Flooding/Data/harris_county/catalogs
+pipeline_backups: /proj/zefflab/projects/Flooding/pipeline/_manual_backups
+report: /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/hydromt_yaml_state_audit_20260612_183824.txt
+
+=== SUMMARY ===
+all YAML/README-like files under catalog root: 26
+active hydromt_data.yml/yaml files, excluding backups: 3
+README_HYDROMT marker files under catalog root: 17
+backup-like YAML files under catalog root: 2
+YAML files under pipeline _manual_backups: 0
+
+Active hydromt catalog status counts:
+  BAD_LEGACY: 1
+  META_ONLY: 2
+  MODERNISH: 0
+  UNKNOWN_SHAPE: 0
+
+Backup/quarantine status counts, including catalog-root backups and pipeline backups:
+  OTHER: 2
+
+=== ACTIVE BAD/LEGACY HYDROMT YAMLS ===
+- _retired_active_hydromt_yamls_20260612_183817/static/harris_county_ppp/hydromt_data.yml
+  size=5370 sha12=f0a93a855cca bad=windows_Z_path,windows_drive_path,old_path_field,old_filesystem_field,old_scalar_driver_raster
+  top_keys=['galveston_bay', 'gcn250', 'harvey_bc_discharge', 'harvey_bc_waterlevel', 'hcfcd_bathy', 'hcfcd_dams', 'houston_domain', 'houston_outflow_bc', 'houston_wl_bc', 'mrms_tc_harvey', 'ned_10m_houston', 'ned_2m_houston', 'nlcd_2016', 'nlcd_mapping_mean']
+
+=== ACTIVE META-ONLY HYDROMT YAMLS ===
+- _retired_active_hydromt_yamls_20260612_183817/events/harvey_2017_mrms/event_metadata/hydromt_data.yml
+  size=290 sha12=7b6bc61d70e6 top_keys=['meta']
+- _retired_active_hydromt_yamls_20260612_183817/static/harris_county/static_metadata/hydromt_data.yml
+  size=290 sha12=7b6bc61d70e6 top_keys=['meta']
+
+=== ACTIVE MODERN-ISH HYDROMT YAMLS ===
+None.
+
+=== ACTIVE UNKNOWN-SHAPE HYDROMT YAMLS ===
+None.
+
+=== README MARKERS ===
+- events/beryl_2024/event_pressure/README_HYDROMT_DATA_CATALOGS.md
+- events/beryl_2024/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- events/flood_2009_04/event_pressure/README_HYDROMT_DATA_CATALOGS.md
+- events/harvey_2017/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- events/harvey_2017_full/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- events/harvey_2017_mrms/_manifests/boundary_table_audit/README_HYDROMT_DATA_CATALOGS.md
+- events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/review_figures/README_HYDROMT_DATA_CATALOGS.md
+- events/harvey_2017_ppe/restarts/README_HYDROMT_DATA_CATALOGS.md
+- events/imelda_2019/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- events_reduced/beryl_2024/event_pressure/README_HYDROMT_DATA_CATALOGS.md
+- events_reduced/beryl_2024/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- events_reduced/harvey_2017/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- events_reduced/harvey_2017_full/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- events_reduced/imelda_2019/event_wind/README_HYDROMT_DATA_CATALOGS.md
+- static/harris_county/bathy/README_HYDROMT_DATA_CATALOGS.md
+- static/harris_county/boundary_points_static/README_HYDROMT_DATA_CATALOGS.md
+- static/harris_county/curve_number/README_HYDROMT_DATA_CATALOGS.md
+
+=== BACKUP-LIKE YAML FILES UNDER CATALOG ROOT ===
+- _yaml_backups/hydromt_yaml_backup_20260612_181807/event_hydromt_data_old.yml
+  status=OTHER size=290 sha12=7b6bc61d70e6 bad=
+- _yaml_backups/hydromt_yaml_backup_20260612_181807/static_hydromt_data_old.yml
+  status=OTHER size=290 sha12=7b6bc61d70e6 bad=
+
+=== PIPELINE MANUAL BACKUP YAMLS ===
+None.
+
+=== DUPLICATE YAML CONTENT GROUPS ===
+sha12=55388e716b52 count=17
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/beryl_2024/event_pressure/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/beryl_2024/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/flood_2009_04/event_pressure/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_full/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/_manifests/boundary_table_audit/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/review_figures/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_ppe/restarts/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/imelda_2019/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced/beryl_2024/event_pressure/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced/beryl_2024/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced/harvey_2017/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced/harvey_2017_full/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced/imelda_2019/event_wind/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/bathy/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/boundary_points_static/README_HYDROMT_DATA_CATALOGS.md
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/curve_number/README_HYDROMT_DATA_CATALOGS.md
+sha12=7b6bc61d70e6 count=4
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/_retired_active_hydromt_yamls_20260612_183817/events/harvey_2017_mrms/event_metadata/hydromt_data.yml
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/_retired_active_hydromt_yamls_20260612_183817/static/harris_county/static_metadata/hydromt_data.yml
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/_yaml_backups/hydromt_yaml_backup_20260612_181807/event_hydromt_data_old.yml
+  - /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/_yaml_backups/hydromt_yaml_backup_20260612_181807/static_hydromt_data_old.yml
+
+=== RECOMMENDATION ===
+ACTION NEEDED: active bad legacy hydromt_data YAMLs still exist outside backup folders.
+
+Generated run-local HydroMT catalogs should appear under:
+  /proj/zefflab/projects/Flooding/sfincs_runs/<run_name>/generated_hydromt_catalog.yml

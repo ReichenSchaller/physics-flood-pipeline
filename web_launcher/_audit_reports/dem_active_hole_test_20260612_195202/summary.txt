@@ -1,0 +1,16 @@
+DEM: /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif
+MSK: /proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp/gis/msk.tif
+DEM shape: 20240 x 19940
+MSK shape: 1012 x 997
+DEM pixels per mask cell: 20 x 20
+active mask cells: 568104
+active DEM pixels checked: 227241600
+active DEM NaN/NoData pixels: 0
+active DEM NaN/NoData pct: 0.00000000
+active cells with ANY DEM NaN: 0
+active cells with PARTIAL DEM NaN: 0
+active cells with ALL DEM NaN: 0
+active all-NaN cells surrounded by 8 active cells: 0
+active cells surrounded by 8 all-NaN neighbor cells: 0
+connected components of active cells with any NaN: 0
+connected components of active cells with all NaN: 0
