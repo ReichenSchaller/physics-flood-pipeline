@@ -82,56 +82,9 @@ already belongs in the Python backend.
 The Python Backend is region 2 in the system architecture. It begins with a
 JSON run configuration and the selected data catalogs, then validates and
 prepares the run before handing the generated job scripts to the Slurm
-Execution Stack.
+Execution Stack. The main progression is highlighted in red.
 
 [![Python Backend architecture](../../assets/architecture/python_backend.svg)](../../assets/architecture/python_backend.svg)
-
-The diagram focuses only on the normal model-run path:
-
-```text
-JSON run configuration
-        ↓
-pipeline_runner.py
-        ↓
-runner_core.py and config_schema.py
-        ↓
-frozen run_config.json
-        ↓
-slurm_tools.py
-        ↓
-three-stage Slurm execution stack
-
-The central execution path is:
-
-```text
-pipeline_runner.py
-        |
-        +-- runner_core.py
-        |       |
-        |       +-- config_schema.py
-        |       +-- validation
-        |       +-- path resolution
-        |       +-- run setup
-        |
-        +-- slurm_tools.py
-                |
-                +-- preprocessing script
-                +-- SFINCS script
-                +-- postprocessing script
-                +-- sbatch submission
-```
-
-The Slurm scripts then execute:
-
-```text
-preprocess_stage.py
-        |
-        v
-SFINCS container
-        |
-        v
-postprocess_stage.py
-```
 
 ---
 
