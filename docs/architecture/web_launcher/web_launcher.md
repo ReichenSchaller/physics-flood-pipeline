@@ -4,9 +4,10 @@ The SFINCS Web Launcher is the browser-facing control layer for the flood-modeli
 
 The launcher does **not** replace the pipeline runner, construct the full SFINCS model by itself, or decide whether a completed simulation is scientifically valid. Its main responsibility is orchestration: it connects browser pages to safe Flask endpoints, translates page state into backend inputs, and presents the results returned by the pipeline, Compare, and Review tools.
 
+The diagram illustrates the rough file layout with a typical progression for a manual run highlighted in red (that is, how it proceeds through the backend, not what the user sees). The only thing missing is the fact that `app.py` actually connects through itself each file to every other file and as such would represent a large central piece in the spider web. (This was not included for clarity.) Consult `page_api_map.md` for a more indepth map of how `app.py` connects each piece.
+
 [![Web Launcher architecture](../../assets/architecture/web_launcher.svg)](../../assets/architecture/web_launcher.svg)
 
-> The diagram above is intended to show component ownership and handoffs. The Mermaid draft later on this page can be used as a structural starting point when rebuilding the final SVG in PowerPoint.
 
 ---
 
@@ -92,6 +93,13 @@ web_launcher/
 ```
 
 The HTML pages are rendered through Flask, while JavaScript files under `static/` are served through Flask's static-file support.
+
+<p style="color: #c62828; font-weight: 700;">
+  Warning: Increase the memory assigned to your Longleaf browser session to at least 16 GB before using the Web Launcher. Lower-memory sessions may terminate with an out-of-memory error. A higher-memory launch configuration is recommended for reliable use; for example:
+</p>
+
+<pre><code>--mem=64G --ntasks=1 --cpus-per-task=4</code></pre>
+
 
 ---
 
@@ -1069,107 +1077,7 @@ These are maintainability concerns, not immediate evidence that the current runt
 
 ---
 
-## Mermaid draft
 
-This draft intentionally uses a small number of nodes and simple left-to-right flow. It may render directly, but its main purpose is to provide the structure for the PowerPoint-built SVG.
-
-```mermaid
-flowchart LR
-    U[User in Longleaf browser]
-
-    subgraph WEB[Web Launcher]
-        HOME[index.html]
-        MODES[Manual and Override]
-        COMPARE[Compare pages]
-        REVIEW[Review page]
-        SHARED[Shared JavaScript]
-    end
-
-    subgraph FLASK[Flask application]
-        APP[app.py]
-        SETTINGS[Settings and safe paths]
-        DETECT[Catalog and native file detection]
-        RUNAPI[Run bridge]
-        COMPAPI[Compare bridge]
-        REVAPI[Review bridge]
-    end
-
-    DEFAULTS[(launcher_site_defaults.json)]
-    INPUTS[(Catalogs and native SFINCS files)]
-    RUNNER[pipeline_runner.py]
-    COMPMGR[compare_job_manager.py]
-    REVHELP[Review helper scripts]
-    SLURM[Slurm]
-    RUNS[(Run root)]
-
-    U --> HOME
-    HOME --> MODES
-    HOME --> COMPARE
-    HOME --> REVIEW
-
-    MODES --> SHARED
-    COMPARE --> SHARED
-    REVIEW --> SHARED
-    SHARED --> APP
-
-    DEFAULTS <--> SETTINGS
-    APP --> SETTINGS
-    APP --> DETECT
-    APP --> RUNAPI
-    APP --> COMPAPI
-    APP --> REVAPI
-
-    INPUTS --> DETECT
-    DETECT --> MODES
-
-    RUNAPI --> RUNNER
-    RUNNER --> SLURM
-    SLURM --> RUNS
-
-    COMPAPI --> COMPMGR
-    COMPMGR --> SLURM
-    COMPMGR --> RUNS
-
-    REVAPI --> REVHELP
-    REVHELP --> SLURM
-    REVHELP --> RUNS
-    RUNS --> REVIEW
-```
-
----
-
-## PowerPoint rebuild notes
-
-For the final `web_launcher.svg`, preserve the color language used by the whole-system architecture:
-
-```text
-green
-    browser pages and shared frontend behavior
-
-blue
-    Flask, Settings, safe-path layer, and backend-facing APIs
-
-orange
-    pipeline runner, Compare submission, Review submission, and Slurm handoff
-
-purple
-    run folders, Compare reports, Review products, and displayed results
-```
-
-A clear PowerPoint layout would use four horizontal regions:
-
-```text
-1. User-facing pages
-2. Shared browser and Flask control layer
-3. Backend helper branches
-4. Persistent outputs and Review feedback
-```
-
-Keep `pipeline_runner.py`, `compare_job_manager.py`, and the Review helpers as three separate outgoing branches from `app.py`. That separation is the main architectural idea the diagram should communicate.
-
-Do not put every API endpoint or every Review helper into the SVG. The endpoint tables on this page account for those details. The diagram should remain a narrative map rather than a source-code call graph.
-
----
 
 ## Related source files
 
