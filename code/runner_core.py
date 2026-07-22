@@ -1,0 +1,703 @@
+"""
+Author: Reichen Schaller
+Core config loading, validation, run-folder preparation, and summaries for the
+SFINCS pipeline runner.
+
+This file is deliberately the "middle" of the backend:
+- no HTML/UI code
+- no direct SFINCS model logic
+- no Slurm script text except calls into slurm_tools.py
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import re
+import shutil
+import sys
+from copy import deepcopy
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from config_schema import (
+    DEFAULT_STATIC_PPP_DIR,
+    HYBRID_ALWAYS_REQUIRED_EVENT_FILES,
+    HYBRID_FORCING_EVENT_FILES,
+    HYBRID_STATIC_REQUIRED_FILES,
+    PIPELINE_MODE_BY_RUNNER_MODE,
+    SFINCS_CONTAINER_FILENAME,
+    VALID_DEPENDENCY_TYPES,
+    VALID_PIPELINE_MODES,
+    VALID_PREPROCESS_MODES,
+)
+
+
+def print_section(title: str) -> None:
+    print("\n" + "=" * 78)
+    print(title)
+    print("=" * 78)
+
+
+def json_safe(obj: Any) -> Any:
+    """Convert common Python objects into JSON-safe values."""
+    if isinstance(obj, Path):
+        return str(obj)
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    if isinstance(obj, dict):
+        return {str(k): json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [json_safe(v) for v in obj]
+    if isinstance(obj, tuple):
+        return [json_safe(v) for v in obj]
+    return obj
+
+
+def shell_quote(value: Any) -> str:
+    """Single-quote shell values safely."""
+    s = str(value)
+    return "'" + s.replace("'", "'\"'\"'") + "'"
+
+
+def command_exists(command: str) -> bool:
+    return shutil.which(command) is not None
+
+
+def load_config_json(config_path: Path) -> dict[str, Any]:
+    """Load a user config JSON file."""
+    config_path = config_path.expanduser().resolve()
+    with config_path.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    if not isinstance(data, dict):
+        raise TypeError(f"Config JSON must contain an object/dict at top level: {config_path}")
+
+    data["_source_config_path"] = str(config_path)
+    return data
+
+
+def apply_defaults(user_cfg: dict[str, Any], defaults: dict[str, Any]) -> dict[str, Any]:
+    """Merge defaults with user config. User config wins."""
+    cfg = deepcopy(defaults)
+    cfg.update(user_cfg)
+    return cfg
+
+
+def apply_cli_overrides(cfg: dict[str, Any], overrides: dict[str, Any]) -> dict[str, Any]:
+    """Apply --set key=value overrides after config load/defaults."""
+    out = deepcopy(cfg)
+    out.update(overrides)
+    return out
+
+
+def set_pipeline_mode_from_runner_mode(cfg: dict[str, Any], runner_mode: str) -> dict[str, Any]:
+    out = deepcopy(cfg)
+    out["pipeline_mode"] = PIPELINE_MODE_BY_RUNNER_MODE[runner_mode]
+    return out
+
+
+def resolve_runtime_paths(cfg: dict[str, Any], pipeline_root: Path) -> dict[str, Any]:
+    """Resolve runtime paths without hiding explicit user choices.
+
+    Rules:
+    - Blank runtime paths get filled from the current /proj pipeline bundle.
+    - Old legacy /users/e/p/epsilon/sfincs_project paths get refreshed to the
+      current /proj pipeline bundle when prefer_pipeline_bundle_runtime_paths=True.
+    - Explicit non-legacy paths are preserved so preflight can validate them.
+      This keeps Manual/Override backend-path fields honest.
+    """
+    out = deepcopy(cfg)
+    code_dir = pipeline_root / "code"
+    old_personal_root = "/users/e/p/epsilon/sfincs_project"
+
+    def is_blank(value: Any) -> bool:
+        return value is None or str(value).strip() == ""
+
+    def is_old_personal_path(value: Any) -> bool:
+        return str(value or "").startswith(old_personal_root)
+
+    def should_refresh_bundle_path(key: str) -> bool:
+        value = out.get(key)
+        return is_blank(value) or is_old_personal_path(value)
+
+    prefer_bundle = bool(out.get("prefer_pipeline_bundle_runtime_paths", True))
+
+    bundle_project_root = pipeline_root
+    bundle_preprocess = code_dir / "preprocess_stage.py"
+    bundle_postprocess = code_dir / "postprocess_stage.py"
+    bundle_container = pipeline_root / "containers" / SFINCS_CONTAINER_FILENAME
+    bundle_python = pipeline_root / "envs" / "sfincs" / "bin" / "python"
+    bundle_env = bundle_python.parent.parent
+
+    if prefer_bundle:
+        if should_refresh_bundle_path("project_root"):
+            out["project_root"] = str(bundle_project_root)
+
+        if should_refresh_bundle_path("preprocess_stage_script"):
+            out["preprocess_stage_script"] = str(bundle_preprocess)
+
+        if should_refresh_bundle_path("postprocess_stage_script"):
+            out["postprocess_stage_script"] = str(bundle_postprocess)
+
+        if should_refresh_bundle_path("sfincs_container_path"):
+            out["sfincs_container_path"] = str(bundle_container)
+
+        if bundle_python.exists() and should_refresh_bundle_path("conda_python"):
+            out["conda_python"] = str(bundle_python)
+
+        if bundle_python.exists() and should_refresh_bundle_path("conda_env_path"):
+            out["conda_env_path"] = str(bundle_env)
+
+    # If conda_python is blank but conda_env_path is explicitly set, derive python from that env.
+    if is_blank(out.get("conda_python")) and not is_blank(out.get("conda_env_path")):
+        out["conda_python"] = str(Path(str(out["conda_env_path"])) / "bin" / "python")
+
+    # If conda_env_path is blank but conda_python is set, derive env path from python path.
+    if is_blank(out.get("conda_env_path")) and not is_blank(out.get("conda_python")):
+        out["conda_env_path"] = str(Path(str(out["conda_python"])).parent.parent)
+
+    # Keep the known-good personal Python only if no conda_python is available at all.
+    if is_blank(out.get("conda_python")):
+        out["conda_python"] = "/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python"
+        out["conda_env_path"] = "/users/e/p/epsilon/sfincs_project/envs/sfincs"
+
+    # If a hybrid config has no static dir, use current Harris PPP default.
+    if out.get("preprocess_mode") == "hybrid" and not out.get("native_static_sfincs_input_dirs"):
+        out["native_static_sfincs_input_dirs"] = [DEFAULT_STATIC_PPP_DIR]
+
+    return out
+
+
+def run_paths(cfg: dict[str, Any]) -> dict[str, Path]:
+    output_root = Path(str(cfg["output_root"])).expanduser()
+    run_root = output_root / str(cfg["run_name"])
+    return {
+        "run_root": run_root,
+        "model_root": run_root / "model",
+        "scripts_root": run_root / "scripts",
+        "logs_root": run_root / "logs",
+        "postprocess_root": run_root / "postprocess",
+        "config_json_path": run_root / "run_config.json",
+        "job_ids_path": run_root / "job_ids.txt",
+        "preprocess_slurm_path": run_root / "scripts" / "preprocess_job.sl",
+        "sfincs_slurm_path": run_root / "scripts" / "sfincs_job.sl",
+        "postprocess_slurm_path": run_root / "scripts" / "postprocess_job.sl",
+    }
+
+
+def validate_run_name(run_name: str) -> None:
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+", run_name):
+        raise ValueError(
+            "run_name should only contain letters, numbers, underscores, dashes, or periods.\n"
+            f"Bad run_name: {run_name!r}"
+        )
+
+
+def _as_path_list(value: Any) -> list[Path]:
+    if value is None:
+        return []
+    if isinstance(value, (str, Path)):
+        return [Path(str(value))]
+    if isinstance(value, list):
+        return [Path(str(v)) for v in value if str(v).strip()]
+    raise TypeError(f"Expected path/list of paths, got {type(value).__name__}: {value!r}")
+
+
+def _check_path(path: Path, label: str, required: bool, failures: list[str]) -> None:
+    if path.exists():
+        print(f"FOUND: {label}: {path}")
+        return
+
+    msg = f"MISSING {'REQUIRED' if required else 'OPTIONAL'}: {label}: {path}"
+    print(msg)
+    if required:
+        failures.append(msg)
+
+
+def _check_existing_run_folder(cfg: dict[str, Any], runner_mode: str, failures: list[str]) -> None:
+    paths = run_paths(cfg)
+    run_root = paths["run_root"]
+    overwrite = bool(cfg.get("overwrite_existing_run", False))
+    run_state = inspect_run_root_for_scaffold(run_root)
+
+    if not run_state["exists"]:
+        return
+
+    if overwrite:
+        print(f"WARNING: run folder exists and overwrite_existing_run=True: {run_root}")
+        return
+
+    if not run_state["has_real_run"]:
+        print(
+            "NOTE: run folder exists but only contains allowed "
+            f"saved-config/build-script scaffold; continuing: {run_root}"
+        )
+        return
+
+    examples = "\n".join(
+        f"  - {p}" for p in run_state["artifact_paths"][:10]
+    )
+
+    msg = (
+        "RUN FOLDER EXISTS and appears to contain real run artifacts, "
+        "not just saved-config/build-script scaffold.\n"
+        f"Run folder: {run_root}\n"
+        "Use a new run_name, or set overwrite_existing_run=True only if intentional.\n"
+        f"Example artifacts:\n{examples}"
+    )
+
+    if runner_mode == "preflight":
+        print("WARNING: " + msg)
+    else:
+        failures.append(msg)
+        print("MISSING REQUIRED: " + msg)
+
+def _validate_hybrid_inputs(cfg: dict[str, Any], failures: list[str]) -> None:
+    print("\nHybrid input checks:")
+
+    data_catalogs = cfg.get("data_catalogs") or []
+    if not data_catalogs:
+        failures.append("MISSING REQUIRED: data_catalogs is empty for hybrid mode")
+        print("MISSING REQUIRED: data_catalogs is empty for hybrid mode")
+    else:
+        event_catalog = Path(str(data_catalogs[0]))
+        _check_path(event_catalog, "HYBRID EVENT CATALOG DIR = data_catalogs[0]", True, failures)
+
+        if event_catalog.exists():
+            for rel in HYBRID_ALWAYS_REQUIRED_EVENT_FILES:
+                _check_path(event_catalog / rel, f"HYBRID EVENT FILE {rel}", True, failures)
+
+            for toggle, rels in HYBRID_FORCING_EVENT_FILES.items():
+                if bool(cfg.get(toggle, False)):
+                    for rel in rels:
+                        _check_path(event_catalog / rel, f"HYBRID EVENT FILE {rel}", True, failures)
+                else:
+                    print(f"SKIP: {toggle}=False, not requiring {rels}")
+
+    static_dirs = _as_path_list(cfg.get("native_static_sfincs_input_dirs"))
+    if not static_dirs:
+        failures.append("MISSING REQUIRED: native_static_sfincs_input_dirs is empty for hybrid mode")
+        print("MISSING REQUIRED: native_static_sfincs_input_dirs is empty for hybrid mode")
+    else:
+        static_dir = static_dirs[0]
+        _check_path(static_dir, "HYBRID STATIC PPP DIR", True, failures)
+
+        if static_dir.exists():
+            for rel in HYBRID_STATIC_REQUIRED_FILES:
+                _check_path(static_dir / rel, f"HYBRID STATIC FILE {rel}", True, failures)
+
+
+def _validate_hydromt_or_native_inputs(cfg: dict[str, Any], failures: list[str]) -> None:
+    preprocess_mode = cfg.get("preprocess_mode")
+    if preprocess_mode == "hydromt_build":
+        print("\nHydroMT-build input checks:")
+        region_mode = cfg.get("region_mode")
+        if region_mode == "geom":
+            region_path = cfg.get("region_path")
+            if region_path:
+                _check_path(Path(str(region_path)), "REGION_PATH", True, failures)
+            elif not cfg.get("allow_missing_model_inputs", False):
+                failures.append("MISSING REQUIRED: region_path is blank for hydromt_build geom mode")
+        elif region_mode == "bbox":
+            if cfg.get("region_bbox") is None and not cfg.get("allow_missing_model_inputs", False):
+                failures.append("MISSING REQUIRED: region_bbox is None for hydromt_build bbox mode")
+        else:
+            failures.append(f"UNKNOWN region_mode for hydromt_build: {region_mode!r}")
+    elif preprocess_mode == "native_sfincs_assembly":
+        print("\nNative assembly input checks:")
+        print("NOTE: first runner pass does not deeply validate native assembly overrides yet.")
+    elif preprocess_mode == "hybrid":
+        _validate_hybrid_inputs(cfg, failures)
+
+def inspect_run_root_for_scaffold(run_root: Path) -> dict[str, Any]:
+    """
+    Classify an existing run folder.
+
+    Allowed scaffold/progress:
+      - run_config.json
+      - saved_config.json
+      - launcher_config.json
+      - scripts/*.sl or scripts/*.sh
+      - empty logs/
+      - empty model/
+      - empty postprocess/
+
+    Real run artifacts:
+      - job_ids.txt
+      - preprocess_failed.json / postprocess_failed.json
+      - any model files
+      - any logs
+      - any postprocess outputs
+      - unknown top-level files/folders
+    """
+    if not run_root.exists():
+        return {
+            "exists": False,
+            "has_real_run": False,
+            "allowed_scaffold_paths": [],
+            "artifact_paths": [],
+        }
+
+    if not run_root.is_dir():
+        return {
+            "exists": True,
+            "has_real_run": True,
+            "allowed_scaffold_paths": [],
+            "artifact_paths": [str(run_root)],
+        }
+
+    allowed_scaffold_paths = []
+    artifact_paths = []
+
+    allowed_top_files = {
+        "run_config.json",
+        "saved_config.json",
+        "launcher_config.json",
+    }
+
+    allowed_top_dirs = {
+        "scripts",
+        "logs",
+        "model",
+        "postprocess",
+    }
+
+    allowed_script_suffixes = {".sl", ".sh"}
+
+    for child in run_root.iterdir():
+        name = child.name
+
+        if name.startswith("."):
+            continue
+
+        if child.is_file() and name in allowed_top_files:
+            allowed_scaffold_paths.append(str(child))
+            continue
+
+        if child.is_file():
+            artifact_paths.append(str(child))
+            continue
+
+        if child.is_dir() and name not in allowed_top_dirs:
+            artifact_paths.append(str(child))
+            continue
+
+        if child.is_dir() and name == "scripts":
+            bad_script_contents = []
+
+            for p in child.rglob("*"):
+                if p.name.startswith("."):
+                    continue
+
+                if p.is_file() and p.suffix in allowed_script_suffixes:
+                    allowed_scaffold_paths.append(str(p))
+                elif p.is_file():
+                    bad_script_contents.append(str(p))
+
+            if bad_script_contents:
+                artifact_paths.extend(bad_script_contents[:10])
+            else:
+                allowed_scaffold_paths.append(str(child))
+
+            continue
+
+        if child.is_dir() and name in {"logs", "model", "postprocess"}:
+            visible_files = [
+                p for p in child.rglob("*")
+                if p.is_file() and not p.name.startswith(".")
+            ]
+
+            if visible_files:
+                artifact_paths.extend(str(p) for p in visible_files[:10])
+            else:
+                allowed_scaffold_paths.append(str(child))
+
+            continue
+
+    return {
+        "exists": True,
+        "has_real_run": bool(artifact_paths),
+        "allowed_scaffold_paths": allowed_scaffold_paths,
+        "artifact_paths": artifact_paths,
+    }
+
+
+def validate_schema_hardening(cfg: dict[str, Any]) -> list[str]:
+    """Print non-fatal schema warnings and return fatal schema failures."""
+    failures: list[str] = []
+
+    try:
+        from config_schema import schema_type_warnings, unknown_config_keys
+    except Exception as exc:
+        print(f"SCHEMA WARNING: unable to import schema metadata checks: {exc}")
+        return failures
+
+    pipeline_root = Path(cfg.get("project_root", "/proj/zefflab/projects/Flooding/pipeline"))
+
+    unknown = unknown_config_keys(cfg, pipeline_root)
+    if unknown:
+        print()
+        print("Schema unknown-key check:")
+        print(f"UNKNOWN CONFIG KEYS: {len(unknown)}")
+        for key in unknown:
+            print(f"  - {key}")
+
+        if bool(cfg.get("strict_schema_validation", False)):
+            failures.append(f"Unknown config keys present: {', '.join(unknown)}")
+        elif bool(cfg.get("warn_unknown_config_keys", True)):
+            print("WARNING: unknown config keys were found, but strict_schema_validation=False so this is non-fatal.")
+    elif bool(cfg.get("warn_unknown_config_keys", True)):
+        print("Schema unknown-key check: no unknown config keys found.")
+
+    if bool(cfg.get("warn_schema_type_mismatches", True)):
+        warnings = schema_type_warnings(cfg)
+        if warnings:
+            print()
+            print("Schema type check warnings:")
+            for warning in warnings:
+                print(warning)
+
+            if bool(cfg.get("strict_schema_validation", False)):
+                failures.extend(warnings)
+        else:
+            print("Schema type check: no obvious type mismatches found.")
+
+    return failures
+
+
+def validate_config(cfg: dict[str, Any], runner_mode: str) -> None:
+    """Validate config values and paths. Raises on failure."""
+    print_section("VALIDATION")
+
+    failures: list[str] = []
+    failures.extend(validate_schema_hardening(cfg))
+
+
+    validate_run_name(str(cfg.get("run_name", "")))
+
+    preprocess_mode = cfg.get("preprocess_mode")
+    if preprocess_mode not in VALID_PREPROCESS_MODES:
+        failures.append(f"preprocess_mode must be one of {sorted(VALID_PREPROCESS_MODES)}, got {preprocess_mode!r}")
+    
+    if bool(cfg.get("use_sfincs_file_overrides", False)) and preprocess_mode == "hydromt_build":
+        failures.append(
+            "Invalid config: use_sfincs_file_overrides=True with preprocess_mode='hydromt_build'. "
+            "Override Mode must use preprocess_mode='native_sfincs_assembly'. "
+            "Use Manual Mode if you want to run a HydroMT build."
+        )
+
+    pipeline_mode = cfg.get("pipeline_mode")
+    if pipeline_mode not in VALID_PIPELINE_MODES:
+        failures.append(f"pipeline_mode must be one of {sorted(VALID_PIPELINE_MODES)}, got {pipeline_mode!r}")
+
+    dependency_type = cfg.get("dependency_type", "afterok")
+    if dependency_type not in VALID_DEPENDENCY_TYPES:
+        failures.append(f"dependency_type must be one of {sorted(VALID_DEPENDENCY_TYPES)}, got {dependency_type!r}")
+
+    if not any([
+        cfg.get("run_preprocessing_job", False),
+        cfg.get("run_sfincs_job", False),
+        cfg.get("run_postprocessing_job", False),
+    ]):
+        failures.append("At least one pipeline stage must be enabled.")
+
+    forcing_enabled = any([
+        cfg.get("use_rainfall", False),
+        cfg.get("use_waterlevel_boundary", False),
+        cfg.get("use_discharge_boundary", False),
+        cfg.get("use_wind", False),
+        cfg.get("use_pressure", False),
+    ])
+    if cfg.get("require_at_least_one_forcing", True) and not forcing_enabled and not cfg.get("allow_missing_model_inputs", False):
+        failures.append("At least one forcing toggle must be enabled.")
+    print(f"FORCING CHECK: at least one forcing enabled = {forcing_enabled}")
+
+    print("\nCore path checks:")
+    for key, label in [
+        ("project_root", "PROJECT_ROOT"),
+        ("data_root", "DATA_ROOT"),
+        ("output_root", "OUTPUT_ROOT"),
+    ]:
+        value = cfg.get(key)
+        if value:
+            _check_path(Path(str(value)), label, True, failures)
+        else:
+            failures.append(f"MISSING REQUIRED: {key} is blank")
+
+    if cfg.get("run_preprocessing_job", False):
+        _check_path(Path(str(cfg["preprocess_stage_script"])), "PREPROCESS_STAGE_SCRIPT", True, failures)
+        _check_path(Path(str(cfg["conda_python"])), "CONDA_PYTHON", True, failures)
+
+    if cfg.get("run_postprocessing_job", False):
+        _check_path(Path(str(cfg["postprocess_stage_script"])), "POSTPROCESS_STAGE_SCRIPT", True, failures)
+        _check_path(Path(str(cfg["conda_python"])), "CONDA_PYTHON", True, failures)
+
+    if cfg.get("run_sfincs_job", False):
+        _check_path(Path(str(cfg["sfincs_container_path"])), "SFINCS_CONTAINER_PATH", True, failures)
+
+    _validate_hydromt_or_native_inputs(cfg, failures)
+    _check_existing_run_folder(cfg, runner_mode, failures)
+
+    if runner_mode == "submit" and not command_exists("sbatch"):
+        failures.append("MISSING REQUIRED: sbatch command not found in this environment")
+        print("MISSING REQUIRED: sbatch command not found in this environment")
+
+    if failures and cfg.get("stop_if_required_path_missing", True):
+        print("\nStopping because required checks failed:")
+        for msg in failures:
+            print(f"  - {msg}")
+        raise RuntimeError("\n".join(failures))
+
+    if failures:
+        print("\nWARNING: validation found failures, but stop_if_required_path_missing=False.")
+    else:
+        print("\nValidation passed.")
+
+
+def plan_workflow(cfg: dict[str, Any]) -> list[str]:
+    stages: list[str] = []
+    if cfg.get("run_preprocessing_job", False):
+        stages.append("preprocess")
+    if cfg.get("run_sfincs_job", False):
+        stages.append("sfincs")
+    if cfg.get("run_postprocessing_job", False):
+        stages.append("postprocess")
+    return stages
+
+
+def print_config_summary(cfg: dict[str, Any], runner_mode: str) -> None:
+    paths = run_paths(cfg)
+    stages = plan_workflow(cfg)
+
+    print_section("CONFIG SUMMARY")
+    print(f"Runner mode:          {runner_mode}")
+    print(f"Pipeline mode:        {cfg.get('pipeline_mode')}")
+    print(f"Preprocess mode:      {cfg.get('preprocess_mode')}")
+    print(f"Run name:             {cfg.get('run_name')}")
+    print(f"Run root:             {paths['run_root']}")
+    print(f"Model root:           {paths['model_root']}")
+    print(f"Scripts root:         {paths['scripts_root']}")
+    print(f"Logs root:            {paths['logs_root']}")
+    print(f"Postprocess root:     {paths['postprocess_root']}")
+    print()
+    print(f"Workflow stages:      {' -> '.join(stages) if stages else '(none)'}")
+    print(f"Dependencies:         {cfg.get('submit_with_dependencies')} ({cfg.get('dependency_type')})")
+    print()
+    print("Runtime machinery:")
+    print(f"  preprocess_stage:   {cfg.get('preprocess_stage_script')}")
+    print(f"  postprocess_stage:  {cfg.get('postprocess_stage_script')}")
+    print(f"  conda_python:       {cfg.get('conda_python')}")
+    print(f"  sfincs_container:   {cfg.get('sfincs_container_path')}")
+    print()
+    print("Main model toggles:")
+    for key in ["use_rainfall", "use_waterlevel_boundary", "use_discharge_boundary", "use_wind", "use_pressure"]:
+        print(f"  {key}: {cfg.get(key)}")
+    print()
+    print("Slurm resources:")
+    print(f"  preprocess:  time={cfg.get('preprocess_time')}, cpus={cfg.get('preprocess_cpus_per_task')}, mem={cfg.get('preprocess_mem')}")
+    print(f"  sfincs:      time={cfg.get('sfincs_time')}, cpus={cfg.get('sfincs_cpus_per_task')}, mem={cfg.get('sfincs_mem')}")
+    print(f"  postprocess: time={cfg.get('postprocess_time')}, cpus={cfg.get('postprocess_cpus_per_task')}, mem={cfg.get('postprocess_mem')}")
+
+
+def prepare_run_folders(cfg: dict[str, Any]) -> None:
+    print_section("RUN FOLDER SETUP")
+
+    paths = run_paths(cfg)
+
+    if not bool(cfg.get("allow_writes_inside_proj", False)):
+        for p in paths.values():
+            if str(p).startswith("/proj"):
+                raise PermissionError(f"Refusing to write inside /proj because allow_writes_inside_proj=False: {p}")
+
+    run_root = paths["run_root"]
+    overwrite = bool(cfg.get("overwrite_existing_run", False))
+    run_state = inspect_run_root_for_scaffold(run_root)
+
+    if run_state["exists"] and not overwrite and run_state["has_real_run"]:
+        examples = "\n".join(
+            f"  - {p}" for p in run_state["artifact_paths"][:10]
+        )
+
+        raise FileExistsError(
+            "Run folder already exists and appears to contain real run artifacts, "
+            "not just saved-config/build-script scaffold.\n"
+            f"Run folder: {run_root}\n"
+            "Change run_name or explicitly enable overwrite_existing_run=True.\n"
+            f"Example artifacts:\n{examples}"
+        )
+
+    if run_state["exists"] and not overwrite and not run_state["has_real_run"]:
+        print(
+            "NOTE: reusing existing saved-config/build-script scaffold folder: "
+            f"{run_root}"
+        )
+
+    for key in ["run_root", "model_root", "scripts_root", "logs_root", "postprocess_root"]:
+        paths[key].mkdir(parents=True, exist_ok=True)
+        print(f"{key}: {paths[key]}")
+
+def write_frozen_run_config(cfg: dict[str, Any], runner_file: Path) -> Path:
+    print_section("WRITE FROZEN RUN CONFIG")
+
+    paths = run_paths(cfg)
+    frozen = deepcopy(cfg)
+
+    # Do not preserve private/temporary keys from the user-loaded config.
+    frozen.pop("_source_config_path", None)
+
+    frozen["runner_file"] = str(runner_file.resolve())
+    frozen["created_at"] = datetime.now().isoformat(timespec="seconds")
+    frozen["created_by_user"] = os.environ.get("USER", "unknown")
+    frozen["runner_python"] = sys.executable
+    frozen["runner_python_version"] = sys.version
+    frozen["source_config_path"] = cfg.get("_source_config_path")
+
+    out_path = paths["config_json_path"]
+    with out_path.open("w", encoding="utf-8") as f:
+        json.dump(json_safe(frozen), f, indent=2)
+
+    print(f"Wrote frozen config: {out_path}")
+    return out_path
+
+
+def print_runner_complete(
+    cfg: dict[str, Any],
+    runner_mode: str,
+    job_ids: dict[str, str | None] | None = None,
+) -> None:
+    paths = run_paths(cfg)
+
+    print_section("RUNNER COMPLETE")
+    print(f"Runner mode: {runner_mode}")
+    print(f"Run folder:  {paths['run_root']}")
+    print(f"Config:      {paths['config_json_path']}")
+    print(f"Scripts:     {paths['scripts_root']}")
+    print(f"Logs:        {paths['logs_root']}")
+    print(f"Model:       {paths['model_root']}")
+    print(f"Postprocess: {paths['postprocess_root']}")
+
+    if job_ids:
+        print("\nSubmitted job IDs:")
+        print(f"  preprocess:  {job_ids.get('preprocess')}")
+        print(f"  SFINCS:      {job_ids.get('sfincs')}")
+        print(f"  postprocess: {job_ids.get('postprocess')}")
+
+    print("\nUseful commands:")
+    user = os.environ.get("USER", "epsilon")
+    print(f"  squeue -u {user}")
+    if job_ids:
+        active = [jid for jid in job_ids.values() if jid]
+        if active:
+            print(f"  squeue -j {','.join(active)}")
+    print(f"  ls -lh {shell_quote(paths['logs_root'])}")
+    print(f"  ls -lh {shell_quote(paths['model_root'])}")
+    print(f"  ls -lh {shell_quote(paths['postprocess_root'])}")
+
+    if runner_mode == "preflight":
+        print("\nPreflight only: no run folder was created and no jobs were submitted.")
+    elif runner_mode == "build_scripts":
+        print("\nScripts were written but not submitted.")
+    elif runner_mode == "submit":
+        print("\nJobs submitted. You may close Spyder / the interactive desktop and come back later.")

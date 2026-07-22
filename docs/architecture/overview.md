@@ -58,23 +58,19 @@ research choices
 
 ---
 
-## System at a Glance
+## System overview
 
-The architecture contains seven major parts:
+The system is divided into four major regions:
 
-1. **Web launcher interface**
-2. **Flask application and API**
-3. **Run configuration**
-4. **Python pipeline backend**
-5. **Slurm execution stack**
-6. **SFINCS solver**
-7. **Review and validation workflows**
+1. Web Launcher
+2. Python Backend
+3. Slurm Execution Stack
+4. Run Review and Scientific Validation
 
-![Physics-Based Flood Simulation Pipeline architecture](../assets/architecture/system_overview.svg)
+The highlighted diagram emphasizes the Python Backend, which is the subsystem
+expanded in the next architecture section.
 
-The web launcher is the main user-facing layer, but it is not the modeling
-engine. The Python backend and generated jobs remain responsible for building
-and executing the run.
+[![Highlighted system architecture](../assets/architecture/system_overview_highlighted.svg)](../assets/architecture/system_overview_highlighted.svg)
 
 ---
 

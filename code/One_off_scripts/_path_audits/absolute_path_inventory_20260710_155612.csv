@@ -1,0 +1,79 @@
+path_text,exists_now,is_file,is_dir,suffix,under_old_data_root,under_old_kieran_root,under_new_data_root,under_new_kieran_root,resolved_if_exists
+/proj/.../dem.tif,False,False,False,.tif,False,False,False,False,
+/proj/zefflab/projects/Flooding,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding
+/proj/zefflab/projects/Flooding/Data/emes_server/lelise_INCOMING_RETRY/data/soil/gcn250/cn_avg.tif,True,True,False,.tif,True,False,False,False,/proj/zefflab/projects/Flooding/Data/emes_server/lelise_INCOMING_RETRY/data/soil/gcn250/cn_avg.tif
+/proj/zefflab/projects/Flooding/Data/harris_county,True,False,True,,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs,True,False,True,,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events,True,False,True,,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms,True,False,True,,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_discharge/harvey_houston_q_bc.csv,True,True,False,.csv,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_discharge/harvey_houston_q_bc.csv
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_metadata/hydromt_data.yml,False,False,False,.yml,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_precip/harvey_mrms.nc,True,True,False,.nc,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_precip/harvey_mrms.nc
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_runtime_window/event_runtime_window.csv,True,True,False,.csv,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_runtime_window/event_runtime_window.csv
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_source_table/event_source_table.csv,True,True,False,.csv,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_source_table/event_source_table.csv
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED.xyxy,False,False,False,.xyxy,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_lines/reviewed_crs_lines/sfincs_crs_lines_REVIEWED_PLUS_AUTO_CUSTOM.xyxy,False,False,False,.xyxy,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/full_candidates/sfincs_obs_points_full_candidates.xy,False,False,False,.xy,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/lite/sfincs_obs_points_lite.xy,False,False,False,.xy,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_validation_points/profiles/validation/sfincs_obs_points_validation.xy,False,False,False,.xy,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_waterlevel/harvey_houston_wl_bc.csv,True,True,False,.csv,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms/event_waterlevel/harvey_houston_wl_bc.csv
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced,False,False,False,,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/,True,False,True,,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county,True,False,True,,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/bathy/galveston_bay_G260_2018_edited.tif,False,False,False,.tif,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/landcover/NLCD_2016_Land_Cover_L48_20190424.img,True,True,False,.img,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/landcover/NLCD_2016_Land_Cover_L48_20190424.img
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/manning_reclass_table/nlcd_mapping_mean.csv,True,True,False,.csv,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/manning_reclass_table/nlcd_mapping_mean.csv
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/region_geom/houston_model.shp,True,True,False,.shp,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/region_geom/houston_model.shp
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/source_points_static/source_points_selected_for_harvey.csv,True,True,False,.csv,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/source_points_static/source_points_selected_for_harvey.csv
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/static_metadata/hydromt_data.yml,False,False,False,.yml,True,False,False,False,
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/structures_thin_dams/AB_dams.shp,True,True,False,.shp,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/structures_thin_dams/AB_dams.shp
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif,True,True,False,.tif,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county/topobathy/HCFCD_DEM_5m_UTM.tif
+/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp,True,False,True,,True,False,False,False,/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp
+/proj/zefflab/projects/Flooding/Data/harris_county\,False,False,False,,True,False,False,False,
+/proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py
+/proj/zefflab/projects/Flooding/Validation/Validation Outputs/bias_diagnostics,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Validation Outputs/bias_diagnostics
+/proj/zefflab/projects/Flooding/Validation/Validation Outputs/catalog_integrity,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Validation Outputs/catalog_integrity
+/proj/zefflab/projects/Flooding/Validation/Validation Outputs/correlation_graphs,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Validation Outputs/correlation_graphs
+/proj/zefflab/projects/Flooding/Validation/Validation Outputs/peak_timing_diagnostics,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Validation Outputs/peak_timing_diagnostics
+/proj/zefflab/projects/Flooding/Validation/Validation Outputs/raw_dem_depth_correlation_graphs,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Validation Outputs/raw_dem_depth_correlation_graphs
+/proj/zefflab/projects/Flooding/Validation/Validation Outputs/stacked_gauge_meter_error,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Validation Outputs/stacked_gauge_meter_error
+/proj/zefflab/projects/Flooding/Validation/Validation Outputs/stacked_gauge_percent_error,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/Validation/Validation Outputs/stacked_gauge_percent_error
+/proj/zefflab/projects/Flooding/pipeline,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline
+/proj/zefflab/projects/Flooding/pipeline/code/postprocess_stage.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/postprocess_stage.py
+/proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py
+/proj/zefflab/projects/Flooding/pipeline/code/review_animation_info.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/review_animation_info.py
+/proj/zefflab/projects/Flooding/pipeline/code/review_prepare_maps.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/review_prepare_maps.py
+/proj/zefflab/projects/Flooding/pipeline/code/review_prepare_obs_gauges.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/review_prepare_obs_gauges.py
+/proj/zefflab/projects/Flooding/pipeline/code/review_submit_animation.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/review_submit_animation.py
+/proj/zefflab/projects/Flooding/pipeline/code/review_submit_maps.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/review_submit_maps.py
+/proj/zefflab/projects/Flooding/pipeline/code/review_submit_obs_gauges.py,True,True,False,.py,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/code/review_submit_obs_gauges.py
+/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif,True,True,False,.sif,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif
+/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif\,False,False,False,.sif\,False,False,False,False,
+/proj/zefflab/projects/Flooding/pipeline/envs/sfincs,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/envs/sfincs
+/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/ffmpeg,True,True,False,,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/ffmpeg
+/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python,True,True,False,,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python3.11
+/proj/zefflab/projects/Flooding/pipeline/envs/sfincs_contextily/bin/python,True,True,False,,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/envs/sfincs_contextily/bin/python3.11
+/proj/zefflab/projects/Flooding/pipeline/web_launcher/guide.html,True,True,False,.html,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/web_launcher/guide.html
+/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html,True,True,False,.html,False,False,False,False,/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+/proj/zefflab/projects/Flooding/sfincs_runs,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/sfincs_runs
+/proj/zefflab/projects/Flooding/sfincs_runs/...,False,False,False,,False,False,False,False,
+/proj/zefflab/projects/Flooding/sfincs_runs/_compare_jobs,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/sfincs_runs/_compare_jobs
+/proj/zefflab/projects/Flooding/sfincs_runs/_launcher_configs,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/sfincs_runs/_launcher_configs
+/proj/zefflab/projects/Flooding/sfincs_runs/beryl_2024_override_001,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/sfincs_runs/beryl_2024_override_001
+/proj/zefflab/projects/Flooding/sfincs_runs/harvey_2017_mrms_manual_012/run_config.json,False,False,False,.json,False,False,False,False,
+/proj/zefflab/projects/Flooding/sfincs_runs/harvey_2017_mrms_manual_020,False,False,False,,False,False,False,False,
+/proj/zefflab/projects/Flooding/sfincs_runs/harvey_2017_mrms_manual_021,False,False,False,,False,False,False,False,
+/proj/zefflab/projects/Flooding/sfincs_runs/harvey_2017_mrms_manual_033_coastal_test_001,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/sfincs_runs/harvey_2017_mrms_manual_033_coastal_test_001
+/proj/zefflab/projects/Flooding/sfincs_runs/pure_test_override_001,True,False,True,,False,False,False,False,/proj/zefflab/projects/Flooding/sfincs_runs/pure_test_override_001
+/proj/zefflab/projects/Flooding/sfincs_runs\,False,False,False,,False,False,False,False,
+/users/e/p/epsilon,True,False,True,,False,False,False,False,/users/e/p/epsilon
+/users/e/p/epsilon/Data/harris_county,False,False,False,,False,False,False,False,
+/users/e/p/epsilon/Data/harris_county/catalogs,False,False,False,,False,False,False,False,
+/users/e/p/epsilon/Data/harris_county/catalogs/events,False,False,False,,False,False,False,False,
+/users/e/p/epsilon/Data/harris_county/catalogs/static,False,False,False,,False,False,False,False,
+/users/e/p/epsilon/sfincs_project,True,False,True,,False,False,False,False,/users/e/p/epsilon/sfincs_project
+/users/e/p/epsilon/sfincs_project/envs/sfincs,True,False,True,,False,False,False,False,/users/e/p/epsilon/sfincs_project/envs/sfincs
+/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python,True,True,False,,False,False,False,False,/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python3.11
+/work/users,True,False,True,,False,False,False,False,/work/users
+/work/users/e/p/epsilon,True,False,True,,False,False,False,False,/work/users/e/p/epsilon
+/work/users/e/p/epsilon/sfincs_runs,True,False,True,,False,False,False,False,/work/users/e/p/epsilon/sfincs_runs

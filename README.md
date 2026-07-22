@@ -95,62 +95,21 @@ storm-outcome database.
 
 ---
 
-## How the Pipeline Works
+## System architecture
 
-At a high level, a researcher uses the web launcher to describe a simulation.
-The launcher converts those selections into a structured run configuration.
-The Python backend validates the configuration, prepares a run directory, and
-generates the required job scripts. Slurm then executes the modeling stages in
-order.
+The pipeline is organized into four connected subsystems:
 
-After the run finishes, Review Mode can be utilized to read the generated files and presents
-maps, time series, animations, validation products, logs, and run metadata.
+1. Web Launcher
+2. Python Backend
+3. Slurm Execution Stack
+4. Run Review and Scientific Validation
 
-```mermaid
-flowchart TD
-    User[Researcher]
+[![Physics-Based Flood Simulation Pipeline system architecture](docs/assets/architecture/system_overview.svg)](docs/assets/architecture/system_overview.svg)
 
-    subgraph Launcher["Web Launcher"]
-        UI[HTML and JavaScript interface]
-        API[Python and Flask API]
-    end
+The diagram can be opened directly for a full-resolution view.
 
-    Config[Run configuration]
-    Backend[Python pipeline backend]
-    Catalogs[Storm event data catalogs]
-    RunFolder[Run directory and provenance]
-    Slurm[Slurm dependency stack]
-
-    subgraph Jobs["Simulation Jobs"]
-        Pre[Preprocessing]
-        Sfincs[SFINCS solver]
-        Post[Postprocessing]
-    end
-
-    Outputs[Model files, NetCDF outputs,<br/>logs, and diagnostics]
-    Review[Review Mode]
-    Interpretation[Scientific review<br/>and validation]
-
-    User --> UI
-    UI --> API
-    API --> Config
-    Config --> Backend
-    Catalogs --> Backend
-    Backend --> RunFolder
-    Backend --> Slurm
-
-    Slurm --> Pre
-    Pre --> Sfincs
-    Sfincs --> Post
-
-    Pre --> RunFolder
-    Sfincs --> RunFolder
-    Post --> RunFolder
-    RunFolder --> Outputs
-    Outputs --> Review
-    Review --> User
-    Outputs --> Interpretation
-```
+See the [architecture overview](docs/architecture/overview.md) for an expanded
+explanation of the four subsystems.
 
 The run configuration acts as the main contract between the web interface and
 the backend. It records the selected inputs, model settings, run identity,
@@ -587,8 +546,8 @@ physics-flood-pipeline/
 │   │   ├── overview.md
 │   │   ├── slurm_execution.md
 │   │   │
-│   │   ├── backend/
-│   │   │   ├── backend.md
+│   │   ├── python_backend/
+│   │   │   ├── python_backend.md
 │   │   │   ├── module_catalog.md
 │   │   │   └── files/
 │   │   │

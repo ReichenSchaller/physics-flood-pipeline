@@ -1,0 +1,31 @@
+READ-ONLY HARDCODED DATA PATH AUDIT
+Timestamp: 20260710_155301
+
+Scan roots:
+  - /proj/zefflab/projects/Flooding/pipeline/code
+  - /proj/zefflab/projects/Flooding/pipeline/web_launcher
+  - /proj/zefflab/projects/Flooding/Validation/Code
+
+Old roots being audited:
+  OLD_DATA_ROOT   = /proj/zefflab/projects/Flooding/Data
+  OLD_KIERAN_ROOT = /proj/zefflab/projects/Flooding/kieran_data
+
+New roots:
+  NEW_DATA_ROOT   = /users/e/p/epsilon/Data/Data
+  NEW_KIERAN_ROOT = /users/e/p/epsilon/Data/kieran_data
+
+Category counts:
+  OLD_PROJ_DATA_ROOT: 187
+  OTHER_MATCH: 3
+  OTHER_PROJECT_ABSOLUTE_PATH: 151
+  OTHER_USERS_ABSOLUTE_PATH: 12
+  RELATIVE_OR_PARTIAL_DATA_REFERENCE: 1
+
+Key verdict fields:
+  OLD_PROJ_DATA_ROOT hits:   187
+  OLD_PROJ_KIERAN_ROOT hits: 0
+  unique quoted absolute paths: 74
+
+Output files:
+  hits_csv  = /proj/zefflab/projects/Flooding/pipeline/code/_path_audits/hardcoded_data_path_hits_20260710_155301.csv
+  paths_csv = /proj/zefflab/projects/Flooding/pipeline/code/_path_audits/absolute_path_inventory_20260710_155301.csv

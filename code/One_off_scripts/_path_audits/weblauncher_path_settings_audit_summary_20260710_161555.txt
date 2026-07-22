@@ -1,0 +1,39 @@
+WEB LAUNCHER PATH + SETTINGS MARKDOWN AUDIT SUMMARY
+Timestamp: 20260710_161555
+
+Full markdown: /proj/zefflab/projects/Flooding/pipeline/code/_path_audits/weblauncher_path_settings_audit_FULL_20260710_161555.md
+Chat markdown: /proj/zefflab/projects/Flooding/pipeline/code/_path_audits/weblauncher_path_settings_audit_FOR_CHAT_20260710_161555.md
+
+Active hardcoded path hits: 29
+Files with active path hits: 11
+
+Usage guess counts:
+  LIKELY_DEFAULT_OR_BROWSE: 28
+  POSSIBLY_LOAD_BEARING: 1
+
+Active path hits by file:
+     6  /proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js
+     4  /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+     2  /proj/zefflab/projects/Flooding/Validation/Code/raw_dem_depth_correlation_graph_generator.py
+     2  /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/apply_harvey_3_boundary_catalog_repair.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/audit_14_event_boundary_point_maps.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js
+
+Settings-related files:
+   130  /proj/zefflab/projects/Flooding/pipeline/web_launcher/guide.html
+   122  /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+   119  /proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html
+    93  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js
+    68  /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+    35  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js
+    20  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js
+    12  /proj/zefflab/projects/Flooding/pipeline/web_launcher/compare_result.html
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/path_browser.js
+     3  /proj/zefflab/projects/Flooding/pipeline/web_launcher/compare.html
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/index.html
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/pipeline_actions.js

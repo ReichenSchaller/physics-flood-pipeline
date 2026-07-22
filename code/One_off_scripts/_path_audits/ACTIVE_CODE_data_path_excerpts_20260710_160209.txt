@@ -1,0 +1,1022 @@
+ACTIVE CODE HARDCODED DATA PATH EXCERPT REPORT
+Timestamp: 20260710_160209
+
+Old Data root:    /proj/zefflab/projects/Flooding/Data
+New Data root:    /users/e/p/epsilon/Data/Data
+Old Kieran root:  /proj/zefflab/projects/Flooding/kieran_data
+New Kieran root:  /users/e/p/epsilon/Data/kieran_data
+
+Usage-guess counts:
+  LIKELY_DEFAULT_ONLY: 24
+  POSSIBLY_LOAD_BEARING: 1
+  PROBABLY_DEFAULT_REVIEW: 1
+  UNCLEAR: 3
+
+Hits by active file:
+     6  /proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js
+     4  /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+     2  /proj/zefflab/projects/Flooding/Validation/Code/raw_dem_depth_correlation_graph_generator.py
+     2  /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/apply_harvey_3_boundary_catalog_repair.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/audit_14_event_boundary_point_maps.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js
+
+
+FULL ACTIVE FILE EXCERPTS
+====================================================================================================
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html
+HITS: 6
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/6 | line 955 | UNCLEAR
+SCOPE: <div class="manual-panel" id="manual-4">
+
+CURRENT LINE:
+placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+placeholder="/users/e/p/epsilon/Data/Data/harris_county/catalogs/events/harvey_2017_mrms"
+
+EXCERPT:
+   00945:               <table class="config-table">
+   00946:                 <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00947:                 <tbody>
+   00948:                   <tr>
+   00949:                     <td>data_catalogs</td>
+   00950:                     <td>
+   00951:                       <textarea
+   00952:                         class="short-textarea catalog-path-textarea"
+   00953:                         data-key="data_catalogs"
+   00954:                         data-type="string"
+>> 00955:                         placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00956:                         style="min-height: 118px;"
+   00957:                       ></textarea>
+   00958: 
+   00959:                       <div
+   00960:                         style="
+   00961:                           display: grid;
+   00962:                           grid-template-columns: minmax(340px, 460px) auto auto;
+   00963:                           gap: 8px;
+   00964:                           align-items: center;
+   00965:                           margin-top: 10px;
+
+----------------------------------------------------------------------------------------------------
+HIT 2/6 | line 971 | LIKELY_DEFAULT_ONLY
+SCOPE: <div class="manual-panel" id="manual-4">
+
+CURRENT LINE:
+placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+placeholder="/users/e/p/epsilon/Data/Data/harris_county/catalogs/events/harvey_2017_mrms"
+
+EXCERPT:
+   00961:                           display: grid;
+   00962:                           grid-template-columns: minmax(340px, 460px) auto auto;
+   00963:                           gap: 8px;
+   00964:                           align-items: center;
+   00965:                           margin-top: 10px;
+   00966:                         "
+   00967:                       >
+   00968:                         <input
+   00969:                           id="override-catalog-add-input"
+   00970:                           type="text"
+>> 00971:                           placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00972:                           style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00973:                         >
+   00974: 
+   00975:                         <button
+   00976:                           type="button"
+   00977:                           class="secondary"
+   00978:                           data-browse-target="override-catalog-add-input"
+   00979:                           data-browse-mode="directory"
+   00980:                           data-browse-default-key="catalogRoot"
+   00981:                           data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+
+----------------------------------------------------------------------------------------------------
+HIT 3/6 | line 981 | LIKELY_DEFAULT_ONLY
+SCOPE: <div class="manual-panel" id="manual-4">
+
+CURRENT LINE:
+data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+data-browse-start="/users/e/p/epsilon/Data/Data/harris_county/catalogs"
+
+EXCERPT:
+   00971:                           placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00972:                           style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00973:                         >
+   00974: 
+   00975:                         <button
+   00976:                           type="button"
+   00977:                           class="secondary"
+   00978:                           data-browse-target="override-catalog-add-input"
+   00979:                           data-browse-mode="directory"
+   00980:                           data-browse-default-key="catalogRoot"
+>> 00981:                           data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00982:                         >
+   00983:                           Browse
+   00984:                         </button>
+   00985: 
+   00986:                         <button
+   00987:                           type="button"
+   00988:                           class="primary"
+   00989:                           onclick="overrideAddCatalogFromInput()"
+   00990:                         >
+   00991:                           Add catalog
+
+----------------------------------------------------------------------------------------------------
+HIT 4/6 | line 2624 | PROBABLY_DEFAULT_REVIEW
+SCOPE: const hasNativePressureOverride = Boolean(
+
+CURRENT LINE:
+: "/proj/zefflab/projects/Flooding/Data/harris_county"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+: "/users/e/p/epsilon/Data/Data/harris_county"
+
+EXCERPT:
+   02614:         cfg.pressure_source = '';
+   02615:       }
+   02616:       
+   02617:       // Smart Override assembly:
+   02618:       // - data_catalogs blank     -> native_sfincs_assembly
+   02619:       // - data_catalogs not blank -> hybrid
+   02620:       // data_root is controlled by launcher settings, not by a visible run field.
+   02621:       cfg.data_root = (
+   02622:         window.LauncherDefaults && window.LauncherDefaults.get
+   02623:           ? window.LauncherDefaults.get("dataRoot")
+>> 02624:           : "/proj/zefflab/projects/Flooding/Data/harris_county"
+   02625:       );
+   02626: 
+   02627:       cfg.data_catalogs = normalizePathListValue(cfg.data_catalogs);
+   02628: 
+   02629:       const hasDataCatalogs = Array.isArray(cfg.data_catalogs) && cfg.data_catalogs.length > 0;
+   02630: 
+   02631:       cfg.pipeline_mode = 'preflight_only';
+   02632:       cfg.preprocess_mode = hasDataCatalogs ? 'hybrid' : 'native_sfincs_assembly';
+   02633: 
+   02634:       const gridTemplateHydromtBuild = shouldUseHydromtBuildForGridTemplateOverride(cfg, selectedOverrideMap);
+
+----------------------------------------------------------------------------------------------------
+HIT 5/6 | line 4196 | LIKELY_DEFAULT_ONLY
+SCOPE: function runChecksSafely(navigate = true) {
+
+CURRENT LINE:
+defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+defaultStart: "/users/e/p/epsilon/Data/Data/harris_county"
+
+EXCERPT:
+   04186:       "sigma_path",
+   04187:       "psi_path",
+   04188:       "f0_path",
+   04189:       "fc_path",
+   04190:       "kd_path",
+   04191:       "vol_path",
+   04192:       "conda_env_path",
+   04193:       "conda_python",
+   04194:       "sfincs_container_path"
+   04195:       ],
+>> 04196:     defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+   04197:   };
+   04198: </script>
+   04199: <script src="static/config_path_browse_buttons.js"></script>
+   04200: <script src="static/path_browser.js"></script>
+   04201: <script src="static/pipeline_actions.js"></script>
+   04202: <script src="static/page_reset.js"></script>
+   04203: 
+   04204: 
+   04205: <!-- BEGIN override source browse defaults patch -->
+   04206: <script>
+
+----------------------------------------------------------------------------------------------------
+HIT 6/6 | line 4211 | LIKELY_DEFAULT_ONLY
+SCOPE: const FALLBACK_OVERRIDE_SOURCE_ROOT =
+
+CURRENT LINE:
+"/proj/zefflab/projects/Flooding/Data/harris_county/catalogs";
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"/users/e/p/epsilon/Data/Data/harris_county/catalogs";
+
+EXCERPT:
+   04201: <script src="static/pipeline_actions.js"></script>
+   04202: <script src="static/page_reset.js"></script>
+   04203: 
+   04204: 
+   04205: <!-- BEGIN override source browse defaults patch -->
+   04206: <script>
+   04207: (function () {
+   04208:   "use strict";
+   04209: 
+   04210:   const FALLBACK_OVERRIDE_SOURCE_ROOT =
+>> 04211:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs";
+   04212: 
+   04213:   function defaultsApi() {
+   04214:     return window.SFINCS_LAUNCHER_DEFAULTS ||
+   04215:            window.SfincsLauncherDefaults ||
+   04216:            window.launcherDefaults ||
+   04217:            {};
+   04218:   }
+   04219: 
+   04220:   function getLauncherDefault(key) {
+   04221:     const api = defaultsApi();
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+HITS: 5
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/5 | line 370 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+"dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"dataRoot": "/users/e/p/epsilon/Data/Data/harris_county",
+
+EXCERPT:
+   00360:     "nativeSfincsRoot",
+   00361:     "overrideSourceRoot",
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+>> 00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+
+----------------------------------------------------------------------------------------------------
+HIT 2/5 | line 371 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+"catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"catalogRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+
+EXCERPT:
+   00361:     "overrideSourceRoot",
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+>> 00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+
+----------------------------------------------------------------------------------------------------
+HIT 3/5 | line 372 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+"eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"eventCatalogRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs/events_reduced",
+
+EXCERPT:
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+
+----------------------------------------------------------------------------------------------------
+HIT 4/5 | line 373 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+"nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"nativeSfincsRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+
+EXCERPT:
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+>> 00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+   00383: def _read_launcher_site_defaults() -> dict:
+
+----------------------------------------------------------------------------------------------------
+HIT 5/5 | line 374 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+"overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"overrideSourceRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+
+EXCERPT:
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+   00383: def _read_launcher_site_defaults() -> dict:
+   00384:     defaults = dict(LAUNCHER_BUILTIN_DEFAULTS)
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js
+HITS: 5
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/5 | line 10 | LIKELY_DEFAULT_ONLY
+SCOPE: const DEFAULTS = {
+
+CURRENT LINE:
+dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+dataRoot: "/users/e/p/epsilon/Data/Data/harris_county",
+
+EXCERPT:
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+>> 00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+
+----------------------------------------------------------------------------------------------------
+HIT 2/5 | line 11 | LIKELY_DEFAULT_ONLY
+SCOPE: const DEFAULTS = {
+
+CURRENT LINE:
+catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+catalogRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+
+EXCERPT:
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+>> 00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+
+----------------------------------------------------------------------------------------------------
+HIT 3/5 | line 12 | LIKELY_DEFAULT_ONLY
+SCOPE: const DEFAULTS = {
+
+CURRENT LINE:
+eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+eventCatalogRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs/events_reduced",
+
+EXCERPT:
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+
+----------------------------------------------------------------------------------------------------
+HIT 4/5 | line 13 | LIKELY_DEFAULT_ONLY
+SCOPE: const DEFAULTS = {
+
+CURRENT LINE:
+nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+nativeSfincsRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+
+EXCERPT:
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+>> 00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+   00023:     dataRoot: "Data root",
+
+----------------------------------------------------------------------------------------------------
+HIT 5/5 | line 14 | LIKELY_DEFAULT_ONLY
+SCOPE: const DEFAULTS = {
+
+CURRENT LINE:
+overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+
+SIMPLE REPLACEMENT WOULD BECOME:
+overrideSourceRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+
+EXCERPT:
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+   00023:     dataRoot: "Data root",
+   00024:     catalogRoot: "Catalog root",
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+HITS: 4
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/4 | line 598 | POSSIBLY_LOAD_BEARING
+SCOPE: <input type="hidden" data-key="data_root" data-type="string" value="/proj/zefflab/projects/Flooding/Data/harris_county">
+
+CURRENT LINE:
+<input type="hidden" data-key="data_root" data-type="string" value="/proj/zefflab/projects/Flooding/Data/harris_county">
+
+SIMPLE REPLACEMENT WOULD BECOME:
+<input type="hidden" data-key="data_root" data-type="string" value="/users/e/p/epsilon/Data/Data/harris_county">
+
+EXCERPT:
+   00588:   .permanent-tab-scrollbar-thumb:active {
+   00589:     cursor: grabbing;
+   00590:   }
+   00591: </style>
+   00592: <!-- END permanent tab scrollbar patch -->
+   00593: 
+   00594: </head>
+   00595: <body>
+   00596:   <input type="hidden" data-key="pipeline_mode" data-type="string" value="preflight_only">
+   00597:   <input type="hidden" data-key="preprocess_mode" data-type="string" value="hydromt_build">
+>> 00598:   <input type="hidden" data-key="data_root" data-type="string" value="/proj/zefflab/projects/Flooding/Data/harris_county">
+   00599:   <input type="hidden" data-key="sfincs_container" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif">
+   00600:   <header>
+   00601:     <div class="header-grid">
+   00602:       <div>
+   00603:         <h1>Manual Mode</h1>
+   00604:         <p class="subtitle">Direct control over a standard SFINCS pipeline JSON config. Fill the tables in any order, save a normal backend config, load an existing config, and use the check tab before moving to backend preflight/build/submit.</p>
+   00605:       </div>
+   00606:       <div class="status-box" aria-label="Manual mode summary">
+   00607:         <div class="status-row"><span>Config format</span><span>normal JSON</span></div>
+   00608:         <div class="status-row"><span>Maintainer</span><span>Reichen Schaller</span></div>
+
+----------------------------------------------------------------------------------------------------
+HIT 2/4 | line 775 | LIKELY_DEFAULT_ONLY
+SCOPE: <div class="panel tab-panel" id="tab-4">
+
+CURRENT LINE:
+placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+placeholder="/users/e/p/epsilon/Data/Data/harris_county/catalogs/static/harris_county"
+
+EXCERPT:
+   00765:                       display: grid;
+   00766:                       grid-template-columns: minmax(340px, 460px) auto auto;
+   00767:                       gap: 8px;
+   00768:                       align-items: center;
+   00769:                       margin-top: 10px;
+   00770:                     "
+   00771:                   >
+   00772:                     <input
+   00773:                       id="manual-catalog-add-input"
+   00774:                       type="text"
+>> 00775:                       placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+   00776:                       style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00777:                     >
+   00778: 
+   00779:                     <button
+   00780:                       type="button"
+   00781:                       class="secondary"
+   00782:                       data-browse-target="manual-catalog-add-input"
+   00783:                       data-browse-mode="directory"
+   00784:                       data-browse-default-key="catalogRoot"
+   00785:                       data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+
+----------------------------------------------------------------------------------------------------
+HIT 3/4 | line 785 | LIKELY_DEFAULT_ONLY
+SCOPE: <div class="panel tab-panel" id="tab-4">
+
+CURRENT LINE:
+data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+data-browse-start="/users/e/p/epsilon/Data/Data/harris_county/catalogs"
+
+EXCERPT:
+   00775:                       placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+   00776:                       style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00777:                     >
+   00778: 
+   00779:                     <button
+   00780:                       type="button"
+   00781:                       class="secondary"
+   00782:                       data-browse-target="manual-catalog-add-input"
+   00783:                       data-browse-mode="directory"
+   00784:                       data-browse-default-key="catalogRoot"
+>> 00785:                       data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00786:                     >
+   00787:                       Browse
+   00788:                     </button>
+   00789: 
+   00790:                     <button
+   00791:                       type="button"
+   00792:                       class="primary"
+   00793:                       onclick="manualAddCatalogFromInput()"
+   00794:                     >
+   00795:                       Add catalog
+
+----------------------------------------------------------------------------------------------------
+HIT 4/4 | line 3632 | LIKELY_DEFAULT_ONLY
+SCOPE: const repairedCfg = getConfig();
+
+CURRENT LINE:
+defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+defaultStart: "/users/e/p/epsilon/Data/Data/harris_county"
+
+EXCERPT:
+   03622:       "sigma_path",
+   03623:       "psi_path",
+   03624:       "f0_path",
+   03625:       "fc_path",
+   03626:       "kd_path",
+   03627:       "vol_path",
+   03628:       "conda_env_path",
+   03629:       "conda_python",
+   03630:       "sfincs_container_path"
+   03631:     ],
+>> 03632:     defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+   03633:   };
+   03634: </script>
+   03635: <script src="static/config_path_browse_buttons.js"></script>
+   03636: <script src="static/path_browser.js"></script>
+   03637: <script src="static/pipeline_actions.js"></script>
+   03638: <script src="static/page_reset.js"></script>
+   03639:   <a class="help-button" href="guide.html?tab=manual" title="Open Manual guide">?</a>
+   03640: 
+   03641: <!-- BEGIN runtime launcher path defaults patch -->
+   03642: <script>
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/Validation/Code/raw_dem_depth_correlation_graph_generator.py
+HITS: 2
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/2 | line 61 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+EVENTS_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events")
+
+SIMPLE REPLACEMENT WOULD BECOME:
+EVENTS_ROOT = Path("/users/e/p/epsilon/Data/Data/harris_county/catalogs/events")
+
+EXCERPT:
+   00051: from rasterio.windows import Window
+   00052: from rasterio.warp import transform as rasterio_transform
+   00053: from rasterio.transform import xy as rasterio_xy
+   00054: 
+   00055: 
+   00056: # =============================================================================
+   00057: # USER SETTINGS
+   00058: # =============================================================================
+   00059: 
+   00060: SFINCS_RUNS_ROOT = Path("/proj/zefflab/projects/Flooding/sfincs_runs")
+>> 00061: EVENTS_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events")
+   00062: 
+   00063: # Kept exactly as requested, including spelling.
+   00064: OUTPUT_DIR = Path("/proj/zefflab/projects/Flooding/Validation/Validation Outputs/raw_dem_depth_correlation_graphs")
+   00065: 
+   00066: # Raw DEM/topobathy surface to subtract from both observed and modeled WSE.
+   00067: # This is the catalog DEM/topobathy file, not sfincs.dep.
+   00068: RAW_DEM_PATH = Path(
+   00069:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/"
+   00070:     "harris_county/topobathy/HCFCD_DEM_5m_UTM.tif"
+   00071: )
+
+----------------------------------------------------------------------------------------------------
+HIT 2/2 | line 69 | UNCLEAR
+
+CURRENT LINE:
+"/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"/users/e/p/epsilon/Data/Data/harris_county/catalogs/static/"
+
+EXCERPT:
+   00059: 
+   00060: SFINCS_RUNS_ROOT = Path("/proj/zefflab/projects/Flooding/sfincs_runs")
+   00061: EVENTS_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events")
+   00062: 
+   00063: # Kept exactly as requested, including spelling.
+   00064: OUTPUT_DIR = Path("/proj/zefflab/projects/Flooding/Validation/Validation Outputs/raw_dem_depth_correlation_graphs")
+   00065: 
+   00066: # Raw DEM/topobathy surface to subtract from both observed and modeled WSE.
+   00067: # This is the catalog DEM/topobathy file, not sfincs.dep.
+   00068: RAW_DEM_PATH = Path(
+>> 00069:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/"
+   00070:     "harris_county/topobathy/HCFCD_DEM_5m_UTM.tif"
+   00071: )
+   00072: 
+   00073: # Validation point coordinates are expected to be UTM Zone 15N in this project.
+   00074: # If the DEM has a different CRS, rasterio will transform x/y before sampling.
+   00075: VALIDATION_POINT_CRS = "EPSG:32615"
+   00076: 
+   00077: # If direct DEM sampling hits nodata, search nearby DEM pixels for the nearest finite value.
+   00078: # At 5 m DEM resolution, 20 pixels is about 100 m.
+   00079: RAW_DEM_NEAREST_FINITE_SEARCH_PIXELS = 20
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py
+HITS: 2
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/2 | line 39 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+DEFAULT_DATA_ROOT = "/users/e/p/epsilon/Data/Data/harris_county"
+
+EXCERPT:
+   00029:     "hybrid",
+   00030: }
+   00031: 
+   00032: VALID_DEPENDENCY_TYPES = {"afterok"}
+   00033: 
+   00034: SFINCS_CONTAINER_FILENAME = "sfincs-v2.3.0-mt-Faber-Release.sif"
+   00035: 
+   00036: FALLBACK_CONDA_PYTHON = "/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python"
+   00037: FALLBACK_CONDA_ENV_PATH = "/users/e/p/epsilon/sfincs_project/envs/sfincs"
+   00038: 
+>> 00039: DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county"
+   00040: DEFAULT_OUTPUT_ROOT = "/proj/zefflab/projects/Flooding/sfincs_runs"
+   00041: DEFAULT_STATIC_PPP_DIR = (
+   00042:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp"
+   00043: )
+   00044: 
+   00045: # Hybrid catalogs are now path-driven.
+   00046: #
+   00047: # Older reduced-event runs used fixed filenames like:
+   00048: #   event_precip/aorc_precip_event.nc
+   00049: #   event_waterlevel/selected_bzs_waterlevel_reduced.csv
+
+----------------------------------------------------------------------------------------------------
+HIT 2/2 | line 42 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+"/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"/users/e/p/epsilon/Data/Data/harris_county/catalogs/static/harris_county_ppp"
+
+EXCERPT:
+   00032: VALID_DEPENDENCY_TYPES = {"afterok"}
+   00033: 
+   00034: SFINCS_CONTAINER_FILENAME = "sfincs-v2.3.0-mt-Faber-Release.sif"
+   00035: 
+   00036: FALLBACK_CONDA_PYTHON = "/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python"
+   00037: FALLBACK_CONDA_ENV_PATH = "/users/e/p/epsilon/sfincs_project/envs/sfincs"
+   00038: 
+   00039: DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county"
+   00040: DEFAULT_OUTPUT_ROOT = "/proj/zefflab/projects/Flooding/sfincs_runs"
+   00041: DEFAULT_STATIC_PPP_DIR = (
+>> 00042:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp"
+   00043: )
+   00044: 
+   00045: # Hybrid catalogs are now path-driven.
+   00046: #
+   00047: # Older reduced-event runs used fixed filenames like:
+   00048: #   event_precip/aorc_precip_event.nc
+   00049: #   event_waterlevel/selected_bzs_waterlevel_reduced.csv
+   00050: #   event_runtime_window/event_runtime_window.csv
+   00051: #
+   00052: # Current event catalogs may use event-specific FINAL_FOR_NOW products, selected
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/apply_harvey_3_boundary_catalog_repair.py
+HITS: 1
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/1 | line 41 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+EVENT_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms")
+
+SIMPLE REPLACEMENT WOULD BECOME:
+EVENT_ROOT = Path("/users/e/p/epsilon/Data/Data/harris_county/catalogs/events/harvey_2017_mrms")
+
+EXCERPT:
+   00031: # SAFETY SWITCH
+   00032: # ---------------------------------------------------------------------
+   00033: APPLY_CHANGES = False
+   00034: 
+   00035: 
+   00036: # ---------------------------------------------------------------------
+   00037: # Exact Harvey active files from audit
+   00038: # ---------------------------------------------------------------------
+   00039: EVENT_FOLDER = "harvey_2017_mrms"
+   00040: 
+>> 00041: EVENT_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms")
+   00042: 
+   00043: BOUNDARY_ACTIVE = EVENT_ROOT / "event_boundary_table" / "event_boundary_table.csv"
+   00044: WL_POINTS_ACTIVE = EVENT_ROOT / "event_waterlevel_points" / "noaa4_waterlevel_station_points.csv"
+   00045: WL_ACTIVE = EVENT_ROOT / "event_waterlevel" / "harvey_houston_wl_bc.csv"
+   00046: 
+   00047: VALIDATION_OUT_ROOT = Path("/proj/zefflab/projects/Flooding/Validation/Validation Outputs/catalog_integrity")
+   00048: 
+   00049: TARGET_ACTIVE_IDS = ["8771013", "8770613", "08072050"]
+   00050: MANCHESTER_ID = "8770777"
+   00051: 
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/audit_14_event_boundary_point_maps.py
+HITS: 1
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/1 | line 38 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+EVENTS_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events")
+
+SIMPLE REPLACEMENT WOULD BECOME:
+EVENTS_ROOT = Path("/users/e/p/epsilon/Data/Data/harris_county/catalogs/events")
+
+EXCERPT:
+   00028: 
+   00029: import matplotlib
+   00030: matplotlib.use("Agg")
+   00031: import matplotlib.pyplot as plt
+   00032: 
+   00033: 
+   00034: # ---------------------------------------------------------------------
+   00035: # Paths
+   00036: # ---------------------------------------------------------------------
+   00037: RUNS_ROOT = Path("/proj/zefflab/projects/Flooding/sfincs_runs")
+>> 00038: EVENTS_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events")
+   00039: OUT_ROOT = Path("/proj/zefflab/projects/Flooding/Validation/Validation Outputs/catalog_integrity")
+   00040: 
+   00041: # Adjust run_name only if one of these folders differs on disk.
+   00042: EVENTS = [
+   00043:     {
+   00044:         "event": "ike_2008",
+   00045:         "label": "Hurricane Ike",
+   00046:         "run_name": "ike_2008_override_001",
+   00047:         "tref": "2008-09-09 21:00:00",
+   00048:         "tstart": "2008-09-09 21:00:00",
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py
+HITS: 1
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/1 | line 41 | LIKELY_DEFAULT_ONLY
+
+CURRENT LINE:
+EVENTS_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events")
+
+SIMPLE REPLACEMENT WOULD BECOME:
+EVENTS_ROOT = Path("/users/e/p/epsilon/Data/Data/harris_county/catalogs/events")
+
+EXCERPT:
+   00031: import pandas as pd
+   00032: import xarray as xr
+   00033: import matplotlib.pyplot as plt
+   00034: 
+   00035: 
+   00036: # =============================================================================
+   00037: # USER SETTINGS
+   00038: # =============================================================================
+   00039: 
+   00040: SFINCS_RUNS_ROOT = Path("/proj/zefflab/projects/Flooding/sfincs_runs")
+>> 00041: EVENTS_ROOT = Path("/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events")
+   00042: 
+   00043: # Kept exactly as requested, including spelling.
+   00044: OUTPUT_DIR = Path("/proj/zefflab/projects/Flooding/Validation/Validation Outputs/correlation_graphs")
+   00045: 
+   00046: 
+   00047: '''
+   00048:  "ike_2008_override_001",
+   00049:  "flood_2009_04_override_005",
+   00050:  c"flood_2012_01_override_001",
+   00051:  "heavy_rain_2012_07_override_001",
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js
+HITS: 1
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/1 | line 4 | LIKELY_DEFAULT_ONLY
+SCOPE: const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";
+
+CURRENT LINE:
+const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";
+
+SIMPLE REPLACEMENT WOULD BECOME:
+const DEFAULT_DATA_ROOT = "/users/e/p/epsilon/Data/Data/harris_county";
+
+EXCERPT:
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+>> 00004:   const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";
+   00005: 
+   00006:   function getConfigPathBrowseSettings() {
+   00007:     return window.CONFIG_PATH_BROWSE_SETTINGS || {};
+   00008:   }
+   00009: 
+   00010:   function firstNonEmptyValueForKey(key) {
+   00011:     const el = document.querySelector(`[data-key="${key}"]`);
+   00012:     if (!el) return "";
+   00013: 
+   00014:     const raw = String(el.value || "").trim();
+
+####################################################################################################
+FILE: /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js
+HITS: 1
+####################################################################################################
+
+----------------------------------------------------------------------------------------------------
+HIT 1/1 | line 1955 | UNCLEAR
+SCOPE: const cfg = pickConfigSource(state.review || {});
+
+CURRENT LINE:
+"/proj/zefflab/projects/Flooding/Data/harris_county"
+
+SIMPLE REPLACEMENT WOULD BECOME:
+"/users/e/p/epsilon/Data/Data/harris_county"
+
+EXCERPT:
+   01945:       cfg.event_name ||
+   01946:       (state.review && state.review.event_name) ||
+   01947:       ""
+   01948:     );
+   01949:   }
+   01950:   
+   01951:   function configuredDataRoot() {
+   01952:     const cfg = pickConfigSource(state.review || {});
+   01953:     return cleanObsId(
+   01954:       cfg.data_root ||
+>> 01955:       "/proj/zefflab/projects/Flooding/Data/harris_county"
+   01956:     );
+   01957:   }
+   01958:   
+   01959:   function inferEventCatalogRootFromPath(pathText) {
+   01960:     const text = String(pathText || "").trim();
+   01961:     const marker = "/catalogs/events/";
+   01962:     const idx = text.indexOf(marker);
+   01963:   
+   01964:     if (idx < 0) return "";
+   01965:   

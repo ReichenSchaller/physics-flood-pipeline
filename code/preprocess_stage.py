@@ -1,0 +1,8402 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+"""
+Author: Reichen Schaller (epsilon@unc.edu)
+SFINCS / HydroMT-SFINCS preprocessing stage.
+
+This file is NOT meant to be edited by normal users.
+Users edit sfincs_launcher.py. The launcher writes run_config.json and submits
+this script as Slurm job 1.
+
+Purpose
+-------
+Read a frozen run_config.json and build the SFINCS model folder using
+HydroMT-SFINCS.
+
+Pipeline position
+-----------------
+launcher.py (hehe legacy note here this pipeline is MUCH longer now but no shot I update that now)
+    -> preprocess_stage.py      <-- this file
+        -> SFINCS container job
+            -> postprocess_stage.py
+
+Success condition
+-----------------
+This script exits with code 0 only if preprocessing completed and the model folder
+contains a usable sfincs.inp file. If preprocessing fails, this script raises an
+exception and exits nonzero, so the dependent SFINCS Slurm job should not start
+when submitted with --dependency=afterok:<preprocess_job_id>.
+
+Important design rule
+---------------------
+This script should read almost everything from run_config.json. Avoid hard-coded
+project paths here. The launcher owns paths and user choices.
+"""
+
+
+
+
+from __future__ import annotations
+
+import shutil
+import json
+import os
+import sys
+import traceback
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Optional
+import csv
+import numpy as np
+import pandas as pd
+import xarray as xr
+
+
+# ============================================================
+# SMALL UTILS
+# ============================================================
+
+# ============================================================
+# OPTIONAL TIMING DIAGNOSTICS
+# ============================================================
+
+ENABLE_TIMING_DIAGNOSTICS = False
+# Set to False later if you do not want timing logs.
+
+STATIC_NATIVE_KEYS = {
+    "depfile",
+    "mskfile",
+    "indexfile",
+    "sbgfile",
+    "manningfile",
+    "scsfile",
+    "bndfile",
+    "srcfile",
+    "obsfile",
+    "crsfile",
+    "thdfile",
+    "weirfile",
+    "drnfile",
+}
+
+EVENT_NATIVE_KEYS = {
+    "bzsfile",
+    "disfile",
+    "netamprfile",
+    "precipfile",
+    "amprfile",
+    "amufile",
+    "amvfile",
+    "ampfile",
+    "wndfile",
+    "spwfile",
+    "netspwfile",
+    "netamuamvfile",
+    "netampfile",
+    "rstfile",
+    "inifile",
+}
+
+DEFAULT_SFINCS_FILE_OVERRIDE_TARGETS = {
+    # Static files
+    "depfile": ["sfincs.dep"],
+    "mskfile": ["sfincs.msk"],
+    "indexfile": ["sfincs.ind"],
+    "sbgfile": ["sfincs.sbg", "sfincs_subgrid.nc"],
+    "manningfile": ["sfincs.manning", "sfincs.man"],
+    "scsfile": ["sfincs.scs"],
+    "bndfile": ["sfincs.bnd"],
+    "srcfile": ["sfincs.src"],
+    "obsfile": ["sfincs.obs"],
+    "crsfile": ["sfincs.crs"],
+    "thdfile": ["sfincs.thd"],
+    "weirfile": ["sfincs.weir"],
+    "drnfile": ["sfincs.drn"],
+
+    # Event files
+    "bzsfile": ["sfincs.bzs"],
+    "disfile": ["sfincs.dis"],
+    "netamprfile": ["precip_2d.nc", "sfincs_netampr.nc", "sfincs_netamprfile.nc"],
+    "precipfile": ["sfincs.prcp"],
+    "amprfile": ["sfincs.ampr"],
+    "amufile": ["sfincs.amu"],
+    "amvfile": ["sfincs.amv"],
+    "ampfile": ["sfincs.amp"],
+    "wndfile": ["sfincs.wnd"],
+    "spwfile": ["sfincs.spw"],
+    "netspwfile": ["spiderweb.nc", "sfincs_netspwfile.nc"],
+    "netamuamvfile": ["sfincs_netamuamvfile.nc"],
+    "netampfile": ["sfincs_netampfile.nc"],
+    "rstfile": ["sfincs.rst"],
+    "inifile": ["sfincs.ini"],
+
+    # Other / rare files
+    "sfincs.inp": ["sfincs.inp"],
+    "qinffile": ["sfincs.qinf"],
+    "smaxfile": ["sfincs.smax"],
+    "sefffile": ["sfincs.seff"],
+    "ksfile": ["sfincs.ks"],
+    "sigmafile": ["sfincs.sigma"],
+    "psifile": ["sfincs.psi"],
+    "f0file": ["sfincs.f0"],
+    "fcfile": ["sfincs.fc"],
+    "kdfile": ["sfincs.kd"],
+    "volfile": ["sfincs.vol"],
+    "bzifile": ["sfincs.bzi"],
+    "netbndbzsbzifile": ["sfincs_netbndbzsbzifile.nc"],
+    "netsrcdisfile": ["sfincs_netsrcdisfile.nc"],
+}
+
+# Manual path fields for SFINCS-native infiltration files.
+#
+# These are different from native Override Mode toggles:
+#   - Native Override Mode detects files already named like sfincs.smax.
+#   - Manual path fields let the user browse to any file path.
+#
+# The backend copies the selected file into model/ using the canonical SFINCS
+# filename, then writes the matching sfincs.inp pointer key.
+MANUAL_SFINCS_INFILTRATION_PATHS = {
+    "qinf_path": ("qinffile", "sfincs.qinf"),
+
+    # Curve Number recovery / storage-style inputs
+    "smax_path": ("smaxfile", "sfincs.smax"),
+    "seff_path": ("sefffile", "sfincs.seff"),
+    "ks_path": ("ksfile", "sfincs.ks"),
+
+    # Green-Ampt-style inputs
+    "sigma_path": ("sigmafile", "sfincs.sigma"),
+    "psi_path": ("psifile", "sfincs.psi"),
+
+    # Horton-style inputs
+    "f0_path": ("f0file", "sfincs.f0"),
+    "fc_path": ("fcfile", "sfincs.fc"),
+    "kd_path": ("kdfile", "sfincs.kd"),
+
+    # Storage volume / green-infrastructure style input
+    "vol_path": ("volfile", "sfincs.vol"),
+}
+
+from contextlib import contextmanager
+from time import perf_counter
+
+@contextmanager
+def timing_block(label: str):
+    """
+    Lightweight wall-time timer for diagnosing slow preprocessing steps.
+    Output appears in logs/preprocess_*.out.
+    """
+    if not ENABLE_TIMING_DIAGNOSTICS:
+        yield
+        return
+
+    t0 = perf_counter()
+    print(f"[TIMER START] {label}", flush=True)
+    try:
+        yield
+    finally:
+        dt = perf_counter() - t0
+        print(f"[TIMER END]   {label}: {dt:.2f} seconds", flush=True)
+
+def print_section(title: str) -> None:
+    print("\n" + "=" * 78)
+    print(title)
+    print("=" * 78)
+
+
+def now_iso() -> str:
+    return datetime.now().isoformat(timespec="seconds")
+
+
+def json_safe(obj: Any) -> Any:
+    """Convert common Python objects to JSON-safe values."""
+    if isinstance(obj, Path):
+        return str(obj)
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    if isinstance(obj, dict):
+        return {str(k): json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [json_safe(v) for v in obj]
+    if isinstance(obj, tuple):
+        return [json_safe(v) for v in obj]
+    return obj
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def write_json(path: Path, data: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(json_safe(data), f, indent=2)
+
+
+def cfg_get(cfg: dict[str, Any], key: str, default: Any = None) -> Any:
+    return cfg.get(key, default)
+
+
+def cfg_bool(cfg: dict[str, Any], key: str, default: bool = False) -> bool:
+    value = cfg_get(cfg, key, default)
+
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "y", "on"}
+
+    return bool(value)
+
+def cfg_store_cumulative_precip_enabled(cfg: dict[str, Any]) -> bool:
+    """
+    Friendly launcher key -> SFINCS storecumprcp behavior.
+
+    store_cumulative_precip is the UI-facing name.
+    storecumprcp is the raw SFINCS sfincs.inp key.
+    """
+    return cfg_bool(cfg, "store_cumulative_precip", True)
+
+
+def cfg_advanced_config_dict(cfg: dict[str, Any]) -> dict[str, Any]:
+    advanced = cfg_get(cfg, "advanced_config", {}) or {}
+
+    if not isinstance(advanced, dict):
+        advanced = {}
+
+    cfg["advanced_config"] = advanced
+    return advanced
+
+
+def cfg_scs_infiltration_requested(cfg: dict[str, Any]) -> bool:
+    overrides = cfg_get(cfg, "sfincs_file_overrides", {}) or {}
+    mode = str(cfg_get(cfg, "infiltration_mode", "") or "").strip().lower()
+
+    return bool(
+        cfg_bool(cfg, "use_infiltration", False)
+        and (
+            mode in {"curve_number", "curve_number_with_ks", "native_sfincs"}
+            or cfg_path(cfg, "curve_number_path") is not None
+            or cfg_path(cfg, "smax_path") is not None
+            or cfg_path(cfg, "seff_path") is not None
+            or cfg_path(cfg, "ks_path") is not None
+            or bool(overrides.get("scsfile"))
+        )
+    )
+
+
+def normalize_storecumprcp_config(cfg: dict[str, Any]) -> None:
+    """
+    Make sure the friendly UI key and raw SFINCS key agree before model writing.
+    """
+    advanced = cfg_advanced_config_dict(cfg)
+
+    store_value = 1 if cfg_store_cumulative_precip_enabled(cfg) else 0
+
+    if cfg_scs_infiltration_requested(cfg) and store_value != 1:
+        print(
+            "WARNING: store_cumulative_precip=false with Curve Number/SCS infiltration. "
+            "Forcing storecumprcp=1 because storecumprcp=0 reproduced unrealistically dry "
+            "Barker/Addicks reservoir and floodplain results."
+        )
+        store_value = 1
+        cfg["store_cumulative_precip"] = True
+
+    advanced["storecumprcp"] = int(store_value)
+
+
+def cfg_path(cfg: dict[str, Any], key: str, default: Optional[str] = None) -> Optional[Path]:
+    value = cfg.get(key, default)
+    if value is None or str(value).strip() == "":
+        return None
+    return Path(value)
+
+
+def cfg_path_list(cfg: dict[str, Any], key: str) -> list[Path]:
+    values = cfg.get(key, []) or []
+    return [Path(v) for v in values if v]
+
+def copy_manual_sfincs_infiltration_files(
+    cfg: dict[str, Any],
+    model_dir: Path,
+    inp_entries: dict[str, str],
+) -> dict[str, str]:
+    """
+    Copy manually selected SFINCS-native infiltration files into model_dir and
+    add the matching sfincs.inp pointer entries.
+
+    Example:
+        smax_path=/some/file.asc
+        -> copy to model/sfincs.smax
+        -> inp_entries["smaxfile"] = "sfincs.smax"
+
+    This is intentionally separate from native Override Mode. Native Override
+    Mode searches source folders for canonical filenames like sfincs.smax.
+    Manual path mode accepts arbitrary user-selected paths and canonicalizes
+    them into the model folder.
+    """
+    model_dir = Path(model_dir)
+    copied: dict[str, str] = {}
+
+    for cfg_key, (inp_key, target_name) in MANUAL_SFINCS_INFILTRATION_PATHS.items():
+        src = cfg_path(cfg, cfg_key)
+
+        if src is None:
+            continue
+
+        if not src.is_file():
+            raise FileNotFoundError(
+                f"{cfg_key} is set, but the file does not exist: {src}"
+            )
+
+        dst = model_dir / target_name
+        dst.parent.mkdir(parents=True, exist_ok=True)
+
+        if src.resolve() != dst.resolve():
+            shutil.copy2(src, dst)
+
+        inp_entries[inp_key] = target_name
+        copied[cfg_key] = str(dst)
+
+        print(f"MANUAL SFINCS INFILTRATION: {cfg_key} -> {inp_key} = {target_name}")
+
+    return copied
+
+def sfincs_override_enabled_keys(cfg: dict[str, Any]) -> list[str]:
+    if not cfg_get(cfg, "use_sfincs_file_overrides", False):
+        return []
+    overrides = cfg_get(cfg, "sfincs_file_overrides", {}) or {}
+    return [k for k, enabled in overrides.items() if enabled]
+
+def sfincs_file_override_enabled(cfg: dict[str, Any], key: str) -> bool:
+    """
+    Return True only when a real SFINCS file override key is enabled.
+
+    Important for obs/CRS:
+      obs_lines_path ending in .crs is a selected validation source path.
+      sfincs_file_overrides["crsfile"] is the true native sfincs.crs override.
+    """
+    if not cfg_bool(cfg, "use_sfincs_file_overrides", False):
+        return False
+
+    overrides = cfg_get(cfg, "sfincs_file_overrides", {}) or {}
+    return bool(overrides.get(key, False))
+
+
+def sfincs_inp_value_to_text(value: Any) -> str:
+    """
+    Convert Python config values into SFINCS-friendly sfincs.inp text.
+
+    This prevents Python list reprs like:
+        [0.0, 28.0, 50.0]
+    from being written into sfincs.inp where SFINCS expects:
+        0.0 28.0 50.0
+    """
+    if isinstance(value, np.generic):
+        value = value.item()
+
+    if isinstance(value, bool):
+        return "1" if value else "0"
+
+    if isinstance(value, (list, tuple, np.ndarray)):
+        return " ".join(sfincs_inp_value_to_text(item) for item in value)
+
+    return str(value)
+
+NATIVE_STATIC_GRID_GEOMETRY_KEYS = {
+    "depfile",
+    "mskfile",
+    "indexfile",
+    "sbgfile",
+}
+
+NATIVE_STATIC_GEOMETRY_COMPARE_KEYS = (
+    "mmax",
+    "nmax",
+    "dx",
+    "dy",
+    "x0",
+    "y0",
+    "epsg",
+)
+
+KNOWN_NATIVE_STATIC_GEOMETRY_AUTHORITIES = [
+    {
+        "id": "harris_county_ppp_latest",
+        "label": "Harris County PPP latest static native geometry",
+        "path_tokens": ("harris_county_ppp_latest",),
+        "geometry": {
+            "mmax": 996,
+            "nmax": 1011,
+            "dx": 100,
+            "dy": 100,
+            "x0": 212000,
+            "y0": 3261300,
+            "rotation": 0,
+            "epsg": 32615,
+        },
+    },
+]
+
+
+def cfg_uses_native_static_grid_geometry(cfg: dict[str, Any]) -> bool:
+    """
+    True when selected native static files are acting as grid/static geometry authority.
+
+    If sfincs.inp itself is overridden, skip this guard because the imported
+    sfincs.inp is the authority.
+    """
+    if not cfg_bool(cfg, "use_sfincs_file_overrides", False):
+        return False
+
+    overrides = cfg_get(cfg, "sfincs_file_overrides", {}) or {}
+
+    if overrides.get("sfincs.inp", False):
+        return False
+
+    return any(bool(overrides.get(key, False)) for key in NATIVE_STATIC_GRID_GEOMETRY_KEYS)
+
+
+def cfg_override_source_texts(cfg: dict[str, Any]) -> list[str]:
+    values: list[str] = []
+
+    def add_value(value: Any) -> None:
+        if value is None:
+            return
+
+        if isinstance(value, (list, tuple, set)):
+            for item in value:
+                add_value(item)
+            return
+
+        text = str(value).strip()
+        if text:
+            values.append(text)
+
+    add_value(cfg_get(cfg, "override_source_path"))
+    add_value(cfg_get(cfg, "override_source_paths"))
+    add_value(cfg_get(cfg, "native_static_sfincs_input_dirs"))
+    add_value(cfg_get(cfg, "native_sfincs_input_dirs"))
+
+    manifest = cfg_get(cfg, "override_detection_manifest", {}) or {}
+    if isinstance(manifest, dict):
+        for key in NATIVE_STATIC_GRID_GEOMETRY_KEYS:
+            item = manifest.get(key, {}) or {}
+            if isinstance(item, dict):
+                add_value(item.get("path"))
+
+    out: list[str] = []
+    seen: set[str] = set()
+
+    for value in values:
+        if value not in seen:
+            out.append(value)
+            seen.add(value)
+
+    return out
+
+
+def known_native_static_geometry_authority(cfg: dict[str, Any]) -> Optional[dict[str, Any]]:
+    source_texts = [text.lower() for text in cfg_override_source_texts(cfg)]
+
+    for item in KNOWN_NATIVE_STATIC_GEOMETRY_AUTHORITIES:
+        tokens = item.get("path_tokens", ()) or ()
+
+        for source_text in source_texts:
+            if any(str(token).lower() in source_text for token in tokens):
+                return item
+
+    return None
+
+
+def numeric_first_token(value: Any) -> Optional[float]:
+    if value is None:
+        return None
+
+    text = str(value).strip()
+
+    if not text:
+        return None
+
+    first = text.split()[0]
+
+    try:
+        return float(first)
+    except Exception:
+        return None
+
+
+def geometry_value_matches(actual: Any, expected: Any) -> bool:
+    a = numeric_first_token(actual)
+    b = numeric_first_token(expected)
+
+    if a is None or b is None:
+        return False
+
+    return abs(a - b) <= 1.0e-6
+
+
+def native_geometry_mismatches(
+    actual: dict[str, Any],
+    expected: dict[str, Any],
+    keys: tuple[str, ...] = NATIVE_STATIC_GEOMETRY_COMPARE_KEYS,
+) -> list[dict[str, Any]]:
+    mismatches: list[dict[str, Any]] = []
+
+    for key in keys:
+        if not geometry_value_matches(actual.get(key), expected.get(key)):
+            mismatches.append({
+                "key": key,
+                "actual": actual.get(key),
+                "expected": expected.get(key),
+            })
+
+    return mismatches
+
+
+def write_native_geometry_audit(cfg: dict[str, Any], audit: dict[str, Any]) -> None:
+    try:
+        write_json(run_root(cfg) / "native_static_geometry_audit.json", audit)
+    except Exception as exc:
+        print(f"WARNING: could not write native static geometry audit: {exc}")
+
+
+def sync_native_static_geometry_advanced_config(cfg: dict[str, Any]) -> None:
+    """
+    Backend safety correction.
+
+    If native static grid files are selected and sfincs.inp is not overridden,
+    advanced_config geometry must match the native static geometry authority.
+    For known native folders, patch advanced_config before sfincs.inp is written.
+    For unknown folders, warn by default.
+    """
+    if not cfg_uses_native_static_grid_geometry(cfg):
+        return
+
+    authority = known_native_static_geometry_authority(cfg)
+    strict = cfg_bool(cfg, "strict_native_geometry_validation", False)
+
+    if authority is None:
+        message = (
+            "Native static grid files are selected, but no native geometry authority "
+            "could be resolved for advanced_config. If mmax/nmax/dx/dy/x0/y0/epsg "
+            "do not match the imported native static files, the map output may be distorted. "
+            "Add a known geometry authority or override sfincs.inp directly."
+        )
+
+        print(f"WARNING: {message}")
+
+        write_native_geometry_audit(cfg, {
+            "created_at": now_iso(),
+            "status": "unresolved",
+            "strict": strict,
+            "message": message,
+            "override_source_texts": cfg_override_source_texts(cfg),
+            "enabled_overrides": sfincs_override_enabled_keys(cfg),
+        })
+
+        if strict:
+            raise RuntimeError(message)
+
+        return
+
+    advanced = cfg_advanced_config_dict(cfg)
+    expected = dict(authority["geometry"])
+    before = {key: advanced.get(key) for key in expected}
+    mismatches = native_geometry_mismatches(before, expected, tuple(expected.keys()))
+
+    for key, value in expected.items():
+        advanced[key] = value
+
+    cfg["override_geometry_authority_status"] = "resolved"
+    cfg["override_geometry_authority_id"] = authority["id"]
+    cfg["override_geometry_authority_label"] = authority["label"]
+    cfg["override_geometry_authority_geometry"] = expected
+    cfg["override_geometry_advanced_config_repaired"] = bool(mismatches)
+
+    if mismatches:
+        print("WARNING: patched advanced_config geometry to match selected native static files:")
+        for item in mismatches:
+            print(f"  {item['key']}: {item['actual']} -> {item['expected']}")
+    else:
+        print("Native static geometry authority resolved and advanced_config already matched.")
+
+    write_native_geometry_audit(cfg, {
+        "created_at": now_iso(),
+        "status": "resolved",
+        "authority_id": authority["id"],
+        "authority_label": authority["label"],
+        "expected_geometry": expected,
+        "before_geometry": before,
+        "mismatches_before_patch": mismatches,
+        "enabled_overrides": sfincs_override_enabled_keys(cfg),
+        "override_source_texts": cfg_override_source_texts(cfg),
+    })
+
+
+def validate_native_static_geometry_in_written_inp(
+    cfg: dict[str, Any],
+    parsed: dict[str, str],
+) -> None:
+    """
+    Final written-model guard.
+
+    This catches any future path where sfincs.inp still ends up with geometry
+    that disagrees with a known native static geometry authority.
+    """
+    if not cfg_uses_native_static_grid_geometry(cfg):
+        return
+
+    authority = known_native_static_geometry_authority(cfg)
+
+    if authority is None:
+        return
+
+    expected = dict(authority["geometry"])
+    mismatches = native_geometry_mismatches(parsed, expected)
+
+    if not mismatches:
+        print("Written sfincs.inp geometry matches native static geometry authority.")
+        return
+
+    detail = "\n".join(
+        f"  {item['key']}: written={item['actual']} expected={item['expected']}"
+        for item in mismatches
+    )
+
+    write_native_geometry_audit(cfg, {
+        "created_at": now_iso(),
+        "status": "written_inp_mismatch",
+        "authority_id": authority["id"],
+        "authority_label": authority["label"],
+        "expected_geometry": expected,
+        "written_geometry": {key: parsed.get(key) for key in NATIVE_STATIC_GEOMETRY_COMPARE_KEYS},
+        "mismatches": mismatches,
+    })
+
+    raise RuntimeError(
+        "Written sfincs.inp geometry does not match selected native static geometry authority.\n"
+        + detail
+    )
+
+def sfincs_override_search_roots_for_key(cfg: dict[str, Any], key: str) -> list[Path]:
+    roots: list[Path] = []
+
+    if key in STATIC_NATIVE_KEYS:
+        dir_key = "native_static_sfincs_input_dirs"
+    elif key in EVENT_NATIVE_KEYS:
+        dir_key = "native_event_sfincs_input_dirs"
+    else:
+        dir_key = "native_sfincs_input_dirs"
+
+    for item in cfg_get(cfg, dir_key, []) or []:
+        p = Path(item)
+        if p.exists():
+            roots.append(p)
+
+    # Manual search dirs are always allowed as an extra override layer.
+    for item in cfg_get(cfg, "sfincs_file_override_search_dirs", []) or []:
+        p = Path(item)
+        if p.exists():
+            roots.append(p)
+
+    # Backward-compatible fallback.
+    for item in cfg_get(cfg, "native_sfincs_input_dirs", []) or []:
+        p = Path(item)
+        if p.exists():
+            roots.append(p)
+
+    out: list[Path] = []
+    seen = set()
+    for p in roots:
+        rp = p.resolve()
+        if rp not in seen:
+            seen.add(rp)
+            out.append(rp)
+
+    return out
+
+def sfincs_override_search_roots(cfg: dict[str, Any]) -> list[Path]:
+    roots: list[Path] = []
+
+    for item in cfg_get(cfg, "native_sfincs_input_dirs", []) or []:
+        p = Path(item)
+        if p.exists():
+            roots.append(p)
+
+    for item in cfg_get(cfg, "sfincs_file_override_search_dirs", []) or []:
+        p = Path(item)
+        if p.exists():
+            roots.append(p)
+
+    for item in cfg_get(cfg, "data_catalogs", []) or []:
+        p = Path(str(item))
+        if p.exists():
+            roots.append(p)
+
+    out: list[Path] = []
+    seen = set()
+    for p in roots:
+        rp = p.resolve()
+        if rp not in seen:
+            seen.add(rp)
+            out.append(rp)
+    return out
+
+def cfg_string_list(cfg: dict[str, Any], key: str) -> list[str]:
+    """
+    Normalize config values that may arrive as:
+      - a real JSON list
+      - a stringified JSON list
+      - newline/comma-separated text
+      - a scalar string
+    """
+    raw = cfg_get(cfg, key, [])
+
+    if raw is None:
+        return []
+
+    if isinstance(raw, (list, tuple, set)):
+        out: list[str] = []
+        for item in raw:
+            s = str(item or "").strip()
+            if s:
+                out.append(s)
+        return out
+
+    if isinstance(raw, str):
+        text = raw.strip()
+
+        if not text:
+            return []
+
+        if text.startswith("["):
+            try:
+                parsed = json.loads(text)
+                if isinstance(parsed, list):
+                    return [str(item).strip() for item in parsed if str(item).strip()]
+            except Exception:
+                pass
+
+        out: list[str] = []
+        for chunk in text.replace(",", "\n").splitlines():
+            s = chunk.strip()
+            if s:
+                out.append(s)
+        return out
+
+    s = str(raw).strip()
+    return [s] if s else []
+
+
+def candidate_hydromt_catalog_yamls(root: Path) -> list[Path]:
+    """
+    Historical compatibility helper.
+
+    We intentionally do NOT auto-discover hydromt_data.yml files from data_catalogs
+    anymore. data_catalogs are launcher/runtime-review directories, not necessarily
+    valid HydroMT data libraries.
+
+    Run-local HydroMT catalogs are generated from selected file paths by
+    prepare_local_hydromt_catalog().
+    """
+    return []
+
+
+def _looks_like_legacy_or_unsafe_hydromt_catalog(path: Path) -> bool:
+    """
+    Return True for old professor/HydroMT catalogs that should not be passed to
+    the installed HydroMT parser.
+
+    Known-bad examples contain Windows Z:\\ paths, old 'path:' fields,
+    old 'filesystem:' fields, or scalar 'driver: raster'.
+    """
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return True
+
+    bad_tokens = [
+        "Z:\\",
+        "driver: raster",
+        "filesystem:",
+    ]
+
+    if any(token in text for token in bad_tokens):
+        return True
+
+    # Old catalog schema used source-level path: fields. Newer HydroMT expects uri:.
+    # Allow top-level/comment text, but reject if path: appears as an indented YAML field.
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("path:"):
+            return True
+
+    return False
+
+
+def resolve_hydromt_catalog_paths(cfg: dict[str, Any]) -> list[str]:
+    """
+    Resolve optional external HydroMT data libraries.
+
+    Important:
+      - data_catalogs is NOT used here.
+      - data_catalogs stays as launcher/runtime-review directory roots.
+      - run-local sources are handled by prepare_local_hydromt_catalog().
+      - hydromt_catalog_paths is honored only if it points to a safe modern catalog.
+    """
+    raw_values = cfg_string_list(cfg, "hydromt_catalog_paths")
+
+    resolved: list[str] = []
+    seen: set[str] = set()
+
+    for raw in raw_values:
+        text = str(raw or "").strip()
+        if not text:
+            continue
+
+        path = Path(text)
+
+        # Preserve explicit predefined catalog names, but only if the user typed
+        # a non-path name. The launcher should not auto-generate these.
+        if not text.startswith("/") and not path.exists():
+            if text not in seen:
+                resolved.append(text)
+                seen.add(text)
+            continue
+
+        if path.is_file() and path.name in {"hydromt_data.yml", "hydromt_data.yaml"}:
+            if _looks_like_legacy_or_unsafe_hydromt_catalog(path):
+                print(f"WARNING: skipping legacy/unsafe HydroMT catalog: {path}")
+                continue
+
+            key = str(path)
+            if key not in seen:
+                resolved.append(key)
+                seen.add(key)
+            continue
+
+        print(f"WARNING: ignoring hydromt_catalog_paths entry that is not a safe hydromt_data.yml file: {text}")
+
+    return resolved
+
+def _yaml_scalar(value: Any) -> str:
+    """Return a safe YAML scalar using JSON string quoting."""
+    return json.dumps(str(value))
+
+
+def _path_from_value_if_existing_file(value: Any) -> Optional[Path]:
+    """
+    Return Path(value) only when value is an existing local file path.
+
+    Source labels like 'fabdem', 'merit_hydro', or 'local_dem_1' must remain
+    labels and must not be treated as paths.
+    """
+    if value is None:
+        return None
+
+    text = str(value).strip()
+    if not text:
+        return None
+
+    if not text.startswith("/"):
+        return None
+
+    path = Path(text)
+    if path.is_file():
+        return path
+
+    return None
+
+
+def _register_local_raster_source(
+    *,
+    sources: dict[str, dict[str, Any]],
+    path_to_source: dict[str, str],
+    path: Path,
+    prefix: str,
+    driver_name: str = "rasterio",
+    metadata: Optional[dict[str, Any]] = None,
+) -> str:
+    """
+    Add one local raster file to the generated HydroMT catalog and return its
+    generated source name.
+    """
+    path = path.resolve()
+    key = str(path)
+
+    if key in path_to_source:
+        return path_to_source[key]
+
+    index = 1
+    while True:
+        source_name = f"local_{prefix}_{index}"
+        if source_name not in sources:
+            break
+        index += 1
+
+    entry: dict[str, Any] = {
+        "data_type": "RasterDataset",
+        "uri": key,
+        "driver_name": driver_name,
+    }
+
+    if metadata:
+        entry["metadata"] = metadata
+
+    sources[source_name] = entry
+    path_to_source[key] = source_name
+    return source_name
+
+
+def _normalize_raster_source_entries(
+    *,
+    cfg: dict[str, Any],
+    cfg_key: str,
+    path_fields: tuple[str, ...],
+    source_prefix: str,
+    sources: dict[str, dict[str, Any]],
+    path_to_source: dict[str, str],
+) -> None:
+    """
+    Rewrite path-like values inside a list of HydroMT dataset dictionaries.
+
+    Example input:
+      hydromt_dem_sources = [{"elevation": "/proj/.../dem.tif", "zmin": 0.001}]
+
+    Example output:
+      hydromt_dem_sources = [{"elevation": "local_dem_1", "zmin": 0.001}]
+
+    and generated_hydromt_catalog.yml contains local_dem_1 -> /proj/.../dem.tif.
+    """
+    raw_items = cfg_get(cfg, cfg_key, []) or []
+    if not isinstance(raw_items, list):
+        return
+
+    normalized: list[Any] = []
+
+    for item in raw_items:
+        if not isinstance(item, dict):
+            normalized.append(item)
+            continue
+
+        new_item = dict(item)
+
+        for field in path_fields:
+            path = _path_from_value_if_existing_file(new_item.get(field))
+            if path is None:
+                continue
+
+            source_name = _register_local_raster_source(
+                sources=sources,
+                path_to_source=path_to_source,
+                path=path,
+                prefix=source_prefix,
+            )
+            new_item[field] = source_name
+
+        normalized.append(new_item)
+
+    cfg[cfg_key] = normalized
+
+
+def generated_hydromt_catalog_path(cfg: dict[str, Any]) -> Path:
+    """Path for the run-local generated HydroMT catalog."""
+    return run_root(cfg) / "generated_hydromt_catalog.yml"
+
+
+def write_generated_hydromt_catalog(
+    *,
+    cfg: dict[str, Any],
+    sources: dict[str, dict[str, Any]],
+) -> Optional[Path]:
+    """
+    Write a minimal HydroMT v1-style catalog using only local raster sources.
+
+    Keep this YAML minimal. The installed HydroMT parser rejected old fields like
+    path, filesystem, scalar driver: raster, source-level crs, and source-level meta.
+    """
+    if not sources:
+        return None
+
+    path = generated_hydromt_catalog_path(cfg)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    lines: list[str] = [
+        "meta:",
+        "  version: hydromt-data-catalog-v1",
+        f"  name: {_yaml_scalar('generated_' + str(cfg_get(cfg, 'run_name', 'sfincs_run')))}",
+        f"  generated_at: {_yaml_scalar(now_iso())}",
+        "  note: \"Generated automatically from explicit launcher file paths.\"",
+        "",
+    ]
+
+    for source_name, info in sources.items():
+        lines.extend([
+            f"{source_name}:",
+            f"  data_type: {info['data_type']}",
+            f"  uri: {_yaml_scalar(info['uri'])}",
+            "  driver:",
+            f"    name: {info['driver_name']}",
+        ])
+
+        metadata = info.get("metadata") or {}
+        if metadata:
+            lines.append("  metadata:")
+            for meta_key, meta_value in metadata.items():
+                lines.append(f"    {meta_key}: {_yaml_scalar(meta_value)}")
+
+        lines.append("")
+
+    path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Wrote generated HydroMT catalog: {path}")
+    for source_name, info in sources.items():
+        print(f"  {source_name}: {info['uri']}")
+
+    return path
+
+
+def source_value_is_label(value: Any) -> bool:
+    """
+    Return True for UI/source-kind labels that must not be passed to HydroMT
+    as catalog names or filesystem paths.
+    """
+    text = str(value or "").strip().lower()
+    return text in {
+        "",
+        "local_file",
+        "csv",
+        "event_catalog_csv",
+        "native_sfincs",
+    }
+
+def prepare_local_hydromt_catalog(cfg: dict[str, Any]) -> list[str]:
+    """
+    Generate a run-local HydroMT catalog from explicit local file paths in cfg.
+
+    This is the key generalization:
+      - app.py detects files as paths.
+      - this backend creates temporary source names.
+      - HydroMT receives source names plus a generated data_lib YAML.
+    """
+    sources: dict[str, dict[str, Any]] = {}
+    path_to_source: dict[str, str] = {}
+
+    _normalize_raster_source_entries(
+        cfg=cfg,
+        cfg_key="hydromt_dem_sources",
+        path_fields=("elevation", "dem", "dep", "raster", "source"),
+        source_prefix="dem",
+        sources=sources,
+        path_to_source=path_to_source,
+    )
+
+    _normalize_raster_source_entries(
+        cfg=cfg,
+        cfg_key="hydromt_bathy_sources",
+        path_fields=("elevation", "bathy", "dep", "raster", "source"),
+        source_prefix="bathy",
+        sources=sources,
+        path_to_source=path_to_source,
+    )
+
+    _normalize_raster_source_entries(
+        cfg=cfg,
+        cfg_key="hydromt_roughness_sources",
+        path_fields=("lulc", "landcover", "raster", "source"),
+        source_prefix="roughness",
+        sources=sources,
+        path_to_source=path_to_source,
+    )
+
+    # Spatial rainfall fallback: app.py stores the friendly label "local_file"
+    # plus the real NetCDF path. HydroMT needs a generated source name with
+    # explicit CRS metadata, otherwise latitude/longitude MRMS NetCDF files can
+    # fail with: RasterDataset: CRS not defined in data catalog or data.
+    if (
+        cfg_get(cfg, "use_rainfall", False)
+        and cfg_get(cfg, "rainfall_kind", "spatial") == "spatial"
+        and source_value_is_label(cfg_get(cfg, "rainfall_source"))
+    ):
+        rainfall_path = cfg_path(cfg, "rainfall_path")
+
+        if rainfall_path and rainfall_path.is_file():
+            source_name = _register_local_raster_source(
+                sources=sources,
+                path_to_source=path_to_source,
+                path=rainfall_path,
+                prefix="precip",
+                driver_name="rasterio",
+                metadata={
+                    "crs": "EPSG:4326",
+                },
+            )
+            cfg["rainfall_source"] = source_name
+            print(f"Registered local rainfall source: {source_name} -> {rainfall_path}")
+        else:
+            print(
+                "WARNING: rainfall_source is local_file but rainfall_path is blank/missing; "
+                "rainfall validation should catch this before HydroMT forcing setup."
+            )
+
+
+    # Landcover roughness fallback: keep app.py generic and path-based, then
+    # register the selected landcover raster here.
+    landcover_path = cfg_path(cfg, "landcover_path")
+    reclass_table = cfg_path(cfg, "landcover_reclass_table")
+    use_landcover = cfg_get(cfg, "use_landcover_roughness_if_available", True)
+
+    if landcover_path and landcover_path.is_file() and reclass_table and reclass_table.is_file() and use_landcover:
+        source_name = _register_local_raster_source(
+            sources=sources,
+            path_to_source=path_to_source,
+            path=landcover_path,
+            prefix="lulc",
+        )
+        cfg["landcover_source"] = source_name
+
+    catalog_path = write_generated_hydromt_catalog(cfg=cfg, sources=sources)
+    if catalog_path is None:
+        return []
+
+    return [str(catalog_path)]
+
+def find_sfincs_override_candidates(search_roots: list[Path], filenames: list[str], max_hits: int = 25) -> list[Path]:
+    """
+    Find override candidates using filename priority.
+
+    Example:
+      ["sfincs.manning", "sfincs.man"]
+
+    If sfincs.manning exists, return only sfincs.manning matches.
+    Only search sfincs.man if no sfincs.manning exists anywhere.
+
+    This avoids false duplicate failures when a folder contains both a preferred
+    filename and an older alias with identical contents.
+    """
+    for filename in filenames:
+        hits: list[Path] = []
+
+        for root in search_roots:
+            if root.is_file():
+                if root.name == filename and not path_has_catalog_admin_part(root):
+                    hits.append(root)
+                continue
+
+            for candidate in root.rglob(filename):
+                if path_has_catalog_admin_part(candidate):
+                    continue
+
+                hits.append(candidate)
+
+            if len(hits) >= max_hits:
+                return hits[:max_hits]
+
+        if hits:
+            return hits[:max_hits]
+
+    return []
+
+
+def resolve_sfincs_override_source(cfg: dict[str, Any], key: str) -> Path:
+    targets = dict(DEFAULT_SFINCS_FILE_OVERRIDE_TARGETS)
+    targets.update(cfg_get(cfg, "sfincs_file_override_targets", {}) or {})
+
+    filenames = targets.get(key)
+
+    if not filenames:
+        raise KeyError(f"Unknown SFINCS file override key: {key}")
+
+    roots = sfincs_override_search_roots_for_key(cfg, key)
+    if not roots:
+        raise FileNotFoundError(
+            f"SFINCS override {key!r} is enabled, but no existing override search folders were found."
+        )
+
+    hits = find_sfincs_override_candidates(roots, filenames)
+
+    if not hits:
+        raise FileNotFoundError(
+            f"SFINCS override {key!r} is enabled, but none of {filenames} was found under: "
+            + ", ".join(str(r) for r in roots)
+        )
+
+    if len(hits) > 1 and cfg_get(cfg, "sfincs_file_override_fail_on_multiple_matches", True):
+        preview = "\n".join(f"  {h}" for h in hits[:20])
+        raise RuntimeError(
+            f"SFINCS override {key!r} found multiple possible files. "
+            f"Narrow SFINCS_FILE_OVERRIDE_SEARCH_DIRS.\n{preview}"
+        )
+
+    return hits[0]
+
+
+def set_sfincs_inp_value(inp_path: Path, key: str, value: str) -> None:
+    lines = inp_path.read_text(encoding="utf-8", errors="replace").splitlines()
+    key_l = key.lower()
+    found = False
+    out: list[str] = []
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or stripped.startswith("!"):
+            out.append(line)
+            continue
+
+        if "=" not in line:
+            out.append(line)
+            continue
+
+        lhs, rhs = line.split("=", 1)
+        if lhs.strip().lower() == key_l:
+            out.append(f"{key:<18}= {value}")
+            found = True
+        else:
+            out.append(line)
+
+    if not found:
+        out.append(f"{key:<18}= {value}")
+
+    inp_path.write_text("\n".join(out) + "\n", encoding="utf-8")
+
+
+def final_model_has_scs_infiltration(cfg: dict[str, Any]) -> bool:
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+
+    parsed: dict[str, str] = {}
+    if inp_path.exists():
+        try:
+            parsed = parse_sfincs_inp(inp_path)
+        except Exception:
+            parsed = {}
+
+    scsfile = str(parsed.get("scsfile", "") or "").strip().lower()
+
+    return bool(
+        cfg_scs_infiltration_requested(cfg)
+        or (scsfile not in {"", "none", "nil"})
+        or (root / "sfincs.scs").exists()
+    )
+
+
+def enforce_storecumprcp_in_written_model(cfg: dict[str, Any]) -> None:
+    """
+    Final safety patch for generated/native/override sfincs.inp.
+
+    This catches old reference sfincs.inp files copied by Override Mode.
+    """
+    inp_path = model_root(cfg) / "sfincs.inp"
+
+    if not inp_path.exists():
+        return
+
+    if not final_model_has_scs_infiltration(cfg):
+        return
+
+    parsed = parse_sfincs_inp(inp_path)
+    old_value = str(parsed.get("storecumprcp", "") or "").strip()
+
+    if old_value != "1":
+        print(
+            "WARNING: patching final sfincs.inp to storecumprcp=1 for Curve Number/SCS infiltration. "
+            f"Previous value was {old_value!r}. storecumprcp=0 reproduced unrealistically dry "
+            "Barker/Addicks reservoir and floodplain results."
+        )
+
+    set_sfincs_inp_value(inp_path, "storecumprcp", "1")
+
+    advanced = cfg_advanced_config_dict(cfg)
+    advanced["storecumprcp"] = 1
+    cfg["store_cumulative_precip"] = True
+
+
+
+def require_existing_path(cfg: dict[str, Any], key: str, label: str) -> Path:
+    path = cfg_path(cfg, key)
+    if path is None:
+        raise FileNotFoundError(f"{label} is enabled but {key} is blank")
+    if not path.exists():
+        raise FileNotFoundError(f"{label} path does not exist: {path}")
+    return path
+
+def normalize_structure_source_kind(value: Any, *, key: str = "structure_source_kind") -> str:
+    """
+    Normalize Manual/UI/detector structure source-kind vocabulary.
+
+    The launcher/detector may describe vector GIS files using HydroMT-ish
+    vocabulary such as "geodataframe". This backend historically used "gis"
+    for the same concept. Normalize aliases once, then keep downstream logic
+    strict and explicit.
+    """
+    text = str(value or "").strip().lower()
+
+    aliases = {
+        # Disabled / absent.
+        "": "none",
+        "none": "none",
+        "false": "none",
+        "disabled": "none",
+        "off": "none",
+        "no": "none",
+
+        # Vector GIS path sources.
+        "gis": "gis",
+        "geodataframe": "gis",
+        "geo_dataframe": "gis",
+        "gdf": "gis",
+        "vector": "gis",
+        "vector_file": "gis",
+        "vector_path": "gis",
+        "shapefile": "gis",
+        "shape": "gis",
+        "shp": "gis",
+        "file": "gis",
+        "path": "gis",
+        "local_file": "gis",
+        "local_path": "gis",
+
+        # Already-made native SFINCS structure files.
+        "native_sfincs": "native_sfincs",
+        "native": "native_sfincs",
+        "native_file": "native_sfincs",
+        "sfincs_native": "native_sfincs",
+        "sfincs_file": "native_sfincs",
+    }
+
+    normalized = aliases.get(text)
+
+    if normalized is None:
+        raise ValueError(f"Unknown {key}: {value!r}")
+
+    return normalized
+
+def create_structure_from_gis(
+    sf,
+    cfg: dict[str, Any],
+    *,
+    label: str,
+    source_kind_key: str,
+    path_key: str,
+    component_names: list[str],
+) -> None:
+    """
+    Create a structure from a GIS/vector location file using a HydroMT-SFINCS component.
+
+    This is intentionally component-name flexible because HydroMT-SFINCS
+    component names may vary by version.
+    """
+    source_kind_raw = cfg_get(cfg, source_kind_key, "none")
+    source_kind = normalize_structure_source_kind(source_kind_raw, key=source_kind_key)
+
+    if source_kind == "none":
+        print(f"Skipping {label}: source kind is 'none'")
+        return
+
+    if source_kind == "native_sfincs":
+        print(f"{label}: native SFINCS file requested; copy will happen after HydroMT write.")
+        return
+
+    source_path = require_existing_path(cfg, path_key, label)
+
+    for component_name in component_names:
+        comp = get_component(sf, component_name)
+        if comp is None:
+            continue
+
+        create_func = safe_getattr(comp, "create", None)
+        if callable(create_func):
+            print(
+                f"Creating {label} from GIS/vector file using component "
+                f"{component_name!r}: {source_path}"
+            )
+            create_func(locations=str(source_path))
+            return
+
+    raise RuntimeError(
+        f"{label} requested from GIS/vector file, but none of these HydroMT-SFINCS components "
+        f"were available with a create() method: {component_names}"
+    )
+
+def copy_native_sfincs_structure_file(
+    cfg: dict[str, Any],
+    *,
+    label: str,
+    source_kind_key: str,
+    native_path_key: str,
+    target_filename: str,
+    inp_key: str,
+) -> None:
+    """
+    Copy an already-made native SFINCS structure file into model/ and patch sfincs.inp.
+    """
+    source_kind_raw = cfg_get(cfg, source_kind_key, "none")
+    source_kind = normalize_structure_source_kind(source_kind_raw, key=source_kind_key)
+
+    if source_kind != "native_sfincs":
+        return
+
+    source_path = require_existing_path(cfg, native_path_key, label)
+    target_path = model_root(cfg) / target_filename
+    inp_path = model_root(cfg) / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch {inp_key}; sfincs.inp does not exist: {inp_path}")
+
+    print(f"Copying native {label} file:")
+    print(f"  source: {source_path}")
+    print(f"  target: {target_path}")
+
+    shutil.copy2(source_path, target_path)
+    set_sfincs_inp_value(inp_path, inp_key, target_filename)
+
+    print(f"Native {label} copied and sfincs.inp patched:")
+    print(f"  {inp_key} = {target_filename}")
+
+def copy_native_structure_files(cfg: dict[str, Any]) -> None:
+    """
+    Copy native SFINCS structure files after HydroMT write_model().
+    Direct SFINCS file overrides still run after this and therefore still win.
+    """
+    if not cfg_get(cfg, "use_structures", False):
+        print("Skipping native structure copies because use_structures=False")
+        return
+
+    # Both drainage structures and culverts map to SFINCS drnfile.
+    drainage_native = (
+        normalize_structure_source_kind(
+            cfg_get(cfg, "drainage_structure_source_kind", "none"),
+            key="drainage_structure_source_kind",
+        )
+        == "native_sfincs"
+    )
+    culvert_native = (
+        normalize_structure_source_kind(
+            cfg_get(cfg, "culvert_source_kind", "none"),
+            key="culvert_source_kind",
+        )
+        == "native_sfincs"
+    )
+    if drainage_native and culvert_native:
+        raise RuntimeError(
+            "Both drainage_structure_source_kind and culvert_source_kind are native_sfincs. "
+            "They both target sfincs.drn, so use only one native drnfile."
+        )
+
+    copy_native_sfincs_structure_file(
+        cfg,
+        label="thin dams",
+        source_kind_key="thin_dam_source_kind",
+        native_path_key="thin_dam_native_file_path",
+        target_filename="sfincs.thd",
+        inp_key="thdfile",
+    )
+
+    copy_native_sfincs_structure_file(
+        cfg,
+        label="weirs",
+        source_kind_key="weir_source_kind",
+        native_path_key="weir_native_file_path",
+        target_filename="sfincs.weir",
+        inp_key="weirfile",
+    )
+
+    copy_native_sfincs_structure_file(
+        cfg,
+        label="drainage structures",
+        source_kind_key="drainage_structure_source_kind",
+        native_path_key="drainage_structure_native_file_path",
+        target_filename="sfincs.drn",
+        inp_key="drnfile",
+    )
+
+    copy_native_sfincs_structure_file(
+        cfg,
+        label="culverts",
+        source_kind_key="culvert_source_kind",
+        native_path_key="culvert_native_file_path",
+        target_filename="sfincs.drn",
+        inp_key="drnfile",
+    )
+
+
+def is_native_sfincs_obs_points_file(path: Optional[Path]) -> bool:
+    """
+    Return True for native SFINCS observation-point files.
+
+    The curated validation profiles use SFINCS .xy format:
+        x y [optional comment/name]
+    These should be copied to sfincs.obs after HydroMT writes the model,
+    not passed into HydroMT as GIS/vector data.
+    """
+    if path is None:
+        return False
+
+    return Path(path).suffix.lower() == ".xy"
+
+
+def is_native_sfincs_obs_lines_file(path: Optional[Path]) -> bool:
+    """
+    Return True for native SFINCS cross-section files.
+
+    Policy:
+      - .crs is the native SFINCS/TEKAL-style cross-section format and may be
+        copied directly to model/sfincs.crs.
+      - .xyxy is a legacy/intermediate line-segment format and is NOT copied
+        directly. Auto-conversion from .xyxy to .crs can be added later as an
+        explicit preprocessing feature.
+    """
+    if path is None:
+        return False
+
+    return Path(path).suffix.lower() == ".crs"
+
+
+def copy_one_native_observation_file(
+    cfg: dict[str, Any],
+    *,
+    source_path: Path,
+    label: str,
+    target_filename: str,
+    inp_key: str,
+) -> None:
+    """
+    Copy a native SFINCS observation/CRS file into model/ and patch sfincs.inp.
+    """
+    if not source_path.is_file():
+        raise FileNotFoundError(f"{label} file does not exist: {source_path}")
+
+    target_path = model_root(cfg) / target_filename
+    inp_path = model_root(cfg) / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(
+            f"Cannot patch {inp_key}; sfincs.inp does not exist: {inp_path}"
+        )
+
+    print(f"Copying native {label} file:")
+    print(f"  source: {source_path}")
+    print(f"  target: {target_path}")
+
+    if source_path.resolve() != target_path.resolve():
+        shutil.copy2(source_path, target_path)
+
+    set_sfincs_inp_value(inp_path, inp_key, target_filename)
+
+    print(f"Native {label} copied and sfincs.inp patched:")
+    print(f"  {inp_key} = {target_filename}")
+
+
+def copy_native_observation_files(cfg: dict[str, Any]) -> None:
+    """
+    Copy native SFINCS observation files after HydroMT write_model().
+
+    Manual mode currently uses curated native validation profiles:
+        obs points: .xy  -> sfincs.obs / obsfile
+        CRS lines: .crs -> sfincs.crs / crsfile
+
+    These files are already SFINCS input files. Do not send them through
+    HydroMT geodata readers.
+    """
+    if cfg_get(cfg, "use_obs_points", False):
+        obs_points = cfg_path(cfg, "obs_points_path")
+
+        if obs_points is None:
+            fail_or_warn(cfg, "use_obs_points=True but obs_points_path is blank")
+        elif is_native_sfincs_obs_points_file(obs_points):
+            copy_one_native_observation_file(
+                cfg,
+                source_path=obs_points,
+                label="observation points",
+                target_filename="sfincs.obs",
+                inp_key="obsfile",
+            )
+        else:
+            print(
+                "Observation points are not a native .xy file; assuming HydroMT already handled them."
+            )
+    else:
+        print("Skipping native observation-point copy because use_obs_points=False")
+
+    if cfg_get(cfg, "use_obs_lines", False):
+        obs_lines = cfg_path(cfg, "obs_lines_path")
+
+        if obs_lines is None:
+            fail_or_warn(cfg, "use_obs_lines=True but obs_lines_path is blank")
+        elif is_native_sfincs_obs_lines_file(obs_lines):
+            copy_one_native_observation_file(
+                cfg,
+                source_path=obs_lines,
+                label="observation/CRS lines",
+                target_filename="sfincs.crs",
+                inp_key="crsfile",
+            )
+        else:
+            print(
+                "Observation lines are not a native .xyxy file; assuming HydroMT already handled them."
+            )
+    else:
+        print("Skipping native observation-line copy because use_obs_lines=False")
+
+def safe_sfincs_label(value: Any, fallback: str) -> str:
+    """
+    Make a short SFINCS-safe label for obs/CRS names.
+    """
+    text = str(value or "").strip()
+
+    if not text or text.lower() in {"nan", "none", "null"}:
+        text = fallback
+
+    out = []
+    for ch in text:
+        if ch.isalnum() or ch in {"_", "-"}:
+            out.append(ch)
+        else:
+            out.append("_")
+
+    label = "".join(out).strip("_")
+
+    if not label:
+        label = fallback
+
+    return label[:64]
+
+
+def optional_first_existing_column(
+    available_cols: list[str],
+    candidates: list[str],
+    *,
+    label: str,
+) -> str:
+    """
+    Return the first matching column or blank if no alias exists.
+    """
+    try:
+        return infer_first_existing_column(
+            available_cols,
+            candidates,
+            label=label,
+        )
+    except KeyError:
+        return ""
+
+
+def resolve_hybrid_obs_points_file(cfg: dict[str, Any], event_catalog: Path) -> Path:
+    """
+    Resolve event-catalog observation points.
+
+    Accepted:
+      - explicit obs_points_path
+      - native SFINCS .xy
+      - CSV with projected model x/y columns
+    """
+    return resolve_hybrid_event_file(
+        cfg=cfg,
+        event_catalog=event_catalog,
+        cfg_keys=("obs_points_path",),
+        default_relative="event_validation_points/sfincs_obs_points_validation.xy",
+        label="observation-points file",
+        patterns=(
+            "*sfincs*obs*points*.xy",
+            "*obs*points*.xy",
+            "*validation*points*.xy",
+            "*obs*points*.csv",
+            "*validation*points*.csv",
+            "*.xy",
+            "*.csv",
+        ),
+    )
+
+
+def resolve_hybrid_obs_lines_file(cfg: dict[str, Any], event_catalog: Path) -> Path:
+    """
+    Resolve event-catalog observation/cross-section lines.
+
+    Accepted:
+      - explicit obs_lines_path
+      - native SFINCS/TEKAL .crs
+      - flat .xyxy line segments
+      - CSV with projected model x1/y1/x2/y2 columns
+    """
+    return resolve_hybrid_event_file(
+        cfg=cfg,
+        event_catalog=event_catalog,
+        cfg_keys=("obs_lines_path",),
+        default_relative="event_validation_lines/sfincs_crs_lines_TEKAL.crs",
+        label="observation/cross-section-lines file",
+        patterns=(
+            "*sfincs*crs*.crs",
+            "*crs*.crs",
+            "*TEKAL*.xyxy",
+            "*tecal*.xyxy",
+            "*obs*lines*.xyxy",
+            "*validation*lines*.xyxy",
+            "*obs*lines*.csv",
+            "*validation*lines*.csv",
+            "*.crs",
+            "*.xyxy",
+            "*.csv",
+        ),
+    )
+
+
+def write_hybrid_obs_from_event_catalog(cfg: dict[str, Any], event_catalog: Path) -> None:
+    """
+    Write model/sfincs.obs from event-catalog observation points.
+
+    Policy:
+      - .xy is already native and is copied directly.
+      - CSV must provide projected model coordinates, not lon/lat.
+      - The output is written before validate_written_model() checks obsfile.
+    """
+    print_section("HYBRID: WRITE SFINCS.OBS")
+
+    src = resolve_hybrid_obs_points_file(cfg, event_catalog)
+    print(f"Hybrid observation-points source: {src}")
+
+    if is_native_sfincs_obs_points_file(src):
+        copy_one_native_observation_file(
+            cfg,
+            source_path=src,
+            label="hybrid observation points",
+            target_filename="sfincs.obs",
+            inp_key="obsfile",
+        )
+        return
+
+    if src.suffix.lower() != ".csv":
+        raise ValueError(
+            "Hybrid observation points must be either native .xy or CSV with projected x/y columns. "
+            f"Got: {src}"
+        )
+
+    df = pd.read_csv(src)
+
+    if df.empty:
+        raise ValueError(f"Observation-points CSV has no rows: {src}")
+
+    cols = list(df.columns)
+
+    x_col = infer_first_existing_column(
+        cols,
+        [
+            "sfincs_obs_x",
+            "sfincs_x",
+            "obs_x",
+            "x_utm15n",
+            "utm15n_x",
+            "x_epsg32615",
+            "epsg32615_x",
+            "x_model",
+            "model_x",
+            "x",
+            "easting",
+            "utm_easting",
+            "coord_x_utm15n",
+            "coord_x_raw",
+        ],
+        label="observation-point x",
+    )
+
+    y_col = infer_first_existing_column(
+        cols,
+        [
+            "sfincs_obs_y",
+            "sfincs_y",
+            "obs_y",
+            "y_utm15n",
+            "utm15n_y",
+            "y_epsg32615",
+            "epsg32615_y",
+            "y_model",
+            "model_y",
+            "y",
+            "northing",
+            "utm_northing",
+            "coord_y_utm15n",
+            "coord_y_raw",
+        ],
+        label="observation-point y",
+    )
+
+    name_col = optional_first_existing_column(
+        cols,
+        [
+            "obs_name",
+            "station_name",
+            "site_name",
+            "gauge_name",
+            "gage_name",
+            "name",
+            "station_id",
+            "site_no",
+            "usgs_site_no",
+            "noaa_id",
+            "id",
+        ],
+        label="observation-point name",
+    )
+
+    records: list[dict[str, Any]] = []
+
+    for row_idx, row in df.iterrows():
+        try:
+            x = float(row[x_col])
+            y = float(row[y_col])
+        except Exception as exc:
+            raise ValueError(
+                f"Bad observation-point coordinate on row {row_idx + 2} in {src}. "
+                f"x_col={x_col!r}, y_col={y_col!r}, row={row.to_dict()}"
+            ) from exc
+
+        if not np.isfinite(x) or not np.isfinite(y):
+            raise ValueError(
+                f"Non-finite observation-point coordinate on row {row_idx + 2} in {src}: "
+                f"x={x}, y={y}"
+            )
+
+        label_value = row[name_col] if name_col else f"obs_{len(records) + 1:03d}"
+        records.append({
+            "order": len(records) + 1,
+            "x": x,
+            "y": y,
+            "label": safe_sfincs_label(label_value, f"obs_{len(records) + 1:03d}"),
+        })
+
+    if not records:
+        raise ValueError(f"No usable observation points found in {src}")
+
+    root = model_root(cfg)
+    dst = root / "sfincs.obs"
+    inp_path = root / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch obsfile; sfincs.inp does not exist: {inp_path}")
+
+    with dst.open("w", encoding="utf-8") as f:
+        for item in records:
+            f.write(f"{item['x']:.6f} {item['y']:.6f}\n")
+
+    set_sfincs_inp_value(inp_path, "obsfile", "sfincs.obs")
+
+    audit = {
+        "created_at": now_iso(),
+        "mode": "hybrid_event_catalog_obs_points",
+        "source": str(src),
+        "output": str(dst),
+        "x_col": x_col,
+        "y_col": y_col,
+        "name_col": name_col,
+        "count": len(records),
+        "records": records,
+    }
+    audit_path = run_root(cfg) / "hybrid_obs_points_audit.json"
+    write_json(audit_path, audit)
+
+    print("Hybrid observation points written:")
+    print(f"  source: {src}")
+    print(f"  output: {dst}")
+    print(f"  count:  {len(records)}")
+    print(f"  audit:  {audit_path}")
+    print("  sfincs.inp: obsfile = sfincs.obs")
+
+
+def write_hybrid_crs_records(
+    cfg: dict[str, Any],
+    *,
+    source_path: Path,
+    records: list[dict[str, Any]],
+) -> None:
+    """
+    Write SFINCS/TEKAL-style CRS blocks.
+
+    Format:
+        CRS_001
+        2 2
+        x1 y1
+        x2 y2
+    """
+    if not records:
+        raise ValueError(f"No CRS records to write from {source_path}")
+
+    root = model_root(cfg)
+    dst = root / "sfincs.crs"
+    inp_path = root / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch crsfile; sfincs.inp does not exist: {inp_path}")
+
+    with dst.open("w", encoding="utf-8") as f:
+        for i, item in enumerate(records, start=1):
+            label = safe_sfincs_label(item.get("label", ""), f"CRS_{i:03d}")
+
+            x1 = float(item["x1"])
+            y1 = float(item["y1"])
+            x2 = float(item["x2"])
+            y2 = float(item["y2"])
+
+            f.write(f"{label}\n")
+            f.write("2 2\n")
+            f.write(f"{x1:.6f} {y1:.6f}\n")
+            f.write(f"{x2:.6f} {y2:.6f}\n")
+
+    set_sfincs_inp_value(inp_path, "crsfile", "sfincs.crs")
+
+    audit = {
+        "created_at": now_iso(),
+        "mode": "hybrid_event_catalog_crs_lines",
+        "source": str(source_path),
+        "output": str(dst),
+        "count": len(records),
+        "records": records,
+    }
+    audit_path = run_root(cfg) / "hybrid_crs_lines_audit.json"
+    write_json(audit_path, audit)
+
+    print("Hybrid CRS lines written:")
+    print(f"  source: {source_path}")
+    print(f"  output: {dst}")
+    print(f"  count:  {len(records)}")
+    print(f"  audit:  {audit_path}")
+    print("  sfincs.inp: crsfile = sfincs.crs")
+
+
+def read_flat_xyxy_records(path: Path) -> list[dict[str, Any]]:
+    """
+    Read a flat x1 y1 x2 y2 whitespace table.
+    """
+    arr = np.loadtxt(path, comments="#")
+
+    if arr.ndim == 1:
+        arr = arr.reshape(1, -1)
+
+    if arr.shape[1] < 4:
+        raise ValueError(f"Flat XYXY file must have at least 4 columns: {path}")
+
+    records: list[dict[str, Any]] = []
+
+    for i, row in enumerate(arr, start=1):
+        x1, y1, x2, y2 = [float(v) for v in row[:4]]
+
+        if not all(np.isfinite([x1, y1, x2, y2])):
+            raise ValueError(f"Non-finite coordinate in {path} row {i}")
+
+        records.append({
+            "order": i,
+            "label": f"CRS_{i:03d}",
+            "x1": x1,
+            "y1": y1,
+            "x2": x2,
+            "y2": y2,
+        })
+
+    return records
+
+def read_tecal_crs_records(path: Path) -> list[dict[str, Any]]:
+    """
+    Read TEKAL/SFINCS-style CRS blocks and return normalized line records.
+
+    Expected structure:
+        CRS_001
+        2 2
+        x1 y1
+        x2 y2
+        CRS_002
+        2 2
+        ...
+    """
+    lines = nonempty_noncomment_lines(path)
+
+    if not lines:
+        raise ValueError(f"TEKAL CRS file is empty: {path}")
+
+    records: list[dict[str, Any]] = []
+    i = 0
+
+    while i < len(lines):
+        label = safe_sfincs_label(lines[i].split()[0], f"CRS_{len(records) + 1:03d}")
+        i += 1
+
+        if i >= len(lines):
+            raise ValueError(f"Unexpected EOF after CRS label {label!r} in {path}")
+
+        dims = lines[i].split()
+        i += 1
+
+        if len(dims) < 1:
+            raise ValueError(f"Bad CRS dimension line after {label!r} in {path}")
+
+        try:
+            npts = int(float(dims[0]))
+        except Exception as exc:
+            raise ValueError(
+                f"Could not parse CRS point count after {label!r} in {path}: {dims}"
+            ) from exc
+
+        if npts < 2:
+            raise ValueError(f"CRS block {label!r} has fewer than 2 points in {path}")
+
+        coords: list[tuple[float, float]] = []
+
+        for point_i in range(npts):
+            if i >= len(lines):
+                raise ValueError(f"Unexpected EOF inside CRS block {label!r} in {path}")
+
+            parts = lines[i].split()
+            i += 1
+
+            if len(parts) < 2:
+                raise ValueError(
+                    f"Bad CRS coordinate line in {label!r}, point {point_i + 1}: {parts}"
+                )
+
+            x = float(parts[0])
+            y = float(parts[1])
+
+            if not np.isfinite(x) or not np.isfinite(y):
+                raise ValueError(
+                    f"Non-finite CRS coordinate in {label!r}, point {point_i + 1}: {x}, {y}"
+                )
+
+            coords.append((x, y))
+
+        x1, y1 = coords[0]
+        x2, y2 = coords[-1]
+
+        records.append({
+            "order": len(records) + 1,
+            "label": label,
+            "x1": x1,
+            "y1": y1,
+            "x2": x2,
+            "y2": y2,
+        })
+
+    if not records:
+        raise ValueError(f"No CRS records found in {path}")
+
+    return records
+
+def read_csv_crs_records(path: Path) -> list[dict[str, Any]]:
+    """
+    Read CRS/line-segment records from CSV with projected model coordinates.
+    """
+    df = pd.read_csv(path)
+
+    if df.empty:
+        raise ValueError(f"Observation-lines CSV has no rows: {path}")
+
+    cols = list(df.columns)
+
+    x1_col = infer_first_existing_column(
+        cols,
+        [
+            "x1",
+            "x_start",
+            "start_x",
+            "from_x",
+            "line_x1",
+            "sfincs_x1",
+            "x1_utm15n",
+            "start_x_utm15n",
+            "coord_x1_utm15n",
+            "model_x1",
+        ],
+        label="CRS line x1",
+    )
+
+    y1_col = infer_first_existing_column(
+        cols,
+        [
+            "y1",
+            "y_start",
+            "start_y",
+            "from_y",
+            "line_y1",
+            "sfincs_y1",
+            "y1_utm15n",
+            "start_y_utm15n",
+            "coord_y1_utm15n",
+            "model_y1",
+        ],
+        label="CRS line y1",
+    )
+
+    x2_col = infer_first_existing_column(
+        cols,
+        [
+            "x2",
+            "x_end",
+            "end_x",
+            "to_x",
+            "line_x2",
+            "sfincs_x2",
+            "x2_utm15n",
+            "end_x_utm15n",
+            "coord_x2_utm15n",
+            "model_x2",
+        ],
+        label="CRS line x2",
+    )
+
+    y2_col = infer_first_existing_column(
+        cols,
+        [
+            "y2",
+            "y_end",
+            "end_y",
+            "to_y",
+            "line_y2",
+            "sfincs_y2",
+            "y2_utm15n",
+            "end_y_utm15n",
+            "coord_y2_utm15n",
+            "model_y2",
+        ],
+        label="CRS line y2",
+    )
+
+    name_col = optional_first_existing_column(
+        cols,
+        [
+            "crs_name",
+            "line_name",
+            "line_id",
+            "cross_section_id",
+            "section_id",
+            "station_name",
+            "site_name",
+            "name",
+            "id",
+        ],
+        label="CRS line name",
+    )
+
+    records: list[dict[str, Any]] = []
+
+    for row_idx, row in df.iterrows():
+        try:
+            x1 = float(row[x1_col])
+            y1 = float(row[y1_col])
+            x2 = float(row[x2_col])
+            y2 = float(row[y2_col])
+        except Exception as exc:
+            raise ValueError(
+                f"Bad CRS coordinate on row {row_idx + 2} in {path}. "
+                f"Columns: {x1_col}, {y1_col}, {x2_col}, {y2_col}. "
+                f"Row: {row.to_dict()}"
+            ) from exc
+
+        if not all(np.isfinite([x1, y1, x2, y2])):
+            raise ValueError(
+                f"Non-finite CRS coordinate on row {row_idx + 2} in {path}: "
+                f"{x1}, {y1}, {x2}, {y2}"
+            )
+
+        label_value = row[name_col] if name_col else f"CRS_{len(records) + 1:03d}"
+
+        records.append({
+            "order": len(records) + 1,
+            "label": safe_sfincs_label(label_value, f"CRS_{len(records) + 1:03d}"),
+            "x1": x1,
+            "y1": y1,
+            "x2": x2,
+            "y2": y2,
+        })
+
+    if not records:
+        raise ValueError(f"No usable CRS records found in {path}")
+
+    return records
+
+
+def write_hybrid_crs_from_event_catalog(cfg: dict[str, Any], event_catalog: Path) -> None:
+    """
+    Write model/sfincs.crs from event-catalog observation/cross-section lines.
+
+    Policy:
+      - If native crsfile override is enabled, that true sfincs.crs override wins.
+      - Otherwise, obs_lines_path is treated as a selected validation source,
+        even if it ends in .crs.
+      - .crs is parsed/normalized as TEKAL CRS.
+      - .xyxy is converted to TEKAL CRS.
+      - CSV x1/y1/x2/y2 is converted to TEKAL CRS.
+    """
+    print_section("HYBRID: WRITE SFINCS.CRS")
+
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch crsfile; sfincs.inp does not exist: {inp_path}")
+
+    if sfincs_file_override_enabled(cfg, "crsfile"):
+        src = resolve_sfincs_override_source(cfg, "crsfile")
+        dst = root / "sfincs.crs"
+
+        print("Native crsfile override is enabled; using override as authoritative sfincs.crs:")
+        print(f"  source: {src}")
+        print(f"  target: {dst}")
+
+        if src.resolve() != dst.resolve():
+            shutil.copy2(src, dst)
+
+        set_sfincs_inp_value(inp_path, "crsfile", "sfincs.crs")
+        print("  sfincs.inp: crsfile = sfincs.crs")
+        return
+
+    src = resolve_hybrid_obs_lines_file(cfg, event_catalog)
+    print(f"Hybrid observation-line source: {src}")
+    print("No native crsfile override is enabled; parsing selected obs_lines_path as a source file.")
+
+    suffix = src.suffix.lower()
+
+    if suffix == ".crs":
+        records = read_tecal_crs_records(src)
+    elif suffix == ".xyxy":
+        records = read_flat_xyxy_records(src)
+    elif suffix == ".csv":
+        records = read_csv_crs_records(src)
+    else:
+        raise ValueError(
+            "Hybrid observation lines must be TEKAL .crs, flat .xyxy, or CSV with projected x1/y1/x2/y2 columns. "
+            f"Got: {src}"
+        )
+
+    write_hybrid_crs_records(
+        cfg,
+        source_path=src,
+        records=records,
+    )
+def parse_csv_time_to_seconds_since_tref(value: str, tref: datetime) -> float:
+    """
+    Convert a CSV time value to SFINCS seconds since tref.
+
+    Accepted:
+      - numeric seconds already
+      - YYYY-mm-dd HH:MM:SS
+      - ISO-like datetime strings
+    """
+    s = str(value).strip()
+
+    try:
+        return float(s)
+    except ValueError:
+        pass
+
+    candidates = [
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%d %H:%M",
+        "%Y-%m-%dT%H:%M",
+    ]
+
+    for fmt in candidates:
+        try:
+            dt = datetime.strptime(s, fmt)
+            return (dt - tref).total_seconds()
+        except ValueError:
+            pass
+
+    raise ValueError(f"Could not parse discharge CSV time value: {value!r}")
+
+
+def read_csv_rows(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        raise FileNotFoundError(f"CSV file does not exist: {path}")
+
+    with path.open("r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    if not rows:
+        raise ValueError(f"CSV file has no data rows: {path}")
+
+    return rows
+
+def normalize_discharge_column_key(value: Any) -> str:
+    """
+    Normalize USGS-style discharge column names for matching.
+
+    This handles source tables where a site column like 08072600 was accidentally
+    saved/read as 8072600.
+    """
+    text = str(value or "").strip()
+
+    if not text:
+        return ""
+
+    # Strip one common float artifact from spreadsheet/CSV round trips.
+    if text.endswith(".0"):
+        text = text[:-2]
+
+    # Compare USGS ids by numeric text when leading zeroes differ.
+    stripped = text.lstrip("0")
+    return stripped if stripped else "0"
+
+
+def resolve_discharge_value_columns(
+    requested_cols: list[Any],
+    available_cols: list[str],
+) -> list[str]:
+    """
+    Resolve requested discharge columns against actual timeseries CSV columns.
+
+    Exact match wins. If exact match fails, match by normalized leading-zero-free
+    key so 8072600 can resolve to 08072600.
+    """
+    available_exact = {str(col).strip(): str(col).strip() for col in available_cols}
+
+    available_by_normalized: dict[str, str] = {}
+    for col in available_cols:
+        col_text = str(col).strip()
+        key = normalize_discharge_column_key(col_text)
+        if key:
+            available_by_normalized.setdefault(key, col_text)
+
+    resolved: list[str] = []
+    missing: list[str] = []
+
+    for raw_col in requested_cols:
+        raw_text = str(raw_col or "").strip()
+
+        if not raw_text:
+            continue
+
+        if raw_text in available_exact:
+            resolved.append(available_exact[raw_text])
+            continue
+
+        key = normalize_discharge_column_key(raw_text)
+        if key in available_by_normalized:
+            resolved.append(available_by_normalized[key])
+            continue
+
+        missing.append(raw_text)
+
+    if missing:
+        raise KeyError(
+            "Selected discharge columns are missing from the discharge timeseries CSV.\n"
+            f"  requested: {missing}\n"
+            f"  available: {available_cols}"
+        )
+
+    return resolved
+
+def first_nonempty_row_value(
+    rows: list[dict[str, str]],
+    candidate_cols: list[str],
+) -> tuple[str, list[str]]:
+    """
+    Return values from the first source-table column that exists and has
+    nonempty values.
+
+    Used for point-to-timeseries mapping. For example, a source table may map
+    each SFINCS source point to a timeseries column using:
+        discharge_column
+        site_no
+        station_id
+        source_id
+
+    Returns:
+        (column_name, values)
+    """
+    if not rows:
+        return "", []
+
+    available_cols = list(rows[0].keys())
+
+    for candidate in candidate_cols:
+        try:
+            col = infer_first_existing_column(
+                available_cols,
+                [candidate],
+                label="discharge selected-value mapping",
+            )
+        except KeyError:
+            continue
+
+        values = [
+            str(row.get(col, "")).strip()
+            for row in rows
+            if str(row.get(col, "")).strip()
+        ]
+
+        if values:
+            return col, values
+
+    return "", []
+
+
+def infer_discharge_value_columns_from_points(
+    point_rows: list[dict[str, str]],
+    ts_cols: list[str],
+    time_col: str,
+) -> tuple[list[str], str]:
+    """
+    Infer which timeseries columns should be written to sfincs.dis.
+
+    General policy:
+      1. Prefer an explicit source-table mapping column.
+      2. If no explicit mapping exists, use source IDs that match timeseries columns.
+      3. Only fall back to all non-time timeseries columns when the number of
+         non-time columns exactly matches the number of source points.
+
+    This avoids accidentally using extra available discharge columns that are
+    present in the timeseries file but are not selected as SFINCS source points.
+    """
+    non_time_ts_cols = [c for c in ts_cols if c != time_col]
+
+    # Best/tutorial-preferred column name first.
+    mapping_aliases = [
+        "discharge_column",
+        "discharge_timeseries_column",
+        "timeseries_column",
+        "value_column",
+        "q_column",
+        "flow_column",
+        "hydrograph_column",
+        "forcing_column",
+        "source_column",
+        "site_no",
+        "site_id",
+        "station_id",
+        "gage_id",
+        "gauge_id",
+        "usgs_site_no",
+        "usgs_id",
+        "source_id",
+    ]
+
+    mapping_col, requested = first_nonempty_row_value(point_rows, mapping_aliases)
+
+    if requested:
+        resolved = resolve_discharge_value_columns(requested, ts_cols)
+        return resolved, f"source table column {mapping_col!r}"
+
+    # Conservative fallback: if the timeseries has exactly one non-time column
+    # per point, assume they are already in source-row order.
+    if len(non_time_ts_cols) == len(point_rows):
+        return non_time_ts_cols, "all non-time timeseries columns because count matches source points"
+
+    raise ValueError(
+        "Could not infer selected discharge timeseries columns safely.\n"
+        f"  source point rows: {len(point_rows)}\n"
+        f"  non-time timeseries columns: {non_time_ts_cols}\n"
+        "Add one mapping column to the discharge source table, preferably:\n"
+        "  discharge_column\n"
+        "or use a source ID column matching the timeseries headers, such as:\n"
+        "  site_no, station_id, usgs_site_no, source_id\n"
+        "This fail is intentional: the pipeline will not silently use every "
+        "available discharge column when extra raw gauges may exist."
+    )
+
+def normalize_column_name(value: Any) -> str:
+    """
+    Normalize column names for tolerant matching.
+
+    This lets the pipeline accept tutorial/user CSVs with small naming
+    differences such as:
+        x_utm15n, X_UTM15N, x utm15n, x-utm15n
+
+    It does not change the original column name used to read the row.
+    """
+    text = str(value or "").strip().lower()
+    for token in [" ", "-", ".", "/", "\\", "(", ")", "[", "]"]:
+        text = text.replace(token, "_")
+    while "__" in text:
+        text = text.replace("__", "_")
+    return text.strip("_")
+
+
+def infer_first_existing_column(
+    available_cols: list[str],
+    candidates: list[str],
+    *,
+    label: str,
+) -> str:
+    """
+    Pick the first candidate column that exists.
+
+    Matching is tolerant to case and small separator differences, but the
+    returned value is always the original CSV column name.
+    """
+    exact = {str(col).strip(): str(col).strip() for col in available_cols}
+    normalized = {
+        normalize_column_name(col): str(col).strip()
+        for col in available_cols
+        if str(col).strip()
+    }
+
+    for candidate in candidates:
+        candidate_text = str(candidate).strip()
+
+        if candidate_text in exact:
+            return exact[candidate_text]
+
+        candidate_key = normalize_column_name(candidate_text)
+        if candidate_key in normalized:
+            return normalized[candidate_key]
+
+    raise KeyError(
+        f"Could not infer {label} column.\n"
+        f"  Tried aliases: {candidates}\n"
+        f"  Available columns: {available_cols}\n"
+        "For a general SFINCS discharge source table, provide projected model-CRS "
+        "source coordinates using columns such as sfincs_src_x/sfincs_src_y, "
+        "x_utm15n/y_utm15n, x/y, or easting/northing."
+    )
+
+
+
+
+def resolve_manual_local_source_path(
+    cfg: dict[str, Any],
+    *,
+    source_key: str,
+    path_key: str,
+    label: str,
+) -> str:
+    """
+    Resolve a Manual-mode local-file source.
+
+    The launcher often sets:
+        rainfall_source = "local_file"
+        rainfall_path   = "/real/file.nc"
+
+    HydroMT must receive the real path, not the label "local_file".
+    """
+    source = cfg_get(cfg, source_key)
+    source_text = str(source or "").strip()
+    path = cfg_path(cfg, path_key)
+
+    if source_value_is_label(source_text):
+        if path is None:
+            raise FileNotFoundError(
+                f"{label} source is {source_text!r}, but {path_key} is blank."
+            )
+        if not path.is_file():
+            raise FileNotFoundError(
+                f"{label} source is {source_text!r}, but {path_key} is not an existing file: {path}"
+            )
+        return str(path)
+
+    return source_text
+
+
+def parse_any_csv_time_to_seconds_since_tref(value: Any, tref: datetime) -> float:
+    """
+    Convert a CSV/net forcing time value to SFINCS seconds since tref.
+
+    Uses the stricter project parser first, then falls back to pandas for
+    timezone-bearing ISO strings.
+    """
+    try:
+        return parse_csv_time_to_seconds_since_tref(str(value), tref)
+    except Exception:
+        pass
+
+    dt = pd.to_datetime(value)
+
+    if getattr(dt, "tzinfo", None) is not None:
+        dt = dt.tz_convert(None)
+
+    py_dt = dt.to_pydatetime().replace(tzinfo=None)
+    return float((py_dt - tref).total_seconds())
+
+
+def nonempty_noncomment_lines(path: Path) -> list[str]:
+    lines: list[str] = []
+
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        s = line.strip()
+        if not s or s.startswith("#") or s.startswith("!"):
+            continue
+        lines.append(s)
+
+    return lines
+
+
+def count_native_timeseries_value_columns(path: Path) -> int:
+    """
+    Count value columns in a whitespace/comma timeseries file.
+
+    Handles rows like:
+        0.0 v1 v2 ...
+        20170822 000000 v1 v2 ...
+        2017-08-22 00:00:00 v1 v2 ...
+    """
+    lines = nonempty_noncomment_lines(path)
+
+    if not lines:
+        raise ValueError(f"Timeseries file is empty: {path}")
+
+    parts = lines[0].replace(",", " ").split()
+
+    if len(parts) < 2:
+        raise ValueError(f"Could not count value columns in: {path}")
+
+    # Date + time + values.
+    if len(parts) >= 3:
+        first = parts[0]
+        second = parts[1]
+        if (
+            ("-" in first and ":" in second)
+            or (first.isdigit() and len(first) == 8 and second.isdigit() and len(second) == 6)
+        ):
+            return len(parts) - 2
+
+    # Seconds + values.
+    return len(parts) - 1
+
+
+def count_bnd_rows_for_model(cfg: dict[str, Any]) -> int:
+    """
+    Count water-level boundary rows in the written model folder.
+    """
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+
+    bnd_name = "sfincs.bnd"
+    if inp_path.exists():
+        parsed = parse_sfincs_inp(inp_path)
+        bnd_name = parsed.get("bndfile", bnd_name)
+
+    bnd_path = root / bnd_name
+    if not bnd_path.exists():
+        raise FileNotFoundError(
+            f"Cannot write sfincs.bzs because the boundary file does not exist: {bnd_path}"
+        )
+
+    rows = nonempty_noncomment_lines(bnd_path)
+    if not rows:
+        raise ValueError(f"Boundary file has no rows: {bnd_path}")
+
+    return len(rows)
+
+
+def manual_waterlevel_candidate_paths(cfg: dict[str, Any]) -> list[Path]:
+    """
+    Candidate source files for Manual raw/event-catalog water level.
+
+    Strict Manual policy:
+      - explicit waterlevel_path wins
+      - otherwise only raw/curated water-level CSV products are considered
+      - never search native/reference BZS products
+      - never search _manifests/admin folders
+    """
+    candidates: list[Path] = []
+
+    explicit = cfg_path(cfg, "waterlevel_path")
+    if explicit is not None:
+        candidates.append(explicit)
+
+    for raw_root in cfg_get(cfg, "data_catalogs", []) or []:
+        root = Path(str(raw_root))
+        if not root.exists() or not root.is_dir():
+            continue
+
+        patterns = [
+            "event_waterlevel/harvey_houston_wl_bc.csv",
+            "event_waterlevel/*wl*_bc.csv",
+            "event_waterlevel/*waterlevel*.csv",
+        ]
+
+        for pattern in patterns:
+            candidates.extend(sorted(root.glob(pattern)))
+
+    out: list[Path] = []
+    seen: set[Path] = set()
+
+    for candidate in candidates:
+        if not candidate:
+            continue
+
+        if path_has_catalog_admin_part(candidate):
+            continue
+
+        if classify_manual_raw_catalog_contaminant(candidate, cfg):
+            continue
+
+        low = str(candidate).lower()
+        if "bzs" in low or "professor_native" in low or "native_sfincs" in low:
+            continue
+
+        try:
+            resolved = candidate.resolve()
+        except Exception:
+            resolved = candidate
+
+        if resolved in seen:
+            continue
+
+        out.append(candidate)
+        seen.add(resolved)
+
+    return out
+
+def manual_waterlevel_boundary_table_candidate_paths(cfg: dict[str, Any]) -> list[Path]:
+    """
+    Candidate explicit water-level boundary tables.
+
+    This table is required in strict Manual mode. It must explicitly provide:
+      - boundary x/y coordinates in model CRS
+      - which water-level CSV column feeds each boundary row
+
+    The backend must not invent boundary points or infer mappings.
+    """
+    candidates: list[Path] = []
+
+    for key in [
+        "waterlevel_boundary_table_path",
+        "event_boundary_table_path",
+        "boundary_table_path",
+        "waterlevel_points_path",
+        "waterlevel_locations_path",
+    ]:
+        p = cfg_path(cfg, key)
+        if p is not None:
+            candidates.append(p)
+
+    for raw_root in cfg_get(cfg, "data_catalogs", []) or []:
+        root = Path(str(raw_root))
+        if not root.exists() or not root.is_dir():
+            continue
+
+        patterns = [
+            "event_boundary_table/event_boundary_table.csv",
+            "event_boundary_table/*.csv",
+            "event_waterlevel_points/event_boundary_table.csv",
+            "event_waterlevel_points/*boundary*.csv",
+            "event_waterlevel_points/*waterlevel*.csv",
+            "event_waterlevel_locations/*boundary*.csv",
+            "event_waterlevel_locations/*waterlevel*.csv",
+        ]
+
+        for pattern in patterns:
+            candidates.extend(sorted(root.glob(pattern)))
+
+    out: list[Path] = []
+    seen: set[Path] = set()
+
+    for candidate in candidates:
+        if not candidate:
+            continue
+
+        if path_has_catalog_admin_part(candidate):
+            continue
+
+        if classify_manual_raw_catalog_contaminant(candidate, cfg):
+            continue
+
+        try:
+            resolved = candidate.resolve()
+        except Exception:
+            resolved = candidate
+
+        if resolved in seen:
+            continue
+
+        out.append(candidate)
+        seen.add(resolved)
+
+    return out
+
+
+def load_explicit_waterlevel_boundary_table(
+    cfg: dict[str, Any],
+    *,
+    value_cols: list[str],
+) -> tuple[Path, list[dict[str, Any]]]:
+    """
+    Load an explicit water-level boundary table.
+
+    Required semantics:
+      - each row becomes one sfincs.bnd row
+      - each row must explicitly name the water-level CSV column to use
+      - no nearest-station inference
+      - no mask-derived boundary creation
+
+    Accepted coordinate columns:
+      x: sfincs_bnd_x, sfincs_x, bnd_x, x, x_utm, utm_x, coord_x_utm15n, coord_x_raw, model_x
+      y: sfincs_bnd_y, sfincs_y, bnd_y, y, y_utm, utm_y, coord_y_utm15n, coord_y_raw, model_y
+
+    Accepted mapping columns:
+      waterlevel_column, wl_col, source_column, timeseries_column,
+      station_id, station, site_no, noaa_id, gage_id
+    """
+    value_col_set = {str(col).strip() for col in value_cols if str(col).strip()}
+
+    value_col_by_normalized = {
+        normalize_discharge_column_key(col): str(col).strip()
+        for col in value_cols
+        if str(col).strip()
+    }
+
+    x_candidates = [
+        "sfincs_bnd_x",
+        "sfincs_x",
+        "bnd_x",
+        "x",
+        "x_utm",
+        "utm_x",
+        "coord_x_utm15n",
+        "coord_x_raw",
+        "model_x",
+    ]
+
+    y_candidates = [
+        "sfincs_bnd_y",
+        "sfincs_y",
+        "bnd_y",
+        "y",
+        "y_utm",
+        "utm_y",
+        "coord_y_utm15n",
+        "coord_y_raw",
+        "model_y",
+    ]
+
+    mapping_candidates = [
+        "waterlevel_column",
+        "wl_col",
+        "source_column",
+        "timeseries_column",
+        "station_id",
+        "station",
+        "site_no",
+        "noaa_id",
+        "gage_id",
+    ]
+
+    tried: list[str] = []
+
+    for candidate in manual_waterlevel_boundary_table_candidate_paths(cfg):
+        try:
+            rows = read_csv_rows(candidate)
+            cols = list(rows[0].keys())
+
+            x_col = infer_first_existing_column(cols, x_candidates, label="water-level boundary x")
+            y_col = infer_first_existing_column(cols, y_candidates, label="water-level boundary y")
+            map_col = infer_first_existing_column(cols, mapping_candidates, label="water-level boundary mapping")
+
+            parsed_rows: list[dict[str, Any]] = []
+            missing_or_bad: list[str] = []
+
+            for i, row in enumerate(rows, start=1):
+                mapped_raw = str(row.get(map_col, "")).strip()
+                mapped_key = normalize_discharge_column_key(mapped_raw)
+                mapped_col = mapped_raw if mapped_raw in value_col_set else value_col_by_normalized.get(mapped_key, "")
+
+                if mapped_col not in value_col_set:
+                    missing_or_bad.append(
+                        f"row {i}: {map_col}={mapped_col!r} is not one of raw waterlevel columns {sorted(value_col_set)}"
+                    )
+                    continue
+
+                parsed_rows.append({
+                    "row_index": i,
+                    "x": float(row[x_col]),
+                    "y": float(row[y_col]),
+                    "waterlevel_column": mapped_col,
+                    "raw_row": row,
+                    "x_col": x_col,
+                    "y_col": y_col,
+                    "map_col": map_col,
+                })
+
+            if missing_or_bad:
+                tried.append(
+                    f"{candidate}: mapping column found but invalid values:\n    "
+                    + "\n    ".join(missing_or_bad[:20])
+                )
+                continue
+
+            if not parsed_rows:
+                tried.append(f"{candidate}: no usable boundary rows")
+                continue
+
+            return candidate, parsed_rows
+
+        except Exception as exc:
+            tried.append(f"{candidate}: {type(exc).__name__}: {exc}")
+
+    raise RuntimeError(
+        "Strict Manual water-level boundary setup requires an explicit boundary table.\n"
+        "The backend will not create water-level boundary points from the mask and will not infer mappings.\n"
+        f"Raw waterlevel CSV columns: {sorted(value_col_set)}\n"
+        "Required table columns: model x/y plus an explicit waterlevel_column/wl_col/source_column/etc.\n"
+        "Tried:\n  " + "\n  ".join(tried)
+    )
+
+
+def write_bnd_and_bzs_from_explicit_waterlevel_table(
+    cfg: dict[str, Any],
+    source_path: Path,
+    *,
+    df: pd.DataFrame,
+    time_col: str,
+    value_cols: list[str],
+) -> None:
+    """
+    Generate sfincs.bnd and sfincs.bzs from explicit raw catalog products.
+
+    This is allowed because the boundary rows and mapping are explicit catalog
+    data. The backend does not create or infer boundary points.
+    """
+    table_path, boundary_rows = load_explicit_waterlevel_boundary_table(
+        cfg,
+        value_cols=value_cols,
+    )
+
+    root = model_root(cfg)
+    bnd_path = root / "sfincs.bnd"
+    bzs_path = root / "sfincs.bzs"
+    inp_path = root / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch water-level files; sfincs.inp does not exist: {inp_path}")
+
+    with bnd_path.open("w", encoding="utf-8") as f:
+        for item in boundary_rows:
+            f.write(
+                f"{float(item['x']):.6f} {float(item['y']):.6f} "
+                f"# row_{item['row_index']} {item['waterlevel_column']}\n"
+            )
+
+    tref = parse_datetime(cfg_get(cfg, "tref"))
+
+    with bzs_path.open("w", encoding="utf-8") as f:
+        for _, row in df.iterrows():
+            tsec = parse_any_csv_time_to_seconds_since_tref(row[time_col], tref)
+            values = [float(row[item["waterlevel_column"]]) for item in boundary_rows]
+            f.write(
+                f"{tsec:.1f} "
+                + " ".join(f"{val:.6f}" for val in values)
+                + "\n"
+            )
+
+    set_sfincs_inp_value(inp_path, "bndfile", "sfincs.bnd")
+    set_sfincs_inp_value(inp_path, "bzsfile", "sfincs.bzs")
+
+    audit = {
+        "created_at": now_iso(),
+        "mode": "explicit_catalog_waterlevel_boundary_table",
+        "source_csv": str(source_path),
+        "boundary_table": str(table_path),
+        "time_col": time_col,
+        "raw_value_cols": list(value_cols),
+        "boundary_row_count": len(boundary_rows),
+        "output_bnd": str(bnd_path),
+        "output_bzs": str(bzs_path),
+        "sfincs_inp_keys": {
+            "bndfile": "sfincs.bnd",
+            "bzsfile": "sfincs.bzs",
+        },
+        "boundary_rows": boundary_rows,
+    }
+
+    audit_path = run_root(cfg) / "waterlevel_boundary_table_audit.json"
+    write_json(audit_path, audit)
+
+    print("Wrote water-level BND/BZS from explicit catalog boundary table:")
+    print(f"  waterlevel CSV:  {source_path}")
+    print(f"  boundary table:  {table_path}")
+    print(f"  boundary rows:   {len(boundary_rows)}")
+    print(f"  output bnd:      {bnd_path}")
+    print(f"  output bzs:      {bzs_path}")
+    print(f"  audit:           {audit_path}")
+    print("  sfincs.inp: bndfile = sfincs.bnd")
+    print("  sfincs.inp: bzsfile = sfincs.bzs")
+
+
+def try_write_native_waterlevel_from_path(
+    cfg: dict[str, Any],
+    source_path: Path,
+    *,
+    n_bnd: Optional[int] = None,
+) -> None:
+    """
+    Write water-level BND/BZS from strict Manual raw/catalog inputs.
+
+    Strict Manual policy:
+      - native .bzs files are not accepted here
+      - the backend does not use an existing HydroMT-generated sfincs.bnd
+      - the backend does not create boundary points from mask
+      - the backend does not infer gage-to-boundary mappings
+      - the catalog must provide an explicit boundary table mapping each BND row
+        to a raw water-level CSV column
+    """
+    if not source_path.is_file():
+        raise FileNotFoundError(f"Water-level candidate is not a file: {source_path}")
+
+    suffix = source_path.suffix.lower()
+
+    if suffix == ".bzs" or suffix == "":
+        raise ValueError(
+            f"Native BZS input is not allowed in strict Manual raw mode: {source_path}"
+        )
+
+    df = pd.read_csv(source_path)
+    if df.empty:
+        raise ValueError(f"Water-level CSV has no rows: {source_path}")
+
+    lower_to_original = {str(col).strip().lower(): col for col in df.columns}
+
+    # Reject native/derived BZS-table-shaped products in strict raw mode.
+    if {"datetime_utc", "bzs_column", "model_bzs_m"}.issubset(lower_to_original):
+        raise ValueError(
+            "BZS-shaped derived table is not allowed in strict Manual raw mode. "
+            f"Use a raw water-level time-series CSV plus an explicit boundary table instead: {source_path}"
+        )
+
+    configured_time_col = str(cfg_get(cfg, "waterlevel_time_column", "") or "").strip()
+    time_candidates = [
+        configured_time_col,
+        "time",
+        "seconds_from_tref",
+        "seconds",
+        "time_seconds",
+        "tsec",
+        "datetime_utc",
+        "datetime",
+        "date_time",
+    ]
+
+    time_col = None
+    for candidate in time_candidates:
+        if not candidate:
+            continue
+        if candidate in df.columns:
+            time_col = candidate
+            break
+
+    if time_col is None:
+        time_col = df.columns[0]
+
+    value_cols = [col for col in df.columns if col != time_col]
+
+    if not value_cols:
+        raise ValueError(
+            f"Water-level CSV has no value columns after time column {time_col!r}: {source_path}"
+        )
+
+    write_bnd_and_bzs_from_explicit_waterlevel_table(
+        cfg,
+        source_path,
+        df=df,
+        time_col=time_col,
+        value_cols=value_cols,
+    )
+
+def write_native_waterlevel_from_csv(cfg: dict[str, Any]) -> None:
+    """
+    Write SFINCS water-level boundary files from strict Manual/event-catalog inputs.
+
+    This uses:
+      - raw/curated water-level time-series CSV
+      - explicit water-level boundary table with model x/y and waterlevel column mapping
+
+    It intentionally does NOT use a HydroMT-created sfincs.bnd as authority.
+    It intentionally does NOT create boundary points from mask.
+    It intentionally does NOT infer station-to-boundary mappings.
+    """
+    print_section("CSV WATER LEVEL: WRITE EXPLICIT-CATALOG SFINCS BND/BZS FILES")
+
+    tried: list[str] = []
+
+    for candidate in manual_waterlevel_candidate_paths(cfg):
+        try:
+            print(f"Trying raw/curated water-level candidate: {candidate}")
+            try_write_native_waterlevel_from_path(cfg, candidate, n_bnd=None)
+            print("Explicit-catalog water-level files written and sfincs.inp patched:")
+            print("  bndfile = sfincs.bnd")
+            print("  bzsfile = sfincs.bzs")
+            return
+        except Exception as exc:
+            tried.append(f"{candidate}: {type(exc).__name__}: {exc}")
+            print(f"Skipping water-level candidate: {candidate}")
+            print(f"  Reason: {type(exc).__name__}: {exc}")
+
+    detail = "\n".join(f"  {item}" for item in tried) if tried else "  No candidates found."
+    raise RuntimeError(
+        "Could not write explicit-catalog sfincs.bnd/sfincs.bzs from configured Manual water-level inputs.\n"
+        "Strict Manual mode requires:\n"
+        "  1. a raw/curated water-level time-series CSV, and\n"
+        "  2. an explicit boundary table with model x/y plus waterlevel_column mapping.\n"
+        f"Tried:\n{detail}"
+    )
+    
+    
+def write_native_discharge_from_csv(cfg: dict[str, Any]) -> None:
+    """
+    Write native SFINCS discharge files from CSV inputs:
+      - sfincs.src = source point x/y coordinates
+      - sfincs.dis = discharge time series
+
+    This bypasses HydroMT's discharge_points component and directly patches
+    sfincs.inp with srcfile/disfile.
+    """
+    print_section("CSV DISCHARGE: WRITE SFINCS SRC/DIS FILES")
+
+    points_path = cfg_path(cfg, "discharge_points_csv_path")
+    timeseries_path = cfg_path(cfg, "discharge_timeseries_csv_path")
+
+    if points_path is None:
+        raise FileNotFoundError(
+            "discharge_source_kind is csv/event_catalog_csv but discharge_points_csv_path is blank"
+        )
+    if timeseries_path is None:
+        raise FileNotFoundError(
+            "discharge_source_kind is csv/event_catalog_csv but discharge_timeseries_csv_path is blank"
+        )
+
+    point_rows = read_csv_rows(points_path)
+    ts_rows = read_csv_rows(timeseries_path)
+
+    point_cols = list(point_rows[0].keys())
+    ts_cols = list(ts_rows[0].keys())
+
+    x_col = cfg_get(cfg, "discharge_points_x_column", None)
+    y_col = cfg_get(cfg, "discharge_points_y_column", None)
+    name_col = cfg_get(cfg, "discharge_points_name_column", None)
+
+    # Source coordinates must be projected model/SFINCS coordinates.
+    # Do NOT silently use lon/lat here; sfincs.src expects x/y in the model CRS
+    # unless the whole model is geographic. For this Harris County workflow, that
+    # means EPSG:32615 coordinates.
+    x_aliases = [
+        "sfincs_src_x",
+        "x_utm15n",
+        "utm15n_x",
+        "x_epsg32615",
+        "epsg32615_x",
+        "x_model",
+        "model_x",
+        "x",
+        "easting",
+        "utm_easting",
+        "coord_x_utm15n",
+        "coord_x_raw",
+    ]
+
+    y_aliases = [
+        "sfincs_src_y",
+        "y_utm15n",
+        "utm15n_y",
+        "y_epsg32615",
+        "epsg32615_y",
+        "y_model",
+        "model_y",
+        "y",
+        "northing",
+        "utm_northing",
+        "coord_y_utm15n",
+        "coord_y_raw",
+    ]
+
+    if not x_col or x_col not in point_cols:
+        x_col = infer_first_existing_column(
+            point_cols,
+            x_aliases,
+            label="discharge source x",
+        )
+
+    if not y_col or y_col not in point_cols:
+        y_col = infer_first_existing_column(
+            point_cols,
+            y_aliases,
+            label="discharge source y",
+        )
+
+    if not name_col or name_col not in point_cols:
+        try:
+            name_col = infer_first_existing_column(
+                point_cols,
+                [
+                    "source_name",
+                    "site_name",
+                    "station_name",
+                    "gage_name",
+                    "gauge_name",
+                    "name",
+                    "site_no",
+                    "station_id",
+                    "source_id",
+                ],
+                label="discharge source name",
+            )
+        except KeyError:
+            name_col = ""
+
+    time_col = cfg_get(cfg, "discharge_time_column", None)
+    if not time_col or time_col not in ts_cols:
+        time_col = infer_first_existing_column(
+            ts_cols,
+            [
+                "time",
+                "datetime",
+                "datetime_utc",
+                "date_time",
+                "timestamp",
+                "date",
+            ],
+            label="discharge timeseries time",
+        )
+
+    value_cols = cfg_get(cfg, "discharge_value_columns", []) or []
+
+    if isinstance(value_cols, str):
+        text = value_cols.strip()
+        if text.startswith("["):
+            try:
+                value_cols = json.loads(text)
+            except Exception:
+                value_cols = []
+        else:
+            value_cols = [c.strip() for c in text.replace(",", "\n").splitlines() if c.strip()]
+
+    value_source_note = "explicit config discharge_value_columns"
+
+    if not value_cols:
+        value_cols, value_source_note = infer_discharge_value_columns_from_points(
+            point_rows,
+            ts_cols,
+            time_col,
+        )
+
+    value_cols = resolve_discharge_value_columns(value_cols, ts_cols)
+
+    if not value_cols:
+        raise ValueError(
+            "No discharge value columns found. Set DISCHARGE_VALUE_COLUMNS or provide columns besides the time column."
+        )
+
+    if len(point_rows) != len(value_cols):
+        raise ValueError(
+            "Discharge CSV mismatch: number of source points does not match number of discharge value columns.\n"
+            f"  points rows: {len(point_rows)}\n"
+            f"  value cols:  {len(value_cols)} -> {value_cols}"
+        )
+
+
+    root = model_root(cfg)
+    src_path = root / "sfincs.src"
+    dis_path = root / "sfincs.dis"
+    inp_path = root / "sfincs.inp"
+
+    print(f"Points CSV:     {points_path}")
+    print(f"Timeseries CSV: {timeseries_path}")
+    print(f"Source x col:   {x_col}")
+    print(f"Source y col:   {y_col}")
+    print(f"Source name col:{name_col if name_col else '(none; source_# labels will be used)'}")
+    print(f"Time column:    {time_col}")
+    print(f"Value columns:  {value_cols}")
+    print(f"Value source:   {value_source_note}")
+    print(f"Writing:        {src_path}")
+    print(f"Writing:        {dis_path}")
+
+    # sfincs.src: one x y pair per source.
+    with src_path.open("w", encoding="utf-8") as f:
+        for i, row in enumerate(point_rows, start=1):
+            try:
+                x = float(row[x_col])
+                y = float(row[y_col])
+            except KeyError as exc:
+                raise KeyError(
+                    f"Missing required point column {exc} in {points_path}. "
+                    f"Available columns: {list(row.keys())}"
+                ) from exc
+
+            label = row.get(name_col, f"source_{i}") if name_col else f"source_{i}"
+            f.write(f"{x:.6f} {y:.6f} # {label}\n")
+
+    # sfincs.dis: time_seconds q1 q2 ...
+    tref = parse_datetime(cfg_get(cfg, "tref"))
+
+    with dis_path.open("w", encoding="utf-8") as f:
+        for row in ts_rows:
+            if time_col not in row:
+                raise KeyError(
+                    f"Missing time column {time_col!r} in {timeseries_path}. "
+                    f"Available columns: {list(row.keys())}"
+                )
+
+            tsec = parse_csv_time_to_seconds_since_tref(row[time_col], tref)
+
+            qvals = []
+            for col in value_cols:
+                if col not in row:
+                    raise KeyError(
+                        f"Missing discharge column {col!r} in {timeseries_path}. "
+                        f"Available columns: {list(row.keys())}"
+                    )
+                qvals.append(float(row[col]))
+
+            f.write(
+                f"{tsec:.1f} "
+                + " ".join(f"{q:.6f}" for q in qvals)
+                + "\n"
+            )
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch discharge files; sfincs.inp does not exist: {inp_path}")
+
+    set_sfincs_inp_value(inp_path, "srcfile", "sfincs.src")
+    set_sfincs_inp_value(inp_path, "disfile", "sfincs.dis")
+
+    print("CSV discharge files written and sfincs.inp patched:")
+    print("  srcfile = sfincs.src")
+    print("  disfile = sfincs.dis")
+
+def apply_sfincs_file_overrides(cfg: dict[str, Any]) -> list[dict[str, str]]:
+    enabled = sfincs_override_enabled_keys(cfg)
+    if not enabled:
+        print("No SFINCS input file overrides enabled.")
+        return []
+
+    print_section("APPLY SFINCS INPUT FILE OVERRIDES")
+
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+    applied: list[dict[str, str]] = []
+
+    # If sfincs.inp itself is overridden, copy it first.
+    ordered = ["sfincs.inp"] + [k for k in enabled if k != "sfincs.inp"]
+
+    for key in ordered:
+        if key not in enabled:
+            continue
+
+        src = resolve_sfincs_override_source(cfg, key)
+        dst = root / src.name
+
+        print(f"Override {key}:")
+        print(f"  source: {src}")
+        print(f"  target: {dst}")
+
+        shutil.copy2(src, dst)
+
+        if key == "sfincs.inp":
+            inp_path = dst
+        else:
+            if not inp_path.exists():
+                raise FileNotFoundError(f"Cannot update {key}; sfincs.inp does not exist at {inp_path}")
+            set_sfincs_inp_value(inp_path, key, dst.name)
+
+        applied.append({
+            "key": key,
+            "source": str(src),
+            "target": str(dst),
+        })
+
+    write_json(
+        run_root(cfg) / "sfincs_file_overrides_manifest.json",
+        {
+            "created_at": now_iso(),
+            "applied": applied,
+        },
+    )
+
+    return applied
+
+
+def parse_datetime(s: str) -> datetime:
+    """Parse launcher time strings."""
+    text = str(s or "").strip()
+
+    for fmt in (
+        "%Y-%m-%d %H:%M:%S",
+        "%Y %m %d %H:%M:%S",
+        "%Y%m%d %H%M%S",
+        "%Y%m%d%H%M%S",
+        "%Y-%m-%dT%H:%M:%S",
+    ):
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            pass
+
+    raise ValueError(
+        f"time data {text!r} does not match any supported runtime format. "
+        "Use YYYY-MM-DD HH:MM:SS."
+    )
+
+
+def path_exists(path: Optional[Path]) -> bool:
+    return path is not None and path.exists()
+
+
+def run_root(cfg: dict[str, Any]) -> Path:
+    return Path(cfg["output_root"]) / cfg["run_name"]
+
+
+def model_root(cfg: dict[str, Any]) -> Path:
+    return run_root(cfg) / "model"
+
+
+def logs_root(cfg: dict[str, Any]) -> Path:
+    return run_root(cfg) / "logs"
+
+
+def postprocess_root(cfg: dict[str, Any]) -> Path:
+    return run_root(cfg) / "postprocess"
+
+
+def preprocess_manifest_path(cfg: dict[str, Any]) -> Path:
+    return run_root(cfg) / "preprocess_manifest.json"
+
+
+def preprocess_failure_path(cfg: dict[str, Any]) -> Path:
+    return run_root(cfg) / "preprocess_failed.json"
+
+
+def data_inventory_path(cfg: dict[str, Any]) -> Path:
+    return run_root(cfg) / "data_inventory.json"
+
+
+def fail_or_warn(cfg: dict[str, Any], message: str) -> None:
+    """Raise unless allow_missing_model_inputs=True."""
+    if cfg_get(cfg, "allow_missing_model_inputs", False):
+        print(f"WARNING: {message}")
+    else:
+        raise RuntimeError(message)
+
+def get_component(sf, name: str):
+    """Safely get a HydroMT-SFINCS component by name."""
+    try:
+        return sf.components.get(name)
+    except Exception as exc:
+        print(f"WARNING: could not access component {name!r}: {exc}")
+        return None
+
+
+def safe_getattr(obj: Any, name: str, default: Any = None) -> Any:
+    """
+    getattr wrapper for HydroMT-SFINCS objects.
+
+    Some HydroMT-SFINCS model objects route unknown attributes through an
+    internal component lookup and can raise KeyError instead of AttributeError.
+    Use this instead of hasattr(...) for optional model methods.
+    """
+    try:
+        return getattr(obj, name)
+    except (AttributeError, KeyError):
+        return default
+
+
+def set_hydromt_config_key(sf, key: str, value: Any) -> None:
+    """
+    Set a SFINCS config key on the HydroMT model without relying on optional
+    SfincsModel shortcut methods.
+    """
+    config_obj = safe_getattr(sf, "config")
+
+    if config_obj is None:
+        print(f"WARNING: Could not set config key {key!r}; sf.config is unavailable.")
+        return
+
+    set_func = safe_getattr(config_obj, "set")
+    if callable(set_func):
+        set_func(key, value)
+        return
+
+    update_func = safe_getattr(config_obj, "update")
+    if callable(update_func):
+        update_func({key: value})
+        return
+
+    try:
+        config_obj[key] = value
+        return
+    except Exception as exc:
+        print(f"WARNING: Could not set config key {key!r}={value!r}: {exc}")
+
+
+def get_hydromt_grid_mask(sf) -> xr.DataArray:
+    """
+    Return the current HydroMT grid mask as an xarray DataArray.
+    """
+    grid_obj = safe_getattr(sf, "grid")
+    if grid_obj is None:
+        raise RuntimeError("Cannot access sf.grid while setting infiltration map.")
+
+    data = safe_getattr(grid_obj, "data")
+    if data is not None:
+        try:
+            if "mask" in data:
+                return data["mask"]
+        except Exception:
+            pass
+
+    mask = safe_getattr(grid_obj, "mask")
+    if mask is not None:
+        return mask
+
+    raise RuntimeError("Cannot find HydroMT grid mask while setting infiltration map.")
+
+
+def set_hydromt_grid_map(sf, da: xr.DataArray, name: str) -> None:
+    """
+    Set a regular-grid map variable on the HydroMT-SFINCS grid.
+    """
+    grid_obj = safe_getattr(sf, "grid")
+    if grid_obj is None:
+        raise RuntimeError(f"Cannot access sf.grid while setting grid map {name!r}.")
+
+    set_func = safe_getattr(grid_obj, "set")
+    if callable(set_func):
+        set_func(da, name=name)
+        return
+
+    data = safe_getattr(grid_obj, "data")
+    if data is not None:
+        data[name] = da
+        return
+
+    raise RuntimeError(f"Cannot set HydroMT grid map {name!r}; no supported grid setter found.")
+
+
+def reproject_raster_to_grid_mask(
+    *,
+    source_path: Path,
+    da_mask: xr.DataArray,
+    label: str,
+    value_min: Optional[float] = None,
+    value_max: Optional[float] = None,
+    inactive_value: float = 0.0,
+) -> xr.DataArray:
+    """
+    Reproject a raster onto the current HydroMT grid mask.
+
+    The output has the same shape/grid/CRS as the HydroMT mask. Inactive cells
+    are set to inactive_value. Active cells receive nearest-neighbor sampled
+    raster values, optionally clipped to [value_min, value_max].
+    """
+    import rasterio
+    from rasterio.warp import reproject, Resampling
+
+    if not source_path.is_file():
+        raise FileNotFoundError(f"{label} raster does not exist: {source_path}")
+
+    dst_transform = da_mask.raster.transform
+    if callable(dst_transform):
+        dst_transform = dst_transform()
+
+    dst_crs = da_mask.raster.crs
+    if dst_crs is None:
+        raise ValueError(f"HydroMT grid mask has no CRS while preparing {label}.")
+
+    active = np.asarray(da_mask.values) > 0
+    dst = np.full(da_mask.shape, np.nan, dtype=np.float32)
+
+    with rasterio.open(source_path) as src:
+        src_nodata = src.nodata
+
+        reproject(
+            source=rasterio.band(src, 1),
+            destination=dst,
+            src_transform=src.transform,
+            src_crs=src.crs,
+            src_nodata=src_nodata,
+            dst_transform=dst_transform,
+            dst_crs=dst_crs,
+            dst_nodata=np.nan,
+            resampling=Resampling.nearest,
+        )
+
+    valid = np.isfinite(dst)
+
+    if value_min is not None:
+        dst = np.where(valid, np.maximum(dst, float(value_min)), dst)
+
+    if value_max is not None:
+        dst = np.where(np.isfinite(dst), np.minimum(dst, float(value_max)), dst)
+
+    dst = np.where(active & np.isfinite(dst), dst, inactive_value).astype(np.float32)
+
+    coords = {
+        dim: da_mask.coords[dim]
+        for dim in da_mask.dims
+        if dim in da_mask.coords
+    }
+
+    da_out = xr.DataArray(
+        dst,
+        dims=da_mask.dims,
+        coords=coords,
+        name=label,
+    )
+
+    da_out.raster.set_crs(dst_crs)
+
+    return da_out
+
+
+def setup_curve_number_scs_infiltration(sf, cfg: dict[str, Any]) -> None:
+    """
+    Build SFINCS SCS Curve Number infiltration map from curve_number_path.
+
+    IMPORTANT:
+    The source raster stores Curve Number (CN), but SFINCS sfincs.scs expects
+    SCS potential retention/storage:
+
+        S = (1000 / CN) - 10
+
+    This function therefore reprojects the CN raster to the active model grid,
+    converts positive CN cells to S, and writes that converted map as 'scs'.
+    """
+    print_section("SCS CURVE NUMBER INFILTRATION")
+
+    curve_number_path = cfg_path(cfg, "curve_number_path")
+    if curve_number_path is None:
+        raise FileNotFoundError(
+            "infiltration_mode='curve_number' but curve_number_path is blank."
+        )
+
+    da_mask = get_hydromt_grid_mask(sf)
+
+    # First read/reproject the source as Curve Number.
+    da_cn = reproject_raster_to_grid_mask(
+        source_path=curve_number_path,
+        da_mask=da_mask,
+        label="curve_number",
+        value_min=1.0,
+        value_max=100.0,
+        inactive_value=0.0,
+    )
+
+    cn_values = np.asarray(da_cn.values, dtype="float32")
+    active_mask = np.asarray(da_mask.values) > 0
+
+    active_cn = cn_values[active_mask]
+    active_cn = active_cn[np.isfinite(active_cn) & (active_cn > 0)]
+
+    if active_cn.size == 0:
+        raise ValueError(
+            f"Curve Number raster produced no positive active-cell values: {curve_number_path}"
+        )
+
+    # Convert Curve Number to SCS potential retention/storage.
+    # Native/professor sfincs.scs values confirm this expected convention:
+    # CN=60 -> S=(1000/60)-10=6.6667, CN=94 -> S=(1000/94)-10=0.6383.
+    scs_values = np.zeros_like(cn_values, dtype="float32")
+    valid_cn = np.isfinite(cn_values) & (cn_values > 0)
+    scs_values[valid_cn] = (1000.0 / cn_values[valid_cn]) - 10.0
+    scs_values = np.where(active_mask & np.isfinite(scs_values), scs_values, 0.0).astype("float32")
+
+    da_scs = xr.DataArray(
+        scs_values,
+        dims=da_cn.dims,
+        coords=da_cn.coords,
+        name="scs",
+        attrs=dict(da_cn.attrs),
+    )
+
+    try:
+        da_scs.raster.set_crs(da_cn.raster.crs)
+    except Exception:
+        pass
+
+    active_scs = scs_values[active_mask]
+    active_scs = active_scs[np.isfinite(active_scs) & (active_scs > 0)]
+
+    set_hydromt_grid_map(sf, da_scs, name="scs")
+    set_hydromt_config_key(sf, "scsfile", "sfincs.scs")
+
+    audit = {
+        "created_at": now_iso(),
+        "mode": "curve_number",
+        "curve_number_path": str(curve_number_path),
+        "grid_shape": list(da_scs.shape),
+        "active_cn_value_count": int(active_cn.size),
+        "active_cn_min": float(np.nanmin(active_cn)),
+        "active_cn_max": float(np.nanmax(active_cn)),
+        "active_cn_mean": float(np.nanmean(active_cn)),
+        "active_scs_value_count": int(active_scs.size),
+        "active_scs_min": float(np.nanmin(active_scs)),
+        "active_scs_max": float(np.nanmax(active_scs)),
+        "active_scs_mean": float(np.nanmean(active_scs)),
+        "conversion": "sfincs.scs = (1000 / curve_number) - 10 for positive active CN cells; inactive cells = 0",
+        "output_grid_var": "scs",
+        "sfincs_inp_key": "scsfile",
+        "sfincs_filename": "sfincs.scs",
+    }
+    write_json(run_root(cfg) / "infiltration_scs_audit.json", audit)
+
+    print("SCS Curve Number infiltration map prepared:")
+    print(f"  source: {curve_number_path}")
+    print("  source map: Curve Number")
+    print("  output grid map: scs")
+    print("  conversion: scs = (1000 / CN) - 10")
+    print("  sfincs.inp: scsfile = sfincs.scs")
+    print(
+        f"  active CN min/max/mean: "
+        f"{audit['active_cn_min']:.3f} / {audit['active_cn_max']:.3f} / {audit['active_cn_mean']:.3f}"
+    )
+    print(
+        f"  active SCS min/max/mean: "
+        f"{audit['active_scs_min']:.3f} / {audit['active_scs_max']:.3f} / {audit['active_scs_mean']:.3f}"
+    )
+    print(f"  audit: {run_root(cfg) / 'infiltration_scs_audit.json'}")
+
+def setup_ks_infiltration_map_if_requested(sf, cfg: dict[str, Any]) -> None:
+    """
+    Optional support for curve_number_with_ks.
+
+    If ks_path is supplied, reproject it to the model grid and set ksfile.
+    Units must already be SFINCS-ready in the selected source file.
+    """
+    ks_path = cfg_path(cfg, "ks_path")
+    if ks_path is None:
+        raise FileNotFoundError(
+            "infiltration_mode='curve_number_with_ks' but ks_path is blank."
+        )
+
+    da_mask = get_hydromt_grid_mask(sf)
+
+    da_ks = reproject_raster_to_grid_mask(
+        source_path=ks_path,
+        da_mask=da_mask,
+        label="ks",
+        value_min=0.0,
+        value_max=None,
+        inactive_value=0.0,
+    )
+
+    set_hydromt_grid_map(sf, da_ks, name="ks")
+    set_hydromt_config_key(sf, "ksfile", "sfincs.ks")
+
+    print("Ks infiltration map prepared:")
+    print(f"  source: {ks_path}")
+    print("  grid map: ks")
+    print("  sfincs.inp: ksfile = sfincs.ks")
+
+# ============================================================
+# CONFIG / PATH CHECKS
+# ============================================================
+
+def print_config_summary(cfg: dict[str, Any], config_path: Path) -> None:
+    print_section("PREPROCESS CONFIG SUMMARY")
+    print(f"Config path:      {config_path}")
+    print(f"Run name:         {cfg_get(cfg, 'run_name')}")
+    print(f"Run root:         {run_root(cfg)}")
+    print(f"Model root:       {model_root(cfg)}")
+    print(f"Project root:     {cfg_get(cfg, 'project_root')}")
+    print(f"Data root:        {cfg_get(cfg, 'data_root')}")
+    print()
+    print(f"Grid source:      {cfg_get(cfg, 'grid_source', 'region')}")
+    print(f"Grid template:    {cfg_get(cfg, 'grid_template_path')}")
+    print(f"Grid tmpl mode:   {cfg_get(cfg, 'grid_template_mode')}")
+    print(f"Grid tmpl as msk: {cfg_get(cfg, 'grid_template_use_as_active_mask')}")
+    print(f"Region mode:      {cfg_get(cfg, 'region_mode')}")
+    print(f"Region path:      {cfg_get(cfg, 'region_path')}")
+    print(f"Region bbox:      {cfg_get(cfg, 'region_bbox')}")
+    print()
+    print("Main toggles:")
+    for key in [
+        "use_subgrid",
+        "use_spatially_variable_roughness",
+        "use_rainfall",
+        "use_waterlevel_boundary",
+        "use_discharge_boundary",
+        "use_infiltration",
+        "use_wind",
+        "use_pressure",
+        "use_structures",
+        "use_obs_points",
+        "use_obs_lines",
+    ]:
+        print(f"  {key}: {cfg_get(cfg, key)}")
+
+    print(f"Active mask path:  {cfg_get(cfg, 'active_mask_path')}")
+    print(f"Active mask mode:  {cfg_get(cfg, 'active_mask_mode')}")
+
+def path_has_catalog_admin_part(path: Path) -> bool:
+    """
+    Return True for catalog admin/quarantine/report folders that are never model inputs.
+
+    Project convention:
+      - _misc can live inside any catalog folder as a local quarantine/scratch folder.
+      - Manual source-catalog scans must ignore files inside _misc.
+    """
+    ignored_parts = {
+        "_misc",
+        "_manifests",
+        "_audit_reports",
+        "_inventory_reports",
+    }
+
+    return any(
+        part.lower() in ignored_parts
+        for part in Path(path).parts
+    )
+
+
+def classify_manual_raw_catalog_contaminant(path: Path, cfg: dict[str, Any]) -> Optional[str]:
+    """
+    Return a reason if path is disallowed in Manual raw HydroMT-build catalogs.
+
+    This intentionally ignores _manifests/admin folders as model-input candidates;
+    backend search functions must also ignore them.
+    """
+    path = Path(path)
+
+
+    if path_has_catalog_admin_part(path):
+        return None
+
+    name = path.name.lower()
+    suffix = path.suffix.lower()
+    text = str(path).lower()
+
+    native_exact_names = {
+        "sfincs.inp",
+        "sfincs.dep",
+        "sfincs.msk",
+        "sfincs.ind",
+        "sfincs.sbg",
+        "sfincs.manning",
+        "sfincs.man",
+        "sfincs.scs",
+        "sfincs.bnd",
+        "sfincs.bzs",
+        "sfincs.src",
+        "sfincs.dis",
+        "sfincs.obs",
+        "sfincs.crs",
+        "sfincs.thd",
+        "sfincs.weir",
+        "sfincs.drn",
+        "sfincs.qinf",
+        "sfincs.smax",
+        "sfincs.seff",
+        "sfincs.ks",
+        "sfincs.sigma",
+        "sfincs.psi",
+        "sfincs.f0",
+        "sfincs.fc",
+        "sfincs.kd",
+        "sfincs.vol",
+    }
+
+    native_suffixes = {
+        ".bnd",
+        ".bzs",
+        ".src",
+        ".dis",
+        ".obs",
+        ".crs",
+        ".thd",
+        ".sbg",
+        ".dep",
+        ".msk",
+        ".ind",
+        ".manning",
+        ".weir",
+        ".drn",
+        ".qinf",
+        ".smax",
+        ".seff",
+        ".ks",
+        ".sigma",
+        ".psi",
+        ".f0",
+        ".fc",
+        ".kd",
+        ".vol",
+    }
+
+    if "professor_native" in text:
+        return "professor_native/reference artifact"
+
+    if "native_sfincs" in text:
+        return "native_sfincs/reference artifact"
+
+    if name in native_exact_names or name.startswith("sfincs."):
+        return "native SFINCS filename"
+
+    # Curated Manual validation line inputs are allowed to use TEKAL/SFINCS .crs.
+    # This allows files such as:
+    #   event_validation_lines/harvey_obs_lines_REVIEWED_PLUS_AUTO_CUSTOM.crs
+    # while still treating unselected/native package files like sfincs.crs as native.
+    parts_l = {part.lower() for part in path.parts}
+    if suffix == ".crs" and "event_validation_lines" in parts_l:
+        return None
+
+    if suffix in native_suffixes:
+        return "native SFINCS extension"
+
+    if suffix in {".xy", ".xyxy"}:
+
+        if (
+            "event_validation_points" in parts_l
+            or "event_validation_lines" in parts_l
+            or "reviewed_crs_lines" in parts_l
+        ):
+            return None
+
+        return "SFINCS-style obs/CRS control file outside curated validation folders"
+    
+    return None
+
+def is_override_hydromt_build(cfg: dict[str, Any]) -> bool:
+    """
+    Return True for Override-launched HydroMT builds.
+
+    These still use preprocess_mode='hydromt_build', but they are not strict
+    Manual raw-catalog mode. They may carry native search folders, file override
+    toggles, lock metadata, or grid_template_path.
+    """
+    if cfg_get(cfg, "preprocess_mode", "hydromt_build") != "hydromt_build":
+        return False
+
+    if str(cfg_get(cfg, "grid_source", "region") or "region").strip() == "raster_template":
+        return True
+
+    if cfg_path(cfg, "grid_template_path") is not None:
+        return True
+
+    if cfg_get(cfg, "override_locked_config_keys", []) or cfg_get(cfg, "override_locked_sections", []):
+        return True
+
+    if cfg_bool(cfg, "use_sfincs_file_overrides", False):
+        return True
+
+    for key in [
+        "native_static_sfincs_input_dirs",
+        "native_event_sfincs_input_dirs",
+        "native_sfincs_input_dirs",
+        "sfincs_file_override_search_dirs",
+    ]:
+        if cfg_get(cfg, key, []) or []:
+            return True
+
+    return False
+
+
+def is_strict_manual_hydromt_build(cfg: dict[str, Any]) -> bool:
+    """Return True only for strict Manual raw HydroMT builds."""
+    return (
+        cfg_get(cfg, "preprocess_mode", "hydromt_build") == "hydromt_build"
+        and not is_override_hydromt_build(cfg)
+    )
+
+
+def same_resolved_path(a: Path, b: Path) -> bool:
+    """
+    Compare two paths robustly without requiring both to resolve successfully.
+    """
+    try:
+        return a.resolve() == b.resolve()
+    except Exception:
+        return Path(a) == Path(b)
+
+
+def manual_catalog_selected_runtime_file_is_allowed(path: Path, cfg: dict[str, Any]) -> bool:
+    """
+    Allow explicitly configured Manual runtime validation/source products even
+    when their file extensions look SFINCS-native.
+
+    This is intentionally narrow. It does not allow arbitrary native SFINCS
+    packages in Manual hydromt_build. It only allows files that the current
+    config explicitly selected as source/validation products.
+
+    Examples:
+      - obs_points_path: curated SFINCS .xy observation points
+      - obs_lines_path: curated SFINCS .crs TEKAL-style cross sections
+      - active_mask_path: curated raster active-area gate
+    """
+    if not path.is_file():
+        return False
+
+    allowed_path_keys = [
+        "obs_points_path",
+        "obs_lines_path",
+        "active_mask_path",
+    ]
+
+    for key in allowed_path_keys:
+        selected = cfg_path(cfg, key)
+        if selected is not None and same_resolved_path(path, selected):
+            return True
+
+    return False
+
+def validate_manual_raw_catalog_decontaminated(cfg: dict[str, Any]) -> None:
+    """
+    In Manual hydromt_build mode, reject data catalogs that contain native SFINCS
+    reference products. There are no native-file exceptions.
+
+    A curated active-mask raster is allowed only as a source-catalog product.
+    It is sampled onto the Manual grid and must not define grid geometry.
+    """
+    if not is_strict_manual_hydromt_build(cfg):
+        print("Manual raw catalog contamination gate: SKIP for non-Manual/Override-HydroMT build.")
+        return
+
+    if cfg_get(cfg, "manual_allow_native_catalog_contamination", False):
+        print("WARNING: manual_allow_native_catalog_contamination=True; skipping raw catalog contamination gate.")
+        return
+
+    failures: list[str] = []
+
+    # Manual raw mode must not inherit Override/native package roots.
+    forbidden_config_keys = [
+        "native_static_sfincs_input_dirs",
+        "native_event_sfincs_input_dirs",
+        "native_sfincs_input_dirs",
+        "sfincs_file_override_search_dirs",
+    ]
+
+    for key in forbidden_config_keys:
+        values = cfg_get(cfg, key, []) or []
+        if values:
+            failures.append(f"{key} is set in Manual hydromt_build mode: {values!r}")
+
+    if cfg_get(cfg, "use_sfincs_file_overrides", False):
+        failures.append("use_sfincs_file_overrides=True in Manual hydromt_build mode")
+
+    for raw_root in cfg_get(cfg, "data_catalogs", []) or []:
+        root = Path(str(raw_root))
+        if not root.exists() or not root.is_dir():
+            continue
+
+        for path in root.rglob("*"):
+            if path_has_catalog_admin_part(path):
+                continue
+
+            if not (path.is_file() or path.is_symlink()):
+                continue
+
+            if manual_catalog_selected_runtime_file_is_allowed(path, cfg):
+                continue
+
+            reason = classify_manual_raw_catalog_contaminant(path, cfg)
+            if reason:
+                failures.append(f"{path}: {reason}")
+
+            if path.is_symlink():
+                failures.append(f"{path}: symlink remains in Manual raw data catalog")
+
+            if len(failures) >= 80:
+                failures.append("... capped at 80 contamination findings")
+                break
+
+        if len(failures) >= 80:
+            break
+
+    if failures:
+        detail = "\n  ".join(failures)
+        raise RuntimeError(
+            "Manual hydromt_build data catalogs are contaminated with native/reference SFINCS artifacts.\n"
+            "Fix by decontaminating/quarantining the catalog or removing native/override paths from the Manual config.\n"
+            "active_mask_path may point to a clean curated raster product, but native/reference SFINCS artifacts still belong in Override/native mode.\n"
+            f"Findings:\n  {detail}"
+        )
+
+    print("Manual raw catalog contamination gate: PASS")
+    
+    
+def validate_no_deprecated_manual_mask_template(cfg: dict[str, Any]) -> None:
+    """
+    Hard-stop deprecated Manual mask-template usage.
+
+    Manual hydromt_build should use region + dx/dy/CRS as the grid authority.
+    Raster masks, once reintroduced, must be ordinary active-mask inputs sampled
+    onto that grid. A raster that defines the grid belongs in the future explicit
+    grid_template_path / grid_source='raster_template' workflow, not in the old
+    mask_template_path fields.
+
+    This prevents the old ambiguous behavior:
+        mask_template_path = both "active mask" and "grid/template authority"
+    """
+    mode = cfg_get(cfg, "preprocess_mode", "hydromt_build")
+
+    # This guard applies to normal HydroMT builds. Future grid-template Override
+    # should use new keys such as grid_source/grid_template_path, not these old keys.
+    if mode != "hydromt_build":
+        return
+
+    bad: list[str] = []
+
+    if bool(cfg_get(cfg, "use_mask_template", False)):
+        bad.append("use_mask_template=True")
+
+    raw_path = cfg_get(cfg, "mask_template_path", "")
+    if raw_path is not None and str(raw_path).strip():
+        bad.append(f"mask_template_path is set: {raw_path!r}")
+
+    # mask_template_mode alone is harmless when path/use flag are blank,
+    # so do not fail on it by itself.
+
+    if bad:
+        detail = "\n  - ".join(bad)
+        raise RuntimeError(
+            "Deprecated Manual mask-template usage is not allowed in hydromt_build mode.\n"
+            "\n"
+            "Manual region-grid mode must build the grid from region_path + dx/dy/CRS, "
+            "then sample DEM/roughness/infiltration inputs onto that grid.\n"
+            "\n"
+            "Do not use mask_template_path as a hidden grid authority.\n"
+            "\n"
+            "Fix the run config by setting:\n"
+            "  use_mask_template = false\n"
+            "  mask_template_path = \"\"\n"
+            "\n"
+            "Later, exact grid-template behavior should use explicit keys such as:\n"
+            "  grid_source = \"raster_template\"\n"
+            "  grid_template_path = /path/to/template.tif\n"
+            "\n"
+            f"Blocked fields:\n  - {detail}"
+        )
+
+def collect_manual_raw_catalog_native_warnings(cfg: dict[str, Any]) -> list[str]:
+    """
+    Collect native-like/manual-contamination warnings for selected data catalogs.
+
+    This is warning/reporting logic. The hard policy gate remains
+    validate_manual_raw_catalog_decontaminated().
+    """
+    warnings: list[str] = []
+
+    for raw_root in cfg_get(cfg, "data_catalogs", []) or []:
+        root = Path(str(raw_root))
+        if not root.exists() or not root.is_dir():
+            continue
+
+        for path in root.rglob("*"):
+            if path_has_catalog_admin_part(path):
+                continue
+
+            if not (path.is_file() or path.is_symlink()):
+                continue
+
+            if manual_catalog_selected_runtime_file_is_allowed(path, cfg):
+                continue
+
+            reason = classify_manual_raw_catalog_contaminant(path, cfg)
+            if reason:
+                warnings.append(f"{path}: {reason}")
+
+            if path.is_symlink():
+                warnings.append(f"{path}: symlink remains in Manual raw data catalog")
+
+            if len(warnings) >= 80:
+                warnings.append("... capped at 80 native-like catalog warnings")
+                return warnings
+
+    return warnings
+
+
+def print_manual_raw_catalog_native_warning_summary(cfg: dict[str, Any]) -> None:
+    warnings = collect_manual_raw_catalog_native_warnings(cfg)
+
+    if not warnings:
+        print("Manual raw catalog native-file warning scan: no native-like catalog files found.")
+        return
+
+    print()
+    print("WARNING: Manual raw catalog native-file scan found native-like files.")
+    print("Clean curated active-mask rasters and explicitly selected curated validation .xy/.crs products are allowed source-catalog inputs.")
+    print("Native SFINCS/reference files should be quarantined or moved to Override/native mode.")
+    for item in warnings[:80]:
+        print(f"  - {item}")
+
+
+def validate_stage_inputs(cfg: dict[str, Any]) -> None:
+    """Stage-side validation before trying HydroMT."""
+    print_section("PREPROCESS INPUT VALIDATION")
+
+    failures: list[str] = []
+    allow_missing = cfg_get(cfg, "allow_missing_model_inputs", False)
+
+    required_paths = {
+        "project_root": cfg_path(cfg, "project_root"),
+        "data_root": cfg_path(cfg, "data_root"),
+        "output_root": cfg_path(cfg, "output_root"),
+    }
+
+    for label, path in required_paths.items():
+        if path_exists(path):
+            print(f"FOUND: {label}: {path}")
+        else:
+            msg = f"MISSING REQUIRED: {label}: {path}"
+            print(msg)
+            failures.append(msg)
+
+    mode = cfg_get(cfg, "preprocess_mode", "hydromt_build")
+    
+    if is_strict_manual_hydromt_build(cfg):
+        print_manual_raw_catalog_native_warning_summary(cfg)
+        validate_manual_raw_catalog_decontaminated(cfg)
+    else:
+        print("Strict Manual raw-catalog warning/contamination gates skipped for this mode.")
+
+    validate_no_deprecated_manual_mask_template(cfg)
+    
+    if mode == "native_sfincs_assembly":
+        static_dirs = cfg_get(cfg, "native_static_sfincs_input_dirs", []) or []
+        event_dirs = cfg_get(cfg, "native_event_sfincs_input_dirs", []) or []
+        other_dirs = cfg_get(cfg, "native_sfincs_input_dirs", []) or []
+    
+        all_native_dirs = static_dirs + event_dirs + other_dirs
+    
+        if not all_native_dirs:
+            failures.append(
+                "MISSING REQUIRED: no native SFINCS input directories configured for native_sfincs_assembly"
+            )
+        else:
+            for folder in all_native_dirs:
+                folder_path = Path(folder)
+                if folder_path.exists():
+                    print(f"FOUND: native SFINCS input dir: {folder_path}")
+                else:
+                    failures.append(f"MISSING REQUIRED: native SFINCS input dir: {folder_path}")
+        
+        validate_mask_template_against_dem(cfg)
+        
+        if failures:
+            raise FileNotFoundError("\n".join(failures))
+    
+        print("NATIVE SFINCS ASSEMBLY MODE: skipping HydroMT region/DEM/elevation-source validation.")
+        return
+
+    if mode == "hybrid":
+        event_catalogs = cfg_get(cfg, "data_catalogs", []) or []
+        static_dirs = cfg_get(cfg, "native_static_sfincs_input_dirs", []) or []
+
+        if not event_catalogs:
+            failures.append("MISSING REQUIRED: data_catalogs is empty for hybrid mode")
+        else:
+            event_catalog = Path(event_catalogs[0])
+            if event_catalog.exists():
+                print(f"FOUND: hybrid event catalog: {event_catalog}")
+            else:
+                failures.append(f"MISSING REQUIRED: hybrid event catalog: {event_catalog}")
+
+        if not static_dirs:
+            failures.append("MISSING REQUIRED: native_static_sfincs_input_dirs is empty for hybrid mode")
+        else:
+            static_dir = Path(static_dirs[0])
+            if static_dir.exists():
+                print(f"FOUND: hybrid static PPP dir: {static_dir}")
+            else:
+                failures.append(f"MISSING REQUIRED: hybrid static PPP dir: {static_dir}")
+
+        if failures:
+            raise FileNotFoundError("\n".join(failures))
+
+        print("HYBRID MODE: skipping HydroMT region/DEM/elevation-source validation.")
+        return
+
+    # Grid / region.
+    grid_source = str(cfg_get(cfg, "grid_source", "region") or "region").strip()
+
+    if grid_source == "raster_template":
+        grid_template = cfg_path(cfg, "grid_template_path")
+
+        if path_exists(grid_template):
+            print(f"FOUND: grid_template_path: {grid_template}")
+        elif allow_missing:
+            print(f"WARNING: grid_template_path missing but allow_missing_model_inputs=True: {grid_template}")
+        else:
+            msg = f"MISSING REQUIRED: grid_source='raster_template' but grid_template_path is missing: {grid_template}"
+            print(msg)
+            failures.append(msg)
+
+    elif grid_source == "region":
+        region_mode = cfg_get(cfg, "region_mode", "geom")
+
+        if region_mode == "geom":
+            region_path = cfg_path(cfg, "region_path")
+            if path_exists(region_path):
+                print(f"FOUND: region_path: {region_path}")
+            elif allow_missing:
+                print(f"WARNING: region_path missing but allow_missing_model_inputs=True: {region_path}")
+            else:
+                msg = f"MISSING REQUIRED: region_path: {region_path}"
+                print(msg)
+                failures.append(msg)
+
+        elif region_mode == "bbox":
+            bbox = cfg_get(cfg, "region_bbox")
+            if bbox:
+                print(f"FOUND/SET: region_bbox: {bbox}")
+            elif allow_missing:
+                print("WARNING: region_bbox missing but allow_missing_model_inputs=True")
+            else:
+                msg = "MISSING REQUIRED: region_bbox is not set while region_mode='bbox'"
+                print(msg)
+                failures.append(msg)
+
+        else:
+            msg = f"UNKNOWN region_mode: {region_mode}"
+            print(msg)
+            failures.append(msg)
+
+    else:
+        msg = f"UNKNOWN grid_source: {grid_source!r}. Use 'region' or 'raster_template'."
+        print(msg)
+        failures.append(msg)
+
+    # DEM raw paths are useful sanity checks, even though HydroMT actually uses source names.
+    dem_paths = cfg_path_list(cfg, "dem_paths")
+    if dem_paths:
+        for i, path in enumerate(dem_paths, start=1):
+            if path.exists():
+                print(f"FOUND: dem_paths[{i}]: {path}")
+            elif allow_missing:
+                print(f"WARNING: dem_paths[{i}] missing but allow_missing_model_inputs=True: {path}")
+            else:
+                msg = f"MISSING REQUIRED: dem_paths[{i}]: {path}"
+                print(msg)
+                failures.append(msg)
+    elif allow_missing:
+        print("WARNING: dem_paths list is empty but allow_missing_model_inputs=True")
+    else:
+        msg = "MISSING REQUIRED: dem_paths list is empty"
+        print(msg)
+        failures.append(msg)
+
+    # HydroMT source names are required for actual HydroMT build.
+    elevation_sources = build_elevation_list(cfg, raise_if_missing=False)
+    if elevation_sources:
+        print(f"FOUND/SET: HydroMT elevation sources: {elevation_sources}")
+    elif allow_missing:
+        print("WARNING: no HydroMT elevation sources configured but allow_missing_model_inputs=True")
+    else:
+        msg = (
+            "MISSING REQUIRED: no hydromt_dem_sources/hydromt_bathy_sources configured. "
+            "Raw DEM paths alone are not enough; HydroMT needs catalog source names."
+        )
+        print(msg)
+        failures.append(msg)
+
+    # Forcing sanity.
+    forcing_enabled = any([
+        bool(cfg_get(cfg, "use_rainfall", False)),
+        bool(cfg_get(cfg, "use_waterlevel_boundary", False)),
+        bool(cfg_get(cfg, "use_discharge_boundary", False)),
+        bool(cfg_get(cfg, "use_wind", False)),
+        bool(cfg_get(cfg, "use_pressure", False)),
+    ])
+    if cfg_get(cfg, "require_at_least_one_forcing", True) and not forcing_enabled and not allow_missing:
+        msg = "MISSING REQUIRED: no forcing toggles are enabled"
+        print(msg)
+        failures.append(msg)
+    else:
+        print(f"FORCING CHECK: at least one forcing enabled = {forcing_enabled}")
+
+    # Optional paths are warnings only.
+    optional_labels = [
+        "active_mask_path",
+        "grid_template_path",
+        "landcover_path",
+        "landcover_reclass_table",
+        "rainfall_path",
+        "waterlevel_path",
+        "streamflow_site_info_path",
+        "streamflow_data_path",
+        "hydrography_path",
+        "infiltration_path",
+        "curve_number_path",
+        "qinf_path",
+        "smax_path",
+        "seff_path",
+        "ks_path",
+        "sigma_path",
+        "psi_path",
+        "f0_path",
+        "fc_path",
+        "kd_path",
+        "vol_path",
+        "hsg_path",
+        "soil_storage_path",
+        "wind_path",
+        "pressure_path",
+        "thin_dam_path",
+        "weir_path",
+        "drainage_structure_path",
+        "culvert_path",
+        "obs_points_path",
+        "obs_lines_path",
+        "outflow_boundary_polygon_path",
+        "subgrid_river_path",
+        "discharge_points_csv_path",
+        "discharge_timeseries_csv_path",
+        "thin_dam_native_file_path",
+        "weir_native_file_path",
+        "drainage_structure_native_file_path",
+        "culvert_native_file_path",
+    ]
+    print("\nOptional path checks:")
+    for label in optional_labels:
+        path = cfg_path(cfg, label)
+        if path is None:
+            print(f"SKIP OPTIONAL: {label} is blank")
+        elif path.exists():
+            print(f"FOUND: {label}: {path}")
+        else:
+            print(f"SKIP OPTIONAL MISSING: {label}: {path}")
+
+    bathy_paths = cfg_path_list(cfg, "bathy_paths")
+    if bathy_paths:
+        for i, path in enumerate(bathy_paths, start=1):
+            print(f"{'FOUND' if path.exists() else 'SKIP OPTIONAL MISSING'}: bathy_paths[{i}]: {path}")
+    else:
+        print("SKIP OPTIONAL: bathy_paths list is empty")
+
+    if failures:
+        raise FileNotFoundError("\n".join(failures))
+
+
+def write_data_inventory(cfg: dict[str, Any]) -> None:
+    """Write a lightweight data inventory from configured paths only."""
+    if not cfg_get(cfg, "save_data_inventory", True):
+        return
+
+    print_section("WRITE DATA INVENTORY")
+
+    path_keys = [
+        "project_root",
+        "data_root",
+        "output_root",
+        "region_path",
+        "landcover_path",
+        "landcover_reclass_table",
+        "rainfall_path",
+        "waterlevel_path",
+        "streamflow_site_info_path",
+        "streamflow_data_path",
+        "hydrography_path",
+        "infiltration_path",
+        "curve_number_path",
+        "qinf_path",
+        "smax_path",
+        "seff_path",
+        "ks_path",
+        "sigma_path",
+        "psi_path",
+        "f0_path",
+        "fc_path",
+        "kd_path",
+        "vol_path",
+        "hsg_path",
+        "soil_storage_path",
+        "wind_path",
+        "pressure_path",
+        "thin_dam_path",
+        "weir_path",
+        "drainage_structure_path",
+        "active_mask_path",
+        "grid_template_path",
+        "culvert_path",
+        "obs_points_path",
+        "obs_lines_path",
+        "outflow_boundary_polygon_path",
+        "subgrid_river_path",
+        "discharge_points_csv_path",
+        "discharge_timeseries_csv_path",
+        "thin_dam_native_file_path",
+        "weir_native_file_path",
+        "drainage_structure_native_file_path",
+        "culvert_native_file_path",
+    ]
+
+    inventory: dict[str, Any] = {
+        "created_at": now_iso(),
+        "configured_paths": {},
+        "configured_path_lists": {},
+        "hydromt_sources": {
+            "data_catalogs": cfg_get(cfg, "data_catalogs", []),
+            "hydromt_catalog_paths": resolve_hydromt_catalog_paths(cfg),
+            "hydromt_dem_sources": cfg_get(cfg, "hydromt_dem_sources", []),
+            "hydromt_bathy_sources": cfg_get(cfg, "hydromt_bathy_sources", []),
+            "hydromt_roughness_sources": cfg_get(cfg, "hydromt_roughness_sources", []),
+            "rainfall_source": cfg_get(cfg, "rainfall_source"),
+            "waterlevel_source": cfg_get(cfg, "waterlevel_source"),
+            "discharge_source": cfg_get(cfg, "discharge_source"),
+        },
+    }
+
+    for key in path_keys:
+        value = cfg_get(cfg, key)
+        if value is None or str(value).strip() == "":
+            inventory["configured_paths"][key] = {"path": None, "exists": False}
+        else:
+            p = Path(value)
+            inventory["configured_paths"][key] = {
+                "path": str(p),
+                "exists": p.exists(),
+                "is_file": p.is_file() if p.exists() else False,
+                "is_dir": p.is_dir() if p.exists() else False,
+            }
+
+    for key in ["dem_paths", "bathy_paths"]:
+        values = cfg_get(cfg, key, []) or []
+        inventory["configured_path_lists"][key] = []
+        for value in values:
+            p = Path(value)
+            inventory["configured_path_lists"][key].append({
+                "path": str(p),
+                "exists": p.exists(),
+                "is_file": p.is_file() if p.exists() else False,
+                "is_dir": p.is_dir() if p.exists() else False,
+            })
+
+    write_json(data_inventory_path(cfg), inventory)
+    print(f"Wrote data inventory: {data_inventory_path(cfg)}")
+
+
+# ============================================================
+# HYDROMT IMPORT / LOGGING
+# ============================================================
+
+def initialize_hydromt_logging(cfg: dict[str, Any]) -> None:
+    """Initialize HydroMT logging to model/hydromt_sfincs.log if enabled."""
+    print_section("HYDROMT LOGGING")
+
+    enable_file_logging = cfg_get(cfg, "preprocess_enable_hydromt_file_logging", False)
+
+    if not enable_file_logging:
+        print("Skipping HydroMT file logging because preprocess_enable_hydromt_file_logging=False.")
+        print("Slurm stdout/stderr logs will still capture preprocessing messages.")
+        return
+
+    log_file = model_root(cfg) / "hydromt_sfincs.log"
+
+    try:
+        with timing_block("HydroMT logging: import hydromt._utils.log"):
+            from hydromt._utils import log
+
+        with timing_block("HydroMT logging: initialize_logging"):
+            log.initialize_logging()
+
+        with timing_block("HydroMT logging: set log level"):
+            log.set_log_level(log_level=20)
+
+        with timing_block("HydroMT logging: add file handler"):
+            log._add_filehandler(log_file)
+
+        print(f"HydroMT logging initialized: {log_file}")
+
+    except Exception as exc:
+        print("WARNING: Could not initialize HydroMT logging helper.")
+        print(f"Reason: {exc}")
+        print("Continuing; Python/Slurm stdout logs will still be available.")
+
+def import_hydromt_sfincs():
+    """Import HydroMT-SFINCS only inside the Slurm preprocessing job."""
+    try:
+        from hydromt_sfincs import SfincsModel
+    except Exception as exc:
+        raise ImportError(
+            "Could not import hydromt_sfincs. Make sure the Slurm job activated the sfincs conda env."
+        ) from exc
+    return SfincsModel
+
+
+def initialize_sfincs_model(cfg: dict[str, Any]):
+    """Initialize SfincsModel."""
+    print_section("HYDROMT: INITIALIZE SFINCS MODEL")
+
+    SfincsModel = import_hydromt_sfincs()
+
+    data_catalogs = cfg_get(cfg, "data_catalogs", []) or []
+
+    # Mutates cfg in-place:
+    #   path-like hydromt_dem_sources -> generated source names
+    #   path-like hydromt_bathy_sources -> generated source names
+    #   landcover_path -> generated landcover source name
+    generated_catalog_paths = prepare_local_hydromt_catalog(cfg)
+
+    # Optional external catalogs are only honored if explicitly safe. We do not
+    # derive these from data_catalogs anymore.
+    external_catalog_paths = resolve_hydromt_catalog_paths(cfg)
+
+    hydromt_catalog_paths = []
+    for item in generated_catalog_paths + external_catalog_paths:
+        if item not in hydromt_catalog_paths:
+            hydromt_catalog_paths.append(item)
+
+    root = model_root(cfg)
+    mode = "w+" if cfg_get(cfg, "overwrite_existing_run", False) else "w"
+    write_gis = cfg_get(cfg, "write_gis", True)
+
+    print(f"Model root:             {root}")
+    print(f"Mode:                   {mode}")
+    print(f"Write GIS:              {write_gis}")
+    print(f"Launcher catalogs:      {data_catalogs}")
+    print(f"Generated HydroMT libs: {generated_catalog_paths}")
+    print(f"External HydroMT libs:  {external_catalog_paths}")
+    print(f"HydroMT data_libs:      {hydromt_catalog_paths}")
+    print(f"HydroMT DEM sources:    {cfg_get(cfg, 'hydromt_dem_sources', [])}")
+    print(f"HydroMT bathy sources:  {cfg_get(cfg, 'hydromt_bathy_sources', [])}")
+    print(f"Landcover source:       {cfg_get(cfg, 'landcover_source')}")
+
+    sf = SfincsModel(
+        data_libs=hydromt_catalog_paths,
+        root=str(root),
+        mode=mode,
+        write_gis=write_gis,
+    )
+    return sf
+
+# ============================================================
+# HYDROMT SETUP HELPERS
+# ============================================================
+
+def get_region_dict(cfg: dict[str, Any]) -> dict[str, Any]:
+    region_mode = cfg_get(cfg, "region_mode", "geom")
+    if region_mode == "geom":
+        return {"geom": str(cfg_path(cfg, "region_path"))}
+    if region_mode == "bbox":
+        return {"bbox": cfg_get(cfg, "region_bbox")}
+    raise ValueError(f"Unsupported region_mode: {region_mode}")
+
+
+def build_elevation_list(cfg: dict[str, Any], raise_if_missing: bool = True) -> list[dict[str, Any]]:
+    elevation_list: list[dict[str, Any]] = []
+    elevation_list.extend(cfg_get(cfg, "hydromt_dem_sources", []) or [])
+    elevation_list.extend(cfg_get(cfg, "hydromt_bathy_sources", []) or [])
+
+    if raise_if_missing and not elevation_list:
+        raise ValueError(
+            "No HydroMT elevation/topobathy sources configured.\n"
+            "Set hydromt_dem_sources and/or hydromt_bathy_sources in the launcher.\n"
+            "Raw DEM paths are used for validation, but HydroMT setup needs catalog source names."
+        )
+    return elevation_list
+
+
+def build_roughness_list(cfg: dict[str, Any]) -> list[dict[str, Any]]:
+    roughness_list = cfg_get(cfg, "hydromt_roughness_sources", []) or []
+    if roughness_list:
+        return roughness_list
+
+    landcover_path = cfg_path(cfg, "landcover_path")
+    reclass_table = cfg_path(cfg, "landcover_reclass_table")
+    use_landcover = cfg_get(cfg, "use_landcover_roughness_if_available", True)
+
+    if landcover_path and reclass_table and use_landcover:
+        # prepare_local_hydromt_catalog() should have converted landcover_path
+        # into a generated catalog source name before this function runs.
+        return [{
+            "lulc": cfg_get(cfg, "landcover_source", str(landcover_path)),
+            "reclass_table": str(reclass_table),
+        }]
+
+    return []
+
+def setup_grid_from_raster_template(sf, cfg: dict[str, Any]) -> None:
+    """
+    Create the HydroMT grid from grid_template_path.
+
+    This is Override-only grid authority. It is separate from active_mask_path:
+      - grid_template_path defines grid geometry.
+      - active_mask_path gates active cells after the grid exists.
+    """
+    template = cfg_path(cfg, "grid_template_path")
+
+    if template is None:
+        raise FileNotFoundError(
+            "grid_source='raster_template' but grid_template_path is blank."
+        )
+
+    if not template.is_file():
+        raise FileNotFoundError(f"grid_template_path does not exist: {template}")
+
+    mode = str(cfg_get(cfg, "grid_template_mode", "raster_template") or "").strip()
+
+    if mode != "raster_template":
+        raise ValueError(
+            f"Unsupported grid_template_mode={mode!r}. "
+            "Current supported mode is 'raster_template'."
+        )
+
+    import rasterio
+
+    print_section("HYDROMT: GRID FROM RASTER TEMPLATE")
+    print(f"Grid template path: {template}")
+    print("Semantics: grid_template_path defines Override grid geometry.")
+
+    with rasterio.open(template) as src:
+        if src.crs is None:
+            raise ValueError(f"grid_template_path has no CRS: {template}")
+
+        transform = src.transform
+        bounds = src.bounds
+        width = int(src.width)
+        height = int(src.height)
+        dx = abs(float(transform.a))
+        dy = abs(float(transform.e))
+        crs = src.crs
+
+        if abs(float(transform.b)) > 1e-12 or abs(float(transform.d)) > 1e-12:
+            raise ValueError(
+                "grid_template_path appears rotated or sheared. "
+                "This first backend pass only supports north-up raster templates. "
+                f"Transform: {transform}"
+            )
+
+        if abs(dx - dy) > 1e-9:
+            raise ValueError(
+                "grid_template_path has non-square pixels. "
+                f"dx={dx}, dy={dy}. This first backend pass expects dx == dy."
+            )
+
+        region = {
+            "bbox": [
+                float(bounds.left),
+                float(bounds.bottom),
+                float(bounds.right),
+                float(bounds.top),
+            ]
+        }
+
+    grid_obj = safe_getattr(sf, "grid")
+
+    method_used = ""
+
+    if grid_obj is not None:
+        create_from_raster = safe_getattr(grid_obj, "create_from_raster")
+        if callable(create_from_raster):
+            try:
+                create_from_raster(raster=str(template))
+            except TypeError:
+                create_from_raster(str(template))
+            method_used = "sf.grid.create_from_raster"
+
+    if not method_used:
+        setup_grid_from_raster = safe_getattr(sf, "setup_grid_from_raster")
+        if callable(setup_grid_from_raster):
+            try:
+                setup_grid_from_raster(raster=str(template))
+            except TypeError:
+                setup_grid_from_raster(str(template))
+            method_used = "sf.setup_grid_from_raster"
+
+    if not method_used:
+        print(
+            "WARNING: no exact raster-template grid API was found. "
+            "Falling back to create_from_region using template bbox/res/CRS."
+        )
+
+        if grid_obj is not None:
+            create_from_region = safe_getattr(grid_obj, "create_from_region")
+            if callable(create_from_region):
+                create_from_region(
+                    region=region,
+                    res=dx,
+                    rotated=False,
+                    crs=str(crs),
+                )
+                method_used = "sf.grid.create_from_region_from_template_bbox"
+
+        if not method_used:
+            setup_grid_from_region = safe_getattr(sf, "setup_grid_from_region")
+            if callable(setup_grid_from_region):
+                setup_grid_from_region(
+                    region=region,
+                    res=dx,
+                    rotated=False,
+                    crs=str(crs),
+                )
+                method_used = "sf.setup_grid_from_region_from_template_bbox"
+
+    if not method_used:
+        raise AttributeError(
+            "grid_source='raster_template' was requested, but this HydroMT-SFINCS "
+            "version exposes neither a raster-template grid method nor a region-grid fallback."
+        )
+
+    audit = {
+        "created_at": now_iso(),
+        "grid_source": "raster_template",
+        "grid_template_path": str(template),
+        "grid_template_mode": mode,
+        "method_used": method_used,
+        "template_shape_yx": [height, width],
+        "template_resolution_xy": [dx, dy],
+        "template_crs": str(crs),
+        "template_bounds": region["bbox"],
+        "note": (
+            "grid_template_path was used as grid authority. "
+            "If method_used is a bbox fallback, compare written model grid shape/transform "
+            "against the template before treating this as exact reproduction."
+        ),
+    }
+
+    write_json(run_root(cfg) / "grid_template_setup_audit.json", audit)
+
+    print(f"Grid template method: {method_used}")
+    print(f"Template shape y/x:   {height} / {width}")
+    print(f"Template resolution:  {dx} / {dy}")
+    print(f"Template CRS:         {crs}")
+    print(f"Template bbox:        {region['bbox']}")
+    print(f"Audit:                {run_root(cfg) / 'grid_template_setup_audit.json'}")
+
+
+def setup_grid(sf, cfg: dict[str, Any]) -> None:
+    print_section("HYDROMT: GRID")
+
+    grid_source = str(cfg_get(cfg, "grid_source", "region") or "region").strip()
+
+    if grid_source == "raster_template":
+        setup_grid_from_raster_template(sf, cfg)
+        return
+
+    if grid_source != "region":
+        raise ValueError(
+            f"Unsupported grid_source={grid_source!r}. "
+            "Use 'region' or 'raster_template'."
+        )
+
+    region = get_region_dict(cfg)
+    print(f"Creating grid from region: {region}")
+
+    res = cfg_get(cfg, "grid_resolution_m", cfg_get(cfg, "grid_dx_m", 50))
+    rotated = cfg_get(cfg, "grid_rotated", True)
+    crs = cfg_get(cfg, "grid_crs", "utm")
+
+    grid_obj = safe_getattr(sf, "grid")
+    if grid_obj is not None:
+        create_from_region = safe_getattr(grid_obj, "create_from_region")
+        if callable(create_from_region):
+            create_from_region(region=region, res=res, rotated=rotated, crs=crs)
+            return
+
+    setup_grid_from_region = safe_getattr(sf, "setup_grid_from_region")
+    if callable(setup_grid_from_region):
+        setup_grid_from_region(region=region, res=res, rotated=rotated, crs=crs)
+        return
+
+    raise AttributeError("Could not find supported grid setup method on SfincsModel")
+
+
+def coerce_float_list(value: Any) -> list[float]:
+    """
+    Coerce SFINCS list-like config values.
+
+    Handles:
+      "0.0 28.0 50.0"
+      "0.0, 28.0, 50.0"
+      [0.0, 28.0, 50.0]
+    """
+    if isinstance(value, list):
+        return [float(v) for v in value]
+
+    if isinstance(value, tuple):
+        return [float(v) for v in value]
+
+    text = str(value or "").strip()
+    if not text:
+        return []
+
+    return [float(chunk) for chunk in text.replace(",", " ").split()]
+
+
+def normalize_sfincs_config_values(cfdict: dict[str, Any]) -> dict[str, Any]:
+    """
+    Normalize imported/parsed advanced SFINCS config values before HydroMT
+    validates them with Pydantic.
+    """
+    out = dict(cfdict)
+
+    for key in ["cdwnd", "cdval"]:
+        if key in out:
+            out[key] = coerce_float_list(out[key])
+
+    if "advection" in out:
+        try:
+            advection = int(out["advection"])
+        except Exception:
+            raise ValueError(
+                f"advanced_config.advection must be an integer 0 or 1 for Manual HydroMT builds; "
+                f"got {out['advection']!r}"
+            )
+
+        if advection not in (0, 1):
+            raise ValueError(
+                "advanced_config.advection is a real SFINCS model-control setting. "
+                f"This HydroMT-SFINCS config validator accepts only 0 or 1; got {advection}. "
+                "Set advection to 0 or 1 in the UI/config instead of relying on a backend override."
+            )
+
+        out["advection"] = advection
+
+    return out
+
+def setup_time_and_config(sf, cfg: dict[str, Any]) -> None:
+    print_section("HYDROMT: TIME / OUTPUT / ADVANCED CONFIG")
+
+    base_config = {
+        "tref": parse_datetime(cfg_get(cfg, "tref")),
+        "tstart": parse_datetime(cfg_get(cfg, "tstart")),
+        "tstop": parse_datetime(cfg_get(cfg, "tstop")),
+        "outputformat": cfg_get(cfg, "output_format", "net"),
+        "dtout": cfg_get(cfg, "dtout_s", 3600),
+        "dtmapout": cfg_get(cfg, "dtout_s", 3600),
+        "dthisout": cfg_get(cfg, "dthisout_s", 600),
+        "dtmaxout": cfg_get(cfg, "dtmaxout_s", 86400),
+        "dtrstout": cfg_get(cfg, "dtrstout_s", 0),
+        "storecumprcp": int(cfg_advanced_config_dict(cfg).get("storecumprcp", 1)),
+    }
+    advanced_config = dict(cfg_get(cfg, "advanced_config", {}) or {})
+
+    # In HydroMT builds, grid geometry must come from setup_grid(), not from
+    # stale imported sfincs.inp fields in advanced_config.
+    if cfg_get(cfg, "preprocess_mode", "hydromt_build") == "hydromt_build":
+        blocked_grid_keys = [
+            "mmax",
+            "nmax",
+            "dx",
+            "dy",
+            "x0",
+            "y0",
+            "rotation",
+            "epsg",
+        ]
+
+        removed_grid_keys = [
+            key for key in blocked_grid_keys
+            if key in advanced_config
+        ]
+
+        for key in removed_grid_keys:
+            advanced_config.pop(key, None)
+
+        if removed_grid_keys:
+            print(
+                "Removed grid-geometry keys from advanced_config for HydroMT build: "
+                + ", ".join(removed_grid_keys)
+            )
+
+    cfdict = normalize_sfincs_config_values({**base_config, **advanced_config})
+
+    print("Updating SFINCS config:")
+    for key, val in cfdict.items():
+        print(f"  {key}: {val}")
+
+    if hasattr(sf, "config") and hasattr(sf.config, "update"):
+        sf.config.update(cfdict)
+        return
+
+    if hasattr(sf, "setup_config"):
+        sf.setup_config(**cfdict)
+        return
+
+    if hasattr(sf, "set_config"):
+        for key, val in cfdict.items():
+            sf.set_config(key, val)
+        return
+
+    raise AttributeError("Could not find supported SFINCS config update method")
+
+
+def setup_elevation(sf, cfg: dict[str, Any]) -> list[dict[str, Any]]:
+    print_section("HYDROMT: ELEVATION / TOPOBATHY")
+
+    elevation_list = build_elevation_list(cfg, raise_if_missing=True)
+    print("Elevation/topobathy sources:")
+    for item in elevation_list:
+        print(f"  {item}")
+
+    buffer_cells = cfg_get(cfg, "elevation_buffer_cells", 1)
+
+    if hasattr(sf, "elevation") and hasattr(sf.elevation, "create"):
+        sf.elevation.create(elevation_list=elevation_list, buffer_cells=buffer_cells)
+        return elevation_list
+
+    if hasattr(sf, "setup_dep"):
+        sf.setup_dep(datasets_dep=elevation_list, buffer_cells=buffer_cells)
+        return elevation_list
+
+    raise AttributeError("Could not find supported elevation/topobathy setup method")
+
+
+def setup_mask(sf, cfg: dict[str, Any]) -> None:
+    print_section("HYDROMT: MASK / BOUNDARIES")
+
+    active_zmin = cfg_get(cfg, "active_zmin", -5.0)
+    fill_area = cfg_get(cfg, "mask_fill_area_km2", None)
+    drop_area = cfg_get(cfg, "mask_drop_area_km2", None)
+
+    use_active_mask = active_mask_is_enabled(cfg)
+
+    # Always let HydroMT build the base active mask first.
+    # active_mask_path is only a post-setup gate sampled onto that mask;
+    # it must not prevent setup_mask from creating active cells.
+    reset_mask = True
+
+    if use_active_mask:
+        print(
+            f"Creating base active mask with zmin={active_zmin}, reset_mask=True "
+            "(active_mask_path will be applied afterward as a sampled active-area gate)"
+        )
+    else:
+        print(f"Creating active mask with zmin={active_zmin}, reset_mask=True")
+
+    if hasattr(sf, "mask") and hasattr(sf.mask, "create_active"):
+        kwargs = {
+            "zmin": active_zmin,
+            "reset_mask": reset_mask,
+        }
+        if fill_area is not None:
+            kwargs["fill_area"] = fill_area
+        if drop_area is not None:
+            kwargs["drop_area"] = drop_area
+        sf.mask.create_active(**kwargs)
+    elif hasattr(sf, "setup_mask_active"):
+        try:
+            sf.setup_mask_active(
+                zmin=active_zmin,
+                fill_area=fill_area,
+                drop_area=drop_area,
+                reset_mask=reset_mask,
+            )
+        except TypeError:
+            print("WARNING: setup_mask_active does not accept reset_mask; calling without it.")
+            sf.setup_mask_active(zmin=active_zmin, fill_area=fill_area, drop_area=drop_area)
+    else:
+        raise AttributeError("Could not find supported active mask setup method")
+
+    # Water-level boundary cells.
+    if cfg_get(cfg, "use_waterlevel_boundary", False):
+        zmax = cfg_get(cfg, "waterlevel_boundary_zmax", -5.0)
+        reset_bounds = cfg_get(cfg, "reset_waterlevel_boundary", True)
+        print(f"Creating waterlevel boundary cells with zmax={zmax}")
+
+        if hasattr(sf, "mask") and hasattr(sf.mask, "create_boundary"):
+            sf.mask.create_boundary(btype="waterlevel", zmax=zmax, reset_bounds=reset_bounds)
+        elif hasattr(sf, "setup_mask_bounds"):
+            sf.setup_mask_bounds(btype="waterlevel", zmax=zmax, reset_bounds=reset_bounds)
+        else:
+            raise AttributeError("Could not find supported waterlevel boundary mask setup method")
+    else:
+        print("Skipping waterlevel boundary cells because use_waterlevel_boundary=False")
+
+    # Optional outflow boundary cells from polygon.
+    outflow_polygon = cfg_path(cfg, "outflow_boundary_polygon_path")
+    if outflow_polygon:
+        print(f"Creating outflow boundary cells from polygon: {outflow_polygon}")
+    
+        if not outflow_polygon.exists():
+            fail_or_warn(cfg, f"outflow_boundary_polygon_path does not exist: {outflow_polygon}")
+            return
+    
+        reset_bounds = cfg_get(cfg, "reset_outflow_boundary", True)
+    
+        if hasattr(sf, "mask") and hasattr(sf.mask, "create_boundary"):
+            sf.mask.create_boundary(
+                btype="outflow",
+                geom=str(outflow_polygon),
+                reset_bounds=reset_bounds,
+            )
+        elif hasattr(sf, "setup_mask_bounds"):
+            sf.setup_mask_bounds(
+                btype="outflow",
+                include_mask=str(outflow_polygon),
+                reset_bounds=reset_bounds,
+            )
+        else:
+            fail_or_warn(cfg, "Requested outflow polygon, but no supported outflow-boundary setup method was found")
+    else:
+        print("Skipping outflow boundary polygon because outflow_boundary_polygon_path is blank")
+
+
+def setup_roughness(sf, cfg: dict[str, Any]) -> list[dict[str, Any]]:
+    print_section("HYDROMT: ROUGHNESS")
+
+    roughness_list = build_roughness_list(cfg)
+    use_spatial = cfg_get(cfg, "use_spatially_variable_roughness", True)
+
+    if use_spatial and roughness_list:
+        print("Using spatial roughness sources:")
+        for item in roughness_list:
+            print(f"  {item}")
+
+        if hasattr(sf, "roughness") and hasattr(sf.roughness, "create"):
+            sf.roughness.create(
+                roughness_list=roughness_list,
+                manning_land=cfg_get(cfg, "manning_land", 0.04),
+                manning_sea=cfg_get(cfg, "manning_sea", 0.02),
+                rgh_lev_land=cfg_get(cfg, "roughness_land_level_m", 0.0),
+            )
+            return roughness_list
+
+        if hasattr(sf, "setup_manning_roughness"):
+            sf.setup_manning_roughness(
+                datasets_rgh=roughness_list,
+                manning_land=cfg_get(cfg, "manning_land", 0.04),
+                manning_sea=cfg_get(cfg, "manning_sea", 0.02),
+                rgh_lev_land=cfg_get(cfg, "roughness_land_level_m", 0.0),
+            )
+            return roughness_list
+
+        raise AttributeError("Could not find supported roughness setup method")
+
+    print("No spatial roughness configured; using constant Manning fallback if possible.")
+    manning = cfg_get(cfg, "manning_uniform", 0.04)
+
+    if hasattr(sf, "config") and hasattr(sf.config, "update"):
+        sf.config.update({"manning": manning})
+    elif hasattr(sf, "setup_config"):
+        sf.setup_config(manning=manning)
+    elif hasattr(sf, "set_config"):
+        sf.set_config("manning", manning)
+    else:
+        print("WARNING: Could not set constant Manning through known config methods")
+
+    return []
+
+
+def validate_mask_template_against_dem(cfg: dict[str, Any]) -> None:
+    """Validate optional mask template before expensive subgrid generation."""
+    if not cfg_get(cfg, "use_subgrid", False):
+        return
+
+    mask_path = cfg_path(cfg, "mask_template_path")
+    use_template = cfg_get(cfg, "use_mask_template", False)
+
+    if mask_path is None:
+        print(
+            "No deprecated mask_template_path selected. "
+            "This is expected for Manual region-grid mode; skipping mask-template DEM audit."
+        )
+        return
+
+    if not mask_path.exists():
+        fail_or_warn(cfg, f"mask_template_path is set but missing: {mask_path}")
+        return
+
+    if not use_template:
+        print(
+            "WARNING: mask_template_path is set, but use_mask_template=False. "
+            "The mask will be audited but not applied."
+        )
+
+    dem_paths = cfg_path_list(cfg, "dem_paths")
+    if not dem_paths:
+        print("WARNING: Cannot audit mask_template_path against DEM because dem_paths is empty.")
+        return
+
+    dem_path = dem_paths[0]
+    if not dem_path.exists():
+        print(f"WARNING: Cannot audit mask_template_path because DEM is missing: {dem_path}")
+        return
+
+    import numpy as np
+    import rasterio
+    from rasterio.windows import Window
+
+    print_section("MASK TEMPLATE / DEM AUDIT")
+    print(f"Mask template: {mask_path}")
+    print(f"DEM for audit: {dem_path}")
+
+    audit_path = run_root(cfg) / "mask_template_audit.json"
+    run_root(cfg).mkdir(parents=True, exist_ok=True)
+
+    summary: dict[str, Any] = {
+        "mask_template_path": str(mask_path),
+        "dem_path": str(dem_path),
+        "use_mask_template": bool(use_template),
+        "status": "started",
+    }
+
+    with rasterio.open(mask_path) as msk_src, rasterio.open(dem_path) as dem_src:
+        summary.update({
+            "mask_crs": str(msk_src.crs),
+            "dem_crs": str(dem_src.crs),
+            "mask_shape": [msk_src.height, msk_src.width],
+            "dem_shape": [dem_src.height, dem_src.width],
+            "mask_transform": str(msk_src.transform),
+            "dem_transform": str(dem_src.transform),
+            "mask_nodata": None if msk_src.nodata is None else float(msk_src.nodata),
+            "dem_nodata": None if dem_src.nodata is None else float(dem_src.nodata),
+        })
+
+        if msk_src.crs != dem_src.crs:
+            msg = f"Mask/DEM CRS mismatch: mask={msk_src.crs}, dem={dem_src.crs}"
+            summary["status"] = "failed_crs_mismatch"
+            summary["error"] = msg
+            write_json(audit_path, summary)
+            fail_or_warn(cfg, msg)
+            return
+
+        ratio_y = dem_src.height / msk_src.height
+        ratio_x = dem_src.width / msk_src.width
+        summary["dem_to_mask_ratio_y"] = ratio_y
+        summary["dem_to_mask_ratio_x"] = ratio_x
+
+        exact_ratio = (
+            float(ratio_y).is_integer()
+            and float(ratio_x).is_integer()
+            and int(ratio_y) == int(ratio_x)
+        )
+
+        if not exact_ratio:
+            msg = (
+                "Mask/DEM shape ratio is not an exact integer. "
+                f"ratio_y={ratio_y}, ratio_x={ratio_x}. "
+                "Skipping active-cell DEM finite audit."
+            )
+            print(f"WARNING: {msg}")
+            summary["status"] = "warning_non_integer_ratio"
+            summary["warning"] = msg
+            write_json(audit_path, summary)
+            return
+
+        ratio = int(ratio_y)
+        summary["dem_to_mask_ratio"] = ratio
+
+        # Basic resolution sanity check.
+        dem_dx = abs(float(dem_src.transform.a))
+        dem_dy = abs(float(dem_src.transform.e))
+        mask_dx = abs(float(msk_src.transform.a))
+        mask_dy = abs(float(msk_src.transform.e))
+
+        summary["dem_resolution"] = [dem_dx, dem_dy]
+        summary["mask_resolution"] = [mask_dx, mask_dy]
+
+        if not (
+            abs(mask_dx - dem_dx * ratio) < 1e-6
+            and abs(mask_dy - dem_dy * ratio) < 1e-6
+        ):
+            msg = (
+                "Mask/DEM resolution ratio does not match shape ratio. "
+                f"DEM res=({dem_dx}, {dem_dy}), mask res=({mask_dx}, {mask_dy}), ratio={ratio}."
+            )
+            summary["status"] = "failed_resolution_mismatch"
+            summary["error"] = msg
+            write_json(audit_path, summary)
+            fail_or_warn(cfg, msg)
+            return
+
+        mask_arr = msk_src.read(1).astype("float32")
+        mask_active = np.isfinite(mask_arr) & (mask_arr > 0)
+        active_cells = int(mask_active.sum())
+        summary["mask_active_cells"] = active_cells
+
+        active_all_nan = 0
+        active_partial_nan = 0
+        active_any_nan = 0
+        min_finite_fraction = 1.0
+
+        for r in range(msk_src.height):
+            dem_block = dem_src.read(
+                1,
+                window=Window(0, r * ratio, dem_src.width, ratio),
+                masked=True,
+            ).filled(np.nan)
+
+            finite = np.isfinite(dem_block)
+            finite_frac = finite.reshape(ratio, msk_src.width, ratio).mean(axis=(0, 2))
+
+            active_row = mask_active[r, :]
+            if active_row.any():
+                frac = finite_frac[active_row]
+                min_finite_fraction = min(min_finite_fraction, float(frac.min()))
+                active_all_nan += int((frac == 0).sum())
+                active_partial_nan += int(((frac > 0) & (frac < 1)).sum())
+                active_any_nan += int((frac < 1).sum())
+
+        summary.update({
+            "active_cells_with_all_nan_dem": active_all_nan,
+            "active_cells_with_partial_nan_dem": active_partial_nan,
+            "active_cells_with_any_nan_dem": active_any_nan,
+            "min_finite_fraction_in_active_cells": min_finite_fraction,
+        })
+
+        if active_all_nan > 0:
+            msg = (
+                f"Mask template activates {active_all_nan} coarse cells whose matching DEM pixels are all NaN. "
+                "This will likely fail subgrid generation."
+            )
+            summary["status"] = "failed_active_all_nan_dem"
+            summary["error"] = msg
+            write_json(audit_path, summary)
+            fail_or_warn(cfg, msg)
+            return
+
+        if active_partial_nan > 0:
+            print(
+                f"WARNING: Mask template has {active_partial_nan} active cells with partial DEM NoData. "
+                "Subgrid may still work if interpolation fills them."
+            )
+
+        summary["status"] = "ok"
+        write_json(audit_path, summary)
+
+    print(f"Mask template audit OK. Active cells: {active_cells}")
+    print(f"Wrote mask template audit: {audit_path}")
+
+
+def mask_template_is_enabled(cfg: dict[str, Any]) -> bool:
+    """Return True when the user explicitly selected a mask template."""
+    return (
+        bool(cfg_get(cfg, "use_mask_template", False))
+        and cfg_path(cfg, "mask_template_path") is not None
+    )
+
+
+def effective_active_mask_path(cfg: dict[str, Any]) -> Optional[Path]:
+    """
+    Return the active-area mask path that should be sampled onto the current grid.
+
+    Priority:
+      1. explicit active_mask_path
+      2. grid_template_path, only if grid_template_use_as_active_mask=True
+    """
+    explicit = cfg_path(cfg, "active_mask_path")
+
+    if explicit is not None:
+        return explicit
+
+    grid_source = str(cfg_get(cfg, "grid_source", "region") or "region").strip()
+
+    if (
+        grid_source == "raster_template"
+        and cfg_bool(cfg, "grid_template_use_as_active_mask", False)
+    ):
+        return cfg_path(cfg, "grid_template_path")
+
+    return None
+
+
+def active_mask_is_enabled(cfg: dict[str, Any]) -> bool:
+    """Return True when an optional active-area mask should be sampled."""
+    return effective_active_mask_path(cfg) is not None
+
+
+def apply_active_mask_to_hydromt_grid(
+    sf,
+    cfg: dict[str, Any],
+    *,
+    stage_label: str = "active_mask",
+) -> None:
+    """
+    Apply active_mask_path as a sampled active-area gate on the current HydroMT grid.
+
+    This does NOT define the grid. It does not set x0/y0/mmax/nmax/dx/dy.
+    It only clips the current HydroMT mask to the sampled active-mask footprint.
+    """
+    if not active_mask_is_enabled(cfg):
+        return
+
+    mode = str(cfg_get(cfg, "active_mask_mode", "sample_to_grid") or "").strip()
+
+    if mode != "sample_to_grid":
+        raise ValueError(
+            f"Unsupported active_mask_mode={mode!r}. "
+            "Current supported mode is 'sample_to_grid'."
+        )
+        
+    active_mask_path = effective_active_mask_path(cfg)
+
+    if active_mask_path is None:
+        return
+
+    if not active_mask_path.exists():
+        fail_or_warn(cfg, f"active_mask_path is set but missing: {active_mask_path}")
+        return
+
+    import rasterio
+    from rasterio.warp import reproject, Resampling
+
+    print_section(f"HYDROMT: APPLY ACTIVE MASK ({stage_label})")
+    print(f"Active mask path: {active_mask_path}")
+    print("Mode: sample_to_grid")
+    print("Semantics: sampled active-area gate only; does not define grid geometry.")
+
+    da_grid_mask = get_hydromt_grid_mask(sf)
+
+    dst_transform = da_grid_mask.raster.transform
+    if callable(dst_transform):
+        dst_transform = dst_transform()
+
+    dst_crs = da_grid_mask.raster.crs
+    if dst_crs is None:
+        raise ValueError("HydroMT grid mask has no CRS while applying active_mask_path.")
+
+    current = np.asarray(da_grid_mask.values)
+    before_active = int((current > 0).sum())
+
+    sampled = np.zeros(da_grid_mask.shape, dtype=np.float32)
+
+    with rasterio.open(active_mask_path) as src:
+        reproject(
+            source=rasterio.band(src, 1),
+            destination=sampled,
+            src_transform=src.transform,
+            src_crs=src.crs,
+            src_nodata=src.nodata,
+            dst_transform=dst_transform,
+            dst_crs=dst_crs,
+            dst_nodata=0,
+            resampling=Resampling.nearest,
+        )
+
+    allowed = np.isfinite(sampled) & (sampled > 0)
+
+    # Preserve HydroMT's mask categories inside the allowed area.
+    # Outside the allowed active-mask footprint, force inactive.
+    out = np.where(allowed, current, 0)
+    out = np.where(np.isfinite(out), out, 0)
+    out = np.rint(out).astype(np.int16)
+
+    # Keep only SFINCS/HydroMT mask classes 0,1,2,3.
+    out = np.where(out < 0, 0, out)
+    out = np.where((out > 0) & (~np.isin(out, [1, 2, 3])), 1, out).astype(np.int16)
+
+    da_new = xr.DataArray(
+        out,
+        dims=da_grid_mask.dims,
+        coords=da_grid_mask.coords,
+        name="mask",
+        attrs=dict(da_grid_mask.attrs),
+    )
+
+    try:
+        da_new.raster.write_crs(dst_crs, inplace=True)
+    except Exception:
+        pass
+
+    try:
+        da_new.raster.write_transform(dst_transform, inplace=True)
+    except Exception:
+        pass
+
+    set_hydromt_grid_map(sf, da_new, "mask")
+
+    vals, counts = np.unique(out, return_counts=True)
+    count_dict = {int(v): int(c) for v, c in zip(vals, counts)}
+    after_active = int((out > 0).sum())
+    allowed_count = int(allowed.sum())
+
+    audit = {
+        "created_at": now_iso(),
+        "stage_label": stage_label,
+        "active_mask_path": str(active_mask_path),
+        "configured_active_mask_path": str(cfg_get(cfg, "active_mask_path", "")),
+        "grid_template_path": str(cfg_get(cfg, "grid_template_path", "")),
+        "grid_template_use_as_active_mask": cfg_bool(cfg, "grid_template_use_as_active_mask", False),
+        "active_mask_mode": mode,
+        "dst_shape": list(out.shape),
+        "dst_crs": str(dst_crs),
+        "dst_transform": str(dst_transform),
+        "active_before": before_active,
+        "allowed_sampled_cells": allowed_count,
+        "active_after": after_active,
+        "value_counts_after": count_dict,
+        "note": "active_mask_path sampled onto existing HydroMT grid and used only as active-area gate.",
+    }
+
+    write_json(run_root(cfg) / f"active_mask_apply_{stage_label}.json", audit)
+
+    print(f"Applied active mask gate at stage: {stage_label}")
+    print(f"Active cells before: {before_active}")
+    print(f"Allowed sampled cells: {allowed_count}")
+    print(f"Active cells after: {after_active}")
+    print(f"Value counts after apply: {count_dict}")
+    print(f"Audit: {run_root(cfg) / f'active_mask_apply_{stage_label}.json'}")
+    if after_active == 0:
+        raise RuntimeError(
+            "active_mask_path gate produced zero active cells. "
+            f"stage={stage_label}, active_before={before_active}, "
+            f"allowed_sampled_cells={allowed_count}, audit={run_root(cfg) / f'active_mask_apply_{stage_label}.json'}. "
+            "This usually means the active mask was applied before HydroMT created the base mask, "
+            "or the active mask/grid alignment is wrong."
+        )
+    
+
+def find_grid_dataarray(sf, candidate_names: list[str]) -> tuple[str, xr.DataArray] | tuple[None, None]:
+    """Find a DataArray in sf.grid.data by candidate names."""
+    grid_obj = safe_getattr(sf, "grid")
+    data = safe_getattr(grid_obj, "data") if grid_obj is not None else None
+
+    if data is None:
+        return None, None
+
+    for name in candidate_names:
+        try:
+            if name in data:
+                return name, data[name]
+        except Exception:
+            pass
+
+    return None, None
+
+
+def validate_and_fill_inactive_nans_before_subgrid(sf, cfg: dict[str, Any]) -> None:
+    """
+    Fail if active cells have NaNs, but fill inactive/off-mask NaNs before HydroMT subgrid.
+
+    This avoids touching HydroMT package code while preventing its broad rectangular
+    finite assertion from failing on inactive cells.
+    """
+    if not cfg_get(cfg, "use_subgrid", False):
+        return
+
+    print_section("HYDROMT: ACTIVE-MASK-AWARE NAN CHECK BEFORE SUBGRID")
+
+    da_mask = get_hydromt_grid_mask(sf)
+    active = np.asarray(da_mask.values) > 0
+
+    dep_name, da_dep = find_grid_dataarray(sf, ["dep", "elevtn", "elevation", "zb", "bedlevel"])
+    man_name, da_man = find_grid_dataarray(sf, ["manning", "man", "roughness"])
+
+    if da_dep is None:
+        print("WARNING: Could not find a grid depth/elevation array before subgrid; skipping inactive-NaN fill.")
+        return
+
+    dep = np.asarray(da_dep.values, dtype=np.float32)
+    dep_finite = np.isfinite(dep)
+
+    active_dep_nan = active & ~dep_finite
+    inactive_dep_nan = (~active) & ~dep_finite
+
+    audit = {
+        "created_at": now_iso(),
+        "active_cell_count": int(active.sum()),
+        "dep_name": dep_name,
+        "active_dep_nan_count": int(active_dep_nan.sum()),
+        "inactive_dep_nan_count_filled": int(inactive_dep_nan.sum()),
+        "man_name": man_name,
+        "active_man_nan_count": None,
+        "inactive_man_nan_count_filled": None,
+    }
+
+    if active_dep_nan.any():
+        audit_path = run_root(cfg) / "subgrid_active_nan_guard_failed.json"
+        write_json(audit_path, audit)
+        raise RuntimeError(
+            "Active-mask-aware subgrid guard failed: depth/elevation has NaNs in active cells. "
+            f"Count={audit['active_dep_nan_count']}. Audit={audit_path}"
+        )
+
+    if inactive_dep_nan.any():
+        dep2 = dep.copy()
+        dep2[inactive_dep_nan] = 0.0
+
+        da_dep2 = xr.DataArray(
+            dep2,
+            dims=da_dep.dims,
+            coords=da_dep.coords,
+            name=da_dep.name,
+            attrs=dict(da_dep.attrs),
+        )
+
+        try:
+            da_dep2.raster.write_crs(da_dep.raster.crs, inplace=True)
+        except Exception:
+            pass
+
+        try:
+            da_dep2.raster.write_transform(da_dep.raster.transform, inplace=True)
+        except Exception:
+            pass
+
+        set_hydromt_grid_map(sf, da_dep2, dep_name)
+
+    if da_man is not None:
+        man = np.asarray(da_man.values, dtype=np.float32)
+        man_finite = np.isfinite(man)
+
+        active_man_nan = active & ~man_finite
+        inactive_man_nan = (~active) & ~man_finite
+
+        audit["active_man_nan_count"] = int(active_man_nan.sum())
+        audit["inactive_man_nan_count_filled"] = int(inactive_man_nan.sum())
+
+        if active_man_nan.any():
+            audit_path = run_root(cfg) / "subgrid_active_nan_guard_failed.json"
+            write_json(audit_path, audit)
+            raise RuntimeError(
+                "Active-mask-aware subgrid guard failed: Manning/roughness has NaNs in active cells. "
+                f"Count={audit['active_man_nan_count']}. Audit={audit_path}"
+            )
+
+        if inactive_man_nan.any():
+            man2 = man.copy()
+            man2[inactive_man_nan] = float(cfg_get(cfg, "manning_uniform", 0.04))
+
+            da_man2 = xr.DataArray(
+                man2,
+                dims=da_man.dims,
+                coords=da_man.coords,
+                name=da_man.name,
+                attrs=dict(da_man.attrs),
+            )
+
+            try:
+                da_man2.raster.write_crs(da_man.raster.crs, inplace=True)
+            except Exception:
+                pass
+
+            try:
+                da_man2.raster.write_transform(da_man.raster.transform, inplace=True)
+            except Exception:
+                pass
+
+            set_hydromt_grid_map(sf, da_man2, man_name)
+
+    audit_path = run_root(cfg) / "subgrid_active_nan_guard.json"
+    write_json(audit_path, audit)
+
+    print("Active-mask-aware subgrid NaN guard passed.")
+    print(f"  active dep NaNs:   {audit['active_dep_nan_count']}")
+    print(f"  inactive dep fill: {audit['inactive_dep_nan_count_filled']}")
+    print(f"  active man NaNs:   {audit['active_man_nan_count']}")
+    print(f"  inactive man fill: {audit['inactive_man_nan_count_filled']}")
+    print(f"  audit: {audit_path}")
+
+
+
+def setup_subgrid(sf, cfg: dict[str, Any], elevation_list: list[dict[str, Any]], roughness_list: list[dict[str, Any]]) -> None:
+    print_section("HYDROMT: SUBGRID")
+
+    if not cfg_get(cfg, "use_subgrid", False):
+        print("Skipping subgrid because use_subgrid=False")
+        return
+
+    print("Creating subgrid tables. This may be slow for large domains/high-res DEMs.")
+
+    nr_pixels = cfg_get(cfg, "subgrid_nr_pixels", 6)
+    write_dep_tif = cfg_get(cfg, "subgrid_write_dep_tif", True)
+    write_man_tif = cfg_get(cfg, "subgrid_write_man_tif", True)
+
+    if hasattr(sf, "subgrid") and hasattr(sf.subgrid, "create"):
+        sf.subgrid.create(
+            elevation_list=elevation_list,
+            roughness_list=roughness_list if roughness_list else None,
+            nr_subgrid_pixels=nr_pixels,
+            write_dep_tif=write_dep_tif,
+            write_man_tif=write_man_tif,
+        )
+        return
+
+    if hasattr(sf, "setup_subgrid"):
+        sf.setup_subgrid(
+            datasets_dep=elevation_list,
+            datasets_rgh=roughness_list if roughness_list else None,
+            nr_subgrid_pixels=nr_pixels,
+            write_dep_tif=write_dep_tif,
+            write_man_tif=write_man_tif,
+        )
+        return
+
+    raise AttributeError("Could not find supported subgrid setup method")
+
+
+def setup_forcing(sf, cfg: dict[str, Any]) -> None:
+    print_section("HYDROMT: FORCING")
+
+    # Rainfall / precipitation.
+    if cfg_get(cfg, "use_rainfall", False):
+        rainfall_kind = cfg_get(cfg, "rainfall_kind", "spatial")
+        precip_comp = get_component(sf, "precipitation")
+
+        if precip_comp is None:
+            fail_or_warn(cfg, "Requested rainfall, but precipitation component is unavailable")
+        else:
+            print(f"Rainfall enabled: kind={rainfall_kind}")
+
+            if rainfall_kind == "uniform":
+                magnitude = cfg_get(cfg, "rainfall_uniform_mm_hr")
+                if magnitude is None:
+                    raise ValueError("rainfall_kind='uniform' but rainfall_uniform_mm_hr is None")
+
+                print(f"Using uniform rainfall magnitude: {magnitude} mm/hr")
+                precip_comp.create_uniform(magnitude=magnitude)
+
+            elif rainfall_kind == "spatial":
+                source = resolve_manual_local_source_path(
+                    cfg,
+                    source_key="rainfall_source",
+                    path_key="rainfall_path",
+                    label="rainfall",
+                )
+
+                print(f"Using gridded precipitation HydroMT source/path: {source}")
+
+                precip_comp.create(
+                    precip=source,
+                    cumulative_input=True,
+                    time_label="right",
+                    aggregate=False,
+                )
+
+            else:
+                raise ValueError(f"Unknown rainfall_kind: {rainfall_kind}")
+    else:
+        print("Skipping rainfall because use_rainfall=False")
+
+    # Water level boundary forcing.
+    if cfg_get(cfg, "use_waterlevel_boundary", False):
+        source_kind = cfg_get(cfg, "waterlevel_source_kind", "geodataset")
+        source = cfg_get(cfg, "waterlevel_source")
+
+        print(f"Water-level forcing enabled: kind={source_kind}, source={source}")
+
+        if source_kind in {"csv", "event_catalog_csv", "local_file"}:
+            print(
+                "CSV/event-catalog water level requested; strict Manual mode will NOT "
+                "create boundary points from the mask. sfincs.bnd and sfincs.bzs will be "
+                "written only from an explicit catalog boundary table after write_model()."
+            )
+
+        elif source_kind == "native_sfincs":
+            raise ValueError(
+                "waterlevel_source_kind='native_sfincs' is not allowed in Manual raw mode. "
+                "Use Override/native assembly mode for native SFINCS BND/BZS files."
+            )
+
+        elif source_kind == "geodataset":
+            water_comp = get_component(sf, "water_level")
+
+            if water_comp is None:
+                fail_or_warn(cfg, "Requested water-level forcing, but water_level component is unavailable")
+            else:
+                if source_value_is_label(source):
+                    raise ValueError(
+                        f"waterlevel_source_kind='geodataset' but waterlevel_source is a UI label: {source!r}. "
+                        "Use waterlevel_source_kind='event_catalog_csv' with waterlevel_path, or provide a real HydroMT geodataset source."
+                    )
+
+                print(f"Creating water-level timeseries from HydroMT source: {source}")
+                water_comp.create(geodataset=source)
+
+        else:
+            raise ValueError(f"Unknown waterlevel_source_kind: {source_kind}")
+    else:
+        print("Skipping water-level forcing because use_waterlevel_boundary=False")
+
+    # Discharge forcing.
+    if cfg_get(cfg, "use_discharge_boundary", False):
+        source_kind = cfg_get(cfg, "discharge_source_kind", "geodataset")
+        source = cfg_get(cfg, "discharge_source")
+
+        if source_kind == "geodataset":
+            if source_value_is_label(source):
+                raise ValueError(
+                    f"discharge_source_kind='geodataset' but discharge_source is a UI label: {source!r}. "
+                    "Use discharge_source_kind='event_catalog_csv' with discharge_points_csv_path and "
+                    "discharge_timeseries_csv_path, or provide a real HydroMT geodataset source."
+                )
+
+            discharge_comp = get_component(sf, "discharge_points")
+
+            if discharge_comp is None:
+                fail_or_warn(cfg, "Requested discharge forcing, but discharge_points component is unavailable")
+            else:
+                print(f"Discharge forcing enabled from HydroMT geodataset: {source}")
+                discharge_comp.create(geodataset=source)
+
+        elif source_kind in {"csv", "event_catalog_csv"}:
+            print("CSV/event-catalog discharge requested; native sfincs.src/sfincs.dis will be written after HydroMT model write.")
+
+        elif source_kind == "native_sfincs":
+            print("Native SFINCS discharge requested; use SFINCS_FILE_OVERRIDES for srcfile/disfile.")
+
+        else:
+            raise ValueError(f"Unknown discharge_source_kind: {source_kind}")
+    else:
+        print("Skipping discharge forcing because use_discharge_boundary=False")
+        
+    # Wind forcing.
+    if cfg_get(cfg, "use_wind", False):
+        source = cfg_get(cfg, "wind_source")
+        wind_path = cfg_path(cfg, "wind_path")
+
+        if source_value_is_label(source):
+            if wind_path is None or not wind_path.is_file():
+                raise FileNotFoundError(
+                    f"use_wind=True but wind_path is blank or missing: {wind_path}"
+                )
+            source = str(wind_path)
+
+        wind_comp = get_component(sf, "wind")
+
+        if wind_comp is None:
+            fail_or_warn(cfg, "Requested wind forcing, but wind component is unavailable")
+        else:
+            print(f"Wind forcing enabled: {source}")
+            wind_comp.create(wind=source)
+    else:
+        print("Skipping wind because use_wind=False")
+
+    # Pressure forcing.
+    if cfg_get(cfg, "use_pressure", False):
+        source = cfg_get(cfg, "pressure_source")
+        pressure_path = cfg_path(cfg, "pressure_path")
+
+        if source_value_is_label(source):
+            if pressure_path is None or not pressure_path.is_file():
+                raise FileNotFoundError(
+                    f"use_pressure=True but pressure_path is blank or missing: {pressure_path}"
+                )
+            source = str(pressure_path)
+
+        pressure_comp = get_component(sf, "pressure")
+
+        if pressure_comp is None:
+            fail_or_warn(cfg, "Requested pressure forcing, but pressure component is unavailable")
+        else:
+            print(f"Pressure forcing enabled: {source}")
+            pressure_comp.create(press=source)
+    else:
+        print("Skipping pressure because use_pressure=False")
+
+def setup_infiltration(sf, cfg: dict[str, Any]) -> None:
+    print_section("HYDROMT: INFILTRATION")
+
+    if not cfg_get(cfg, "use_infiltration", False):
+        print("Skipping infiltration because use_infiltration=False")
+        return
+
+    mode = cfg_get(cfg, "infiltration_mode", "none")
+
+    if mode == "none":
+        print("Skipping infiltration because infiltration_mode='none'")
+        return
+
+    if mode == "native_sfincs":
+        print("Skipping HydroMT infiltration setup because native SFINCS infiltration files are supplied by file overrides")
+        return
+
+    if mode == "constant":
+        qinf = cfg_get(cfg, "qinf_mm_hr", 0.0)
+        zmin = cfg_get(cfg, "qinf_zmin_m", 0.0)
+        print(f"Using constant infiltration: qinf={qinf} mm/hr, zmin={zmin} m")
+
+        setup_constant = safe_getattr(sf, "setup_constant_infiltration")
+        if callable(setup_constant):
+            setup_constant(qinf=qinf, zmin=zmin)
+        else:
+            fail_or_warn(
+                cfg,
+                "Requested constant infiltration, but setup_constant_infiltration is unavailable. "
+                "Use qinf_path/native qinffile for gridded constant infiltration, or disable infiltration."
+            )
+        return
+
+    if mode == "curve_number":
+        print("Curve Number infiltration requested")
+        setup_curve_number_scs_infiltration(sf, cfg)
+        return
+
+    if mode == "curve_number_with_ks":
+        print("Curve Number + Ks infiltration requested")
+        setup_curve_number_scs_infiltration(sf, cfg)
+        setup_ks_infiltration_map_if_requested(sf, cfg)
+        return
+
+    if mode in {"spatial_constant", "qinf"}:
+        print(f"Spatial constant/qinf infiltration requested: mode={mode}")
+
+        qinf_path = cfg_path(cfg, "qinf_path")
+        if qinf_path is None:
+            fail_or_warn(
+                cfg,
+                f"infiltration_mode={mode!r} requires qinf_path or native qinffile, but qinf_path is blank."
+            )
+            return
+
+        da_mask = get_hydromt_grid_mask(sf)
+        da_qinf = reproject_raster_to_grid_mask(
+            source_path=qinf_path,
+            da_mask=da_mask,
+            label="qinf",
+            value_min=0.0,
+            value_max=None,
+            inactive_value=0.0,
+        )
+        set_hydromt_grid_map(sf, da_qinf, name="qinf")
+        set_hydromt_config_key(sf, "qinffile", "sfincs.qinf")
+
+        print("QINF infiltration map prepared:")
+        print(f"  source: {qinf_path}")
+        print("  grid map: qinf")
+        print("  sfincs.inp: qinffile = sfincs.qinf")
+        return
+
+    raise ValueError(f"Unknown infiltration_mode: {mode}")
+
+
+def setup_structures_and_observations(sf, cfg: dict[str, Any]) -> None:
+    print_section("HYDROMT: STRUCTURES / OBSERVATIONS")
+
+    if cfg_get(cfg, "use_structures", False):
+        print("Structures requested.")
+
+        create_structure_from_gis(
+            sf,
+            cfg,
+            label="thin dams",
+            source_kind_key="thin_dam_source_kind",
+            path_key="thin_dam_path",
+            component_names=["thin_dams", "thin_dam", "thin_dam_lines"],
+        )
+
+        create_structure_from_gis(
+            sf,
+            cfg,
+            label="weirs",
+            source_kind_key="weir_source_kind",
+            path_key="weir_path",
+            component_names=["weirs", "weir"],
+        )
+
+        create_structure_from_gis(
+            sf,
+            cfg,
+            label="drainage structures",
+            source_kind_key="drainage_structure_source_kind",
+            path_key="drainage_structure_path",
+            component_names=["drainage_structures", "drainage", "drainage_points"],
+        )
+
+        create_structure_from_gis(
+            sf,
+            cfg,
+            label="culverts",
+            source_kind_key="culvert_source_kind",
+            path_key="culvert_path",
+            component_names=["culverts", "culvert", "drainage_structures", "drainage"],
+        )
+
+    else:
+        print("Skipping structures because use_structures=False")
+
+    if cfg_get(cfg, "use_obs_points", False):
+        obs_points = cfg_path(cfg, "obs_points_path")
+
+        if obs_points is None:
+            fail_or_warn(cfg, "use_obs_points=True but obs_points_path is blank")
+        elif is_native_sfincs_obs_points_file(obs_points):
+            print(
+                "Observation points are native SFINCS .xy; "
+                "skipping HydroMT geodata creation and copying after write_model()."
+            )
+        else:
+            obs_comp = get_component(sf, "observation_points")
+
+            if obs_comp is None:
+                fail_or_warn(cfg, "Requested observation points, but observation_points component is unavailable")
+            else:
+                print(f"Creating observation points from HydroMT-readable source: {obs_points}")
+                obs_comp.create(locations=str(obs_points))
+    else:
+        print("Skipping observation points")
+
+    if cfg_get(cfg, "use_obs_lines", False):
+        obs_lines = cfg_path(cfg, "obs_lines_path")
+
+        if obs_lines is None:
+            fail_or_warn(cfg, "use_obs_lines=True but obs_lines_path is blank")
+        elif is_native_sfincs_obs_lines_file(obs_lines):
+            print(
+                "Observation/CRS lines are native SFINCS .crs; "
+                "skipping HydroMT geodata creation and copying after write_model()."
+            )
+        else:
+            # There is no obvious observation_lines component in this HydroMT-SFINCS version.
+            # Try cross_sections as a likely equivalent geometry component, but only if present.
+            cross_comp = get_component(sf, "cross_sections")
+
+            if cross_comp is None:
+                fail_or_warn(cfg, "Requested observation lines, but cross_sections component is unavailable")
+            elif callable(safe_getattr(cross_comp, "create", None)):
+                print(f"Creating observation/cross-section lines from HydroMT-readable source: {obs_lines}")
+                cross_comp.create(locations=str(obs_lines))
+            else:
+                fail_or_warn(cfg, "Requested observation lines, but cross_sections.create is unavailable")
+    else:
+        print("Skipping observation lines")
+        
+
+def write_model(sf, cfg: dict[str, Any]) -> None:
+    print_section("HYDROMT: WRITE MODEL")
+    root = model_root(cfg)
+    print(f"Writing model to: {root}")
+    sf.write()
+    print("HydroMT-SFINCS write completed.")
+
+def stamp_waterlevel_boundary_points_on_sparse_mask(cfg: dict[str, Any]) -> None:
+    """
+    Stamp water-level boundary points into sparse SFINCS sfincs.msk.
+
+    Manual HydroMT-build uses active_mask_path as an active-area gate. That gate
+    creates active cells, but it does not necessarily encode SFINCS open-boundary
+    class values. This helper uses the final written sfincs.bnd plus sfincs.ind
+    to convert matching sparse sfincs.msk entries from 1 to 2.
+
+    SFINCS mask convention used here:
+        1 = active normal cell
+        2 = open-boundary cell
+    """
+    if not cfg_bool(cfg, "stamp_waterlevel_boundary_on_mask", True):
+        print("Skipping water-level boundary mask stamping: stamp_waterlevel_boundary_on_mask=False")
+        return
+
+    if not cfg_bool(cfg, "use_waterlevel_boundary", False):
+        print("Skipping water-level boundary mask stamping: use_waterlevel_boundary=False")
+        return
+
+    overrides = cfg_get(cfg, "sfincs_file_overrides", {}) or {}
+    if cfg_bool(cfg, "use_sfincs_file_overrides", False) and bool(overrides.get("mskfile", False)):
+        print(
+            "Skipping water-level boundary mask stamping: native mskfile override is enabled; "
+            "imported sfincs.msk is authoritative."
+        )
+        return
+
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+    msk_path = root / "sfincs.msk"
+    ind_path = root / "sfincs.ind"
+    bnd_path = root / "sfincs.bnd"
+
+    missing = [p for p in [inp_path, msk_path, ind_path, bnd_path] if not p.exists()]
+    if missing:
+        raise RuntimeError(
+            "Cannot stamp water-level boundary cells onto mask; missing model file(s): "
+            + ", ".join(str(p) for p in missing)
+        )
+
+    parsed = parse_sfincs_inp(inp_path)
+
+    def _first_number(value: Any) -> str:
+        return str(value).split()[0]
+
+    try:
+        mmax = int(float(_first_number(parsed["mmax"])))
+        nmax = int(float(_first_number(parsed["nmax"])))
+        x0 = float(_first_number(parsed["x0"]))
+        y0 = float(_first_number(parsed["y0"]))
+        dx = float(_first_number(parsed["dx"]))
+        dy = float(_first_number(parsed["dy"]))
+    except KeyError as exc:
+        raise RuntimeError(f"Cannot stamp boundary mask; sfincs.inp missing grid key: {exc}") from exc
+
+    search_radius_cells = int(cfg_get(cfg, "waterlevel_boundary_stamp_search_radius_cells", 3))
+    if search_radius_cells < 0:
+        raise RuntimeError("waterlevel_boundary_stamp_search_radius_cells must be >= 0")
+
+    msk = np.fromfile(msk_path, dtype=np.uint8)
+    ind = np.fromfile(ind_path, dtype=np.int32)
+    bnd = np.atleast_2d(np.loadtxt(bnd_path))
+
+    if ind.size < 2:
+        raise RuntimeError(f"sfincs.ind appears invalid or empty: {ind_path}")
+
+    active_count_header = int(ind[0])
+    active_lin_1based = ind[1:]
+
+    if msk.size != active_lin_1based.size:
+        raise RuntimeError(
+            "Boundary mask stamping currently expects sparse binary sfincs.msk. "
+            f"Found msk cells={msk.size}, sparse active cells={active_lin_1based.size}. "
+            "This likely means a different SFINCS input format is being used and needs a separate handler."
+        )
+
+    if active_count_header != active_lin_1based.size:
+        raise RuntimeError(
+            f"sfincs.ind active-count header mismatch: header={active_count_header}, "
+            f"indices={active_lin_1based.size}"
+        )
+
+    lin_to_sparse_pos = {int(lin): i for i, lin in enumerate(active_lin_1based)}
+
+    active_lin_0based = active_lin_1based.astype(np.int64) - 1
+
+    # SFINCS sparse indices are 1-based column-major / Fortran-style:
+    #     lin0 = col * nmax + row
+    # The professor/reference mask audit confirmed this convention. Using
+    # row-major here places open-boundary cells far from their intended X/Y.
+    active_cols = active_lin_0based // nmax
+    active_rows = active_lin_0based % nmax
+
+    active_xs = x0 + (active_cols + 0.5) * dx
+    active_ys = y0 + (active_rows + 0.5) * dy
+
+    def _row_col_from_xy(x: float, y: float) -> tuple[int, int]:
+        col = int(np.floor((x - x0) / dx))
+        row = int(np.floor((y - y0) / dy))
+        return row, col
+
+    def _lin_1based(row: int, col: int) -> int:
+        return int(col * nmax + row + 1)
+
+    def _xy_from_row_col(row: int, col: int) -> tuple[float, float]:
+        return x0 + (col + 0.5) * dx, y0 + (row + 0.5) * dy
+
+    max_search_dist = search_radius_cells * max(abs(dx), abs(dy))
+    stamp_records: list[dict[str, Any]] = []
+
+    for bnd_order, xy in enumerate(bnd, start=1):
+        x = float(xy[0])
+        y = float(xy[1])
+
+        row, col = _row_col_from_xy(x, y)
+        direct_lin = _lin_1based(row, col)
+
+        if direct_lin in lin_to_sparse_pos:
+            chosen_row = row
+            chosen_col = col
+            chosen_lin = direct_lin
+            chosen_reason = "direct_bnd_cell_is_active"
+        else:
+            if search_radius_cells == 0:
+                raise RuntimeError(
+                    f"BND row {bnd_order} does not land on an active sparse cell and "
+                    "waterlevel_boundary_stamp_search_radius_cells=0. "
+                    f"x={x}, y={y}, row={row}, col={col}"
+                )
+
+            dist = np.sqrt((active_xs - x) ** 2 + (active_ys - y) ** 2)
+            nearest_i = int(np.argmin(dist))
+            nearest_dist = float(dist[nearest_i])
+
+            if nearest_dist > max_search_dist:
+                raise RuntimeError(
+                    f"BND row {bnd_order} does not land on an active cell and nearest active cell "
+                    f"is {nearest_dist:.3f} m away, exceeding search radius {max_search_dist:.3f} m. "
+                    f"x={x}, y={y}, direct_row={row}, direct_col={col}. "
+                    "Move the boundary point in event_boundary_table.csv or intentionally increase "
+                    "waterlevel_boundary_stamp_search_radius_cells."
+                )
+
+            chosen_row = int(active_rows[nearest_i])
+            chosen_col = int(active_cols[nearest_i])
+            chosen_lin = _lin_1based(chosen_row, chosen_col)
+            chosen_reason = f"nearest_active_cell_distance_m={nearest_dist:.3f}"
+
+            if chosen_lin not in lin_to_sparse_pos:
+                raise RuntimeError(
+                    f"Internal error: chosen active cell not found in sparse index. "
+                    f"BND row {bnd_order}, row={chosen_row}, col={chosen_col}, lin={chosen_lin}"
+                )
+
+        sparse_pos = lin_to_sparse_pos[chosen_lin]
+        old_value = int(msk[sparse_pos])
+        msk[sparse_pos] = 2
+
+        chosen_x, chosen_y = _xy_from_row_col(chosen_row, chosen_col)
+
+        stamp_records.append({
+            "bnd_order": int(bnd_order),
+            "bnd_x": float(x),
+            "bnd_y": float(y),
+            "direct_row": int(row),
+            "direct_col": int(col),
+            "chosen_row": int(chosen_row),
+            "chosen_col": int(chosen_col),
+            "chosen_x": float(chosen_x),
+            "chosen_y": float(chosen_y),
+            "chosen_lin_1based": int(chosen_lin),
+            "sparse_pos": int(sparse_pos),
+            "old_value": int(old_value),
+            "new_value": 2,
+            "reason": chosen_reason,
+        })
+
+    stamp_count = int(np.sum(msk == 2))
+    if stamp_count <= 0:
+        raise RuntimeError(
+            "Water-level boundary mask stamping produced zero open-boundary cells. "
+            "SFINCS would likely fail with 'no open boundary points found in mask'."
+        )
+
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup = msk_path.with_name(f"{msk_path.stem}.BACKUP_BEFORE_WL_BOUNDARY_STAMP_{stamp}{msk_path.suffix}")
+    shutil.copy2(msk_path, backup)
+    msk.tofile(msk_path)
+
+    vals, counts = np.unique(msk, return_counts=True)
+    count_dict = {int(v): int(c) for v, c in zip(vals, counts)}
+
+    audit = {
+        "created_at": now_iso(),
+        "model_root": str(root),
+        "msk_path": str(msk_path),
+        "backup": str(backup),
+        "grid": {
+            "mmax": int(mmax),
+            "nmax": int(nmax),
+            "x0": float(x0),
+            "y0": float(y0),
+            "dx": float(dx),
+            "dy": float(dy),
+        },
+        "search_radius_cells": int(search_radius_cells),
+        "mask_value_counts_after": count_dict,
+        "stamp_records": stamp_records,
+    }
+
+    audit_path = root / f"waterlevel_boundary_mask_stamp_audit_{stamp}.json"
+    write_json(audit_path, audit)
+
+    print_section("STAMP WATER-LEVEL BOUNDARY CELLS ONTO SFINCS MASK")
+    print(f"Boundary rows stamped: {len(stamp_records)}")
+    print(f"Mask value counts after stamp: {count_dict}")
+    print(f"Backup: {backup}")
+    print(f"Audit: {audit_path}")
+
+    if count_dict.get(2, 0) <= 0:
+        raise RuntimeError(
+            f"Boundary stamping audit found no value-2 cells after write. Counts: {count_dict}"
+        )
+    
+
+def apply_open_boundary_outline_to_sparse_mask(cfg: dict[str, Any]) -> None:
+    """
+    Read a reviewed coastal/channel open-boundary outline and mark matching
+    final sparse SFINCS mask cells as open-boundary cells.
+
+    SFINCS mask convention used here:
+        1 = active normal cell
+        2 = open-boundary cell
+
+    This is intended for Manual HydroMT-build runs where the active mask creates
+    the active domain, but a separate reviewed line/polygon defines where the
+    model wall is intentionally open for water-level exchange.
+    """
+    if not cfg_bool(cfg, "stamp_waterlevel_boundary_on_mask", True):
+        print("Skipping open-boundary outline mask application: stamp_waterlevel_boundary_on_mask=False")
+        return
+
+    if not cfg_bool(cfg, "use_waterlevel_boundary", False):
+        print("Skipping open-boundary outline mask application: use_waterlevel_boundary=False")
+        return
+
+    overrides = cfg_get(cfg, "sfincs_file_overrides", {}) or {}
+    if cfg_bool(cfg, "use_sfincs_file_overrides", False) and bool(overrides.get("mskfile", False)):
+        print(
+            "Skipping open-boundary outline mask application: native mskfile override is enabled; "
+            "imported sfincs.msk is authoritative."
+        )
+        return
+
+    outline_path = cfg_path(cfg, "open_boundary_outline_path")
+    if outline_path is None:
+        raise RuntimeError(
+            "open_boundary_mask_mode='coastal_outline' requires open_boundary_outline_path."
+        )
+
+    if not outline_path.exists():
+        raise FileNotFoundError(f"open_boundary_outline_path does not exist: {outline_path}")
+
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+    msk_path = root / "sfincs.msk"
+    ind_path = root / "sfincs.ind"
+
+    missing = [p for p in [inp_path, msk_path, ind_path] if not p.exists()]
+    if missing:
+        raise RuntimeError(
+            "Cannot apply open-boundary outline to mask; missing model file(s): "
+            + ", ".join(str(p) for p in missing)
+        )
+
+    parsed = parse_sfincs_inp(inp_path)
+
+    def _first_number(value: Any) -> str:
+        return str(value).split()[0]
+
+    try:
+        mmax = int(float(_first_number(parsed["mmax"])))
+        nmax = int(float(_first_number(parsed["nmax"])))
+        x0 = float(_first_number(parsed["x0"]))
+        y0 = float(_first_number(parsed["y0"]))
+        dx = float(_first_number(parsed["dx"]))
+        dy = float(_first_number(parsed["dy"]))
+    except KeyError as exc:
+        raise RuntimeError(f"Cannot apply open-boundary outline; sfincs.inp missing grid key: {exc}") from exc
+
+    rotation = float(_first_number(parsed.get("rotation", "0")))
+    if abs(rotation) > 1.0e-9:
+        raise RuntimeError(
+            "open_boundary_mask_mode='coastal_outline' currently supports only rotation=0 grids. "
+            f"Found rotation={rotation}."
+        )
+
+    epsg_value = str(parsed.get("epsg", cfg_get(cfg, "grid_crs", "32615"))).strip()
+    epsg_digits = "".join(ch for ch in epsg_value if ch.isdigit())
+    if not epsg_digits:
+        raise RuntimeError(
+            f"Cannot infer model EPSG for open-boundary outline reprojection from value: {epsg_value!r}"
+        )
+    target_crs = f"EPSG:{epsg_digits}"
+
+    buffer_m = float(cfg_get(cfg, "open_boundary_outline_buffer_m", 150.0))
+    min_cells = int(cfg_get(cfg, "open_boundary_min_cells", 50))
+    max_cells = int(cfg_get(cfg, "open_boundary_max_cells", 1000))
+    require_edge_adjacency = cfg_bool(cfg, "open_boundary_require_edge_adjacency", True)
+    allow_overwrite_special = cfg_bool(cfg, "open_boundary_allow_overwrite_special", False)
+
+    if buffer_m <= 0:
+        raise RuntimeError("open_boundary_outline_buffer_m must be > 0")
+    if min_cells < 0:
+        raise RuntimeError("open_boundary_min_cells must be >= 0")
+    if max_cells < 0:
+        raise RuntimeError("open_boundary_max_cells must be >= 0")
+
+    try:
+        import geopandas as gpd
+        from shapely.geometry import Point
+    except Exception as exc:
+        raise RuntimeError(
+            "open_boundary_mask_mode='coastal_outline' requires geopandas and shapely "
+            "in the preprocessing environment."
+        ) from exc
+
+    gdf = gpd.read_file(outline_path)
+    if gdf.empty:
+        raise RuntimeError(f"open_boundary_outline_path contains no features: {outline_path}")
+
+    if gdf.crs is None:
+        raise RuntimeError(
+            "open_boundary_outline_path has no CRS. Save it with a CRS, preferably EPSG:32615."
+        )
+
+    if str(gdf.crs) != target_crs:
+        gdf = gdf.to_crs(target_crs)
+
+    geom = gdf.geometry.dropna().unary_union
+    if geom is None or geom.is_empty:
+        raise RuntimeError(f"open_boundary_outline_path has empty geometry: {outline_path}")
+
+    msk = np.fromfile(msk_path, dtype=np.uint8)
+    ind = np.fromfile(ind_path, dtype=np.int32)
+
+    if ind.size < 2:
+        raise RuntimeError(f"sfincs.ind appears invalid or empty: {ind_path}")
+
+    active_count_header = int(ind[0])
+    active_lin_1based = ind[1:]
+
+    if msk.size != active_lin_1based.size:
+        raise RuntimeError(
+            "Open-boundary outline application currently expects sparse binary sfincs.msk. "
+            f"Found msk cells={msk.size}, sparse active cells={active_lin_1based.size}. "
+            "This likely means a different SFINCS input format is being used and needs a separate handler."
+        )
+
+    if active_count_header != active_lin_1based.size:
+        raise RuntimeError(
+            f"sfincs.ind active-count header mismatch: header={active_count_header}, "
+            f"indices={active_lin_1based.size}"
+        )
+
+    vals_before, counts_before = np.unique(msk, return_counts=True)
+    count_before = {int(v): int(c) for v, c in zip(vals_before, counts_before)}
+
+    active_lin_0based = active_lin_1based.astype(np.int64) - 1
+
+    # SFINCS sparse indices are 1-based column-major / Fortran-style:
+    #     lin0 = col * nmax + row
+    # The professor/reference mask audit confirmed this convention. Using
+    # row-major here places open-boundary cells far from their intended X/Y.
+    active_cols = active_lin_0based // nmax
+    active_rows = active_lin_0based % nmax
+
+    active_xs = x0 + (active_cols + 0.5) * dx
+    active_ys = y0 + (active_rows + 0.5) * dy
+
+    minx, miny, maxx, maxy = geom.bounds
+    bbox_mask = (
+        (active_xs >= minx - buffer_m)
+        & (active_xs <= maxx + buffer_m)
+        & (active_ys >= miny - buffer_m)
+        & (active_ys <= maxy + buffer_m)
+    )
+    bbox_positions = np.flatnonzero(bbox_mask)
+
+    if bbox_positions.size == 0:
+        raise RuntimeError(
+            "Open-boundary outline bbox selected zero sparse cells. "
+            f"outline bounds={geom.bounds}, buffer_m={buffer_m}"
+        )
+
+    active_lin_set = {int(v) for v in active_lin_1based}
+
+    def _lin_1based(row: int, col: int) -> int:
+        return int(col * nmax + row + 1)
+
+    def _is_edge_adjacent(row: int, col: int) -> bool:
+        if row <= 0 or row >= nmax - 1 or col <= 0 or col >= mmax - 1:
+            return True
+
+        for rr, cc in (
+            (row - 1, col),
+            (row + 1, col),
+            (row, col - 1),
+            (row, col + 1),
+        ):
+            if _lin_1based(rr, cc) not in active_lin_set:
+                return True
+
+        return False
+
+    selected_positions: list[int] = []
+    selected_records: list[dict[str, Any]] = []
+    skipped_not_edge = 0
+    skipped_far = 0
+    skipped_special = 0
+
+    for sparse_pos in bbox_positions:
+        row = int(active_rows[sparse_pos])
+        col = int(active_cols[sparse_pos])
+        x = float(active_xs[sparse_pos])
+        y = float(active_ys[sparse_pos])
+
+        dist_m = float(geom.distance(Point(x, y)))
+        if dist_m > buffer_m:
+            skipped_far += 1
+            continue
+
+        if require_edge_adjacency and not _is_edge_adjacent(row, col):
+            skipped_not_edge += 1
+            continue
+
+        old_value = int(msk[sparse_pos])
+        if old_value not in {1, 2} and not allow_overwrite_special:
+            skipped_special += 1
+            continue
+
+        selected_positions.append(int(sparse_pos))
+        selected_records.append({
+            "sparse_pos": int(sparse_pos),
+            "row": int(row),
+            "col": int(col),
+            "x": float(x),
+            "y": float(y),
+            "distance_to_outline_m": float(dist_m),
+            "old_value": int(old_value),
+            "new_value": 2,
+        })
+
+    selected_positions = sorted(set(selected_positions))
+    selected_count = len(selected_positions)
+
+    if selected_count <= 0:
+        raise RuntimeError(
+            "Open-boundary outline selected zero cells after distance/edge/special-cell filters. "
+            f"bbox_candidates={bbox_positions.size}, skipped_far={skipped_far}, "
+            f"skipped_not_edge={skipped_not_edge}, skipped_special={skipped_special}"
+        )
+
+    if selected_count < min_cells:
+        raise RuntimeError(
+            f"Open-boundary outline selected only {selected_count} cells, below "
+            f"open_boundary_min_cells={min_cells}. Increase buffer, review the outline, "
+            "or lower the threshold intentionally."
+        )
+
+    if max_cells > 0 and selected_count > max_cells:
+        raise RuntimeError(
+            f"Open-boundary outline selected {selected_count} cells, above "
+            f"open_boundary_max_cells={max_cells}. Reduce buffer, review the outline, "
+            "or set open_boundary_max_cells=0 intentionally."
+        )
+
+    changed_count = 0
+    already_open_count = 0
+    overwrite_special_count = 0
+
+    for sparse_pos in selected_positions:
+        old_value = int(msk[sparse_pos])
+        if old_value == 2:
+            already_open_count += 1
+        elif old_value == 1:
+            changed_count += 1
+        else:
+            overwrite_special_count += 1
+
+        msk[sparse_pos] = 2
+
+    vals_after, counts_after = np.unique(msk, return_counts=True)
+    count_after = {int(v): int(c) for v, c in zip(vals_after, counts_after)}
+
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup = msk_path.with_name(
+        f"{msk_path.stem}.BACKUP_BEFORE_OPEN_BOUNDARY_OUTLINE_{stamp}{msk_path.suffix}"
+    )
+    shutil.copy2(msk_path, backup)
+    msk.tofile(msk_path)
+
+    distance_values = [rec["distance_to_outline_m"] for rec in selected_records]
+    audit = {
+        "created_at": now_iso(),
+        "mode": "coastal_outline",
+        "model_root": str(root),
+        "outline_path": str(outline_path),
+        "target_crs": target_crs,
+        "msk_path": str(msk_path),
+        "backup": str(backup),
+        "grid": {
+            "mmax": int(mmax),
+            "nmax": int(nmax),
+            "x0": float(x0),
+            "y0": float(y0),
+            "dx": float(dx),
+            "dy": float(dy),
+            "rotation": float(rotation),
+        },
+        "settings": {
+            "open_boundary_outline_buffer_m": float(buffer_m),
+            "open_boundary_min_cells": int(min_cells),
+            "open_boundary_max_cells": int(max_cells),
+            "open_boundary_require_edge_adjacency": bool(require_edge_adjacency),
+            "open_boundary_allow_overwrite_special": bool(allow_overwrite_special),
+        },
+        "mask_value_counts_before": count_before,
+        "mask_value_counts_after": count_after,
+        "bbox_candidate_cells": int(bbox_positions.size),
+        "selected_cells": int(selected_count),
+        "changed_1_to_2": int(changed_count),
+        "already_open_2": int(already_open_count),
+        "overwrite_special_to_2": int(overwrite_special_count),
+        "skipped_far": int(skipped_far),
+        "skipped_not_edge": int(skipped_not_edge),
+        "skipped_special": int(skipped_special),
+        "distance_to_outline_m": {
+            "min": float(np.min(distance_values)),
+            "median": float(np.median(distance_values)),
+            "max": float(np.max(distance_values)),
+        },
+        "selected_records_sample": selected_records[:100],
+    }
+
+    audit_path = root / f"open_boundary_outline_mask_audit_{stamp}.json"
+    write_json(audit_path, audit)
+
+    print_section("APPLY OPEN-BOUNDARY OUTLINE TO SFINCS MASK")
+    print(f"Outline: {outline_path}")
+    print(f"Target CRS: {target_crs}")
+    print(f"Buffer m: {buffer_m}")
+    print(f"Selected open-boundary cells: {selected_count}")
+    print(f"Changed 1->2: {changed_count}")
+    print(f"Already 2: {already_open_count}")
+    print(f"Mask value counts before: {count_before}")
+    print(f"Mask value counts after:  {count_after}")
+    print(f"Backup: {backup}")
+    print(f"Audit: {audit_path}")
+
+    if count_after.get(2, 0) <= 0:
+        raise RuntimeError(
+            f"Open-boundary outline audit found no value-2 cells after write. Counts: {count_after}"
+        )
+
+
+def apply_waterlevel_open_boundary_mask_mode(cfg: dict[str, Any]) -> None:
+    """
+    Dispatch final sparse-mask open-boundary classification.
+
+    point_stamp:
+        Existing behavior. Stamp final sfincs.bnd points into sfincs.msk.
+
+    coastal_outline:
+        New Manual behavior. Read reviewed open-boundary outline and mark all
+        matching active edge cells as sfincs.msk value 2.
+
+    none:
+        Do not modify final sfincs.msk.
+    """
+    if not cfg_bool(cfg, "stamp_waterlevel_boundary_on_mask", True):
+        print("Skipping water-level open-boundary mask classification: stamp_waterlevel_boundary_on_mask=False")
+        return
+
+    mode = str(cfg_get(cfg, "open_boundary_mask_mode", "point_stamp") or "point_stamp").strip().lower()
+
+    if mode in {"point_stamp", "point", "bnd_point_stamp", "bnd_points"}:
+        stamp_waterlevel_boundary_points_on_sparse_mask(cfg)
+        return
+
+    if mode in {"coastal_outline", "outline", "open_boundary_outline"}:
+        apply_open_boundary_outline_to_sparse_mask(cfg)
+        return
+
+    if mode in {"none", "off", "false", "disabled"}:
+        print("Skipping water-level open-boundary mask classification: open_boundary_mask_mode=none")
+        return
+
+    raise RuntimeError(
+        "Unknown open_boundary_mask_mode. Expected one of: point_stamp, coastal_outline, none. "
+        f"Got: {mode!r}"
+    )
+        
+# ============================================================
+# DIAGNOSTIC / VALIDATION OUTPUTS
+# ============================================================
+
+def save_diagnostic_plots(sf, cfg: dict[str, Any]) -> None:
+    """Placeholder for safe preprocessing diagnostics."""
+    print_section("PREPROCESS DIAGNOSTIC PLOTS")
+
+    # The launcher currently treats full quicklook plotting as a postprocess stage.
+    # Preprocess-stage plots can be added later, but we avoid them in first pass
+    # because basemaps/graphical backends can be fragile on compute nodes.
+    print("Skipping preprocess plots in first pass. Postprocess stage will handle quicklooks.")
+
+
+def parse_sfincs_inp(path: Path) -> dict[str, str]:
+    """Parse simple key=value lines from sfincs.inp for validation."""
+    data: dict[str, str] = {}
+    if not path.exists():
+        return data
+
+    for raw_line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or line.startswith("!"):
+            continue
+        if "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        data[key.strip().lower()] = value.strip()
+    return data
+
+def validate_sfincs_input_file_pointers(cfg: dict[str, Any], parsed: dict[str, str]) -> None:
+    """
+    Check that every SFINCS input key ending in 'file' points to an existing file.
+    This catches missing copied native files before spending ~1 hour on SFINCS.
+    """
+    root = model_root(cfg)
+    missing = []
+
+    for key, value in sorted(parsed.items()):
+        if not key.endswith("file"):
+            continue
+
+        value = str(value).strip()
+        if not value or value.lower() in {"none", "null"}:
+            continue
+
+        # SFINCS file values are usually relative to model_root.
+        candidate = Path(value)
+        if not candidate.is_absolute():
+            candidate = root / candidate
+
+        if not candidate.exists():
+            missing.append((key, value, candidate))
+
+    if missing:
+        print("Missing SFINCS input file pointers:")
+        for key, value, candidate in missing:
+            print(f"  {key} = {value}  -> missing at {candidate}")
+        raise FileNotFoundError("One or more sfincs.inp file pointers are missing.")
+
+    print("All sfincs.inp input file pointers exist.")
+
+def validate_written_model(cfg: dict[str, Any]) -> None:
+    """Final check: make sure the model folder is ready for the SFINCS job."""
+    print_section("VALIDATE WRITTEN MODEL")
+
+    root = model_root(cfg)
+    inp = root / "sfincs.inp"
+
+    if not root.exists():
+        raise FileNotFoundError(f"Model root does not exist: {root}")
+    print(f"FOUND: model root: {root}")
+
+    if not inp.exists():
+        raise FileNotFoundError(f"sfincs.inp was not created: {inp}")
+    print(f"FOUND: sfincs.inp: {inp}")
+
+    if inp.stat().st_size == 0:
+        raise RuntimeError(f"sfincs.inp exists but is empty: {inp}")
+    print(f"sfincs.inp size: {inp.stat().st_size} bytes")
+
+    parsed = parse_sfincs_inp(inp)
+    validate_sfincs_input_file_pointers(cfg, parsed)
+    validate_native_static_geometry_in_written_inp(cfg, parsed)
+    
+    expected_keys = ["tref", "tstart", "tstop", "dtout"]
+    missing_keys = [key for key in expected_keys if key not in parsed]
+    if missing_keys:
+        print(f"WARNING: sfincs.inp missing expected keys: {missing_keys}")
+    else:
+        print("Basic sfincs.inp time/output keys found.")
+
+    model_files = sorted([p.name for p in root.iterdir() if p.is_file()])
+    print("Model files currently present:")
+    for name in model_files:
+        print(f"  {name}")
+
+    write_json(
+        preprocess_manifest_path(cfg),
+        {
+            "status": "success",
+            "completed_at": now_iso(),
+            "model_root": root,
+            "sfincs_inp": inp,
+            "sfincs_inp_size_bytes": inp.stat().st_size,
+            "sfincs_inp_keys_found": sorted(parsed.keys()),
+            "model_files": model_files,
+        },
+    )
+    print(f"Wrote preprocess manifest: {preprocess_manifest_path(cfg)}")
+
+def sfincs_time_string(value: str) -> str:
+    s = str(value).strip()
+    if len(s) == 15 and s[8] == " ":
+        return s
+    dt = parse_datetime(s)
+    return dt.strftime("%Y%m%d %H%M%S")
+
+
+def write_native_sfincs_inp_from_config(cfg: dict[str, Any]) -> None:
+    print_section("WRITE NATIVE SFINCS.INP FROM LAUNCHER CONFIG")
+
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+
+    entries: dict[str, Any] = {}
+
+    entries["tref"] = sfincs_time_string(cfg_get(cfg, "tref"))
+    entries["tstart"] = sfincs_time_string(cfg_get(cfg, "tstart"))
+    entries["tstop"] = sfincs_time_string(cfg_get(cfg, "tstop"))
+
+    entries["dtout"] = cfg_get(cfg, "dtout_s")
+    entries["dthisout"] = cfg_get(cfg, "dthisout_s")
+    entries["dtrstout"] = cfg_get(cfg, "dtrstout_s")
+    entries["dtmaxout"] = cfg_get(cfg, "dtmaxout_s")
+    entries["dtmapout"] = cfg_get(cfg, "dtout_s")
+    entries["outputformat"] = cfg_get(cfg, "output_format", "net")
+    entries["storecumprcp"] = int(cfg_advanced_config_dict(cfg).get("storecumprcp", 1))
+
+    entries["depfile"] = "sfincs.dep"
+    entries["mskfile"] = "sfincs.msk"
+    entries["indexfile"] = "sfincs.ind"
+    entries["sbgfile"] = "sfincs.sbg"
+    entries["manningfile"] = "sfincs.manning"
+
+    if cfg_get(cfg, "use_waterlevel_boundary", False):
+        entries["bndfile"] = "sfincs.bnd"
+        entries["bzsfile"] = "sfincs.bzs"
+
+    if cfg_get(cfg, "use_discharge_boundary", False):
+        entries["srcfile"] = "sfincs.src"
+        entries["disfile"] = "sfincs.dis"
+
+    if cfg_get(cfg, "use_rainfall", False):
+        entries["netamprfile"] = "precip_2d.nc"
+
+    if cfg_get(cfg, "use_obs_points", False):
+        entries["obsfile"] = "sfincs.obs"
+
+    if cfg_get(cfg, "use_obs_lines", False):
+        entries["crsfile"] = "sfincs.crs"
+
+    if cfg_get(cfg, "use_structures", False):
+        entries["thdfile"] = "sfincs.thd"
+
+    if cfg_get(cfg, "use_infiltration", False):
+        entries["scsfile"] = "sfincs.scs"
+    
+    # Manual SFINCS-native infiltration files selected by explicit path.
+    # These supplement generated/native inputs by copying arbitrary user-selected
+    # paths into model/ with canonical SFINCS names and adding sfincs.inp pointers.
+    copy_manual_sfincs_infiltration_files(
+        cfg=cfg,
+        model_dir=inp_path.parent,
+        inp_entries=entries,
+    )
+
+    advanced = cfg_get(cfg, "advanced_config", {}) or {}
+    entries.update(advanced)
+
+    preferred_order = [
+        "mmax", "nmax", "dx", "dy", "x0", "y0", "rotation", "epsg",
+        "latitude", "tref", "tstart", "tstop", "tspinup",
+        "dtout", "dtmapout", "dthisout", "dtrstout", "dtmaxout", "storecumprcp", "trstout", "dtwnd",
+        "alpha", "theta", "huthresh", "manning", "zsini",
+        "rhoa", "rhow", "dtmax", "advection", "baro", "pavbnd",
+        "gapres", "stopdepth", "crsgeo", "btfilter", "viscosity",
+        "depfile", "mskfile", "indexfile", "bndfile", "bzsfile",
+        "srcfile", "disfile", "sbgfile", "obsfile", "crsfile",
+        "thdfile", "manningfile", "scsfile",
+        "inputformat", "outputformat", "cdnrb", "cdwnd", "cdval",
+        "min_lev_hmax", "netamprfile",
+    ]
+
+    lines = []
+    written = set()
+
+    for key in preferred_order:
+        if key in entries and entries[key] is not None:
+            lines.append(f"{key:<20}= {sfincs_inp_value_to_text(entries[key])}")
+            written.add(key)
+
+    for key in sorted(entries):
+        if key not in written and entries[key] is not None:
+            lines.append(f"{key:<20}= {sfincs_inp_value_to_text(entries[key])}")
+
+    inp_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Wrote native sfincs.inp: {inp_path}")
+
+
+def build_model_native_sfincs_assembly(cfg: dict[str, Any], config_path: Path) -> None:
+    with timing_block("write native sfincs.inp"):
+        write_native_sfincs_inp_from_config(cfg)
+
+    with timing_block("apply SFINCS input file overrides"):
+        apply_sfincs_file_overrides(cfg)
+
+    with timing_block("enforce storecumprcp safety"):
+        enforce_storecumprcp_in_written_model(cfg)
+
+    with timing_block("apply water-level open-boundary mask mode"):
+        apply_waterlevel_open_boundary_mask_mode(cfg)
+
+    with timing_block("validate written model"):
+        validate_written_model(cfg)
+
+    print_section("PREPROCESS COMPLETE")
+    print(f"Native SFINCS model folder is ready: {model_root(cfg)}")
+
+# ============================================================
+# MAIN PREPROCESS WORKFLOW
+# ============================================================
+def build_model_hydromt(cfg: dict[str, Any], config_path: Path) -> None:
+
+    with timing_block("initialize HydroMT logging"):
+        initialize_hydromt_logging(cfg)
+
+    with timing_block("initialize SFINCS model"):
+        sf = initialize_sfincs_model(cfg)
+
+    with timing_block("setup grid"):
+        setup_grid(sf, cfg)
+
+    with timing_block("setup time and SFINCS config"):
+        setup_time_and_config(sf, cfg)
+
+    with timing_block("setup elevation / topobathy"):
+        elevation_list = setup_elevation(sf, cfg)
+
+    with timing_block("setup active mask and boundary cells"):
+        setup_mask(sf, cfg)
+    
+    with timing_block("gate active mask"):
+        apply_active_mask_to_hydromt_grid(sf, cfg, stage_label="gate_after_setup_mask")
+
+    with timing_block("setup roughness / landcover"):
+        roughness_list = setup_roughness(sf, cfg)
+    
+    with timing_block("sanitize inactive NaNs before subgrid"):
+        validate_and_fill_inactive_nans_before_subgrid(sf, cfg)
+    
+    with timing_block("setup subgrid"):
+        setup_subgrid(
+            sf,
+            cfg,
+            elevation_list=elevation_list,
+            roughness_list=roughness_list,
+        )
+
+    with timing_block("setup forcing"):
+        setup_forcing(sf, cfg)
+
+    with timing_block("setup infiltration"):
+        setup_infiltration(sf, cfg)
+
+    with timing_block("setup structures and observations"):
+        setup_structures_and_observations(sf, cfg)
+
+    with timing_block("save preprocessing diagnostic plots"):
+        save_diagnostic_plots(sf, cfg)
+
+    with timing_block("write model files"):
+        write_model(sf, cfg)
+
+    if (
+        cfg_get(cfg, "use_waterlevel_boundary", False)
+        and cfg_get(cfg, "waterlevel_source_kind", "geodataset") in {"csv", "event_catalog_csv", "local_file"}
+    ):
+        with timing_block("write CSV water-level files"):
+            write_native_waterlevel_from_csv(cfg)
+
+    if (
+        cfg_get(cfg, "use_discharge_boundary", False)
+        and cfg_get(cfg, "discharge_source_kind", "geodataset") in {"csv", "event_catalog_csv"}
+    ):
+        with timing_block("write CSV discharge files"):
+            write_native_discharge_from_csv(cfg)
+
+    with timing_block("copy native structure files"):
+        copy_native_structure_files(cfg)
+
+    with timing_block("copy native observation files"):
+        copy_native_observation_files(cfg)
+
+    with timing_block("apply SFINCS input file overrides"):
+        apply_sfincs_file_overrides(cfg)
+
+    with timing_block("enforce storecumprcp safety"):
+        enforce_storecumprcp_in_written_model(cfg)
+
+    with timing_block("apply water-level open-boundary mask mode"):
+        apply_waterlevel_open_boundary_mask_mode(cfg)
+
+    with timing_block("validate written model"):
+        validate_written_model(cfg)
+
+    print_section("PREPROCESS COMPLETE")
+    print(f"Model folder is ready for SFINCS: {model_root(cfg)}")
+    
+def hybrid_tstop_seconds(cfg: dict[str, Any]) -> float:
+    """Return model tstop in seconds after tref using SFINCS time strings."""
+    tref = pd.to_datetime(
+        sfincs_time_string(cfg_get(cfg, "tref")),
+        format="%Y%m%d %H%M%S",
+        utc=True,
+    )
+    tstop = pd.to_datetime(
+        sfincs_time_string(cfg_get(cfg, "tstop")),
+        format="%Y%m%d %H%M%S",
+        utc=True,
+    )
+
+    out = float((tstop - tref).total_seconds())
+
+    if not np.isfinite(out) or out <= 0:
+        raise ValueError(
+            f"Bad hybrid model window: tref={cfg_get(cfg, 'tref')!r}, "
+            f"tstop={cfg_get(cfg, 'tstop')!r}, seconds={out}"
+        )
+
+    return out
+
+
+def pad_hybrid_wide_timeseries_to_model_window(
+    wide: pd.DataFrame,
+    expected_cols: list[int],
+    tstop_seconds: float,
+    label: str,
+) -> pd.DataFrame:
+    """
+    Pad/interpolate a wide SFINCS forcing table so it covers exactly:
+      0 seconds <= time <= tstop_seconds
+
+    This avoids SFINCS warnings like:
+      Times in boundary conditions file do not cover entire simulation period
+      Times in discharge file do not cover entire simulation period
+    """
+    if wide.empty:
+        raise ValueError(f"{label} wide table is empty before padding.")
+
+    wide = wide.copy()
+    wide.index = pd.Index([float(x) for x in wide.index], name="time_seconds")
+    wide = wide.sort_index()
+    wide = wide.groupby(level=0).first()
+
+    missing_cols = [c for c in expected_cols if c not in wide.columns]
+    if missing_cols:
+        raise ValueError(f"{label} file is missing columns {missing_cols}")
+
+    wide = wide[expected_cols]
+    wide = wide.apply(pd.to_numeric, errors="coerce")
+
+    first_in = float(wide.index.min())
+    last_in = float(wide.index.max())
+
+    target_times = sorted(set(list(wide.index) + [0.0, float(tstop_seconds)]))
+
+    padded = (
+        wide.reindex(target_times)
+        .interpolate(method="index", limit_direction="both")
+        .ffill()
+        .bfill()
+    )
+
+    padded = padded[
+        (padded.index >= 0.0) &
+        (padded.index <= float(tstop_seconds))
+    ]
+
+    if padded.isna().any().any():
+        bad = padded.columns[padded.isna().any()].tolist()
+        raise ValueError(f"{label} still has NaNs after padding in columns: {bad}")
+
+    print(f"{label} time coverage before padding:")
+    print(f"  first input time: {first_in:.1f} s")
+    print(f"  last input time:  {last_in:.1f} s")
+    print(f"  model tstop:      {float(tstop_seconds):.1f} s")
+    print(f"{label} time coverage after padding:")
+    print(f"  first output time: {float(padded.index.min()):.1f} s")
+    print(f"  last output time:  {float(padded.index.max()):.1f} s")
+    print(f"  rows written:       {len(padded)}")
+
+    return padded
+
+def cfg_value_looks_like_path(value: Any) -> bool:
+    """Return True for values that look like file paths, not source-name labels."""
+    s = str(value or "").strip()
+    if not s:
+        return False
+
+    return (
+        "/" in s
+        or "\\" in s
+        or s.startswith(".")
+        or "." in Path(s).name
+    )
+
+
+def iter_cfg_path_values(cfg: dict[str, Any], keys: tuple[str, ...]) -> list[str]:
+    """Return non-empty string values from config keys, flattening simple lists."""
+    values: list[str] = []
+
+    for key in keys:
+        raw = cfg_get(cfg, key, None)
+
+        if raw is None:
+            continue
+
+        if isinstance(raw, (list, tuple)):
+            for item in raw:
+                s = str(item or "").strip()
+                if s:
+                    values.append(s)
+            continue
+
+        s = str(raw or "").strip()
+        if s:
+            values.append(s)
+
+    return values
+
+
+def resolve_hybrid_event_file(
+    *,
+    cfg: dict[str, Any],
+    event_catalog: Path,
+    cfg_keys: tuple[str, ...],
+    default_relative: str,
+    label: str,
+    patterns: tuple[str, ...] = (),
+) -> Path:
+    """
+    Resolve a reduced-event file inside an event catalog.
+
+    The launcher passes data_catalogs as an event catalog folder. Individual
+    hybrid writers need the actual file inside that folder.
+    """
+    event_catalog = Path(event_catalog)
+
+    for raw in iter_cfg_path_values(cfg, cfg_keys):
+        # Ignore source-name labels like "geodataset"; only treat path-looking
+        # values as explicit file paths.
+        if not cfg_value_looks_like_path(raw):
+            continue
+
+        candidate = Path(raw)
+        if not candidate.is_absolute():
+            candidate = event_catalog / candidate
+
+        if candidate.is_file():
+            return candidate
+
+        if candidate.is_dir():
+            raise IsADirectoryError(
+                f"{label} config value points to a directory, not a file: {candidate}"
+            )
+
+        raise FileNotFoundError(
+            f"{label} config value looks like a path but does not exist: {candidate}"
+        )
+
+    preferred = event_catalog / default_relative
+    if preferred.is_file():
+        return preferred
+
+    matches: list[Path] = []
+    for pattern in patterns:
+        matches.extend(sorted((event_catalog / Path(default_relative).parent).glob(pattern)))
+        matches.extend(sorted(event_catalog.glob(pattern)))
+
+    unique_matches: list[Path] = []
+    seen: set[Path] = set()
+
+    for match in matches:
+        if not match.is_file():
+            continue
+
+        resolved = match.resolve()
+        if resolved in seen:
+            continue
+
+        unique_matches.append(match)
+        seen.add(resolved)
+
+    if len(unique_matches) == 1:
+        return unique_matches[0]
+
+    if len(unique_matches) > 1:
+        found = "\n".join(str(p) for p in unique_matches)
+        raise RuntimeError(
+            f"Multiple possible {label} files were found. "
+            f"Set one of {cfg_keys} explicitly.\n"
+            f"Candidates:\n{found}"
+        )
+
+    raise FileNotFoundError(
+        f"Could not find {label} inside event catalog. Expected: {preferred}"
+    )
+
+
+def write_hybrid_bzs_from_event_catalog(cfg: dict[str, Any], event_catalog: Path) -> None:
+    print_section("HYBRID: WRITE SFINCS.BND/SFINCS.BZS")
+
+    src = resolve_hybrid_event_file(
+        cfg=cfg,
+        event_catalog=event_catalog,
+        cfg_keys=("waterlevel_path", "waterlevel_source"),
+        default_relative="event_waterlevel/selected_bzs_waterlevel_reduced.csv",
+        label="water-level CSV",
+        patterns=(
+            "*main*waterlevel*.csv",
+            "*bzs*waterlevel*.csv",
+            "*waterlevel*.csv",
+            "*.csv",
+        ),
+    )
+
+    print(f"Hybrid water-level source CSV: {src}")
+
+    df = pd.read_csv(src)
+    if df.empty:
+        raise ValueError(f"Hybrid water-level CSV has no rows: {src}")
+
+    lower_cols = {str(col).strip().lower(): col for col in df.columns}
+    tall_bzs_required = {"datetime_utc", "bzs_column", "model_bzs_m"}
+
+    # ------------------------------------------------------------------
+    # Backward-compatible path:
+    # Older reduced-event catalogs stored an already-derived tall BZS table:
+    #   datetime_utc, bzs_column, model_bzs_m
+    # In that case, preserve the old pivot-to-sfincs.bzs behavior.
+    # ------------------------------------------------------------------
+    if tall_bzs_required.issubset(lower_cols):
+        print("Detected old tall BZS water-level schema.")
+
+        dt_col = lower_cols["datetime_utc"]
+        bzs_col = lower_cols["bzs_column"]
+        value_col = lower_cols["model_bzs_m"]
+
+        root = model_root(cfg)
+        dst = root / "sfincs.bzs"
+        inp_path = root / "sfincs.inp"
+
+        if not inp_path.exists():
+            raise FileNotFoundError(f"Cannot patch bzsfile; sfincs.inp does not exist: {inp_path}")
+
+        df[dt_col] = pd.to_datetime(df[dt_col], utc=True)
+
+        tref = pd.to_datetime(
+            sfincs_time_string(cfg_get(cfg, "tref")),
+            format="%Y%m%d %H%M%S",
+            utc=True,
+        )
+        df["time_seconds"] = (df[dt_col] - tref).dt.total_seconds()
+
+        wide = (
+            df.pivot_table(
+                index="time_seconds",
+                columns=bzs_col,
+                values=value_col,
+                aggfunc="first",
+            )
+            .sort_index()
+        )
+
+        # Normalize columns like "1", "1.0", 1.0 -> 1 so old products match.
+        rename_cols = {}
+        for col in wide.columns:
+            try:
+                rename_cols[col] = int(float(col))
+            except Exception:
+                rename_cols[col] = col
+
+        wide = wide.rename(columns=rename_cols)
+
+        expected_cols = [1, 2, 3, 4]
+        missing_cols = [col for col in expected_cols if col not in wide.columns]
+        if missing_cols:
+            raise ValueError(f"BZS file is missing columns {missing_cols}")
+
+        wide = pad_hybrid_wide_timeseries_to_model_window(
+            wide=wide,
+            expected_cols=expected_cols,
+            tstop_seconds=hybrid_tstop_seconds(cfg),
+            label="hybrid BZS",
+        )
+
+        with dst.open("w", encoding="utf-8") as f:
+            for t, row in wide.iterrows():
+                values = [float(row[col]) for col in expected_cols]
+                f.write(
+                    f"{float(t):.1f} "
+                    + " ".join(f"{value:.6f}" for value in values)
+                    + "\n"
+                )
+
+        set_sfincs_inp_value(inp_path, "bzsfile", "sfincs.bzs")
+
+        print(f"Wrote {dst}")
+        print("  sfincs.inp: bzsfile = sfincs.bzs")
+        return
+
+    # ------------------------------------------------------------------
+    # Current event-catalog path:
+    # Beryl and the promoted 8-event catalogs use a wide/raw water-level CSV
+    # plus an explicit event_boundary_table/*.csv mapping boundary rows to
+    # water-level columns. This writes BOTH sfincs.bnd and sfincs.bzs.
+    # ------------------------------------------------------------------
+    print(
+        "Detected wide/raw water-level CSV. "
+        "Using explicit event boundary table to write sfincs.bnd and sfincs.bzs."
+    )
+
+    try_write_native_waterlevel_from_path(cfg, src, n_bnd=None)
+
+    print("Hybrid explicit-catalog water-level files written:")
+    print("  sfincs.inp: bndfile = sfincs.bnd")
+    print("  sfincs.inp: bzsfile = sfincs.bzs")
+
+def resolve_hybrid_discharge_csv(event_catalog: Path, cfg: dict[str, Any]) -> Path:
+    """
+    Resolve the reduced-event discharge CSV used to write sfincs.dis.
+
+    The launcher passes data_catalogs as an event catalog folder. This helper
+    finds the actual discharge timeseries CSV inside that folder.
+    """
+    event_catalog = Path(event_catalog)
+
+    explicit = cfg_path(cfg, "discharge_timeseries_csv_path")
+    if explicit is not None:
+        if explicit.is_file():
+            return explicit
+        if explicit.is_dir():
+            raise IsADirectoryError(
+                f"discharge_timeseries_csv_path points to a directory, not a CSV file: {explicit}"
+            )
+        raise FileNotFoundError(
+            f"discharge_timeseries_csv_path does not exist: {explicit}"
+        )
+
+    # Backward-compatible support for discharge_source if someone uses it as a
+    # relative/absolute CSV path. Ignore blank values and source-name strings.
+    raw_source = str(cfg_get(cfg, "discharge_source", "") or "").strip()
+    if raw_source:
+        candidate = Path(raw_source)
+        if not candidate.is_absolute():
+            candidate = event_catalog / candidate
+
+        if candidate.is_file():
+            return candidate
+
+        if candidate.is_dir():
+            raise IsADirectoryError(
+                f"discharge_source resolved to a directory, not a CSV file: {candidate}"
+            )
+
+    preferred = event_catalog / "event_discharge" / "usgs_00060_discharge_reduced_to_sfincs_src.csv"
+    if preferred.is_file():
+        return preferred
+
+    matches: list[Path] = []
+
+    for root in [event_catalog / "event_discharge", event_catalog]:
+        if root.exists():
+            matches.extend(sorted(root.glob("*sfincs_src*.csv")))
+            matches.extend(sorted(root.glob("*discharge*.csv")))
+
+    unique_matches: list[Path] = []
+    seen: set[Path] = set()
+
+    for match in matches:
+        if not match.is_file():
+            continue
+
+        resolved = match.resolve()
+        if resolved in seen:
+            continue
+
+        unique_matches.append(match)
+        seen.add(resolved)
+
+    if len(unique_matches) == 1:
+        return unique_matches[0]
+
+    if len(unique_matches) > 1:
+        found = "\n".join(str(p) for p in unique_matches)
+        raise RuntimeError(
+            "Multiple possible reduced-event discharge CSV files were found. "
+            "Set discharge_timeseries_csv_path explicitly.\n"
+            f"Candidates:\n{found}"
+        )
+
+    raise FileNotFoundError(
+        "Could not find a reduced-event discharge CSV inside event catalog. "
+        f"Expected: {preferred}"
+    )
+
+def copy_hybrid_wind_from_event_catalog(cfg: dict[str, Any], event_catalog: Path) -> None:
+    """
+    Copy event-catalog wind forcing into model/ and patch sfincs.inp.
+    """
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch wind file; sfincs.inp does not exist: {inp_path}")
+
+    wind_src = resolve_hybrid_event_file(
+        cfg=cfg,
+        event_catalog=event_catalog,
+        cfg_keys=("wind_path", "wind_source"),
+        default_relative="event_wind/aorc_wind_event.nc",
+        label="wind NetCDF",
+        patterns=("*wind*.nc", "*.nc"),
+    )
+
+    wind_dst = root / "sfincs_netamuamvfile.nc"
+    shutil.copy2(wind_src, wind_dst)
+    set_sfincs_inp_value(inp_path, "netamuamvfile", wind_dst.name)
+
+    print("Hybrid wind forcing copied and sfincs.inp patched:")
+    print(f"  source: {wind_src}")
+    print(f"  target: {wind_dst}")
+    print("  netamuamvfile = sfincs_netamuamvfile.nc")
+
+
+def copy_hybrid_pressure_from_event_catalog(cfg: dict[str, Any], event_catalog: Path) -> None:
+    """
+    Copy event-catalog pressure forcing into model/ and patch sfincs.inp.
+    """
+    root = model_root(cfg)
+    inp_path = root / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch pressure file; sfincs.inp does not exist: {inp_path}")
+
+    pressure_src = resolve_hybrid_event_file(
+        cfg=cfg,
+        event_catalog=event_catalog,
+        cfg_keys=("pressure_path", "pressure_source"),
+        default_relative="event_pressure/aorc_pressure_event.nc",
+        label="pressure NetCDF",
+        patterns=("*pressure*.nc", "*press*.nc", "*.nc"),
+    )
+
+    pressure_dst = root / "sfincs_netampfile.nc"
+    shutil.copy2(pressure_src, pressure_dst)
+    set_sfincs_inp_value(inp_path, "netampfile", pressure_dst.name)
+
+    print("Hybrid pressure forcing copied and sfincs.inp patched:")
+    print(f"  source: {pressure_src}")
+    print(f"  target: {pressure_dst}")
+    print("  netampfile = sfincs_netampfile.nc")
+
+def write_hybrid_dis_from_event_catalog(cfg: dict[str, Any], event_catalog: Path) -> None:
+    print_section("HYBRID: WRITE SFINCS.DIS")
+
+    src = resolve_hybrid_discharge_csv(event_catalog, cfg)
+    print(f"Hybrid DIS source CSV: {src}")
+
+    dst = model_root(cfg) / "sfincs.dis"
+
+    df = pd.read_csv(src)
+    required = {"datetime_utc", "dis_column", "discharge_m3s"}
+    missing = required - set(df.columns)
+    if missing:
+        raise KeyError(f"Missing required DIS columns {missing} in {src}")
+
+    df["datetime_utc"] = pd.to_datetime(df["datetime_utc"], utc=True)
+    tref = pd.to_datetime(sfincs_time_string(cfg_get(cfg, "tref")), format="%Y%m%d %H%M%S", utc=True)
+    df["time_seconds"] = (df["datetime_utc"] - tref).dt.total_seconds()
+
+    wide = (
+        df.pivot_table(
+            index="time_seconds",
+            columns="dis_column",
+            values="discharge_m3s",
+            aggfunc="first",
+        )
+        .sort_index()
+    )
+
+    expected_cols = [1, 2]
+    missing_cols = [c for c in expected_cols if c not in wide.columns]
+    if missing_cols:
+        raise ValueError(f"DIS file is missing columns {missing_cols}")
+
+    wide = pad_hybrid_wide_timeseries_to_model_window(
+        wide=wide,
+        expected_cols=expected_cols,
+        tstop_seconds=hybrid_tstop_seconds(cfg),
+        label="DIS",
+    )
+    
+    with dst.open("w", encoding="utf-8") as f:
+        for t, row in wide.iterrows():
+            vals = " ".join(f"{float(row[c]):.6f}" for c in expected_cols)
+            f.write(f"{float(t):.1f} {vals}\n")
+
+    print(f"Wrote {dst}")
+
+def sfincs_model_grid_from_written_inp(cfg: dict[str, Any]) -> dict[str, Any]:
+    """
+    Read the final model grid from model/sfincs.inp.
+
+    Hybrid mode has already written sfincs.inp and applied native static overrides
+    before rainfall is written, so this is the safest geometry source.
+    """
+    inp_path = model_root(cfg) / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot derive rainfall grid; sfincs.inp does not exist: {inp_path}")
+
+    parsed = parse_sfincs_inp(inp_path)
+
+    def get_float(key: str) -> float:
+        value = parsed.get(key)
+        if value is None:
+            raise KeyError(f"sfincs.inp missing required grid key for rainfall reprojection: {key}")
+        return float(str(value).split()[0])
+
+    mmax = int(round(get_float("mmax")))
+    nmax = int(round(get_float("nmax")))
+    dx = get_float("dx")
+    dy = get_float("dy")
+    x0 = get_float("x0")
+    y0 = get_float("y0")
+    epsg = int(round(get_float("epsg")))
+
+    if mmax <= 0 or nmax <= 0 or dx <= 0 or dy <= 0:
+        raise ValueError(
+            "Invalid SFINCS grid while preparing rainfall: "
+            f"mmax={mmax}, nmax={nmax}, dx={dx}, dy={dy}"
+        )
+
+    return {
+        "mmax": mmax,
+        "nmax": nmax,
+        "dx": dx,
+        "dy": dy,
+        "x0": x0,
+        "y0": y0,
+        "epsg": epsg,
+        "xmin": x0,
+        "xmax": x0 + mmax * dx,
+        "ymin": y0,
+        "ymax": y0 + nmax * dy,
+    }
+
+
+def coordinate_values_look_geographic(x_vals: np.ndarray, y_vals: np.ndarray) -> bool:
+    """
+    Return True when x/y values look like longitude/latitude degrees.
+    """
+    x = np.asarray(x_vals, dtype="float64")
+    y = np.asarray(y_vals, dtype="float64")
+
+    if not np.isfinite(x).any() or not np.isfinite(y).any():
+        return False
+
+    return (
+        float(np.nanmin(x)) >= -180.0
+        and float(np.nanmax(x)) <= 180.0
+        and float(np.nanmin(y)) >= -90.0
+        and float(np.nanmax(y)) <= 90.0
+    )
+
+
+def normalize_rainfall_xy_order(
+    data: np.ndarray,
+    x_vals: np.ndarray,
+    y_vals: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Return data ordered as time, y ascending, x ascending.
+    """
+    x = np.asarray(x_vals, dtype="float64")
+    y = np.asarray(y_vals, dtype="float64")
+    out = np.asarray(data, dtype="float32")
+
+    if x.size < 2 or y.size < 2:
+        raise ValueError("Rainfall x/y coordinates must each have at least two cells.")
+
+    if x[1] < x[0]:
+        x = x[::-1]
+        out = out[:, :, ::-1]
+
+    if y[1] < y[0]:
+        y = y[::-1]
+        out = out[:, ::-1, :]
+
+    return out, x, y
+
+
+def reproject_geographic_rainfall_to_projected_grid(
+    *,
+    data_mm: np.ndarray,
+    lon_vals: np.ndarray,
+    lat_vals: np.ndarray,
+    grid: dict[str, Any],
+    source_crs: str = "EPSG:4326",
+    target_resolution_m: Optional[float] = None,
+    pad_m: Optional[float] = None,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
+    """
+    Reproject rainfall from regular lon/lat source grid to regular projected model grid.
+
+    Output data is time, y ascending, x ascending.
+    """
+    import rasterio
+    from rasterio.transform import from_origin
+    from rasterio.warp import reproject, Resampling
+
+    data_mm, lon, lat = normalize_rainfall_xy_order(data_mm, lon_vals, lat_vals)
+
+    if not coordinate_values_look_geographic(lon, lat):
+        raise ValueError("Expected geographic lon/lat rainfall coordinates, but values do not look geographic.")
+
+    # Use ~1 km forcing grid by default. This matches the event AORC scale and avoids
+    # exploding the forcing file to full 100 m model resolution.
+    res = float(1000.0 if target_resolution_m is None else target_resolution_m)
+    if res <= 0:
+        raise ValueError(f"Rainfall target resolution must be positive, got {res}")
+
+    pad = float(pad_m if pad_m is not None else 5.0 * res)
+
+    xmin = float(grid["xmin"]) - pad
+    xmax = float(grid["xmax"]) + pad
+    ymin = float(grid["ymin"]) - pad
+    ymax = float(grid["ymax"]) + pad
+
+    nx = int(np.ceil((xmax - xmin) / res))
+    ny = int(np.ceil((ymax - ymin) / res))
+
+    x_centers = xmin + (np.arange(nx, dtype="float64") + 0.5) * res
+    y_centers_asc = ymin + (np.arange(ny, dtype="float64") + 0.5) * res
+
+    lon_dx = float(np.nanmedian(np.diff(lon)))
+    lat_dy = float(np.nanmedian(np.diff(lat)))
+
+    if lon_dx <= 0 or lat_dy <= 0:
+        raise ValueError(f"Rainfall lon/lat coordinates are not strictly increasing. lon_dx={lon_dx}, lat_dy={lat_dy}")
+
+    # rasterio source and destination arrays use row 0 as north/top.
+    src_transform = from_origin(
+        float(lon.min() - 0.5 * lon_dx),
+        float(lat.max() + 0.5 * lat_dy),
+        lon_dx,
+        lat_dy,
+    )
+
+    dst_transform = from_origin(
+        xmin,
+        ymax,
+        res,
+        res,
+    )
+
+    # Convert source data from y ascending to y descending for rasterio.
+    src_data_desc = data_mm[:, ::-1, :]
+
+    dst_desc = np.full((src_data_desc.shape[0], ny, nx), np.nan, dtype="float32")
+
+    for t_index in range(src_data_desc.shape[0]):
+        reproject(
+            source=src_data_desc[t_index],
+            destination=dst_desc[t_index],
+            src_transform=src_transform,
+            src_crs=source_crs,
+            src_nodata=np.nan,
+            dst_transform=dst_transform,
+            dst_crs=f"EPSG:{int(grid['epsg'])}",
+            dst_nodata=np.nan,
+            resampling=Resampling.bilinear,
+        )
+
+    # Flip back to y ascending for SFINCS-friendly x/y coordinate arrays.
+    dst_asc = dst_desc[:, ::-1, :]
+    dst_asc = np.where(np.isfinite(dst_asc), dst_asc, 0.0).astype("float32")
+    dst_asc = np.maximum(dst_asc, 0.0).astype("float32")
+
+    audit = {
+        "source_crs": source_crs,
+        "target_crs": f"EPSG:{int(grid['epsg'])}",
+        "target_resolution_m": res,
+        "target_pad_m": pad,
+        "target_shape_time_y_x": list(dst_asc.shape),
+        "target_x_min": float(x_centers.min()),
+        "target_x_max": float(x_centers.max()),
+        "target_y_min": float(y_centers_asc.min()),
+        "target_y_max": float(y_centers_asc.max()),
+        "positive_cells_total": int(np.count_nonzero(dst_asc > 0)),
+        "max_mm": float(np.nanmax(dst_asc)) if np.isfinite(dst_asc).any() else None,
+        "mean_mm": float(np.nanmean(dst_asc)) if np.isfinite(dst_asc).any() else None,
+    }
+
+    return dst_asc, x_centers, y_centers_asc, audit
+
+def hybrid_rainfall_source_crs(cfg: dict[str, Any], ds: xr.Dataset) -> str:
+    """
+    CRS for geographic lon/lat rainfall inputs.
+
+    Default is EPSG:4326 because AORC/event NetCDF files use longitude/latitude
+    coordinates. Allow config override for future non-AORC catalogs.
+    """
+    configured = str(cfg_get(cfg, "hybrid_precip_source_crs", "") or "").strip()
+    if configured:
+        return configured
+
+    for attr_key in ["crs", "spatial_ref", "grid_mapping"]:
+        value = str(ds.attrs.get(attr_key, "") or "").strip()
+        if value.upper().startswith("EPSG:"):
+            return value
+
+    return "EPSG:4326"
+
+def validate_hybrid_precip_grid_against_model(
+    *,
+    cfg: dict[str, Any],
+    precip_path: Path,
+    grid: dict[str, Any],
+) -> None:
+    """
+    Hard-stop rainfall forcing that still has lon/lat-degree coordinates
+    or does not overlap the projected SFINCS model grid.
+    """
+    ds = xr.open_dataset(precip_path)
+    try:
+        if "x" not in ds.coords or "y" not in ds.coords:
+            raise ValueError(f"Hybrid precip file missing x/y coordinates: {precip_path}")
+
+        x = np.asarray(ds["x"].values, dtype="float64")
+        y = np.asarray(ds["y"].values, dtype="float64")
+
+        if coordinate_values_look_geographic(x, y):
+            raise RuntimeError(
+                "Hybrid precip_2d.nc still has lon/lat-degree coordinates. "
+                "SFINCS model grid is projected meters, so rainfall will not land on the model."
+            )
+
+        pxmin, pxmax = float(np.nanmin(x)), float(np.nanmax(x))
+        pymin, pymax = float(np.nanmin(y)), float(np.nanmax(y))
+
+        ix0 = max(pxmin, float(grid["xmin"]))
+        ix1 = min(pxmax, float(grid["xmax"]))
+        iy0 = max(pymin, float(grid["ymin"]))
+        iy1 = min(pymax, float(grid["ymax"]))
+
+        if ix1 <= ix0 or iy1 <= iy0:
+            raise RuntimeError(
+                "Hybrid precip_2d.nc projected extent does not overlap model extent.\n"
+                f"  precip x=[{pxmin}, {pxmax}], y=[{pymin}, {pymax}]\n"
+                f"  model  x=[{grid['xmin']}, {grid['xmax']}], y=[{grid['ymin']}, {grid['ymax']}]"
+            )
+
+        if "Precipitation" not in ds:
+            raise ValueError(f"Hybrid precip file missing Precipitation variable: {precip_path}")
+
+        arr = np.asarray(ds["Precipitation"].values)
+        if not np.isfinite(arr).any():
+            raise ValueError(f"Hybrid precip file has no finite precipitation values: {precip_path}")
+
+        if np.nanmax(arr) <= 0:
+            raise ValueError(f"Hybrid precip file has no positive precipitation values: {precip_path}")
+
+    finally:
+        ds.close()
+
+def write_hybrid_precip_from_event_catalog(cfg: dict[str, Any], event_catalog: Path) -> None:
+    print_section("HYBRID: WRITE PRECIP_2D.NC")
+
+    if not cfg_bool(cfg, "use_rainfall", False):
+        print("Skipping hybrid precip_2d.nc because use_rainfall=False")
+        return
+
+    src = resolve_hybrid_event_file(
+        cfg=cfg,
+        event_catalog=event_catalog,
+        cfg_keys=("rainfall_path", "rainfall_source"),
+        default_relative="event_precip/aorc_precip_event.nc",
+        label="rainfall NetCDF",
+        patterns=("*precip*.nc", "*rain*.nc", "*.nc"),
+    )
+
+    print(f"Hybrid rainfall source NetCDF: {src}")
+
+    if not src.exists():
+        raise FileNotFoundError(f"Hybrid rainfall source does not exist: {src}")
+
+    root = model_root(cfg)
+    dst = root / "precip_2d.nc"
+    inp_path = root / "sfincs.inp"
+
+    if not inp_path.exists():
+        raise FileNotFoundError(f"Cannot patch netamprfile; sfincs.inp does not exist: {inp_path}")
+
+    grid = sfincs_model_grid_from_written_inp(cfg)
+
+    requested_var = str(cfg_get(cfg, "rainfall_variable", "") or "").strip()
+
+    ds = xr.open_dataset(src)
+
+    try:
+        rainfall_var_candidates = [
+            requested_var,
+            "precip_mm",
+            "APCP_surface",
+            "apcp_surface",
+            "Precipitation",
+            "precipitation",
+            "rainfall",
+            "rain",
+            "precip",
+        ]
+
+        var = ""
+        for candidate in rainfall_var_candidates:
+            if candidate and candidate in ds.data_vars:
+                var = candidate
+                break
+
+        if not var:
+            raise KeyError(
+                f"Could not infer rainfall variable in {src}. "
+                f"Tried {rainfall_var_candidates}. "
+                f"Available data variables: {list(ds.data_vars)}"
+            )
+
+        if requested_var and requested_var != var:
+            print(
+                f"WARNING: requested rainfall_variable={requested_var!r} was not found. "
+                f"Using detected rainfall variable {var!r} instead."
+            )
+        elif not requested_var:
+            print(f"Detected rainfall variable: {var!r}")
+
+        da = ds[var]
+
+        if {"time", "latitude", "longitude"}.issubset(set(da.dims)):
+            da = da.transpose("time", "latitude", "longitude")
+            y_vals = np.asarray(ds["latitude"].values, dtype="float64")
+            x_vals = np.asarray(ds["longitude"].values, dtype="float64")
+            source_layout = "time_latitude_longitude"
+
+        elif {"time", "y", "x"}.issubset(set(da.dims)):
+            da = da.transpose("time", "y", "x")
+            y_vals = np.asarray(ds["y"].values, dtype="float64")
+            x_vals = np.asarray(ds["x"].values, dtype="float64")
+            source_layout = "time_y_x"
+
+        else:
+            raise ValueError(
+                f"Unexpected rainfall dimensions for {var!r} in {src}: {da.dims}. "
+                "Expected either ('time', 'latitude', 'longitude') or ('time', 'y', 'x')."
+            )
+
+        data = da.values.astype("float32")
+
+        if not np.isfinite(data).any():
+            raise ValueError(f"Rainfall variable {var!r} in {src} has no finite values.")
+
+        if np.nanmin(data) < 0:
+            raise ValueError(
+                f"Rainfall variable {var!r} in {src} has negative values; "
+                f"min={float(np.nanmin(data))}"
+            )
+
+        time_values = pd.to_datetime(ds["time"].values, utc=True)
+
+        if len(time_values) != data.shape[0]:
+            raise ValueError(
+                f"Rainfall time length mismatch: len(time)={len(time_values)}, "
+                f"data time dimension={data.shape[0]}"
+            )
+
+        if not time_values.is_monotonic_increasing:
+            raise ValueError("Rainfall time coordinate is not monotonic increasing.")
+
+        source_looks_geographic = (
+            source_layout == "time_latitude_longitude"
+            or coordinate_values_look_geographic(x_vals, y_vals)
+        )
+
+        if source_looks_geographic:
+            source_crs = hybrid_rainfall_source_crs(cfg, ds)
+            
+            print("Rainfall source coordinates look geographic; reprojecting to model CRS.")
+            print(f"  source CRS: {source_crs}")
+            print(f"  target CRS: EPSG:{grid['epsg']}")
+
+            target_resolution_m = float(cfg_get(cfg, "hybrid_precip_target_resolution_m", 1000.0))
+            target_pad_m = float(cfg_get(cfg, "hybrid_precip_pad_m", 5000.0))
+
+            data_out, x_out, y_out, reproj_audit = reproject_geographic_rainfall_to_projected_grid(
+                data_mm=data,
+                lon_vals=x_vals,
+                lat_vals=y_vals,
+                grid=grid,
+                source_crs=source_crs,
+                target_resolution_m=target_resolution_m,
+                pad_m=target_pad_m,
+            )
+
+            x_units = "m"
+            y_units = "m"
+            x_long_name = "projection_x_coordinate"
+            y_long_name = "projection_y_coordinate"
+            conversion_note = (
+                f"Source rainfall variable {var!r} was read from geographic lon/lat coordinates, "
+                f"reprojected from {source_crs} to EPSG:{grid['epsg']}, and written as "
+                "SFINCS-friendly Precipitation(time, y, x) in mm on a regular projected meter grid."
+            )
+
+        else:
+            print("Rainfall source coordinates do not look geographic; preserving projected x/y grid.")
+            data_out, x_out, y_out = normalize_rainfall_xy_order(data, x_vals, y_vals)
+            reproj_audit = {
+                "source_layout": source_layout,
+                "mode": "preserved_projected_xy",
+                "target_shape_time_y_x": list(data_out.shape),
+                "positive_cells_total": int(np.count_nonzero(data_out > 0)),
+                "max_mm": float(np.nanmax(data_out)) if np.isfinite(data_out).any() else None,
+                "mean_mm": float(np.nanmean(data_out)) if np.isfinite(data_out).any() else None,
+            }
+
+            x_units = str(ds["x"].attrs.get("units", "m")) if "x" in ds.coords else "m"
+            y_units = str(ds["y"].attrs.get("units", "m")) if "y" in ds.coords else "m"
+            x_long_name = "projection_x_coordinate"
+            y_long_name = "projection_y_coordinate"
+            conversion_note = (
+                f"Source rainfall variable {var!r} written as SFINCS-friendly "
+                "Precipitation(time, y, x) in mm using existing projected x/y coordinates."
+            )
+
+        ref_date = time_values[0].strftime("%Y-%m-%d")
+        time_minutes = np.asarray(
+            (time_values - time_values[0]).total_seconds() / 60.0,
+            dtype="float64",
+        )
+
+        out = xr.Dataset(
+            data_vars={
+                "Precipitation": (
+                    ("time", "y", "x"),
+                    data_out.astype("float32"),
+                    {
+                        "units": "mm",
+                        "long_name": "Precipitation",
+                        "source_variable": var,
+                        "source_file": str(src),
+                        "conversion_note": conversion_note,
+                    },
+                )
+            },
+            coords={
+                "time": time_minutes,
+                "y": np.asarray(y_out, dtype="float64"),
+                "x": np.asarray(x_out, dtype="float64"),
+            },
+            attrs={
+                "title": "Hybrid SFINCS precipitation forcing",
+                "source": str(src),
+                "history": f"Created by preprocess_stage.py at {now_iso()}",
+                "target_epsg": int(grid["epsg"]),
+                "model_xmin": float(grid["xmin"]),
+                "model_xmax": float(grid["xmax"]),
+                "model_ymin": float(grid["ymin"]),
+                "model_ymax": float(grid["ymax"]),
+            },
+        )
+
+        out["x"].attrs.update({
+            "long_name": x_long_name,
+            "standard_name": "projection_x_coordinate",
+            "units": x_units,
+            "axis": "X",
+        })
+
+        out["y"].attrs.update({
+            "long_name": y_long_name,
+            "standard_name": "projection_y_coordinate",
+            "units": y_units,
+            "axis": "Y",
+        })
+
+        out["time"].attrs.update({
+            "long_name": "time",
+            "axis": "T",
+            "units": f"minutes since {ref_date}",
+            "calendar": "proleptic_gregorian",
+        })
+
+        encoding = {
+            "time": {
+                "dtype": "float64",
+                "_FillValue": None,
+            },
+            "y": {
+                "dtype": "float64",
+                "_FillValue": None,
+            },
+            "x": {
+                "dtype": "float64",
+                "_FillValue": None,
+            },
+            "Precipitation": {
+                "dtype": "float32",
+                "zlib": False,
+                "_FillValue": np.float32(np.nan),
+            },
+        }
+
+        out.to_netcdf(dst, encoding=encoding)
+
+    finally:
+        ds.close()
+
+    set_sfincs_inp_value(inp_path, "netamprfile", dst.name)
+
+    validate_hybrid_precip_grid_against_model(
+        cfg=cfg,
+        precip_path=dst,
+        grid=grid,
+    )
+
+    check = xr.open_dataset(dst)
+    try:
+        arr = check["Precipitation"].values
+        finite = arr[np.isfinite(arr)]
+
+        audit = {
+            "created_at": now_iso(),
+            "mode": "hybrid_precip_projected_writer",
+            "source": str(src),
+            "output": str(dst),
+            "rainfall_variable": var,
+            "source_layout": source_layout,
+            "model_grid": grid,
+            "reprojection": reproj_audit,
+            "output_dims": {key: int(value) for key, value in check.sizes.items()},
+            "output_x_min": float(np.nanmin(check["x"].values)),
+            "output_x_max": float(np.nanmax(check["x"].values)),
+            "output_y_min": float(np.nanmin(check["y"].values)),
+            "output_y_max": float(np.nanmax(check["y"].values)),
+            "precip_min_mm": float(np.nanmin(finite)) if finite.size else None,
+            "precip_mean_mm": float(np.nanmean(finite)) if finite.size else None,
+            "precip_p95_mm": float(np.nanpercentile(finite, 95)) if finite.size else None,
+            "precip_max_mm": float(np.nanmax(finite)) if finite.size else None,
+            "positive_value_count": int(np.count_nonzero(np.where(np.isfinite(arr), arr > 0.0, False))),
+            "sfincs_inp_patch": {
+                "netamprfile": dst.name,
+            },
+        }
+
+        audit_path = run_root(cfg) / "hybrid_precip_audit.json"
+        write_json(audit_path, audit)
+
+        print(f"Wrote {dst}")
+        print(f"Rainfall source variable: {var}")
+        print(f"Output dims: {dict(check.sizes)}")
+        print(f"Output x range: {audit['output_x_min']} to {audit['output_x_max']} {check['x'].attrs.get('units')}")
+        print(f"Output y range: {audit['output_y_min']} to {audit['output_y_max']} {check['y'].attrs.get('units')}")
+        print(
+            "Precipitation summary: "
+            f"min={audit['precip_min_mm']:.6g}, "
+            f"mean={audit['precip_mean_mm']:.6g}, "
+            f"p95={audit['precip_p95_mm']:.6g}, "
+            f"max={audit['precip_max_mm']:.6g}"
+        )
+        print(f"Positive precipitation values: {audit['positive_value_count']}")
+        print(f"Audit: {audit_path}")
+        print("sfincs.inp: netamprfile = precip_2d.nc")
+
+    finally:
+        check.close()
+        
+def resolve_event_runtime_window_csv(event_catalog: Path) -> Path:
+    folder = event_catalog / "event_runtime_window"
+
+    if folder.exists() and folder.is_dir():
+        candidates = sorted(
+            path
+            for path in folder.iterdir()
+            if (
+                path.is_file()
+                and path.suffix.lower() == ".csv"
+                and not path_has_catalog_admin_part(path)
+            )
+        )
+        if candidates:
+            return candidates[0]
+
+    legacy = event_catalog / "event_runtime_window" / "event_runtime_window.csv"
+    return legacy
+
+def apply_hybrid_runtime_window(cfg: dict[str, Any], event_catalog: Path) -> None:
+    print_section("HYBRID: APPLY EVENT RUNTIME WINDOW")
+
+    runtime_path = resolve_event_runtime_window_csv(event_catalog)
+
+    requested_runtime = {
+        "tref": cfg_get(cfg, "tref"),
+        "tstart": cfg_get(cfg, "tstart"),
+        "tstop": cfg_get(cfg, "tstop"),
+    }
+
+    def normalize_runtime_value(value: Any) -> str:
+        text = str(value or "").strip()
+        if not text or text.lower() in {"none", "nan", "nat"}:
+            return ""
+
+        # Normalize common config/catalog/SFINCS time formats so formatting alone
+        # does not trigger a false mismatch.
+        parsed = pd.to_datetime(text, errors="coerce")
+        if pd.notna(parsed):
+            return parsed.strftime("%Y-%m-%d %H:%M:%S")
+
+        return text
+
+    df = pd.read_csv(runtime_path)
+
+    if df.empty:
+        raise ValueError(f"Runtime window file has no rows: {runtime_path}")
+
+    row = df.iloc[0]
+
+    def row_runtime_value(*names: str) -> str:
+        for name in names:
+            if name in row and pd.notna(row[name]) and str(row[name]).strip():
+                return str(row[name]).strip()
+        return ""
+
+    for key, value in {
+        "tref": row_runtime_value("tref", "reference_time", "ref_time"),
+        "tstart": row_runtime_value("tstart", "start_time", "time_start", "event_start"),
+        "tstop": row_runtime_value(
+            "tstop_recommended_end_exclusive",
+            "tstop",
+            "stop_time",
+            "time_stop",
+            "event_stop",
+            "end_time",
+        ),
+    }.items():
+        if value:
+            cfg[key] = normalize_runtime_value(value)
+
+    effective_runtime = {
+        "tref": cfg_get(cfg, "tref"),
+        "tstart": cfg_get(cfg, "tstart"),
+        "tstop": cfg_get(cfg, "tstop"),
+    }
+
+    mismatches = {}
+    for key in ("tref", "tstart", "tstop"):
+        requested_norm = normalize_runtime_value(requested_runtime.get(key))
+        effective_norm = normalize_runtime_value(effective_runtime.get(key))
+
+        if requested_norm and effective_norm and requested_norm != effective_norm:
+            mismatches[key] = {
+                "requested_raw": requested_runtime.get(key),
+                "effective_raw": effective_runtime.get(key),
+                "requested_normalized": requested_norm,
+                "effective_normalized": effective_norm,
+            }
+
+    audit = {
+        "status": "major_warning" if mismatches else "ok",
+        "severity": "major" if mismatches else "ok",
+        "ui_color": "red" if mismatches else "green",
+        "category": "runtime_window_mismatch" if mismatches else "runtime_window_match",
+        "message": (
+            "Requested config runtime window does not match the effective hybrid/SFINCS runtime window."
+            if mismatches
+            else "Requested config runtime window matches the effective hybrid/SFINCS runtime window."
+        ),
+        "reason": (
+            "Hybrid event catalog runtime window overrode one or more requested config runtime values."
+            if mismatches
+            else "No runtime override mismatch detected."
+        ),
+        "event_catalog": str(event_catalog),
+        "runtime_source_csv": str(runtime_path),
+        "requested": requested_runtime,
+        "effective": effective_runtime,
+        "mismatches": mismatches,
+    }
+
+    audit_path = model_root(cfg).parent / "runtime_window_audit.json"
+    audit_path.parent.mkdir(parents=True, exist_ok=True)
+    audit_path.write_text(json.dumps(audit, indent=2, default=str), encoding="utf-8")
+
+    if mismatches:
+        print("")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("MAJOR RUNTIME WINDOW MISMATCH")
+        print("Severity: MAJOR / RED")
+        print("The requested config runtime differs from the effective hybrid runtime.")
+        print("This changes the physical event duration.")
+        print("")
+        for key, info in mismatches.items():
+            print(f"{key}:")
+            print(f"  requested: {info['requested_raw']}  -> {info['requested_normalized']}")
+            print(f"  effective: {info['effective_raw']}  -> {info['effective_normalized']}")
+        print("")
+        print(f"Wrote runtime audit: {audit_path}")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("")
+    else:
+        print(f"Runtime window audit: OK ({audit_path})")
+
+    print(f"Using tref:   {cfg_get(cfg, 'tref')}")
+    print(f"Using tstart: {cfg_get(cfg, 'tstart')}")
+    print(f"Using tstop:  {cfg_get(cfg, 'tstop')}")
+
+
+def build_model_hybrid(cfg: dict[str, Any], config_path: Path) -> None:
+    print_section("HYBRID PREPROCESS START")
+
+    event_catalogs = cfg_get(cfg, "data_catalogs", []) or []
+    static_dirs = cfg_get(cfg, "native_static_sfincs_input_dirs", []) or []
+
+    if not event_catalogs:
+        raise RuntimeError("Hybrid mode requires DATA_CATALOGS[0] to be the event catalog folder.")
+    if not static_dirs:
+        raise RuntimeError("Hybrid mode requires NATIVE_STATIC_SFINCS_INPUT_DIRS[0] to be the static PPP folder.")
+
+    event_catalog = Path(event_catalogs[0])
+    static_dir = Path(static_dirs[0])
+
+    print(f"Event catalog: {event_catalog}")
+    print(f"Static PPP:    {static_dir}")
+    print(f"Model root:    {model_root(cfg)}")
+
+    if not event_catalog.exists():
+        raise FileNotFoundError(f"Hybrid event catalog does not exist: {event_catalog}")
+    if not static_dir.exists():
+        raise FileNotFoundError(f"Hybrid static PPP folder does not exist: {static_dir}")
+
+    with timing_block("apply event runtime window"):
+        apply_hybrid_runtime_window(cfg, event_catalog)
+
+    with timing_block("write native sfincs.inp"):
+        write_native_sfincs_inp_from_config(cfg)
+
+    with timing_block("copy static SFINCS files"):
+        apply_sfincs_file_overrides(cfg)
+
+    with timing_block("write hybrid sfincs.bzs"):
+        write_hybrid_bzs_from_event_catalog(cfg, event_catalog)
+
+    if cfg_bool(cfg, "use_discharge_boundary", False):
+        with timing_block("write hybrid sfincs.dis"):
+            write_hybrid_dis_from_event_catalog(cfg, event_catalog)
+    else:
+        print("Skipping hybrid sfincs.dis: use_discharge_boundary=False")
+
+    with timing_block("write hybrid precip_2d.nc"):
+        write_hybrid_precip_from_event_catalog(cfg, event_catalog)
+
+    if cfg_bool(cfg, "use_wind", False):
+        with timing_block("copy hybrid wind forcing"):
+            copy_hybrid_wind_from_event_catalog(cfg, event_catalog)
+    else:
+        print("Skipping hybrid wind forcing: use_wind=False")
+
+    if cfg_bool(cfg, "use_pressure", False):
+        with timing_block("copy hybrid pressure forcing"):
+            copy_hybrid_pressure_from_event_catalog(cfg, event_catalog)
+    else:
+        print("Skipping hybrid pressure forcing: use_pressure=False")
+
+    if cfg_bool(cfg, "use_obs_points", False):
+        with timing_block("write hybrid sfincs.obs"):
+            write_hybrid_obs_from_event_catalog(cfg, event_catalog)
+    else:
+        print("Skipping hybrid sfincs.obs: use_obs_points=False")
+
+    if cfg_bool(cfg, "use_obs_lines", False):
+        with timing_block("write hybrid sfincs.crs"):
+            write_hybrid_crs_from_event_catalog(cfg, event_catalog)
+    else:
+        print("Skipping hybrid sfincs.crs: use_obs_lines=False")
+
+    with timing_block("stamp water-level boundary cells onto mask"):
+        stamp_waterlevel_boundary_points_on_sparse_mask(cfg)
+
+    with timing_block("validate written model"):
+        validate_written_model(cfg)
+
+
+    def hybrid_enabled(key: str, default: bool = False) -> bool:
+        value = cfg_get(cfg, key, default)
+        if isinstance(value, str):
+            return value.strip().lower() in {"1", "true", "yes", "y", "on"}
+        return bool(value)
+
+    hybrid_manifest = {
+        "status": "success",
+        "completed_at": now_iso(),
+        "event_catalog": event_catalog,
+        "static_dir": static_dir,
+        "model_root": model_root(cfg),
+    }
+
+    if hybrid_enabled("use_rainfall", False):
+        hybrid_manifest["rainfall_source"] = resolve_hybrid_event_file(
+            cfg=cfg,
+            event_catalog=event_catalog,
+            cfg_keys=("rainfall_path", "rainfall_source"),
+            default_relative="event_precip/aorc_precip_event.nc",
+            label="rainfall NetCDF",
+            patterns=("*precip*.nc", "*rain*.nc", "*.nc"),
+        )
+        hybrid_manifest["precipfile"] = model_root(cfg) / "precip_2d.nc"
+
+    if hybrid_enabled("use_waterlevel_boundary", False):
+        hybrid_manifest["waterlevel_source"] = resolve_hybrid_event_file(
+            cfg=cfg,
+            event_catalog=event_catalog,
+            cfg_keys=("waterlevel_path", "waterlevel_source"),
+            default_relative="event_waterlevel/selected_bzs_waterlevel_reduced.csv",
+            label="BZS water-level CSV",
+            patterns=("*bzs*waterlevel*.csv", "*waterlevel*.csv"),
+        )
+        hybrid_manifest["bzsfile"] = model_root(cfg) / "sfincs.bzs"
+
+    if hybrid_enabled("use_wind", False):
+        hybrid_manifest["wind_source"] = resolve_hybrid_event_file(
+            cfg=cfg,
+            event_catalog=event_catalog,
+            cfg_keys=("wind_path", "wind_source"),
+            default_relative="event_wind/aorc_wind_event.nc",
+            label="wind NetCDF",
+            patterns=("*wind*.nc", "*.nc"),
+        )
+        hybrid_manifest["netamuamvfile"] = model_root(cfg) / "sfincs_netamuamvfile.nc"
+
+    if hybrid_enabled("use_pressure", False):
+        hybrid_manifest["pressure_source"] = resolve_hybrid_event_file(
+            cfg=cfg,
+            event_catalog=event_catalog,
+            cfg_keys=("pressure_path", "pressure_source"),
+            default_relative="event_pressure/aorc_pressure_event.nc",
+            label="pressure NetCDF",
+            patterns=("*pressure*.nc", "*press*.nc", "*.nc"),
+        )
+        hybrid_manifest["netampfile"] = model_root(cfg) / "sfincs_netampfile.nc"
+
+    if hybrid_enabled("use_discharge_boundary", False):
+        hybrid_manifest["discharge_source"] = resolve_hybrid_discharge_csv(event_catalog, cfg)
+        hybrid_manifest["disfile"] = model_root(cfg) / "sfincs.dis"
+        
+    if hybrid_enabled("use_obs_points", False):
+        hybrid_manifest["obs_points_source"] = resolve_hybrid_obs_points_file(cfg, event_catalog)
+        hybrid_manifest["obsfile"] = model_root(cfg) / "sfincs.obs"
+
+    if hybrid_enabled("use_obs_lines", False):
+        hybrid_manifest["obs_lines_source"] = resolve_hybrid_obs_lines_file(cfg, event_catalog)
+        hybrid_manifest["crsfile"] = model_root(cfg) / "sfincs.crs"
+
+    write_json(
+        run_root(cfg) / "hybrid_preprocess_manifest.json",
+        hybrid_manifest,
+    )
+
+    print_section("HYBRID PREPROCESS COMPLETE")
+    print(f"Hybrid SFINCS model folder is ready: {model_root(cfg)}")
+
+def build_model(cfg: dict[str, Any], config_path: Path) -> None:
+    normalize_storecumprcp_config(cfg)
+    
+    with timing_block("print config summary"):
+        print_config_summary(cfg, config_path)
+
+    with timing_block("validate stage inputs"):
+        validate_stage_inputs(cfg)
+
+    with timing_block("create run folders"):
+        model_root(cfg).mkdir(parents=True, exist_ok=True)
+        logs_root(cfg).mkdir(parents=True, exist_ok=True)
+        postprocess_root(cfg).mkdir(parents=True, exist_ok=True)
+
+    with timing_block("sync native static geometry"):
+        sync_native_static_geometry_advanced_config(cfg)
+
+    with timing_block("write data inventory"):
+        write_data_inventory(cfg)
+
+    mode = cfg_get(cfg, "preprocess_mode", "hydromt_build")
+
+    if mode == "hybrid":
+        build_model_hybrid(cfg, config_path)
+    elif mode == "native_sfincs_assembly":
+        build_model_native_sfincs_assembly(cfg, config_path)
+    elif mode == "hydromt_build":
+        build_model_hydromt(cfg, config_path)
+    else:
+        raise ValueError(f"Unknown preprocess_mode: {mode}")
+
+def main(argv: list[str]) -> int:
+    if len(argv) != 2:
+        print("Usage:")
+        print("  python preprocess_stage.py /path/to/run_config.json")
+        return 2
+
+    config_path = Path(argv[1]).resolve()
+    print_section("PREPROCESS STAGE START")
+    print(f"Started at: {now_iso()}")
+    print(f"Python:     {sys.executable}")
+    print(f"Config:     {config_path}")
+
+    if not config_path.exists():
+        print(f"ERROR: config file not found: {config_path}")
+        return 2
+
+    cfg = read_json(config_path)
+
+    try:
+        build_model(cfg, config_path)
+    except Exception as exc:
+        print_section("PREPROCESS FAILED")
+        print(f"Failed at: {now_iso()}")
+        print(f"Error type: {type(exc).__name__}")
+        print(f"Error: {exc}")
+        print("\nTraceback:")
+        traceback.print_exc()
+
+        try:
+            write_json(
+                preprocess_failure_path(cfg),
+                {
+                    "status": "failed",
+                    "failed_at": now_iso(),
+                    "error_type": type(exc).__name__,
+                    "error_message": str(exc),
+                    "config_path": config_path,
+                    "model_root": model_root(cfg),
+                },
+            )
+            print(f"Wrote failure record: {preprocess_failure_path(cfg)}")
+        except Exception as write_exc:
+            print(f"WARNING: could not write failure record: {write_exc}")
+
+        return 1
+
+    print_section("PREPROCESS STAGE END")
+    print(f"Finished at: {now_iso()}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv))

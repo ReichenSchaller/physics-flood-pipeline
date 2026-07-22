@@ -1,0 +1,24 @@
+ACTIVE CODE HARDCODED DATA PATH SUMMARY
+Timestamp: 20260710_160209
+
+Total active hits: 29
+Files with active hits: 11
+
+Usage-guess counts:
+  LIKELY_DEFAULT_ONLY: 24
+  POSSIBLY_LOAD_BEARING: 1
+  PROBABLY_DEFAULT_REVIEW: 1
+  UNCLEAR: 3
+
+Hits by active file:
+     6  /proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js
+     4  /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+     2  /proj/zefflab/projects/Flooding/Validation/Code/raw_dem_depth_correlation_graph_generator.py
+     2  /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/apply_harvey_3_boundary_catalog_repair.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/audit_14_event_boundary_point_maps.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js

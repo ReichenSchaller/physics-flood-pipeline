@@ -1,0 +1,10029 @@
+# Web Launcher Path + Settings Audit
+
+Timestamp: `20260710_161555`
+
+## Root replacement preview
+
+| Old root | Proposed new root |
+|---|---|
+| `/proj/zefflab/projects/Flooding/Data` | `/users/e/p/epsilon/Data/Data` |
+| `/proj/zefflab/projects/Flooding/kieran_data` | `/users/e/p/epsilon/Data/kieran_data` |
+
+## Active hardcoded path summary
+
+Total active hardcoded path hits: **29**  
+Files with active path hits: **11**
+
+### Usage guess counts
+
+| Usage guess | Count |
+|---|---:|
+| `LIKELY_DEFAULT_OR_BROWSE` | 28 |
+| `POSSIBLY_LOAD_BEARING` | 1 |
+
+### Active path hits by file
+
+| Hits | File |
+|---:|---|
+| 6 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html` |
+| 5 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py` |
+| 5 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js` |
+| 4 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html` |
+| 2 | `/proj/zefflab/projects/Flooding/Validation/Code/raw_dem_depth_correlation_graph_generator.py` |
+| 2 | `/proj/zefflab/projects/Flooding/pipeline/code/config_schema.py` |
+| 1 | `/proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/apply_harvey_3_boundary_catalog_repair.py` |
+| 1 | `/proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/audit_14_event_boundary_point_maps.py` |
+| 1 | `/proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py` |
+| 1 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js` |
+| 1 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js` |
+
+## Settings-related match summary
+
+| Matched lines | File |
+|---:|---|
+| 130 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/guide.html` |
+| 122 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html` |
+| 119 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html` |
+| 93 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js` |
+| 68 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py` |
+| 35 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js` |
+| 20 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js` |
+| 12 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/compare_result.html` |
+| 5 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/path_browser.js` |
+| 3 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/compare.html` |
+| 1 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/index.html` |
+| 1 | `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/pipeline_actions.js` |
+
+---
+
+## A. Active hardcoded data path chunks — focused for ChatGPT review
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html`
+
+Hits: **6**
+
+#### Hit 1/6 — line 955 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `<table class="config-table">`
+
+Current line:
+
+```text
+placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+```
+
+Simple root replacement would become:
+
+```text
+placeholder="/users/e/p/epsilon/Data/Data/harris_county/catalogs/events/harvey_2017_mrms"
+```
+
+Excerpt:
+
+```text
+   00943:               </p>
+   00944: 
+   00945:               <table class="config-table">
+   00946:                 <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00947:                 <tbody>
+   00948:                   <tr>
+   00949:                     <td>data_catalogs</td>
+   00950:                     <td>
+   00951:                       <textarea
+   00952:                         class="short-textarea catalog-path-textarea"
+   00953:                         data-key="data_catalogs"
+   00954:                         data-type="string"
+>> 00955:                         placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00956:                         style="min-height: 118px;"
+   00957:                       ></textarea>
+   00958: 
+   00959:                       <div
+   00960:                         style="
+   00961:                           display: grid;
+   00962:                           grid-template-columns: minmax(340px, 460px) auto auto;
+   00963:                           gap: 8px;
+   00964:                           align-items: center;
+   00965:                           margin-top: 10px;
+   00966:                         "
+   00967:                       >
+```
+
+#### Hit 2/6 — line 971 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `<table class="config-table">`
+
+Current line:
+
+```text
+placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+```
+
+Simple root replacement would become:
+
+```text
+placeholder="/users/e/p/epsilon/Data/Data/harris_county/catalogs/events/harvey_2017_mrms"
+```
+
+Excerpt:
+
+```text
+   00959:                       <div
+   00960:                         style="
+   00961:                           display: grid;
+   00962:                           grid-template-columns: minmax(340px, 460px) auto auto;
+   00963:                           gap: 8px;
+   00964:                           align-items: center;
+   00965:                           margin-top: 10px;
+   00966:                         "
+   00967:                       >
+   00968:                         <input
+   00969:                           id="override-catalog-add-input"
+   00970:                           type="text"
+>> 00971:                           placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00972:                           style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00973:                         >
+   00974: 
+   00975:                         <button
+   00976:                           type="button"
+   00977:                           class="secondary"
+   00978:                           data-browse-target="override-catalog-add-input"
+   00979:                           data-browse-mode="directory"
+   00980:                           data-browse-default-key="catalogRoot"
+   00981:                           data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00982:                         >
+   00983:                           Browse
+```
+
+#### Hit 3/6 — line 981 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `<table class="config-table">`
+
+Current line:
+
+```text
+data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+```
+
+Simple root replacement would become:
+
+```text
+data-browse-start="/users/e/p/epsilon/Data/Data/harris_county/catalogs"
+```
+
+Excerpt:
+
+```text
+   00969:                           id="override-catalog-add-input"
+   00970:                           type="text"
+   00971:                           placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00972:                           style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00973:                         >
+   00974: 
+   00975:                         <button
+   00976:                           type="button"
+   00977:                           class="secondary"
+   00978:                           data-browse-target="override-catalog-add-input"
+   00979:                           data-browse-mode="directory"
+   00980:                           data-browse-default-key="catalogRoot"
+>> 00981:                           data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00982:                         >
+   00983:                           Browse
+   00984:                         </button>
+   00985: 
+   00986:                         <button
+   00987:                           type="button"
+   00988:                           class="primary"
+   00989:                           onclick="overrideAddCatalogFromInput()"
+   00990:                         >
+   00991:                           Add catalog
+   00992:                         </button>
+   00993:                       </div>
+```
+
+#### Hit 4/6 — line 2624 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const hasNativePressureOverride = Boolean(`
+
+Current line:
+
+```text
+: "/proj/zefflab/projects/Flooding/Data/harris_county"
+```
+
+Simple root replacement would become:
+
+```text
+: "/users/e/p/epsilon/Data/Data/harris_county"
+```
+
+Excerpt:
+
+```text
+   02612:       if (!hasNativePressureOverride && !String(cfg.pressure_path || '').trim()) {
+   02613:         cfg.use_pressure = false;
+   02614:         cfg.pressure_source = '';
+   02615:       }
+   02616:       
+   02617:       // Smart Override assembly:
+   02618:       // - data_catalogs blank     -> native_sfincs_assembly
+   02619:       // - data_catalogs not blank -> hybrid
+   02620:       // data_root is controlled by launcher settings, not by a visible run field.
+   02621:       cfg.data_root = (
+   02622:         window.LauncherDefaults && window.LauncherDefaults.get
+   02623:           ? window.LauncherDefaults.get("dataRoot")
+>> 02624:           : "/proj/zefflab/projects/Flooding/Data/harris_county"
+   02625:       );
+   02626: 
+   02627:       cfg.data_catalogs = normalizePathListValue(cfg.data_catalogs);
+   02628: 
+   02629:       const hasDataCatalogs = Array.isArray(cfg.data_catalogs) && cfg.data_catalogs.length > 0;
+   02630: 
+   02631:       cfg.pipeline_mode = 'preflight_only';
+   02632:       cfg.preprocess_mode = hasDataCatalogs ? 'hybrid' : 'native_sfincs_assembly';
+   02633: 
+   02634:       const gridTemplateHydromtBuild = shouldUseHydromtBuildForGridTemplateOverride(cfg, selectedOverrideMap);
+   02635: 
+   02636:       if (gridTemplateHydromtBuild) {
+```
+
+#### Hit 5/6 — line 4196 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `function runChecksSafely(navigate = true) {`
+
+Current line:
+
+```text
+defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+```
+
+Simple root replacement would become:
+
+```text
+defaultStart: "/users/e/p/epsilon/Data/Data/harris_county"
+```
+
+Excerpt:
+
+```text
+   04184:       "seff_path",
+   04185:       "ks_path",
+   04186:       "sigma_path",
+   04187:       "psi_path",
+   04188:       "f0_path",
+   04189:       "fc_path",
+   04190:       "kd_path",
+   04191:       "vol_path",
+   04192:       "conda_env_path",
+   04193:       "conda_python",
+   04194:       "sfincs_container_path"
+   04195:       ],
+>> 04196:     defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+   04197:   };
+   04198: </script>
+   04199: <script src="static/config_path_browse_buttons.js"></script>
+   04200: <script src="static/path_browser.js"></script>
+   04201: <script src="static/pipeline_actions.js"></script>
+   04202: <script src="static/page_reset.js"></script>
+   04203: 
+   04204: 
+   04205: <!-- BEGIN override source browse defaults patch -->
+   04206: <script>
+   04207: (function () {
+   04208:   "use strict";
+```
+
+#### Hit 6/6 — line 4211 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const FALLBACK_OVERRIDE_SOURCE_ROOT =`
+
+Current line:
+
+```text
+"/proj/zefflab/projects/Flooding/Data/harris_county/catalogs";
+```
+
+Simple root replacement would become:
+
+```text
+"/users/e/p/epsilon/Data/Data/harris_county/catalogs";
+```
+
+Excerpt:
+
+```text
+   04199: <script src="static/config_path_browse_buttons.js"></script>
+   04200: <script src="static/path_browser.js"></script>
+   04201: <script src="static/pipeline_actions.js"></script>
+   04202: <script src="static/page_reset.js"></script>
+   04203: 
+   04204: 
+   04205: <!-- BEGIN override source browse defaults patch -->
+   04206: <script>
+   04207: (function () {
+   04208:   "use strict";
+   04209: 
+   04210:   const FALLBACK_OVERRIDE_SOURCE_ROOT =
+>> 04211:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs";
+   04212: 
+   04213:   function defaultsApi() {
+   04214:     return window.SFINCS_LAUNCHER_DEFAULTS ||
+   04215:            window.SfincsLauncherDefaults ||
+   04216:            window.launcherDefaults ||
+   04217:            {};
+   04218:   }
+   04219: 
+   04220:   function getLauncherDefault(key) {
+   04221:     const api = defaultsApi();
+   04222: 
+   04223:     if (typeof api.getDefault === "function") {
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html`
+
+Hits: **4**
+
+#### Hit 1/4 — line 598 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Current line:
+
+```text
+<input type="hidden" data-key="data_root" data-type="string" value="/proj/zefflab/projects/Flooding/Data/harris_county">
+```
+
+Simple root replacement would become:
+
+```text
+<input type="hidden" data-key="data_root" data-type="string" value="/users/e/p/epsilon/Data/Data/harris_county">
+```
+
+Excerpt:
+
+```text
+   00586:   }
+   00587: 
+   00588:   .permanent-tab-scrollbar-thumb:active {
+   00589:     cursor: grabbing;
+   00590:   }
+   00591: </style>
+   00592: <!-- END permanent tab scrollbar patch -->
+   00593: 
+   00594: </head>
+   00595: <body>
+   00596:   <input type="hidden" data-key="pipeline_mode" data-type="string" value="preflight_only">
+   00597:   <input type="hidden" data-key="preprocess_mode" data-type="string" value="hydromt_build">
+>> 00598:   <input type="hidden" data-key="data_root" data-type="string" value="/proj/zefflab/projects/Flooding/Data/harris_county">
+   00599:   <input type="hidden" data-key="sfincs_container" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif">
+   00600:   <header>
+   00601:     <div class="header-grid">
+   00602:       <div>
+   00603:         <h1>Manual Mode</h1>
+   00604:         <p class="subtitle">Direct control over a standard SFINCS pipeline JSON config. Fill the tables in any order, save a normal backend config, load an existing config, and use the check tab before moving to backend preflight/build/submit.</p>
+   00605:       </div>
+   00606:       <div class="status-box" aria-label="Manual mode summary">
+   00607:         <div class="status-row"><span>Config format</span><span>normal JSON</span></div>
+   00608:         <div class="status-row"><span>Maintainer</span><span>Reichen Schaller</span></div>
+   00609:         <div class="status-row"><span>Version</span><span>v1.1 (6/1/26)</span></div>
+   00610:       </div>
+```
+
+#### Hit 2/4 — line 775 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `<table class="config-table">`
+
+Current line:
+
+```text
+placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+```
+
+Simple root replacement would become:
+
+```text
+placeholder="/users/e/p/epsilon/Data/Data/harris_county/catalogs/static/harris_county"
+```
+
+Excerpt:
+
+```text
+   00763:                   <div
+   00764:                     style="
+   00765:                       display: grid;
+   00766:                       grid-template-columns: minmax(340px, 460px) auto auto;
+   00767:                       gap: 8px;
+   00768:                       align-items: center;
+   00769:                       margin-top: 10px;
+   00770:                     "
+   00771:                   >
+   00772:                     <input
+   00773:                       id="manual-catalog-add-input"
+   00774:                       type="text"
+>> 00775:                       placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+   00776:                       style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00777:                     >
+   00778: 
+   00779:                     <button
+   00780:                       type="button"
+   00781:                       class="secondary"
+   00782:                       data-browse-target="manual-catalog-add-input"
+   00783:                       data-browse-mode="directory"
+   00784:                       data-browse-default-key="catalogRoot"
+   00785:                       data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00786:                     >
+   00787:                       Browse
+```
+
+#### Hit 3/4 — line 785 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `<table class="config-table">`
+
+Current line:
+
+```text
+data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+```
+
+Simple root replacement would become:
+
+```text
+data-browse-start="/users/e/p/epsilon/Data/Data/harris_county/catalogs"
+```
+
+Excerpt:
+
+```text
+   00773:                       id="manual-catalog-add-input"
+   00774:                       type="text"
+   00775:                       placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+   00776:                       style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00777:                     >
+   00778: 
+   00779:                     <button
+   00780:                       type="button"
+   00781:                       class="secondary"
+   00782:                       data-browse-target="manual-catalog-add-input"
+   00783:                       data-browse-mode="directory"
+   00784:                       data-browse-default-key="catalogRoot"
+>> 00785:                       data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00786:                     >
+   00787:                       Browse
+   00788:                     </button>
+   00789: 
+   00790:                     <button
+   00791:                       type="button"
+   00792:                       class="primary"
+   00793:                       onclick="manualAddCatalogFromInput()"
+   00794:                     >
+   00795:                       Add catalog
+   00796:                     </button>
+   00797:                   </div>
+```
+
+#### Hit 4/4 — line 3632 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const repairedCfg = getConfig();`
+
+Current line:
+
+```text
+defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+```
+
+Simple root replacement would become:
+
+```text
+defaultStart: "/users/e/p/epsilon/Data/Data/harris_county"
+```
+
+Excerpt:
+
+```text
+   03620:       "seff_path",
+   03621:       "ks_path",
+   03622:       "sigma_path",
+   03623:       "psi_path",
+   03624:       "f0_path",
+   03625:       "fc_path",
+   03626:       "kd_path",
+   03627:       "vol_path",
+   03628:       "conda_env_path",
+   03629:       "conda_python",
+   03630:       "sfincs_container_path"
+   03631:     ],
+>> 03632:     defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+   03633:   };
+   03634: </script>
+   03635: <script src="static/config_path_browse_buttons.js"></script>
+   03636: <script src="static/path_browser.js"></script>
+   03637: <script src="static/pipeline_actions.js"></script>
+   03638: <script src="static/page_reset.js"></script>
+   03639:   <a class="help-button" href="guide.html?tab=manual" title="Open Manual guide">?</a>
+   03640: 
+   03641: <!-- BEGIN runtime launcher path defaults patch -->
+   03642: <script>
+   03643: (function () {
+   03644:   "use strict";
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py`
+
+Hits: **5**
+
+#### Hit 1/5 — line 370 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Current line:
+
+```text
+"dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+```
+
+Simple root replacement would become:
+
+```text
+"dataRoot": "/users/e/p/epsilon/Data/Data/harris_county",
+```
+
+Excerpt:
+
+```text
+   00358:     "catalogRoot",
+   00359:     "eventCatalogRoot",
+   00360:     "nativeSfincsRoot",
+   00361:     "overrideSourceRoot",
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+>> 00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+```
+
+#### Hit 2/5 — line 371 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Current line:
+
+```text
+"catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+```
+
+Simple root replacement would become:
+
+```text
+"catalogRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+```
+
+Excerpt:
+
+```text
+   00359:     "eventCatalogRoot",
+   00360:     "nativeSfincsRoot",
+   00361:     "overrideSourceRoot",
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+>> 00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+   00383: def _read_launcher_site_defaults() -> dict:
+```
+
+#### Hit 3/5 — line 372 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Current line:
+
+```text
+"eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+```
+
+Simple root replacement would become:
+
+```text
+"eventCatalogRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs/events_reduced",
+```
+
+Excerpt:
+
+```text
+   00360:     "nativeSfincsRoot",
+   00361:     "overrideSourceRoot",
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+   00383: def _read_launcher_site_defaults() -> dict:
+   00384:     defaults = dict(LAUNCHER_BUILTIN_DEFAULTS)
+```
+
+#### Hit 4/5 — line 373 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Current line:
+
+```text
+"nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+```
+
+Simple root replacement would become:
+
+```text
+"nativeSfincsRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+```
+
+Excerpt:
+
+```text
+   00361:     "overrideSourceRoot",
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+>> 00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+   00383: def _read_launcher_site_defaults() -> dict:
+   00384:     defaults = dict(LAUNCHER_BUILTIN_DEFAULTS)
+   00385: 
+```
+
+#### Hit 5/5 — line 374 — `POSSIBLY_LOAD_BEARING`
+
+Current line:
+
+```text
+"overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+```
+
+Simple root replacement would become:
+
+```text
+"overrideSourceRoot": "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+```
+
+Excerpt:
+
+```text
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+   00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+   00383: def _read_launcher_site_defaults() -> dict:
+   00384:     defaults = dict(LAUNCHER_BUILTIN_DEFAULTS)
+   00385: 
+   00386:     if not LAUNCHER_DEFAULTS_PATH.exists():
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js`
+
+Hits: **5**
+
+#### Hit 1/5 — line 10 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const DEFAULTS = {`
+
+Current line:
+
+```text
+dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+```
+
+Simple root replacement would become:
+
+```text
+dataRoot: "/users/e/p/epsilon/Data/Data/harris_county",
+```
+
+Excerpt:
+
+```text
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+>> 00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+```
+
+#### Hit 2/5 — line 11 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const DEFAULTS = {`
+
+Current line:
+
+```text
+catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+```
+
+Simple root replacement would become:
+
+```text
+catalogRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+```
+
+Excerpt:
+
+```text
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+>> 00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+   00023:     dataRoot: "Data root",
+```
+
+#### Hit 3/5 — line 12 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const DEFAULTS = {`
+
+Current line:
+
+```text
+eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+```
+
+Simple root replacement would become:
+
+```text
+eventCatalogRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs/events_reduced",
+```
+
+Excerpt:
+
+```text
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+   00023:     dataRoot: "Data root",
+   00024:     catalogRoot: "Catalog root",
+```
+
+#### Hit 4/5 — line 13 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const DEFAULTS = {`
+
+Current line:
+
+```text
+nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+```
+
+Simple root replacement would become:
+
+```text
+nativeSfincsRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+```
+
+Excerpt:
+
+```text
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+>> 00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+   00023:     dataRoot: "Data root",
+   00024:     catalogRoot: "Catalog root",
+   00025:     eventCatalogRoot: "Event catalog root",
+```
+
+#### Hit 5/5 — line 14 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const DEFAULTS = {`
+
+Current line:
+
+```text
+overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+```
+
+Simple root replacement would become:
+
+```text
+overrideSourceRoot: "/users/e/p/epsilon/Data/Data/harris_county/catalogs",
+```
+
+Excerpt:
+
+```text
+   00002:   "use strict";
+   00003: 
+   00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+   00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+   00006:   let SERVER_DEFAULTS = {};
+   00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+   00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+   00023:     dataRoot: "Data root",
+   00024:     catalogRoot: "Catalog root",
+   00025:     eventCatalogRoot: "Event catalog root",
+   00026:     nativeSfincsRoot: "Native SFINCS root",
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js`
+
+Hits: **1**
+
+#### Hit 1/1 — line 4 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";`
+
+Current line:
+
+```text
+const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";
+```
+
+Simple root replacement would become:
+
+```text
+const DEFAULT_DATA_ROOT = "/users/e/p/epsilon/Data/Data/harris_county";
+```
+
+Excerpt:
+
+```text
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+>> 00004:   const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";
+   00005: 
+   00006:   function getConfigPathBrowseSettings() {
+   00007:     return window.CONFIG_PATH_BROWSE_SETTINGS || {};
+   00008:   }
+   00009: 
+   00010:   function firstNonEmptyValueForKey(key) {
+   00011:     const el = document.querySelector(`[data-key="${key}"]`);
+   00012:     if (!el) return "";
+   00013: 
+   00014:     const raw = String(el.value || "").trim();
+   00015:     if (!raw) return "";
+   00016: 
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js`
+
+Hits: **1**
+
+#### Hit 1/1 — line 1955 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Scope: `const cfg = pickConfigSource(state.review || {});`
+
+Current line:
+
+```text
+"/proj/zefflab/projects/Flooding/Data/harris_county"
+```
+
+Simple root replacement would become:
+
+```text
+"/users/e/p/epsilon/Data/Data/harris_county"
+```
+
+Excerpt:
+
+```text
+   01943:     const cfg = pickConfigSource(state.review || {});
+   01944:     return cleanObsId(
+   01945:       cfg.event_name ||
+   01946:       (state.review && state.review.event_name) ||
+   01947:       ""
+   01948:     );
+   01949:   }
+   01950:   
+   01951:   function configuredDataRoot() {
+   01952:     const cfg = pickConfigSource(state.review || {});
+   01953:     return cleanObsId(
+   01954:       cfg.data_root ||
+>> 01955:       "/proj/zefflab/projects/Flooding/Data/harris_county"
+   01956:     );
+   01957:   }
+   01958:   
+   01959:   function inferEventCatalogRootFromPath(pathText) {
+   01960:     const text = String(pathText || "").trim();
+   01961:     const marker = "/catalogs/events/";
+   01962:     const idx = text.indexOf(marker);
+   01963:   
+   01964:     if (idx < 0) return "";
+   01965:   
+   01966:     const after = text.slice(idx + marker.length);
+   01967:     const eventName = after.split("/")[0];
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/code/config_schema.py`
+
+Hits: **2**
+
+#### Hit 1/2 — line 39 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Current line:
+
+```text
+DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county"
+```
+
+Simple root replacement would become:
+
+```text
+DEFAULT_DATA_ROOT = "/users/e/p/epsilon/Data/Data/harris_county"
+```
+
+Excerpt:
+
+```text
+   00027:     "hydromt_build",
+   00028:     "native_sfincs_assembly",
+   00029:     "hybrid",
+   00030: }
+   00031: 
+   00032: VALID_DEPENDENCY_TYPES = {"afterok"}
+   00033: 
+   00034: SFINCS_CONTAINER_FILENAME = "sfincs-v2.3.0-mt-Faber-Release.sif"
+   00035: 
+   00036: FALLBACK_CONDA_PYTHON = "/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python"
+   00037: FALLBACK_CONDA_ENV_PATH = "/users/e/p/epsilon/sfincs_project/envs/sfincs"
+   00038: 
+>> 00039: DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county"
+   00040: DEFAULT_OUTPUT_ROOT = "/proj/zefflab/projects/Flooding/sfincs_runs"
+   00041: DEFAULT_STATIC_PPP_DIR = (
+   00042:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp"
+   00043: )
+   00044: 
+   00045: # Hybrid catalogs are now path-driven.
+   00046: #
+   00047: # Older reduced-event runs used fixed filenames like:
+   00048: #   event_precip/aorc_precip_event.nc
+   00049: #   event_waterlevel/selected_bzs_waterlevel_reduced.csv
+   00050: #   event_runtime_window/event_runtime_window.csv
+   00051: #
+```
+
+#### Hit 2/2 — line 42 — `LIKELY_DEFAULT_OR_BROWSE`
+
+Current line:
+
+```text
+"/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp"
+```
+
+Simple root replacement would become:
+
+```text
+"/users/e/p/epsilon/Data/Data/harris_county/catalogs/static/harris_county_ppp"
+```
+
+Excerpt:
+
+```text
+   00030: }
+   00031: 
+   00032: VALID_DEPENDENCY_TYPES = {"afterok"}
+   00033: 
+   00034: SFINCS_CONTAINER_FILENAME = "sfincs-v2.3.0-mt-Faber-Release.sif"
+   00035: 
+   00036: FALLBACK_CONDA_PYTHON = "/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python"
+   00037: FALLBACK_CONDA_ENV_PATH = "/users/e/p/epsilon/sfincs_project/envs/sfincs"
+   00038: 
+   00039: DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county"
+   00040: DEFAULT_OUTPUT_ROOT = "/proj/zefflab/projects/Flooding/sfincs_runs"
+   00041: DEFAULT_STATIC_PPP_DIR = (
+>> 00042:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county_ppp"
+   00043: )
+   00044: 
+   00045: # Hybrid catalogs are now path-driven.
+   00046: #
+   00047: # Older reduced-event runs used fixed filenames like:
+   00048: #   event_precip/aorc_precip_event.nc
+   00049: #   event_waterlevel/selected_bzs_waterlevel_reduced.csv
+   00050: #   event_runtime_window/event_runtime_window.csv
+   00051: #
+   00052: # Current event catalogs may use event-specific FINAL_FOR_NOW products, selected
+   00053: # through explicit config paths such as rainfall_path, waterlevel_path, wind_path,
+   00054: # and pressure_path. Do not enforce old fixed filenames here.
+```
+
+
+---
+
+## B. Settings / path-root / browse-root chunks — focused for ChatGPT review
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html`
+
+Settings chunks: **15**  
+Matched settings-ish lines: **119**
+
+#### Settings chunk 1/15 — lines 758-1099 — matches=42
+
+Scope: `<button class="step-tab active" data-step="step-overrides" type="button">1 Detect + overrides</button>`
+
+```text
+   00758:       <div class="status-box" aria-label="Override mode summary">
+   00759:         <div class="status-row"><span>Config format</span><span>normal JSON</span></div>
+   00760:         <div class="status-row"><span>Maintainer</span><span>Reichen Schaller</span></div>
+   00761:         <div class="status-row"><span>Version</span><span>v1.1 (5/28/26)</span></div>
+   00762:       </div>
+   00763:     </div>
+   00764:   </header>
+   00765: 
+   00766:   <main>
+   00767:     <div class="top-actions">
+   00768:       <div class="left-actions">
+   00769:         <a class="back-link" href="index.html">← Back to main menu</a>
+   00770:         <button class="secondary" type="button" id="check-button-top">Run page checks</button>
+   00771:       </div>
+   00772:       <div class="right-actions">
+   00773:         <button class="secondary" type="button" data-new-run-button>
+   00774:           New run / wipe page
+   00775:         </button>
+   00776:         <button class="primary" type="button" id="save-config-button">Save config</button>
+   00777:         <label class="file-label" for="load-config-input">Load config</label>
+   00778:         <input id="load-config-input" type="file" accept=".json,application/json" />
+   00779:       </div>
+   00780:      </div>
+   00781: 
+   00782:     <div class="layout">
+   00783:       <section>
+   00784:         <div class="step-strip-wrap">
+   00785:           <nav class="step-strip" aria-label="Override workflow steps">
+>> 00786:             <button class="step-tab active" data-step="step-overrides" type="button">1 Detect + overrides</button>
+>> 00787:             <button class="step-tab" data-step="step-manual" type="button">2 Stripped manual config</button>
+>> 00788:             <button class="step-tab" data-step="step-check" type="button">3 Review checks</button>
+>> 00789:             <button class="step-tab submit-tab" data-step="step-submit" type="button">4 Submit</button>
+   00790:           </nav>
+   00791:         </div>
+   00792: 
+   00793:         <!-- STEP 1: DETECT + OVERRIDES START -->
+   00794:         <div class="panel step-panel active" id="step-overrides">
+   00795:           <h2>1. Detect source files and confirm overrides</h2>
+   00796:           <p class="section-intro">Enter the source folder containing already-processed SFINCS inputs. Detection checks for known SFINCS filenames and flips matching override switches green. Files not recognized here are not treated as SFINCS-readable override inputs.</p>
+   00797: 
+   00798:         <div class="source-box">
+   00799:           <div style="grid-column: 1 / -1;">
+   00800:             <label for="source-path">Sources</label>
+   00801:         
+   00802:             <div id="source-list">
+   00803:               <div class="source-row">
+   00804:                 <input id="source-path"
+   00805:                        class="source-path-input"
+   00806:                        value=""
+   00807:                        placeholder="/path/to/folder/with/sfincs/files" />
+   00808:         
+   00809:                 <button class="secondary" type="button"
+   00810:                         data-browse-target="source-path"
+   00811:                         data-browse-mode="directory"
+   00812:                         data-browse-default-key="overrideSourceRoot"
+   00813:                         data-browse-start="/proj/zefflab/projects/Flooding">
+   00814:                   Browse
+   00815:                 </button>
+   00816:               </div>
+   00817:             </div>
+   00818:         
+   00819:             <p class="field-note">
+   00820:               Add one or more folders. For example, use one static SFINCS folder and one event folder, then click Detect all.
+   00821:             </p>
+   00822:         
+   00823:             <div class="button-row">
+   00824:               <button class="secondary" type="button" id="add-source-button">+ Add source</button>
+   00825:               <button class="primary" type="button" id="detect-button-main">Detect all</button>
+   00826:               <button class="secondary" type="button" id="all-off-button">Turn all off</button>
+   00827:               <button class="secondary" type="button" id="detected-on-button">Reapply detected</button>
+   00828:             </div>
+   00829:           </div>
+   00830:         </div>
+   00831:         
+   00832:         <div id="override-sections"></div>
+   00833:         
+   00834:         <div class="button-row">
+   00835:           <button class="primary" type="button" id="confirm-overrides-button">
+   00836:             Confirm overrides → stripped manual config
+   00837:           </button>
+   00838:         </div> 
+   00839:         
+   00840:         </div> 
+   00841:         <!-- STEP 1: DETECT + OVERRIDES END -->
+   00842: 
+   00843:         <!-- STEP 2: STRIPPED MANUAL CONFIG START -->
+   00844:         <div class="panel step-panel" id="step-manual">
+   00845:           <h2>2. Stripped manual config</h2>
+   00846:           
+   00847: 
+>> 00848:           <div id="hidden-tabs-note" class="hidden-tabs-note">No manual tabs are hidden yet. Confirm overrides to update this section.</div><p class="section-intro">This keeps the same style as Manual Mode. Source/path rows can grey out when selected override files already provide that product. Master toggles such as use_infiltration, use_wind, and use_pressure stay editable so you can still decide whether those products are active.</p>
+   00849: 
+>> 00850:           <div class="manual-tab-strip-wrap">
+>> 00851:             <nav class="manual-tab-strip" aria-label="Override-aware manual configuration tabs">
+>> 00852:               <button class="manual-tab active" data-manual-tab="manual-0" type="button">0 Run identity</button>
+>> 00853:               <button class="manual-tab" data-manual-tab="manual-1" type="button">1 Pipeline</button>
+>> 00854:               <button class="manual-tab" data-manual-tab="manual-2" type="button">2 Slurm general</button>
+>> 00855:               <button class="manual-tab" data-manual-tab="manual-3" type="button">3 Stage resources</button>
+>> 00856:               <button class="manual-tab" data-manual-tab="manual-4" type="button">4 Data catalogs</button>
+>> 00857:               <button class="manual-tab" data-manual-tab="manual-5" type="button">5 Required inputs</button>
+>> 00858:               <button class="manual-tab" data-manual-tab="manual-6" type="button">6 Optional inputs</button>
+>> 00859:               <button class="manual-tab" data-manual-tab="manual-7" type="button">7 Model settings</button>
+>> 00860:               <button class="manual-tab" data-manual-tab="manual-8" type="button">8 Elevation/mask</button>
+>> 00861:               <button class="manual-tab" data-manual-tab="manual-9" type="button">9 Roughness</button>
+>> 00862:               <button class="manual-tab" data-manual-tab="manual-10" type="button">10 Subgrid</button>
+>> 00863:               <button class="manual-tab" data-manual-tab="manual-11" type="button">11 Forcing</button>
+>> 00864:               <button class="manual-tab" data-manual-tab="manual-12" type="button">12 Infiltration</button>
+>> 00865:               <button class="manual-tab" data-manual-tab="manual-13" type="button">13 Output</button>
+>> 00866:               <button class="manual-tab" data-manual-tab="manual-14" type="button">14 Advanced</button>
+>> 00867:               <button class="manual-tab" data-manual-tab="manual-15" type="button">15 Postprocess</button>
+>> 00868:               <button class="manual-tab" data-manual-tab="manual-16" type="button">16 Safety/debug</button>
+>> 00869:               <button class="manual-tab" data-manual-tab="manual-17" type="button">17 Backend paths</button>
+   00870:             </nav>
+   00871:           </div>
+   00872: 
+   00873:           <div class="manual-panel active" id="manual-0">
+   00874:             <h2>0. Run identity / output locations</h2>
+>> 00875:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   00876:               <tr><td>event_name</td><td><input data-key="event_name" data-type="string" value="harvey_2017"></td><td>Convenience label. If edited, run_name updates to event_name + run_series.</td></tr>
+   00877: 
+   00878:               <tr><td>run_series</td><td><input data-key="run_series" data-type="string" value="override_001"></td><td>Convenience label for repeat experiments. If edited, run_name updates to event_name + run_series.</td></tr>
+   00879: 
+   00880:               <tr><td>run_name</td><td><input data-key="run_name" data-type="string" value="harvey_2017_override_001"></td><td>If left untouched, this is event_name + run_series. If you edit run_name directly, it becomes the full run folder name until event_name or run_series is edited again.</td></tr>
+>> 00881:               <tr><td>project_root</td><td><input data-key="project_root" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline"></td><td>Shared pipeline root.</td></tr>
+>> 00882:               <tr><td>output_root</td><td><input data-key="output_root" data-type="string" value="/proj/zefflab/projects/Flooding/sfincs_runs"></td><td>Root where the backend will create the run folder.</td></tr>
+   00883:               <tr><td>overwrite_existing_run</td><td><select data-key="overwrite_existing_run" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Keep false unless intentionally replacing a run.</td></tr>
+   00884:               <tr><td>run_description</td><td><input data-key="run_description" data-type="string" value="Override-mode SFINCS run."></td><td>Short description.</td></tr>
+   00885:               <tr><td>run_tags</td><td><textarea class="short-textarea" data-key="run_tags" data-type="json">["override", "sfincs"]</textarea></td><td>JSON list of tags.</td></tr>
+   00886:             </tbody></table>
+   00887:           </div>
+   00888: 
+   00889:           <div class="manual-panel" id="manual-1">
+   00890:             <h2>1. Pipeline control</h2>
+>> 00891:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   00892:               <tr><td>run_preprocessing_job</td><td><select data-key="run_preprocessing_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 1.</td></tr>
+   00893:               <tr><td>run_sfincs_job</td><td><select data-key="run_sfincs_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 2.</td></tr>
+   00894:               <tr><td>run_postprocessing_job</td><td><select data-key="run_postprocessing_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 3.</td></tr>
+   00895:               <tr><td>submit_with_dependencies</td><td><select data-key="submit_with_dependencies" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Usually true.</td></tr>
+   00896:               <tr><td>dependency_type</td><td><select data-key="dependency_type" data-type="string"><option selected>afterok</option></select></td><td>Supported dependency style.</td></tr>
+   00897:             </tbody></table>
+   00898:           </div>
+   00899: 
+   00900:           <div class="manual-panel" id="manual-2">
+>> 00901:             <h2>2. Slurm general settings</h2>
+>> 00902:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   00903:               <tr><td>slurm_account</td><td><input data-key="slurm_account" data-type="nullable" value=""></td><td>Leave blank unless needed.</td></tr>
+   00904:               <tr><td>slurm_partition</td><td><input data-key="slurm_partition" data-type="nullable" value=""></td><td>Leave blank for default partition.</td></tr>
+   00905:               <tr><td>slurm_qos</td><td><input data-key="slurm_qos" data-type="nullable" value=""></td><td>Leave blank unless needed.</td></tr>
+   00906:               <tr><td>slurm_email</td><td><input data-key="slurm_email" data-type="nullable" value=""></td><td>Optional email notifications.</td></tr>
+   00907:               <tr><td>slurm_mail_type</td><td><input data-key="slurm_mail_type" data-type="string" value="END,FAIL"></td><td>Used only if slurm_email is set.</td></tr>
+   00908:               <tr><td>slurm_extra_directives</td><td><textarea class="short-textarea" data-key="slurm_extra_directives" data-type="json">[]</textarea></td><td>JSON list of extra #SBATCH lines.</td></tr>
+   00909:               <tr><td>bash_strict_mode</td><td><select data-key="bash_strict_mode" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Usually true.</td></tr>
+   00910:             </tbody></table>
+   00911:           </div>
+   00912: 
+   00913:           <div class="manual-panel" id="manual-3">
+   00914:             <h2>3. Slurm resources by stage</h2>
+>> 00915:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   00916:               <tr><td>preprocess_time</td><td><input data-key="preprocess_time" data-type="string" value="01:00:00"></td><td>Native assembly preprocessing is usually light.</td></tr>
+   00917:               <tr><td>preprocess_nodes</td><td><input data-key="preprocess_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00918:               <tr><td>preprocess_ntasks</td><td><input data-key="preprocess_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00919:               <tr><td>preprocess_cpus_per_task</td><td><input data-key="preprocess_cpus_per_task" data-type="int" value="2"></td><td>CPUs for native assembly.</td></tr>
+   00920:               <tr><td>preprocess_mem</td><td><input data-key="preprocess_mem" data-type="string" value="8G"></td><td>Memory request.</td></tr>
+   00921:               <tr><td>sfincs_time</td><td><input data-key="sfincs_time" data-type="string" value="04:00:00"></td><td>Solver wall time.</td></tr>
+   00922:               <tr><td>sfincs_nodes</td><td><input data-key="sfincs_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00923:               <tr><td>sfincs_ntasks</td><td><input data-key="sfincs_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00924:               <tr><td>sfincs_cpus_per_task</td><td><input data-key="sfincs_cpus_per_task" data-type="int" value="16"></td><td>OpenMP threads.</td></tr>
+   00925:               <tr><td>sfincs_mem</td><td><input data-key="sfincs_mem" data-type="string" value="16G"></td><td>Solver memory request.</td></tr>
+   00926:               <tr><td>postprocess_time</td><td><input data-key="postprocess_time" data-type="string" value="01:00:00"></td><td>Postprocessing wall time.</td></tr>
+   00927:               <tr><td>postprocess_nodes</td><td><input data-key="postprocess_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00928:               <tr><td>postprocess_ntasks</td><td><input data-key="postprocess_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00929:               <tr><td>postprocess_cpus_per_task</td><td><input data-key="postprocess_cpus_per_task" data-type="int" value="2"></td><td>Postprocess CPUs.</td></tr>
+   00930:               <tr><td>postprocess_mem</td><td><input data-key="postprocess_mem" data-type="string" value="24G"></td><td>Postprocess memory request.</td></tr>
+   00931:               <tr><td>sfincs_use_openmp_threads</td><td><select data-key="sfincs_use_openmp_threads" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Usually true.</td></tr>
+   00932:               <tr><td>sfincs_omp_proc_bind</td><td><input data-key="sfincs_omp_proc_bind" data-type="string" value="true"></td><td>OpenMP binding.</td></tr>
+   00933:               <tr><td>sfincs_omp_places</td><td><input data-key="sfincs_omp_places" data-type="string" value="cores"></td><td>OpenMP places.</td></tr>
+   00934:             </tbody></table>
+   00935:           </div>
+   00936: 
+   00937:             <div class="manual-panel" id="manual-4">
+   00938:               <h2>4. Data / event catalogs</h2>
+   00939:               <p class="section-intro">
+   00940:                 Add one or more data/event catalog folders here. If this field is blank, Override Mode uses
+   00941:                 pure native SFINCS assembly from the detected override files. If this field is filled, the launcher
+   00942:                 switches to hybrid mode, using native override files plus selected catalog/event products.
+   00943:               </p>
+   00944: 
+>> 00945:               <table class="config-table">
+   00946:                 <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00947:                 <tbody>
+   00948:                   <tr>
+   00949:                     <td>data_catalogs</td>
+   00950:                     <td>
+   00951:                       <textarea
+   00952:                         class="short-textarea catalog-path-textarea"
+   00953:                         data-key="data_catalogs"
+   00954:                         data-type="string"
+>> 00955:                         placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00956:                         style="min-height: 118px;"
+   00957:                       ></textarea>
+   00958: 
+   00959:                       <div
+   00960:                         style="
+   00961:                           display: grid;
+   00962:                           grid-template-columns: minmax(340px, 460px) auto auto;
+   00963:                           gap: 8px;
+   00964:                           align-items: center;
+   00965:                           margin-top: 10px;
+   00966:                         "
+   00967:                       >
+   00968:                         <input
+   00969:                           id="override-catalog-add-input"
+   00970:                           type="text"
+>> 00971:                           placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events/harvey_2017_mrms"
+   00972:                           style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00973:                         >
+   00974: 
+   00975:                         <button
+   00976:                           type="button"
+   00977:                           class="secondary"
+   00978:                           data-browse-target="override-catalog-add-input"
+   00979:                           data-browse-mode="directory"
+   00980:                           data-browse-default-key="catalogRoot"
+   00981:                           data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00982:                         >
+   00983:                           Browse
+   00984:                         </button>
+   00985: 
+   00986:                         <button
+   00987:                           type="button"
+   00988:                           class="primary"
+   00989:                           onclick="overrideAddCatalogFromInput()"
+   00990:                         >
+   00991:                           Add catalog
+   00992:                         </button>
+   00993:                       </div>
+   00994: 
+   00995:                       <div class="button-row" style="margin-top: 10px;">
+   00996:                         <button type="button" class="secondary" onclick="overrideRenderCatalogList()">Refresh selected list</button>
+   00997:                         <button type="button" class="secondary" onclick="overrideDetectDataCatalogs(false)">Detect contents</button>
+   00998:                         <button type="button" class="primary" onclick="overrideDetectDataCatalogs(true)">Apply event catalog suggestions</button>
+   00999:                       </div>
+   01000: 
+   01001:                       <div
+   01002:                         id="override-catalog-list"
+   01003:                         class="path-preview"
+   01004:                         style="margin-top: 10px; min-height: 82px;"
+   01005:                       ></div>
+   01006:                       <div id="override-catalog-detection-output" class="checks-list" style="margin-top: 10px;"></div>
+   01007:                     </td>
+   01008:                     <td>
+   01009:                       One plain path, newline-separated paths, comma-separated paths, or a JSON list is accepted.
+   01010:                       In Override Mode, detected catalog suggestions are applied only to event/hybrid fields, not native static-file authority.
+   01011:                     </td>
+   01012:                   </tr>
+   01013:                 </tbody>
+   01014:               </table>
+   01015:             </div>
+   01016: 
+   01017:           <div class="manual-panel" id="manual-5" data-hide-when="geometry">
+   01018:             <h2>5. Required input data</h2>
+>> 01019:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01020:               <tr data-lock="gridTemplate"><td>region_mode</td><td><select data-key="region_mode" data-type="string"><option selected>geom</option><option>bbox</option></select></td><td>Locked if a raster grid template defines model geometry.</td></tr>
+   01021:               <tr data-lock="gridTemplate"><td>region_path</td><td><input data-key="region_path" data-type="nullable" value=""></td><td>Region geometry path. Locked if grid_template_path defines the grid.</td></tr>
+   01022:               <tr data-lock="gridTemplate"><td>region_bbox</td><td><textarea class="short-textarea" data-key="region_bbox" data-type="nullable_json"></textarea></td><td>Optional bbox JSON. Locked if grid_template_path defines the grid.</td></tr>
+   01023:               <tr data-lock="topobathy"><td>dem_paths</td><td><textarea class="short-textarea" data-key="dem_paths" data-type="json">[]</textarea></td><td>Locked if depth/topobathy is supplied by native files.</td></tr>
+   01024:               <tr data-lock="topobathy"><td>hydromt_dem_sources</td><td><textarea data-key="hydromt_dem_sources" data-type="json">[]</textarea></td><td>Locked if depth/topobathy is supplied by native files.</td></tr>
+   01025:             </tbody></table>
+   01026:           </div>
+   01027: 
+   01028:           <div class="manual-panel" id="manual-6" data-hide-when="optionalInputs">
+   01029:             <h2>6. Optional / additional input data</h2>
+>> 01030:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01031:               <tr data-lock="topobathy"><td>bathy_paths</td><td><textarea class="short-textarea" data-key="bathy_paths" data-type="json">[]</textarea></td><td>Locked if topobathy is supplied by native files.</td></tr>
+   01032:               <tr data-lock="roughness"><td>landcover_path</td><td><input data-key="landcover_path" data-type="nullable" value=""></td><td>Locked if roughness is supplied by native files.</td></tr>
+   01033:               <tr data-lock="roughness"><td>landcover_source</td><td><input data-key="landcover_source" data-type="string" value=""></td><td>Landcover source.</td></tr>
+   01034:               <tr data-lock="eventForcing"><td>rainfall_path</td><td><input data-key="rainfall_path" data-type="nullable" value=""></td><td>Locked if rainfall files are overridden.</td></tr>
+   01035:               <tr data-lock="eventForcing"><td>waterlevel_path</td><td><input data-key="waterlevel_path" data-type="nullable" value=""></td><td>Locked if water-level series are overridden.</td></tr>
+   01036:               <tr data-lock="eventForcing"><td>discharge_source</td><td><input data-key="discharge_source" data-type="string" value=""></td><td>Locked if discharge files are overridden.</td></tr>
+   01037:               <tr data-lock="obsPoints"><td>obs_points_path</td><td><input data-key="obs_points_path" data-type="nullable" value=""></td><td>Locked if sfincs.obs is overridden.</td></tr>
+   01038:               <tr data-lock="obsLines"><td>obs_lines_path</td><td><input data-key="obs_lines_path" data-type="nullable" value=""></td><td>Locked if sfincs.crs is overridden.</td></tr>
+   01039:               <tr data-lock="thinDam"><td>thin_dam_path</td><td><input data-key="thin_dam_path" data-type="nullable" value=""></td><td>Locked if sfincs.thd is overridden.</td></tr>
+   01040:               <tr data-lock="weir"><td>weir_path</td><td><input data-key="weir_path" data-type="nullable" value=""></td><td>Locked if sfincs.weir is overridden.</td></tr>
+   01041:               <tr data-lock="drainage"><td>drainage_structure_path</td><td><input data-key="drainage_structure_path" data-type="nullable" value=""></td><td>Locked if sfincs.drn is overridden.</td></tr>
+   01042:             </tbody></table>
+   01043:           </div>
+   01044: 
+>> 01045:           <div class="manual-panel" id="manual-7" data-hide-when="modelSettings">
+>> 01046:             <h2>7. Normal model settings</h2>
+>> 01047:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01048:               <tr data-lock="gridTemplate"><td>grid_resolution_m</td><td><input data-key="grid_resolution_m" data-type="float" value="100"></td><td>Locked if a grid template is selected.</td></tr>
+   01049:               <tr data-lock="gridTemplate"><td>grid_source</td><td><select data-key="grid_source" data-type="string"><option value="region" selected>region</option><option value="raster_template">raster_template</option></select></td><td>region uses region_path + dx/dy/CRS. raster_template uses grid_template_path as Override grid authority.</td></tr>
+   01050:               <tr data-lock="gridTemplate"><td>grid_template_path</td><td><input data-key="grid_template_path" data-type="nullable" value=""></td><td>Optional Override-only grid template. If set with grid_source=raster_template, this raster defines grid geometry.</td></tr>
+   01051:               <tr data-lock="gridTemplate"><td>grid_template_mode</td><td><select data-key="grid_template_mode" data-type="string"><option value="raster_template" selected>raster_template</option></select></td><td>Current supported behavior: use the raster as grid-template authority in Override workflows.</td></tr>
+   01052:               <tr data-lock="gridTemplate"><td>grid_template_use_as_active_mask</td><td><select data-key="grid_template_use_as_active_mask" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>If true, also use grid_template_path as active_mask_path unless a separate active_mask_path is set.</td></tr>
+   01053:               <tr data-lock="gridTemplate"><td>grid_dx_m</td><td><input data-key="grid_dx_m" data-type="float" value="100"></td><td>Locked if a grid template is selected.</td></tr>
+   01054:               <tr data-lock="gridTemplate"><td>grid_dy_m</td><td><input data-key="grid_dy_m" data-type="float" value="100"></td><td>Locked if a grid template is selected.</td></tr>
+   01055:               <tr data-lock="gridTemplate"><td>grid_crs</td><td><input data-key="grid_crs" data-type="string" value="utm"></td><td>Locked if a grid template is selected.</td></tr>
+   01056:               <tr data-lock="eventForcing"><td>use_rainfall</td><td><select data-key="use_rainfall" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if rainfall is overridden.</td></tr>
+   01057:               <tr data-lock="eventForcing"><td>use_waterlevel_boundary</td><td><select data-key="use_waterlevel_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if water levels are overridden.</td></tr>
+   01058:               <tr data-lock="eventForcing"><td>use_discharge_boundary</td><td><select data-key="use_discharge_boundary" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Locked if discharge is overridden.</td></tr>
+   01059:               <tr><td>use_infiltration</td><td><select data-key="use_infiltration" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Master toggle for writing/using infiltration inputs. This stays editable even when native infiltration files are selected.</td></tr>
+   01060:               <tr data-lock="obsPoints"><td>use_obs_points</td><td><select data-key="use_obs_points" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use observation-point validation/output locations. Locked if sfincs.obs is overridden.</td></tr>
+   01061:               <tr data-lock="obsLines"><td>use_obs_lines</td><td><select data-key="use_obs_lines" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use observation/cross-section line validation/output locations. Locked if sfincs.crs is overridden.</td></tr>
+   01062:               <tr data-lock="structures"><td>use_structures</td><td><select data-key="use_structures" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if structure files are overridden.</td></tr>
+   01063:               <tr data-lock="sfincsInp"><td>tref</td><td><input data-key="tref" data-type="string" value=""></td><td>Reference time.</td></tr>
+   01064:               <tr data-lock="sfincsInp"><td>tstart</td><td><input data-key="tstart" data-type="string" value=""></td><td>Start time.</td></tr>
+   01065:               <tr data-lock="sfincsInp"><td>tstop</td><td><input data-key="tstop" data-type="string" value=""></td><td>Stop time.</td></tr>
+   01066:             </tbody></table>
+   01067:           </div>
+   01068: 
+   01069:           <div class="manual-panel" id="manual-8" data-hide-when="elevationMask">
+>> 01070:             <h2>8. Elevation / mask / boundary settings</h2>
+>> 01071:             <table class="config-table override-mask-table">
+   01072:               <thead>
+   01073:                 <tr><th>Setting</th><th>Value</th><th>Notes</th></tr>
+   01074:               </thead>
+   01075:               <tbody>
+   01076:                 <tr data-lock="topobathy">
+   01077:                   <td>dem_zmin</td>
+   01078:                   <td><input data-key="dem_zmin" data-type="float" value="-50.0"></td>
+   01079:                   <td>DEM lower cutoff.</td>
+   01080:                 </tr>
+   01081: 
+   01082:                 <tr data-lock="activeMask">
+   01083:                   <td>active_zmin</td>
+   01084:                   <td><input data-key="active_zmin" data-type="float" value="-50.0"></td>
+   01085:                   <td>Active-cell cutoff.</td>
+   01086:                 </tr>
+   01087: 
+   01088:                 <tr data-lock="activeMask">
+   01089:                   <td>active_mask_path</td>
+   01090:                   <td><input data-key="active_mask_path" data-type="nullable" value=""></td>
+   01091:                   <td>Optional active-area gate.</td>
+   01092:                 </tr>
+   01093: 
+   01094:                 <tr data-lock="activeMask">
+   01095:                   <td>active_mask_mode</td>
+   01096:                   <td>
+   01097:                     <select data-key="active_mask_mode" data-type="string">
+   01098:                       <option value="sample_to_grid" selected>sample_to_grid</option>
+   01099:                     </select>
+```
+
+#### Settings chunk 2/15 — lines 1126-1262 — matches=12
+
+Scope: `<table class="config-table override-mask-table">`
+
+```text
+   01126:                       <option value="true" selected>true</option>
+   01127:                       <option value="false">false</option>
+   01128:                     </select>
+   01129:                   </td>
+   01130:                   <td>Rebuild WL boundary.</td>
+   01131:                 </tr>
+   01132: 
+   01133:                 <tr data-lock="nativeMask">
+   01134:                   <td>stamp_waterlevel_boundary_on_mask</td>
+   01135:                   <td>
+   01136:                     <select data-key="stamp_waterlevel_boundary_on_mask" data-type="bool">
+   01137:                       <option value="true" selected>true</option>
+   01138:                       <option value="false">false</option>
+   01139:                     </select>
+   01140:                   </td>
+   01141:                   <td>Stamp BND cells as open.</td>
+   01142:                 </tr>
+   01143: 
+   01144:                 <tr data-lock="nativeMask">
+   01145:                   <td>waterlevel_boundary_stamp_search_radius_cells</td>
+   01146:                   <td><input data-key="waterlevel_boundary_stamp_search_radius_cells" data-type="int" value="3"></td>
+   01147:                   <td>Nearby-cell fallback.</td>
+   01148:                 </tr>
+   01149:               </tbody>
+   01150:             </table>
+   01151:           </div>
+   01152: 
+   01153:           <div class="manual-panel" id="manual-9" data-hide-when="roughness">
+>> 01154:             <h2>9. Roughness settings</h2>
+>> 01155:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01156:               <tr data-lock="roughness"><td>manning_uniform</td><td><input data-key="manning_uniform" data-type="float" value="0.04"></td><td>Locked if sfincs.manning is overridden.</td></tr>
+   01157:               <tr data-lock="roughness"><td>manning_land</td><td><input data-key="manning_land" data-type="float" value="0.04"></td><td>Locked if spatial roughness is overridden.</td></tr>
+   01158:               <tr data-lock="roughness"><td>manning_sea</td><td><input data-key="manning_sea" data-type="float" value="0.02"></td><td>Locked if spatial roughness is overridden.</td></tr>
+   01159:               <tr data-lock="roughness"><td>use_landcover_roughness_if_available</td><td><select data-key="use_landcover_roughness_if_available" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if spatial roughness is overridden.</td></tr>
+   01160:             </tbody></table>
+   01161:           </div>
+   01162: 
+   01163:           <div class="manual-panel" id="manual-10" data-hide-when="subgrid">
+>> 01164:             <h2>10. Subgrid settings</h2>
+>> 01165:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01166:               <tr data-lock="subgrid"><td>use_subgrid</td><td><select data-key="use_subgrid" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if sfincs.sbg is overridden.</td></tr>
+   01167:               <tr data-lock="subgrid"><td>subgrid_nr_pixels</td><td><input data-key="subgrid_nr_pixels" data-type="int" value="6"></td><td>Locked if pre-made subgrid is overridden.</td></tr>
+   01168:               <tr data-lock="subgrid"><td>subgrid_write_dep_tif</td><td><select data-key="subgrid_write_dep_tif" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if subgrid is overridden.</td></tr>
+   01169:               <tr data-lock="subgrid"><td>subgrid_write_man_tif</td><td><select data-key="subgrid_write_man_tif" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Locked if subgrid is overridden.</td></tr>
+   01170:             </tbody></table>
+   01171:           </div>
+   01172: 
+   01173:           <div class="manual-panel" id="manual-11" data-hide-when="eventForcingFull">
+>> 01174:             <h2>11. Forcing settings</h2>
+>> 01175:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01176:               <tr data-lock="rainfall"><td>rainfall_kind</td><td><select data-key="rainfall_kind" data-type="string"><option selected>spatial</option><option>uniform</option><option>event_catalog_aorc</option></select></td><td>Locked if rainfall file is overridden.</td></tr>
+   01177:               <tr data-lock="rainfall"><td>rainfall_uniform_mm_hr</td><td><input data-key="rainfall_uniform_mm_hr" data-type="nullable_float" value=""></td><td>Locked if rainfall file is overridden.</td></tr>
+   01178:               <tr data-lock="waterlevel"><td>waterlevel_source_kind</td><td><select data-key="waterlevel_source_kind" data-type="string"><option selected>geodataset</option><option>csv</option><option>event_catalog_csv</option><option>native_sfincs</option></select></td><td>Locked if sfincs.bzs is overridden.</td></tr>
+   01179:               <tr data-lock="discharge"><td>discharge_source_kind</td><td><select data-key="discharge_source_kind" data-type="string"><option selected>geodataset</option><option>csv</option><option>event_catalog_csv</option><option>native_sfincs</option></select></td><td>Locked if sfincs.dis is overridden.</td></tr>
+   01180:               <tr data-lock="discharge"><td>discharge_points_csv_path</td><td><input data-key="discharge_points_csv_path" data-type="nullable" value=""></td><td>Locked if discharge native files are overridden.</td></tr>
+   01181:               <tr data-lock="discharge"><td>discharge_timeseries_csv_path</td><td><input data-key="discharge_timeseries_csv_path" data-type="nullable" value=""></td><td>Locked if discharge native files are overridden.</td></tr>
+   01182:               <tr><td>use_wind</td><td><select data-key="use_wind" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Master toggle for wind forcing. Leave false unless the selected event catalog or manual input provides wind.</td></tr>
+   01183:               <tr><td>use_pressure</td><td><select data-key="use_pressure" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Master toggle for pressure forcing. Leave false unless the selected event catalog or manual input provides pressure.</td></tr>
+   01184:               <tr data-lock="meteo"><td>wind_path</td><td><input data-key="wind_path" data-type="nullable" value=""></td><td>Locked if wind files are overridden.</td></tr>
+   01185:               <tr data-lock="meteo"><td>pressure_path</td><td><input data-key="pressure_path" data-type="nullable" value=""></td><td>Locked if pressure files are overridden.</td></tr>
+   01186:             </tbody></table>
+   01187:           </div>
+   01188: 
+   01189:           <div class="manual-panel" id="manual-12" data-hide-when="infiltration">
+>> 01190:             <h2>12. Infiltration settings</h2>
+>> 01191:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01192:               <tr data-lock="infiltration"><td>infiltration_mode</td><td><select data-key="infiltration_mode" data-type="string"><option selected>none</option><option>constant</option><option>spatial_constant</option><option>curve_number</option><option>curve_number_with_ks</option><option>native_sfincs</option></select></td><td>Locked if native infiltration files are overridden.</td></tr>
+   01193:               <tr data-lock="infiltration"><td>qinf_mm_hr</td><td><input data-key="qinf_mm_hr" data-type="float" value="0.0"></td><td>Constant infiltration rate if using scalar constant infiltration.</td></tr>
+   01194:               <tr data-lock="infiltration"><td>curve_number_path</td><td><input data-key="curve_number_path" data-type="nullable" value=""></td><td>HydroMT/Curve Number source path when building infiltration.</td></tr>
+   01195:             
+   01196:               <tr data-lock="infiltration"><td>qinf_path</td><td><input data-key="qinf_path" data-type="nullable" value=""></td><td>Manual SFINCS qinf file. Copies to sfincs.qinf and writes qinffile.</td></tr>
+   01197:               <tr data-lock="infiltration"><td>smax_path</td><td><input data-key="smax_path" data-type="nullable" value=""></td><td>Manual maximum soil storage file. Copies to sfincs.smax and writes smaxfile.</td></tr>
+   01198:               <tr data-lock="infiltration"><td>seff_path</td><td><input data-key="seff_path" data-type="nullable" value=""></td><td>Manual initial/effective soil storage file. Copies to sfincs.seff and writes sefffile.</td></tr>
+   01199:               <tr data-lock="infiltration"><td>ks_path</td><td><input data-key="ks_path" data-type="nullable" value=""></td><td>Manual saturated hydraulic conductivity file. Copies to sfincs.ks and writes ksfile.</td></tr>
+   01200:             
+   01201:               <tr data-lock="infiltration"><td>sigma_path</td><td><input data-key="sigma_path" data-type="nullable" value=""></td><td>Manual Green-Ampt sigma file. Copies to sfincs.sigma and writes sigmafile.</td></tr>
+   01202:               <tr data-lock="infiltration"><td>psi_path</td><td><input data-key="psi_path" data-type="nullable" value=""></td><td>Manual Green-Ampt psi file. Copies to sfincs.psi and writes psifile.</td></tr>
+   01203:             
+   01204:               <tr data-lock="infiltration"><td>f0_path</td><td><input data-key="f0_path" data-type="nullable" value=""></td><td>Manual Horton f0 file. Copies to sfincs.f0 and writes f0file.</td></tr>
+   01205:               <tr data-lock="infiltration"><td>fc_path</td><td><input data-key="fc_path" data-type="nullable" value=""></td><td>Manual Horton fc file. Copies to sfincs.fc and writes fcfile.</td></tr>
+   01206:               <tr data-lock="infiltration"><td>kd_path</td><td><input data-key="kd_path" data-type="nullable" value=""></td><td>Manual Horton decay coefficient file. Copies to sfincs.kd and writes kdfile.</td></tr>
+   01207:             
+   01208:               <tr data-lock="infiltration"><td>vol_path</td><td><input data-key="vol_path" data-type="nullable" value=""></td><td>Manual storage volume file. Copies to sfincs.vol and writes volfile.</td></tr>
+   01209:             </tbody></table>
+   01210:           </div>
+   01211: 
+   01212:           <div class="manual-panel" id="manual-13">
+>> 01213:             <h2>13. SFINCS output settings</h2>
+>> 01214:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01215:               <tr data-lock="sfincsInp"><td>output_format</td><td><input data-key="output_format" data-type="string" value="net"></td><td>Output format.</td></tr>
+   01216:               <tr data-lock="sfincsInp"><td>dtout_s</td><td><input data-key="dtout_s" data-type="int" value="3600"></td><td>Map output interval.</td></tr>
+   01217:               <tr data-lock="sfincsInp"><td>dthisout_s</td><td><input data-key="dthisout_s" data-type="int" value="900"></td><td>History output interval.</td></tr>
+   01218:               <tr data-lock="sfincsInp"><td>dtmaxout_s</td><td><input data-key="dtmaxout_s" data-type="float" value="99999.0"></td><td>Maximum output interval.</td></tr>
+   01219:               <tr data-lock="sfincsInp"><td>dtrstout_s</td><td><input data-key="dtrstout_s" data-type="int" value="259200"></td><td>Restart output interval.</td></tr>              
+   01220:               <tr data-lock="sfincsInp"><td>store_cumulative_precip</td><td><select data-key="store_cumulative_precip" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Writes SFINCS storecumprcp. Keep true for Curve Number/SCS infiltration; false reproduced unrealistically dry Barker/Addicks reservoir and floodplain results.</td></tr>
+   01221:             </tbody></table>
+   01222:           </div>
+   01223: 
+   01224:           <div class="manual-panel" id="manual-14">
+   01225:             <h2>14. Generated sfincs.inp / advanced tuning</h2>
+   01226:             <p class="section-intro">
+   01227:               These keys are written into the generated <span class="mono">sfincs.inp</span> when the
+   01228:               <span class="mono">sfincs.inp</span> override switch is off. If you turn on the
+>> 01229:               <span class="mono">sfincs.inp</span> file override, this section is locked because the imported file controls these settings instead.
+   01230:             </p>
+   01231: 
+   01232: 
+   01233: 
+>> 01234:             <table class="config-table">
+   01235:               <thead>
+   01236:                 <tr><th>Setting</th><th>Value</th><th>Notes</th></tr>
+   01237:               </thead>
+   01238:               <tbody>
+   01239:                 <tr data-lock="sfincsInp">
+   01240:                   <td>advanced_config</td>
+   01241:                   <td>
+   01242:                     <textarea class="long-page-textarea" data-key="advanced_config" data-type="json">{
+   01243:   "mmax": 996,
+   01244:   "nmax": 1011,
+   01245:   "dx": 100,
+   01246:   "dy": 100,
+   01247:   "x0": 212000.0,
+   01248:   "y0": 3261300.0,
+   01249:   "rotation": 0,
+   01250:   "epsg": 32615,
+   01251:   "latitude": 0.0,
+   01252: 
+   01253:   "tspinup": 86400,
+   01254:   "trstout": -999.0,
+   01255:   "dtwnd": 1800.0,
+   01256:   "storecumprcp": 1,
+   01257: 
+   01258:   "alpha": 0.5,
+   01259:   "theta": 1,
+   01260:   "huthresh": 0.05,
+   01261:   "manning": 0.04,
+   01262:   "zsini": -0.5,
+```
+
+#### Settings chunk 3/15 — lines 1269-1393 — matches=5
+
+Scope: `<table class="config-table">`
+
+```text
+   01269:   "pavbnd": 0,
+   01270:   "gapres": 101200.0,
+   01271: 
+   01272:   "stopdepth": 100,
+   01273:   "crsgeo": 0,
+   01274:   "coriolis": 0,
+   01275:   "btfilter": 60.0,
+   01276:   "viscosity": 1,
+   01277: 
+   01278:   "inputformat": "bin",
+   01279:   "cdnrb": 3,
+   01280:   "cdwnd": [0.0, 28.0, 50.0],
+   01281:   "cdval": [0.001, 0.0025, 0.0015],
+   01282:   "min_lev_hmax": -20
+   01283: }</textarea>
+   01284:                   </td>
+   01285:                   <td>
+   01286:                     Must be valid JSON. These are raw/generated <span class="mono">sfincs.inp</span>
+   01287:                     controls. Grid-shape/location keys like <span class="mono">mmax</span>,
+   01288:                     <span class="mono">nmax</span>, <span class="mono">dx</span>, <span class="mono">dy</span>,
+   01289:                     <span class="mono">x0</span>, and <span class="mono">y0</span> should match the native static files you are importing.
+   01290:                   </td>
+   01291:                 </tr>
+   01292:               </tbody>
+   01293:             </table>
+   01294:           </div>
+   01295: 
+   01296:           <div class="manual-panel" id="manual-15">
+>> 01297:             <h2>15. Post-processing settings</h2>
+>> 01298:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01299:               <tr><td>postprocess_create_summary_txt</td><td><select data-key="postprocess_create_summary_txt" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Create summary text.</td></tr>
+   01300: 
+   01301:               <tr><td>postprocess_create_summary_json</td><td><select data-key="postprocess_create_summary_json" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Create summary JSON.</td></tr>
+   01302: 
+   01303:               <tr><td>postprocess_list_output_variables</td><td><select data-key="postprocess_list_output_variables" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>List output variables.</td></tr>
+   01304: 
+   01305:               <tr><td>postprocess_make_quicklook_plots</td><td><select data-key="postprocess_make_quicklook_plots" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Make quicklook plots.</td></tr>
+   01306: 
+   01307:               <tr><td>postprocess_plot_max_water_level</td><td><select data-key="postprocess_plot_max_water_level" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot max water level.</td></tr>
+   01308: 
+   01309:               <tr><td>postprocess_plot_max_flood_depth</td><td><select data-key="postprocess_plot_max_flood_depth" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot max flood depth.</td></tr>
+   01310: 
+   01311:               <tr><td>postprocess_plot_final_water_level</td><td><select data-key="postprocess_plot_final_water_level" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot final water level.</td></tr>
+   01312: 
+   01313:               <tr><td>postprocess_plot_obs_hydrographs</td><td><select data-key="postprocess_plot_obs_hydrographs" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot observation hydrographs.</td></tr>
+   01314: 
+   01315:               <tr><td>postprocess_use_basemap</td><td><select data-key="postprocess_use_basemap" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use basemap for maps.</td></tr>
+   01316: 
+   01317:               <tr><td>postprocess_basemap_source</td><td><input data-key="postprocess_basemap_source" data-type="nullable" value="sat"></td><td>Basemap source.</td></tr>
+   01318: 
+   01319:               <tr><td>postprocess_basemap_zoomlevel</td><td><input data-key="postprocess_basemap_zoomlevel" data-type="string_or_number" value="auto"></td><td>Enter a number, or Auto.</td></tr>
+   01320: 
+   01321:               <tr><td>postprocess_use_rotated_map_plots</td><td><select data-key="postprocess_use_rotated_map_plots" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use rotated map plots.</td></tr>
+   01322: 
+   01323:               <tr><td>postprocess_use_basemap_on_result_maps</td><td><select data-key="postprocess_use_basemap_on_result_maps" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use basemap underneath result maps.</td></tr>
+   01324: 
+   01325:               <tr><td>postprocess_result_map_alpha</td><td><input data-key="postprocess_result_map_alpha" data-type="float" value="0.85"></td><td>Result overlay alpha. 0 is transparent, 1 is opaque.</td></tr>
+   01326: 
+   01327:               <tr><td>postprocess_result_map_background_fade_alpha</td><td><input data-key="postprocess_result_map_background_fade_alpha" data-type="float" value="0.35"></td><td>Background fade alpha when result-map basemaps are used.</td></tr>
+   01328: 
+   01329:               <tr><td>postprocess_result_map_show_model_features</td><td><select data-key="postprocess_result_map_show_model_features" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show model feature overlays on result maps.</td></tr>
+   01330: 
+   01331:               <tr><td>postprocess_result_map_show_obs</td><td><select data-key="postprocess_result_map_show_obs" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show observation locations on result maps.</td></tr>
+   01332: 
+   01333:               <tr><td>postprocess_result_map_show_boundaries</td><td><select data-key="postprocess_result_map_show_boundaries" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show boundary/source features on result maps.</td></tr>
+   01334: 
+   01335:               <tr><td>postprocess_result_map_show_dep_layer</td><td><select data-key="postprocess_result_map_show_dep_layer" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show depth/elevation layer under result maps when available.</td></tr>
+   01336: 
+   01337:               <tr><td>postprocess_result_map_show_layout_legend</td><td><select data-key="postprocess_result_map_show_layout_legend" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show layout legend on result maps.</td></tr>
+   01338:             </tbody></table>
+   01339:           </div>
+   01340: 
+   01341:           <div class="manual-panel" id="manual-16">
+>> 01342:             <h2>16. Safety / debug settings</h2>
+>> 01343:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01344:               <tr><td>allow_writes_inside_proj</td><td><select data-key="allow_writes_inside_proj" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Shared project runs use /proj.</td></tr>
+   01345:               <tr><td>print_config_summary</td><td><select data-key="print_config_summary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Print backend summary.</td></tr>
+   01346:               <tr><td>validate_paths_before_submit</td><td><select data-key="validate_paths_before_submit" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Path safety validation.</td></tr>
+   01347:               <tr><td>stop_if_required_path_missing</td><td><select data-key="stop_if_required_path_missing" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stop on missing required paths.</td></tr>
+   01348:               <tr><td>sfincs_file_override_fail_on_multiple_matches</td><td><select data-key="sfincs_file_override_fail_on_multiple_matches" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Keep true to avoid ambiguous file copies.</td></tr>
+   01349:               <tr><td>strict_schema_validation</td><td><select data-key="strict_schema_validation" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Turn on for final configs once schema support is complete.</td></tr>
+   01350:               <tr>
+   01351:                 <td>preprocess_enable_hydromt_file_logging</td>
+   01352:                 <td>
+   01353:                   <select data-key="preprocess_enable_hydromt_file_logging" data-type="bool">
+   01354:                     <option value="false" selected>false</option>
+   01355:                     <option value="true">true</option>
+   01356:                   </select>
+   01357:                 </td>
+   01358:                 <td>Keep false by default; HydroMT file logging is slow. Slurm stdout/stderr logs still capture preprocessing messages.</td>
+   01359:               </tr>           
+   01360:             </tbody></table>
+   01361:           </div>
+   01362: 
+   01363:           <div class="manual-panel" id="manual-17">
+   01364:             <h2>17. Backend paths / advanced runtime</h2>
+>> 01365:             <table class="config-table"><thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead><tbody>
+   01366:               <tr><td>preprocess_stage_script</td><td><input data-key="preprocess_stage_script" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py"></td><td>Shared backend script.</td></tr>
+   01367:               <tr><td>postprocess_stage_script</td><td><input data-key="postprocess_stage_script" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/code/postprocess_stage.py"></td><td>Shared backend script.</td></tr>
+   01368:               <tr><td>conda_env_path</td><td><input data-key="conda_env_path" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/envs/sfincs"></td><td>Shared bundled SFINCS/HydroMT environment.</td></tr>
+   01369:               <tr><td>conda_python</td><td><input data-key="conda_python" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python"></td><td>Shared bundled Python path for backend stages.</td></tr>
+   01370:               <tr><td>sfincs_container_path</td><td><input data-key="sfincs_container_path" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"></td><td>SFINCS Apptainer image.</td></tr>
+   01371:             </tbody></table>
+   01372:           </div>
+   01373: 
+   01374:           <div class="button-row">
+   01375:             <button class="primary" type="button" id="go-check-button">Next: review checks →</button>
+   01376:           </div>
+   01377:         </div>
+   01378:         <!-- STEP 2: STRIPPED MANUAL CONFIG END -->
+   01379: 
+   01380:         <!-- STEP 3: REVIEW CHECKS START -->
+   01381:         <div class="panel step-panel" id="step-check">
+   01382:           <h2>3. Review checks</h2>
+   01383:           <p class="section-intro">These are quick page-level checks. Later, this should call the real backend preflight and show stdout/stderr.</p>
+   01384:           <div class="button-row">
+   01385:             <button class="primary" type="button" id="check-button-main">Run page checks</button>
+   01386:           </div>
+   01387:           <div id="runtime-window-review-output"></div>
+   01388:           <div id="native-shape-review-output"></div>
+   01389:           <div id="checks-output" class="checks-list"></div>
+   01390:         </div>
+   01391:         <!-- STEP 3: REVIEW CHECKS END -->
+   01392: 
+   01393:         <!-- STEP 4: SUBMIT START -->
+```
+
+#### Settings chunk 4/15 — lines 1518-1574 — matches=1
+
+Scope: `const BASE_DEFAULTS = {`
+
+```text
+   01518:           { key: 'netampfile', primary: 'sfincs_netampfile.nc', aliases: [], desc: 'NetCDF pressure forcing.' },
+   01519:           { key: 'rstfile', primary: 'sfincs.rst', aliases: [], desc: 'Restart file.' },
+   01520:           { key: 'inifile', primary: 'sfincs.ini', aliases: [], desc: 'Initial-condition file.' }
+   01521:         ]
+   01522:       },
+   01523:       {
+   01524:         id: 'other',
+   01525:         title: 'Other / rare files',
+   01526:         description: 'Less common native SFINCS files. Keep these off unless the source folder actually contains them and you mean to use them.',
+   01527:         entries: [
+   01528:           { key: 'sfincs.inp', primary: 'sfincs.inp', aliases: [], desc: 'Full SFINCS input template. Usually leave off so the backend writes a compatible current input file.', special: true },
+   01529:           { key: 'qinffile', primary: 'sfincs.qinf', aliases: [], desc: 'Infiltration flux file.' },
+   01530:           { key: 'smaxfile', primary: 'sfincs.smax', aliases: [], desc: 'Maximum soil storage file.' },
+   01531:           { key: 'sefffile', primary: 'sfincs.seff', aliases: [], desc: 'Effective storage file.' },
+   01532:           { key: 'ksfile', primary: 'sfincs.ks', aliases: [], desc: 'Hydraulic conductivity file.' },
+   01533:           { key: 'sigmafile', primary: 'sfincs.sigma', aliases: [], desc: 'Green-Ampt sigma file.' },
+   01534:           { key: 'psifile', primary: 'sfincs.psi', aliases: [], desc: 'Green-Ampt psi file.' },
+   01535:           { key: 'f0file', primary: 'sfincs.f0', aliases: [], desc: 'Horton f0 infiltration file.' },
+   01536:           { key: 'fcfile', primary: 'sfincs.fc', aliases: [], desc: 'Horton fc infiltration file.' },
+   01537:           { key: 'kdfile', primary: 'sfincs.kd', aliases: [], desc: 'Drainage coefficient file.' },
+   01538:           { key: 'volfile', primary: 'sfincs.vol', aliases: [], desc: 'Storage volume file.' },
+   01539:           { key: 'bzifile', primary: 'sfincs.bzi', aliases: [], desc: 'Boundary initial water-level file.' },
+   01540:           { key: 'netbndbzsbzifile', primary: 'sfincs_netbndbzsbzifile.nc', aliases: [], desc: 'Combined boundary NetCDF.' },
+   01541:           { key: 'netsrcdisfile', primary: 'sfincs_netsrcdisfile.nc', aliases: [], desc: 'Combined source/discharge NetCDF.' }
+   01542:         ]
+   01543:       }
+   01544:     ];
+   01545: 
+>> 01546:     const BASE_DEFAULTS = {
+   01547:       use_sfincs_file_overrides: true,
+   01548:       native_static_sfincs_input_dirs: [],
+   01549:       native_event_sfincs_input_dirs: [],
+   01550:       native_sfincs_input_dirs: [],
+   01551:       output_format: 'net',
+   01552:       postprocess_max_plot_cells: 2000000,
+   01553:       active_mask_path: '',
+   01554:       active_mask_mode: 'sample_to_grid',
+   01555:       stamp_waterlevel_boundary_on_mask: true,
+   01556:       waterlevel_boundary_stamp_search_radius_cells: 3,
+   01557:       grid_source: 'region',
+   01558:       grid_template_path: '',
+   01559:       grid_template_mode: 'raster_template',
+   01560:       grid_template_use_as_active_mask: false,
+   01561:       override_locked_config_keys: [],
+   01562:       override_locked_sections: [],
+   01563:       override_lock_reasons: {}
+   01564:     };
+   01565: 
+   01566:     const stepTabs = document.querySelectorAll('.step-tab');
+   01567:     const stepPanels = document.querySelectorAll('.step-panel');
+   01568:     const manualTabs = document.querySelectorAll('.manual-tab');
+   01569:     const manualPanels = document.querySelectorAll('.manual-panel');
+   01570:     const overrideSections = document.getElementById('override-sections');
+   01571:     const preview = document.getElementById('config-preview');
+   01572:     const checksOutput = document.getElementById('checks-output');
+   01573:     const countOn = document.getElementById('count-on');
+   01574:     const countOff = document.getElementById('count-off');
+```
+
+#### Settings chunk 5/15 — lines 1731-1787 — matches=1
+
+Scope: `<table class="override-table">`
+
+```text
+   01731:       stepPanels.forEach(panel => panel.classList.toggle('active', panel.id === stepId));
+   01732:       window.scrollTo({ top: 0, behavior: 'smooth' });
+   01733:       if (stepId === 'step-manual') applyOverrideManualVisibility();
+   01734:       if (stepId === 'step-check') runChecks(false);
+   01735:     }
+   01736: 
+   01737:     function showManualTab(tabId) {
+   01738:       manualTabs.forEach(tab => tab.classList.toggle('active', tab.dataset.manualTab === tabId));
+   01739:       manualPanels.forEach(panel => panel.classList.toggle('active', panel.id === tabId));
+   01740:       window.scrollTo({ top: 0, behavior: 'smooth' });
+   01741:     }
+   01742: 
+   01743:     function renderOverrideTables() {
+   01744:       overrideSections.innerHTML = '';
+   01745:       FILE_GROUPS.forEach(group => {
+   01746:         const section = document.createElement('section');
+   01747:         section.className = 'override-section';
+   01748:         section.innerHTML = `
+   01749:           <div class="override-section-header">
+   01750:             <div>
+   01751:               <h3>${group.title}</h3>
+   01752:               <p>${group.description}</p>
+   01753:             </div>
+   01754:             <div class="button-row" style="margin:0;">
+   01755:               <button class="secondary" type="button" data-group-off="${group.id}">All off</button>
+   01756:               <button class="secondary" type="button" data-group-on="${group.id}">All on</button>
+   01757:             </div>
+   01758:           </div>
+>> 01759:           <table class="override-table">
+   01760:             <thead><tr><th>File name</th><th>Short description</th><th>Override?</th></tr></thead>
+   01761:             <tbody>${group.entries.map(entry => rowHtml(entry, group.id)).join('')}</tbody>
+   01762:           </table>
+   01763:         `;
+   01764:         overrideSections.appendChild(section);
+   01765:       });
+   01766: 
+   01767:       document.querySelectorAll('[data-override-key]').forEach(input => {
+   01768:         input.addEventListener('change', () => {
+   01769:           const key = input.dataset.overrideKey;
+   01770:           if (!detectionState[key]) detectionState[key] = { found: false, filename: '', manual: true };
+   01771:           detectionState[key].manual = true;
+   01772:           updateRowState(key);
+   01773:           updatePreview();
+   01774:         });
+   01775:       });
+   01776: 
+   01777:       document.querySelectorAll('[data-group-on]').forEach(btn => btn.addEventListener('click', () => setGroup(btn.dataset.groupOn, true)));
+   01778:       document.querySelectorAll('[data-group-off]').forEach(btn => btn.addEventListener('click', () => setGroup(btn.dataset.groupOff, false)));
+   01779:     }
+   01780: 
+   01781:     function rowHtml(entry, groupId) {
+   01782:       const aliasText = entry.aliases.length ? `<div class="aliases">also detects: ${entry.aliases.join(', ')}</div>` : '';
+   01783:       const specialText = entry.special ? '<div class="aliases">special / usually leave off</div>' : '';
+   01784:       return `
+   01785:         <tr data-row-key="${entry.key}" class="row-off">
+   01786:           <td>
+   01787:             <div class="file-name">${entry.primary}</div>
+```
+
+#### Settings chunk 6/15 — lines 1809-1985 — matches=5
+
+Scope: `function applyDetectedMaskTemplateDefaults(options = {}) {`
+
+```text
+   01809:         const base = cleaned.split('/').pop();
+   01810:         if (base) names.add(base);
+   01811:       });
+   01812:       return names;
+   01813:     }
+   01814: 
+   01815:     const SPECIAL_DETECTED_NOT_AUTO_KEYS = new Set(['sfincs.inp']);
+   01816: 
+   01817:     function pathLooksRasterTemplate(pathText) {
+   01818:       const clean = String(pathText || '').trim().split(/[?#]/)[0].toLowerCase();
+   01819:       return (
+   01820:         clean.endsWith('.tif') ||
+   01821:         clean.endsWith('.tiff') ||
+   01822:         clean.endsWith('.nc')
+   01823:       );
+   01824:     }
+   01825: 
+   01826: 
+   01827:     function detectedPathForKey(key) {
+   01828:       const state = detectionState[key] || {};
+   01829:       return String(state.path || '').trim();
+   01830:     }
+   01831: 
+   01832:     function fieldIsBlank(key) {
+   01833:       const el = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+   01834:       return !el || String(el.value || '').trim() === '';
+   01835:     }
+   01836: 
+>> 01837:     function applyDetectedMaskTemplateDefaults(options = {}) {
+   01838:       const force = Boolean(options.force);
+   01839:       const maskPath = detectedPathForKey('mskfile');
+   01840: 
+   01841:       if (!maskPath) {
+   01842:         return false;
+   01843:       }
+   01844: 
+   01845:       // Native sfincs.msk is not necessarily a georeferenced raster.
+   01846:       // Only auto-promote detected mask files into grid_template_path /
+   01847:       // active_mask_path when they look raster-readable.
+   01848:       if (!pathLooksRasterTemplate(maskPath)) {
+   01849:         return false;
+   01850:       }
+   01851: 
+   01852:       if (force || fieldIsBlank('grid_template_path')) {
+   01853:         setFieldValue('grid_source', 'raster_template');
+   01854:         setFieldValue('grid_template_path', maskPath);
+   01855:         setFieldValue('grid_template_mode', 'raster_template');
+   01856:         setFieldValue('grid_template_use_as_active_mask', true);
+   01857:       }
+   01858: 
+   01859:       if (force || fieldIsBlank('active_mask_path')) {
+   01860:         setFieldValue('active_mask_path', maskPath);
+   01861:         setFieldValue('active_mask_mode', 'sample_to_grid');
+   01862:       }
+   01863: 
+   01864:       return true;
+   01865:     }
+   01866: 
+   01867: 
+   01868: 
+   01869: 
+   01870:     async function detectFiles(options = {}) {
+   01871:       const preserveSelected = Boolean(options.preserveSelected);
+   01872:       const showFinalAlert = options.showFinalAlert !== false;
+   01873:       const autoEnableDetected = options.autoEnableDetected !== false;
+   01874:       const allowSfincsInpAdvancedConfig = Boolean(options.allowSfincsInpAdvancedConfig);
+   01875:       const previouslySelectedMap = overrideMap();
+   01876: 
+   01877:       const sourcePaths = getSourcePaths();
+   01878:     
+   01879:       if (!sourcePaths.length) {
+   01880:         alert('Add at least one source folder first.');
+   01881:         return;
+   01882:       }
+   01883:     
+   01884:       try {
+>> 01885:         const response = await fetch('/api/detect-sfincs-files', {
+   01886:           method: 'POST',
+   01887:           headers: { 'Content-Type': 'application/json' },
+   01888:           body: JSON.stringify({
+   01889:             source_paths: sourcePaths,
+   01890:             source_path: sourcePaths[0] || ''
+   01891:           })
+   01892:         });
+   01893:     
+   01894:         const result = await response.json();
+   01895:     
+   01896:         if (!response.ok || !result.ok) {
+   01897:           throw new Error(result.error || 'Detection failed.');
+   01898:         }
+   01899:     
+   01900:         allEntries().forEach(entry => {
+   01901:           const detected = result.recognized[entry.key] || {
+   01902:             found: false,
+   01903:             filename: '',
+   01904:             path: '',
+   01905:             multiple_matches: false
+   01906:           };
+   01907:     
+   01908:           detectionState[entry.key] = {
+   01909:             found: Boolean(detected.found),
+   01910:             filename: detected.filename || '',
+   01911:             path: detected.path || '',
+   01912:             manual: false,
+   01913:             multiple_matches: Boolean(detected.multiple_matches)
+   01914:           };
+   01915:     
+   01916:           const input = document.querySelector(`[data-override-key="${CSS.escape(entry.key)}"]`);
+   01917: 
+   01918:           if (input) {
+   01919:             if (preserveSelected) {
+   01920:               input.checked = Boolean(previouslySelectedMap[entry.key]);
+   01921:             } else if (autoEnableDetected) {
+   01922:               input.checked =
+   01923:                 Boolean(detected.found) &&
+   01924:                 !SPECIAL_DETECTED_NOT_AUTO_KEYS.has(entry.key);
+   01925:             }
+   01926:           }
+   01927:     
+   01928:           updateRowState(entry.key);
+   01929:         });
+   01930:     
+   01931:         const detectedInp = result.recognized && result.recognized['sfincs.inp'];
+   01932: 
+   01933:         if (detectedInp && detectedInp.found) {
+   01934:           if (detectedInp.parsed) {
+>> 01935:             applyDetectedSfincsInpDefaults(detectedInp.parsed, {
+   01936:               allowAdvancedConfig: allowSfincsInpAdvancedConfig
+   01937:             });
+   01938:           }
+   01939: 
+   01940:           if (!preserveSelected) {
+   01941:             const inpInput = document.querySelector('[data-override-key="sfincs.inp"]');
+   01942:             if (inpInput) {
+   01943:               inpInput.checked = false;
+   01944:               updateRowState('sfincs.inp');
+   01945:             }
+   01946:           }
+   01947:         }
+   01948:         
+>> 01949:         applyDetectedMaskTemplateDefaults({
+   01950:           force: !preserveSelected
+   01951:         });
+   01952:            
+   01953:         updatePreview();
+   01954:         
+   01955:         if (showFinalAlert) {
+   01956:           const sfincsInpNote = detectedInp && detectedInp.found
+>> 01957:             ? `\n\nImportant: sfincs.inp was detected, but it was NOT automatically enabled. This is intentional. Leave sfincs.inp override OFF if you want the launcher/backend to generate a fresh sfincs.inp from the page settings. Turn it ON only if you intentionally want the imported sfincs.inp to control advanced SFINCS settings.`
+   01958:             : '';
+   01959: 
+   01960:           alert(
+   01961:             `Detection complete.\n\n` +
+   01962:             `Source folders: ${result.source_count}\n` +
+   01963:             `Scanned files: ${result.file_count}\n` +
+   01964:             `Recognized SFINCS override files: ${result.recognized_count}` +
+   01965:             sfincsInpNote
+   01966:           );
+   01967:         }
+   01968:     
+   01969:       } catch (err) {
+   01970:         alert(`Detection failed:\n${err.message}`);
+   01971:         throw err;
+   01972:       }
+   01973:     }
+   01974: 
+   01975:     function reapplyDetected() {
+   01976:       allEntries().forEach(entry => {
+   01977:         const input = document.querySelector(`[data-override-key="${CSS.escape(entry.key)}"]`);
+   01978:         if (input) {
+   01979:           input.checked =
+   01980:             Boolean(detectionState[entry.key]?.found) &&
+   01981:             !SPECIAL_DETECTED_NOT_AUTO_KEYS.has(entry.key);
+   01982:         }
+   01983:         updateRowState(entry.key);
+   01984:       });
+   01985:       updatePreview();
+```
+
+#### Settings chunk 7/15 — lines 2156-2212 — matches=1
+
+Scope: `const firstVisible = [...manualPanels].find(panel => !panel.hidden);`
+
+```text
+   02156:         // Rows without data-lock are still user-needed rows, so the tab stays visible.
+   02157:         return fieldRows.every(row => row.dataset.overrideLocked === 'true');
+   02158:       }
+   02159:     
+   02160:       manualPanels.forEach(panel => {
+   02161:         // Only panels that were intentionally marked hideable may disappear,
+   02162:         // and even then only when every editable row in that panel is locked.
+   02163:         const canHide = Boolean(panel.dataset.hideWhen);
+   02164:         const shouldHide = canHide && panelIsFullyLocked(panel);
+   02165:     
+   02166:         panel.hidden = shouldHide;
+   02167:     
+   02168:         const tab = document.querySelector(`[data-manual-tab="${CSS.escape(panel.id)}"]`);
+   02169:         if (tab) tab.hidden = shouldHide;
+   02170:     
+   02171:         if (shouldHide) {
+   02172:           hiddenLabels.push(tab ? tab.textContent.trim() : panel.id);
+   02173:         }
+   02174:       });
+   02175:     
+   02176:       const activePanel = document.querySelector('.manual-panel.active');
+   02177:       if (!activePanel || activePanel.hidden) {
+   02178:         const firstVisible = [...manualPanels].find(panel => !panel.hidden);
+   02179:         if (firstVisible) showManualTab(firstVisible.id);
+   02180:       }
+   02181:     
+   02182:       hiddenTabsNote.textContent = hiddenLabels.length
+   02183:         ? `Hidden only because every editable row in that tab is already supplied by selected override files: ${hiddenLabels.join(', ')}.`
+>> 02184:         : 'No manual tabs are fully hidden. Rows supplied by selected override files are greyed out, while remaining needed settings stay editable.';
+   02185:     }
+   02186: 
+   02187:     function parseValue(el) {
+   02188:       const type = el.dataset.type || 'string';
+   02189:       const raw = el.value;
+   02190:       const trimmed = raw.trim();
+   02191:       if (type === 'string') return raw;
+   02192:       if (type === 'nullable') return trimmed === '' ? null : raw;
+   02193:       if (type === 'bool') return raw === 'true';
+   02194:       if (type === 'int') return trimmed === '' ? null : parseInt(trimmed, 10);
+   02195:       if (type === 'float') return trimmed === '' ? null : parseFloat(trimmed);
+   02196:       if (type === 'nullable_float') return trimmed === '' ? null : parseFloat(trimmed);
+   02197:       if (type === 'string_or_number') {
+   02198:         if (trimmed === '') return '';
+   02199:         const num = Number(trimmed);
+   02200:         return Number.isFinite(num) && String(num) === trimmed ? num : raw;
+   02201:       }
+   02202:       if (type === 'json') return JSON.parse(trimmed || 'null');
+   02203:       if (type === 'nullable_json') return trimmed === '' ? null : JSON.parse(trimmed);
+   02204:       return raw;
+   02205:     }
+   02206: 
+   02207:     function stringifyForField(value, type) {
+   02208:       if (value === null || value === undefined) return '';
+   02209:       if (type === 'json' || type === 'nullable_json') return JSON.stringify(value, null, 2);
+   02210:       return String(value);
+   02211:     }
+   02212: 
+```
+
+#### Settings chunk 8/15 — lines 2527-2583 — matches=1
+
+Scope: `const cfg = {`
+
+```text
+   02527: 
+   02528:       OVERRIDE_ADVANCED_GEOMETRY_KEYS.forEach(key => {
+   02529:         cfg.advanced_config[key] = authority.geometry[key];
+   02530:       });
+   02531: 
+   02532:       cfg.override_geometry_authority_status = 'resolved';
+   02533:       cfg.override_geometry_authority_id = authority.id;
+   02534:       cfg.override_geometry_authority_label = authority.label;
+   02535:       cfg.override_geometry_authority_geometry = {...authority.geometry};
+   02536:       cfg.override_geometry_advanced_config_repaired = diffsBefore.length > 0;
+   02537:       cfg.override_geometry_advanced_config_repair_detail = diffsBefore
+   02538:         .map(item => `${item.key}: ${item.current} -> ${item.expected}`)
+   02539:         .join('\n');
+   02540: 
+   02541:       if (writeBackToPage) {
+   02542:         setFieldValue('advanced_config', cfg.advanced_config);
+   02543:       }
+   02544: 
+   02545:       return {
+   02546:         status: diffsBefore.length ? 'repaired' : 'good',
+   02547:         authority,
+   02548:         diffsBefore
+   02549:       };
+   02550:     }
+   02551: 
+   02552: 
+   02553:     function getConfig() {
+   02554:       const cfg = {
+>> 02555:         ...BASE_DEFAULTS,
+   02556:         ...editableValues(),
+   02557:         ...sourceRootsForConfig(),
+   02558:         use_sfincs_file_overrides: true,
+   02559:         sfincs_file_overrides: overrideMap(),
+   02560:         override_source_path: getSourcePaths()[0] || '',
+   02561:         override_source_paths: getSourcePaths(),
+   02562:         override_detection_manifest: detectionManifest()
+   02563:       };
+   02564:     
+   02565: 
+   02566:       const selectedOverrideMap = cfg.sfincs_file_overrides || {};
+   02567: 
+   02568:       if (selectedOverrideMap.mskfile) {
+   02569:         cfg.stamp_waterlevel_boundary_on_mask = false;
+   02570:         cfg.reset_waterlevel_boundary = false;
+   02571:       }
+   02572: 
+   02573:       const hasNativeDischargeOverride = Boolean(
+   02574:         selectedOverrideMap.srcfile ||
+   02575:         selectedOverrideMap.disfile ||
+   02576:         selectedOverrideMap.netsrcdisfile
+   02577:       );
+   02578: 
+   02579:       const hasCatalogDischarge = Boolean(
+   02580:         String(cfg.discharge_points_csv_path || '').trim() &&
+   02581:         String(cfg.discharge_timeseries_csv_path || '').trim()
+   02582:       );
+   02583: 
+```
+
+#### Settings chunk 9/15 — lines 2592-2651 — matches=4
+
+Scope: `const hasNativePressureOverride = Boolean(`
+
+```text
+   02592: 
+   02593:       const hasNativeWindOverride = Boolean(
+   02594:         selectedOverrideMap.amufile ||
+   02595:         selectedOverrideMap.amvfile ||
+   02596:         selectedOverrideMap.wndfile ||
+   02597:         selectedOverrideMap.spwfile ||
+   02598:         selectedOverrideMap.netspwfile ||
+   02599:         selectedOverrideMap.netamuamvfile
+   02600:       );
+   02601: 
+   02602:       const hasNativePressureOverride = Boolean(
+   02603:         selectedOverrideMap.ampfile ||
+   02604:         selectedOverrideMap.netampfile
+   02605:       );
+   02606: 
+   02607:       if (!hasNativeWindOverride && !String(cfg.wind_path || '').trim()) {
+   02608:         cfg.use_wind = false;
+   02609:         cfg.wind_source = '';
+   02610:       }
+   02611: 
+   02612:       if (!hasNativePressureOverride && !String(cfg.pressure_path || '').trim()) {
+   02613:         cfg.use_pressure = false;
+   02614:         cfg.pressure_source = '';
+   02615:       }
+   02616:       
+   02617:       // Smart Override assembly:
+   02618:       // - data_catalogs blank     -> native_sfincs_assembly
+   02619:       // - data_catalogs not blank -> hybrid
+>> 02620:       // data_root is controlled by launcher settings, not by a visible run field.
+>> 02621:       cfg.data_root = (
+>> 02622:         window.LauncherDefaults && window.LauncherDefaults.get
+>> 02623:           ? window.LauncherDefaults.get("dataRoot")
+   02624:           : "/proj/zefflab/projects/Flooding/Data/harris_county"
+   02625:       );
+   02626: 
+   02627:       cfg.data_catalogs = normalizePathListValue(cfg.data_catalogs);
+   02628: 
+   02629:       const hasDataCatalogs = Array.isArray(cfg.data_catalogs) && cfg.data_catalogs.length > 0;
+   02630: 
+   02631:       cfg.pipeline_mode = 'preflight_only';
+   02632:       cfg.preprocess_mode = hasDataCatalogs ? 'hybrid' : 'native_sfincs_assembly';
+   02633: 
+   02634:       const gridTemplateHydromtBuild = shouldUseHydromtBuildForGridTemplateOverride(cfg, selectedOverrideMap);
+   02635: 
+   02636:       if (gridTemplateHydromtBuild) {
+   02637:         cfg.preprocess_mode = 'hydromt_build';
+   02638:         cfg.use_sfincs_file_overrides = false;
+   02639:         cfg.native_static_sfincs_input_dirs = [];
+   02640:         cfg.native_event_sfincs_input_dirs = [];
+   02641:         cfg.native_sfincs_input_dirs = [];
+   02642:         cfg.sfincs_file_override_search_dirs = [];
+   02643:       } else {
+   02644:         cfg.use_sfincs_file_overrides = true;
+   02645:       }
+   02646: 
+   02647:       if (hasNativeInfiltrationOverride(cfg.sfincs_file_overrides || {})) {
+   02648:         cfg.infiltration_mode = cfg.use_infiltration ? 'native_sfincs' : 'none';
+   02649:       }
+   02650:       
+   02651:       overrideSyncStoreCumulativePrecip(cfg);
+```
+
+#### Settings chunk 10/15 — lines 3146-3252 — matches=2
+
+Scope: `const outputRoot = (cfg.output_root || '').replace(/\/+$/, '');`
+
+```text
+   03146:         console.warn('Runtime review: runtime-window-review-output was not found.');
+   03147:         return;
+   03148:       }
+   03149:     
+   03150:       if (button.dataset.runtimeWindowReviewWired === 'true') {
+   03151:         return;
+   03152:       }
+   03153:     
+   03154:       button.dataset.runtimeWindowReviewWired = 'true';
+   03155:       button.addEventListener('click', () => {
+   03156:         console.log('Runtime review: Run page checks clicked.');
+   03157:         runRuntimeWindowReviewCheck();
+   03158:       });
+   03159:     
+   03160:       target.innerHTML = `
+   03161:         <div style="margin-top: 1rem; padding: 0.8rem; border-radius: 12px; background: #f8fafc; border: 1px solid #cbd5e1;">
+   03162:           Runtime-window review is loaded. Click <strong>Run page checks</strong> to compare requested model times against the hybrid event catalog window.
+   03163:         </div>
+   03164:       `;
+   03165:     }
+   03166:     
+   03167:     wireRuntimeWindowReviewButton();
+   03168:     
+   03169:     document.addEventListener('DOMContentLoaded', wireRuntimeWindowReviewButton);
+   03170: 
+   03171: 
+   03172: 
+   03173:     function plannedRunRoot(cfg) {
+>> 03174:       const outputRoot = (cfg.output_root || '').replace(/\/+$/, '');
+   03175:       const runName = cfg.run_name || 'UNSET_RUN_NAME';
+   03176:       return outputRoot ? `${outputRoot}/${runName}` : runName;
+   03177:     }
+   03178: 
+   03179:     function updatePreview() {
+   03180:       const map = overrideMap();
+   03181:       const keys = Object.keys(map);
+   03182:       const on = keys.filter(k => map[k]).length;
+   03183:       const found = keys.filter(k => detectionState[k]?.found).length;
+   03184:       countOn.textContent = `${on} on`;
+   03185:       countOff.textContent = `${keys.length - on} off`;
+   03186:       countFound.textContent = `${found} found`;
+   03187:       const cfg = getConfig();
+   03188:       sideRunRootPreview.textContent = `${plannedRunRoot(cfg)}/run_config.json`;
+   03189:       preview.textContent = JSON.stringify(cfg, null, 2);
+   03190:       applyOverrideManualVisibility();
+   03191:     }
+   03192: 
+   03193:     function makeCheck(status, message, detail) {
+   03194:       const div = document.createElement('div');
+   03195:       div.className = `check-item ${status}`;
+   03196:       const label = status === 'good' ? 'OK' : status === 'warn' ? 'WARN' : 'FAIL';
+   03197:       div.innerHTML = `<div class="check-status">${label}</div><div><b>${message}</b><br><span class="muted">${detail || ''}</span></div>`;
+   03198:       return div;
+   03199:     }
+   03200: 
+   03201:     function runChecks(navigate = true) {
+   03202:       const cfg = getConfig();
+   03203:       const map = cfg.sfincs_file_overrides || {};
+   03204:       const onKeys = Object.entries(map).filter(([, v]) => v).map(([k]) => k);
+   03205:       const sourcePaths = getSourcePaths()
+   03206:         .map(path => String(path || '').trim())
+   03207:         .filter(Boolean);
+   03208:       const gridTemplateHydromtBuild = shouldUseHydromtBuildForGridTemplateOverride(cfg, map);
+   03209:       checksOutput.innerHTML = '';
+   03210:       const checks = [];
+   03211:       
+   03212:     
+   03213:       function looksLikeLauncherTime(value) {
+   03214:         return /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(String(value || '').trim());
+   03215:       }
+   03216:     
+   03217:       function parseLauncherTime(value) {
+   03218:         const s = String(value || '').trim();
+   03219:         if (!looksLikeLauncherTime(s)) return null;
+   03220:         return new Date(s.replace(' ', 'T') + 'Z');
+   03221:       }
+   03222:     
+   03223:       function isHarrisCountyConfig(cfg) {
+>> 03224:         const dataRoot = String(cfg.data_root || '');
+   03225:         const sources = Array.isArray(cfg.override_source_paths) ? cfg.override_source_paths.join(' ') : '';
+   03226:         return dataRoot.includes('/Data/harris_county') || sources.includes('/Data/harris_county');
+   03227:       }
+   03228: 
+   03229:       if (/^[A-Za-z0-9_.-]+$/.test(cfg.run_name || '')) checks.push(makeCheck('good', 'run_name format is safe.', cfg.run_name));
+   03230:       else checks.push(makeCheck('bad', 'run_name has unsafe characters.', 'Use only letters, numbers, underscores, dashes, and periods.'));
+   03231: 
+   03232:       if (sourcePaths.length) {
+   03233:         checks.push(makeCheck(
+   03234:           'good',
+   03235:           'Source path is set.',
+   03236:           sourcePaths.join('\n')
+   03237:         ));
+   03238:       } else if (gridTemplateHydromtBuild) {
+   03239:         checks.push(makeCheck(
+   03240:           'good',
+   03241:           'Source path is not required for grid-template HydroMT build.',
+   03242:           'grid_template_path is acting as the selected Override input; no native SFINCS source folder is required for this path.'
+   03243:         ));
+   03244:       } else {
+   03245:         checks.push(makeCheck(
+   03246:           'bad',
+   03247:           'Source path is blank.',
+   03248:           'Set at least one source folder before saving a real native/hybrid override config.'
+   03249:         ));
+   03250:       }
+   03251: 
+   03252:       const normalizedSourcePaths = sourcePaths.map(path => path.replace(/\/+$/, ''));
+```
+
+#### Settings chunk 11/15 — lines 3361-3423 — matches=2
+
+Scope: `const geometrySyncAudit = overrideSyncAdvancedConfigGeometry(cfg, {`
+
+```text
+   03361:           `Override Mode detected native grid/static overrides and corrected advanced_config using ${geometrySyncAudit.authority.label}.\n\nCorrected fields:\n${cfg.override_geometry_advanced_config_repair_detail}`
+   03362:         ));
+   03363:       } else if (geometrySyncAudit.status === 'good') {
+   03364:         checks.push(makeCheck(
+   03365:           'good',
+   03366:           'Advanced config geometry matches the selected native static geometry authority.',
+   03367:           `${cfg.override_geometry_authority_label}: ` +
+   03368:           `mmax=${cfg.advanced_config.mmax}, nmax=${cfg.advanced_config.nmax}, ` +
+   03369:           `x0=${cfg.advanced_config.x0}, y0=${cfg.advanced_config.y0}`
+   03370:         ));
+   03371:       } else if (geometrySyncAudit.status === 'warn') {
+   03372:         checks.push(makeCheck(
+   03373:           'warn',
+   03374:           'Native static geometry is overridden but advanced_config geometry was not resolved.',
+   03375:           geometrySyncAudit.detail
+   03376:         ));
+   03377:       } else if (geometrySyncAudit.status === 'bad') {
+   03378:         checks.push(makeCheck(
+   03379:           'bad',
+   03380:           'Native static geometry override has invalid advanced_config.',
+   03381:           geometrySyncAudit.detail
+   03382:         ));
+   03383:       }
+   03384: 
+   03385:       if (map['sfincs.inp']) {
+   03386:         checks.push(makeCheck(
+   03387:           'warn',
+   03388:           'sfincs.inp override is enabled.',
+>> 03389:           'The imported sfincs.inp will control advanced SFINCS settings. This is okay for exact reruns, but usually keep this off if you want the backend to write a current-compatible sfincs.inp.'
+   03390:         ));
+   03391:       } else {
+   03392:         checks.push(makeCheck(
+   03393:           'good',
+   03394:           'sfincs.inp override is off.',
+>> 03395:           'The backend will generate sfincs.inp from the editable time/output/advanced settings.'
+   03396:         ));
+   03397:       }
+   03398: 
+   03399:       if (!map['sfincs.inp']) {
+   03400:         ['tref', 'tstart', 'tstop'].forEach(key => {
+   03401:           if (isBlank(cfg[key])) {
+   03402:             checks.push(makeCheck(
+   03403:               'warn',
+   03404:               `${key} is blank.`,
+   03405:               `Because sfincs.inp override is off, native assembly must generate sfincs.inp and needs ${key}.`
+   03406:             ));
+   03407:           } else if (!looksLikeLauncherTime(cfg[key])) {
+   03408:             checks.push(makeCheck(
+   03409:               'warn',
+   03410:               `${key} has an unexpected time format.`,
+   03411:               `Use YYYY-MM-DD HH:MM:SS. Current value: ${cfg[key]}`
+   03412:             ));
+   03413:           }
+   03414:         });
+   03415: 
+   03416:       const scsStoreCumPrecipActive = Boolean(
+   03417:         cfg.use_infiltration && (
+   03418:           cfg.infiltration_mode === 'curve_number'
+   03419:           || cfg.infiltration_mode === 'curve_number_with_ks'
+   03420:           || cfg.infiltration_mode === 'native_sfincs'
+   03421:           || map.scsfile
+   03422:           || !isBlank(cfg.curve_number_path)
+   03423:           || !isBlank(cfg.smax_path)
+```
+
+#### Settings chunk 12/15 — lines 3476-3546 — matches=3
+
+Scope: `const value = Number(cfg[key]);`
+
+```text
+   03476:               `Current value: ${cfg[key]}`
+   03477:             ));
+   03478:           } else if (value < 0 && key !== 'dtrstout_s') {
+   03479:             checks.push(makeCheck(
+   03480:               'warn',
+   03481:               `${key} is negative.`,
+   03482:               `Current value: ${cfg[key]}. Check whether this is intentional.`
+   03483:             ));
+   03484:           } else if (value === 0 && key !== 'dtrstout_s') {
+   03485:             checks.push(makeCheck(
+   03486:               'warn',
+   03487:               `${key} is zero.`,
+   03488:               `Current value: ${cfg[key]}. Most output intervals should be positive.`
+   03489:             ));
+   03490:           }
+   03491:         });
+   03492:       }
+   03493: 
+   03494:       if (harrisCounty) {
+   03495:         if (adv.epsg === 32615 && adv.crsgeo === 0 && adv.coriolis === 0) {
+   03496:           checks.push(makeCheck(
+   03497:             'good',
+   03498:             'Harris County CRS/Coriolis compatibility looks safe.',
+   03499:             'epsg=32615, crsgeo=0, coriolis=0.'
+   03500:           ));
+   03501:         } else {
+   03502:           checks.push(makeCheck(
+   03503:             'warn',
+>> 03504:             'Harris County CRS/Coriolis settings need review.',
+   03505:             `Current values: epsg=${adv.epsg}, crsgeo=${adv.crsgeo}, coriolis=${adv.coriolis}. For the current Harris County / EPSG:32615 setup, use epsg=32615, crsgeo=0, coriolis=0. Do not copy the old professor crsgeo=32615 setting into the current container run.`
+   03506:           ));
+   03507:         }
+   03508: 
+   03509:         if (adv.baro === 0 && adv.pavbnd === 0) {
+   03510:           checks.push(makeCheck(
+   03511:             'good',
+>> 03512:             'Harris County pressure-boundary settings look safe.',
+   03513:             'baro=0 and pavbnd=0.'
+   03514:           ));
+   03515:         } else {
+   03516:           checks.push(makeCheck(
+   03517:             'warn',
+>> 03518:             'Harris County pressure-boundary settings need review.',
+   03519:             `Current values: baro=${adv.baro}, pavbnd=${adv.pavbnd}. Current Harris/professor-template convention usually uses baro=0 and pavbnd=0.`
+   03520:           ));
+   03521:         }
+   03522:       }
+   03523: 
+   03524: 
+   03525:       const selectedStaticGeometryKeys = [
+   03526:         'depfile',
+   03527:         'mskfile',
+   03528:         'indexfile',
+   03529:         'sbgfile',
+   03530:         'manningfile'
+   03531:       ].filter(key => Boolean(map[key]));
+   03532: 
+   03533:       const selectedStaticBoundaryKeys = [
+   03534:         'bndfile',
+   03535:         'srcfile'
+   03536:       ].filter(key => Boolean(map[key]));
+   03537: 
+   03538:       const selectedStaticOptionalKeys = [
+   03539:         'obsfile',
+   03540:         'crsfile',
+   03541:         'thdfile',
+   03542:         'weirfile',
+   03543:         'drnfile',
+   03544:         'scsfile'
+   03545:       ].filter(key => Boolean(map[key]));
+   03546: 
+```
+
+#### Settings chunk 13/15 — lines 3860-3919 — matches=2
+
+Scope: `const state = detectionState[key] || {};`
+
+```text
+   03860: 
+   03861:       Object.entries(map).forEach(([key, enabled]) => {
+   03862:         const state = detectionState[key] || {};
+   03863:         if (enabled && !state.found) {
+   03864:           checks.push(makeCheck(
+   03865:             'warn',
+   03866:             `${key} is manually enabled but was not detected.`,
+   03867:             'This can work only if the backend can find the file from the selected source folders. Otherwise preprocessing will fail.'
+   03868:           ));
+   03869:         }
+   03870: 
+   03871:         if (enabled && state.multiple_matches) {
+   03872:           checks.push(makeCheck(
+   03873:             'warn',
+   03874:             `${key} has multiple detected matches.`,
+   03875:             'Narrow the source folders or keep sfincs_file_override_fail_on_multiple_matches=true so the backend refuses ambiguous copies.'
+   03876:           ));
+   03877:         }
+   03878:       });
+   03879: 
+   03880:       if (cfg.overwrite_existing_run) {
+   03881:         checks.push(makeCheck(
+   03882:           'warn',
+   03883:           'overwrite_existing_run=true.',
+   03884:           'This can replace previous run products. Keep false unless you are intentionally rerunning into the same folder.'
+   03885:         ));
+   03886:       }
+   03887: 
+>> 03888:       if (String(cfg.output_root || '').startsWith('/proj') && !cfg.allow_writes_inside_proj) {
+   03889:         checks.push(makeCheck(
+   03890:           'bad',
+>> 03891:           'output_root is inside /proj but allow_writes_inside_proj=false.',
+   03892:           'Shared project runs need allow_writes_inside_proj=true or a non-/proj output root.'
+   03893:         ));
+   03894:       }
+   03895: 
+   03896:       const sharedCondaEnv = '/proj/zefflab/projects/Flooding/pipeline/envs/sfincs';
+   03897:       const sharedCondaPython = '/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python';
+   03898:       const oldPersonalCondaPython = '/users/e/p/epsilon/sfincs_project/envs/sfincs/bin/python';
+   03899: 
+   03900:       if (String(cfg.conda_python || '') === sharedCondaPython) {
+   03901:         checks.push(makeCheck(
+   03902:           'good',
+   03903:           'conda_python points to the shared /proj environment.',
+   03904:           'The shared environment has been cloned and passed core + geospatial import checks.'
+   03905:         ));
+   03906:       } else if (String(cfg.conda_python || '') === oldPersonalCondaPython) {
+   03907:         checks.push(makeCheck(
+   03908:           'warn',
+   03909:           'conda_python still points to the old personal /users environment.',
+   03910:           'This works, but the launcher default should now use the shared /proj environment for lab portability.'
+   03911:         ));
+   03912:       } else {
+   03913:         checks.push(makeCheck(
+   03914:           'warn',
+   03915:           'conda_python points to an unexpected environment.',
+   03916:           `Current value: ${cfg.conda_python}. Expected shared path: ${sharedCondaPython}`
+   03917:         ));
+   03918:       }
+   03919: 
+```
+
+#### Settings chunk 14/15 — lines 3974-4030 — matches=1
+
+Scope: `function applyDetectedSfincsInpDefaults(parsed, options = {}) {`
+
+```text
+   03974:         }
+   03975:     
+   03976:         return data;
+   03977:       }
+   03978:     
+   03979:       if (!response.ok || !data.ok) {
+   03980:         const message = data.message || data.error || `Save failed with HTTP ${response.status}`;
+   03981:         alert(message);
+   03982:         throw new Error(message);
+   03983:       }
+   03984:     
+   03985:       alert(
+   03986:         data.updated_existing
+   03987:           ? `Updated saved config:\n${data.config_path}`
+   03988:           : `Saved config:\n${data.config_path}`
+   03989:       );
+   03990:     
+   03991:       return data;
+   03992:     }
+   03993: 
+   03994:     function setFieldValue(key, value) {
+   03995:       const el = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+   03996:       if (!el) return false;
+   03997:       const type = el.dataset.type || 'string';
+   03998:       el.value = stringifyForField(value, type);
+   03999:       return true;
+   04000:     }
+   04001:     
+>> 04002:     function applyDetectedSfincsInpDefaults(parsed, options = {}) {
+   04003:       if (!parsed || typeof parsed !== 'object') return;
+   04004: 
+   04005:       const allowAdvancedConfig = Boolean(options.allowAdvancedConfig);
+   04006:       const uiValues = parsed.ui_values || {};
+   04007:       const advancedConfig = parsed.advanced_config || null;
+   04008: 
+   04009:       // A detected sfincs.inp may hydrate safe scalar fields such as
+   04010:       // tref/tstart/tstop/epsg/crsgeo, but it should not overwrite the
+   04011:       // Advanced tab unless that is explicitly requested.
+   04012:       Object.entries(uiValues).forEach(([key, value]) => {
+   04013:         importedNativeValues[key] = value;
+   04014:         setFieldValue(key, value);
+   04015:       });
+   04016: 
+   04017:       if (allowAdvancedConfig && advancedConfig && typeof advancedConfig === 'object') {
+   04018:         importedNativeValues.advanced_config = advancedConfig;
+   04019:         setFieldValue('advanced_config', advancedConfig);
+   04020:       }
+   04021:     }
+   04022: 
+   04023:     async function loadConfigFromFile(file) {
+   04024:       if (!file) return;
+   04025:       const text = await file.text();
+   04026:       let cfg;
+   04027: 
+   04028:       try {
+   04029:         cfg = JSON.parse(text);
+   04030:       } catch (err) {
+```
+
+#### Settings chunk 15/15 — lines 4119-4410 — matches=37
+
+Scope: `function runChecksSafely(navigate = true) {`
+
+```text
+   04119: 
+   04120:     document.getElementById('check-button-top').addEventListener('click', () => runChecksSafely(true));
+   04121:     document.getElementById('check-button-main').addEventListener('click', () => runChecksSafely(false));
+   04122:     document.getElementById('save-config-button').addEventListener('click', () => saveConfigProgress(false));
+   04123:     document.getElementById('load-config-input').addEventListener('change', event => loadConfigFromFile(event.target.files[0]));
+   04124:     document.getElementById('add-source-button').addEventListener('click', () => addSourceRow(''));
+   04125: 
+   04126:     document.querySelectorAll('input, select, textarea').forEach(el => {
+   04127:       el.addEventListener('input', updatePreview);
+   04128:       el.addEventListener('change', updatePreview);
+   04129:     });
+   04130: 
+   04131:     // Expose Override Mode hooks for reusable static helpers such as
+   04132:     // pipeline_actions.js, path/default helpers, and native-shape review.
+   04133:     window.getConfig = getConfig;
+   04134:     window.setFieldValue = setFieldValue;
+   04135:     window.updatePreview = updatePreview;
+   04136:     window.runChecks = runChecks;
+   04137:     window.showStep = showStep;
+   04138:     window.showManualTab = showManualTab;
+   04139:     window.overrideMap = overrideMap;
+   04140:     window.getSourcePaths = getSourcePaths;
+   04141:     window.detectFiles = detectFiles;
+   04142: 
+   04143:     overrideRenderCatalogList();
+   04144:     renderOverrideTables();
+   04145:     updatePreview();
+   04146:   </script>
+>> 04147: <script src="static/launcher_defaults.js"></script>
+   04148: <script>
+   04149:   window.CONFIG_PATH_BROWSE_SETTINGS = {
+   04150:     sectionNumbers: ["5", "6", "7", "8", "11", "12", "17"],
+   04151:     specialPathKeys: [
+>> 04152:       "project_root",
+>> 04153:       "output_root",
+   04154:       "region_path",
+   04155:       "dem_paths",
+   04156:       "bathy_paths",
+   04157:       "landcover_path",
+   04158:       "landcover_reclass_table",
+   04159:       "rainfall_path",
+   04160:       "waterlevel_path",
+   04161:       "streamflow_site_info_path",
+   04162:       "streamflow_data_path",
+   04163:       "hydrography_path",
+   04164:       "obs_points_path",
+   04165:       "obs_lines_path",
+   04166:       "thin_dam_path",
+   04167:       "weir_path",
+   04168:       "drainage_structure_path",
+   04169:       "culvert_path",
+   04170:       "outflow_boundary_polygon_path",
+   04171:       "subgrid_river_path",
+   04172:       "grid_template_path",
+   04173:       "active_mask_path",
+   04174:       "discharge_points_csv_path",
+   04175:       "discharge_timeseries_csv_path",
+   04176:       "wind_path",
+   04177:       "pressure_path",
+   04178:       "infiltration_path",
+   04179:       "curve_number_path",
+   04180:       "hsg_path",
+   04181:       "soil_storage_path",
+   04182:       "qinf_path",
+   04183:       "smax_path",
+   04184:       "seff_path",
+   04185:       "ks_path",
+   04186:       "sigma_path",
+   04187:       "psi_path",
+   04188:       "f0_path",
+   04189:       "fc_path",
+   04190:       "kd_path",
+   04191:       "vol_path",
+   04192:       "conda_env_path",
+   04193:       "conda_python",
+   04194:       "sfincs_container_path"
+   04195:       ],
+>> 04196:     defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+   04197:   };
+   04198: </script>
+>> 04199: <script src="static/config_path_browse_buttons.js"></script>
+>> 04200: <script src="static/path_browser.js"></script>
+   04201: <script src="static/pipeline_actions.js"></script>
+   04202: <script src="static/page_reset.js"></script>
+   04203: 
+   04204: 
+>> 04205: <!-- BEGIN override source browse defaults patch -->
+   04206: <script>
+   04207: (function () {
+   04208:   "use strict";
+   04209: 
+   04210:   const FALLBACK_OVERRIDE_SOURCE_ROOT =
+   04211:     "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs";
+   04212: 
+>> 04213:   function defaultsApi() {
+>> 04214:     return window.SFINCS_LAUNCHER_DEFAULTS ||
+>> 04215:            window.SfincsLauncherDefaults ||
+>> 04216:            window.launcherDefaults ||
+   04217:            {};
+   04218:   }
+   04219: 
+   04220:   function getLauncherDefault(key) {
+>> 04221:     const api = defaultsApi();
+   04222: 
+   04223:     if (typeof api.getDefault === "function") {
+   04224:       return api.getDefault(key) || "";
+   04225:     }
+   04226: 
+   04227:     if (typeof api.get === "function") {
+   04228:       return api.get(key) || "";
+   04229:     }
+   04230: 
+   04231:     if (typeof api.getAll === "function") {
+   04232:       const all = api.getAll() || {};
+   04233:       return all[key] || "";
+   04234:     }
+   04235: 
+>> 04236:     if (api.defaults && api.defaults[key]) {
+>> 04237:       return api.defaults[key];
+   04238:     }
+   04239: 
+   04240:     return "";
+   04241:   }
+   04242: 
+   04243:   function getOverrideSourceBrowseStart() {
+   04244:     return String(
+   04245:       getLauncherDefault("overrideSourceRoot") ||
+   04246:       getLauncherDefault("nativeSfincsRoot") ||
+   04247:       FALLBACK_OVERRIDE_SOURCE_ROOT
+   04248:     ).trim();
+   04249:   }
+   04250: 
+   04251:   function applyOverrideSourceBrowseDefault() {
+   04252:     const start = getOverrideSourceBrowseStart();
+   04253:     if (!start) return;
+   04254: 
+   04255:     document
+   04256:       .querySelectorAll('#source-list button[data-browse-mode="directory"], button[data-browse-target="source-path"]')
+   04257:       .forEach((button) => {
+   04258:         button.dataset.browseDefaultKey = "overrideSourceRoot";
+   04259:         button.dataset.browseStart = start;
+   04260:       });
+   04261:   }
+   04262: 
+   04263:   window.applyOverrideSourceBrowseDefault = applyOverrideSourceBrowseDefault;
+   04264: 
+   04265:   document.addEventListener("DOMContentLoaded", function () {
+   04266:     setTimeout(applyOverrideSourceBrowseDefault, 0);
+   04267: 
+   04268:     const sourceList = document.getElementById("source-list");
+   04269:     if (sourceList) {
+   04270:       const observer = new MutationObserver(function () {
+   04271:         applyOverrideSourceBrowseDefault();
+   04272:       });
+   04273: 
+   04274:       observer.observe(sourceList, {
+   04275:         childList: true,
+   04276:         subtree: true
+   04277:       });
+   04278:     }
+   04279:   });
+   04280: 
+>> 04281:   window.addEventListener("launcher-defaults-changed", function () {
+   04282:     applyOverrideSourceBrowseDefault();
+   04283:   });
+   04284: })();
+   04285: </script>
+>> 04286: <!-- END override source browse defaults patch -->
+   04287: 
+   04288: 
+>> 04289: <!-- BEGIN runtime launcher path defaults patch -->
+   04290: <script>
+   04291: (function () {
+   04292:   "use strict";
+   04293: 
+   04294:   const FIELD_TO_DEFAULT = {
+>> 04295:     project_root: "projectRoot",
+   04296:     conda_env_path: "condaEnvPath",
+   04297:     conda_python: "condaPython",
+   04298:     sfincs_container: "sfincsContainerPath",
+   04299:     sfincs_container_path: "sfincsContainerPath"
+   04300:   };
+   04301: 
+>> 04302:   const BUILTIN_DEFAULTS = {
+   04303:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   04304:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   04305:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   04306:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   04307:   };
+   04308: 
+>> 04309:   function defaultsApi() {
+>> 04310:     return window.SFINCS_LAUNCHER_DEFAULTS ||
+>> 04311:            window.SfincsLauncherDefaults ||
+>> 04312:            window.launcherDefaults ||
+   04313:            {};
+   04314:   }
+   04315: 
+   04316:   function getLauncherDefault(key) {
+>> 04317:     const api = defaultsApi();
+   04318: 
+   04319:     if (typeof api.getDefault === "function") {
+>> 04320:       return api.getDefault(key) || BUILTIN_DEFAULTS[key] || "";
+   04321:     }
+   04322: 
+   04323:     if (typeof api.get === "function") {
+>> 04324:       return api.get(key) || BUILTIN_DEFAULTS[key] || "";
+   04325:     }
+   04326: 
+   04327:     if (typeof api.getAll === "function") {
+   04328:       const all = api.getAll() || {};
+>> 04329:       return all[key] || BUILTIN_DEFAULTS[key] || "";
+   04330:     }
+   04331: 
+>> 04332:     if (api.defaults && api.defaults[key]) {
+>> 04333:       return api.defaults[key];
+   04334:     }
+   04335: 
+>> 04336:     return BUILTIN_DEFAULTS[key] || "";
+   04337:   }
+   04338: 
+>> 04339:   function applyRuntimeLauncherPathDefaults(force) {
+   04340:     Object.entries(FIELD_TO_DEFAULT).forEach(([fieldKey, defaultKey]) => {
+   04341:       const input = document.querySelector(`[data-key="${fieldKey}"]`);
+   04342:       if (!input) return;
+   04343: 
+   04344:       const desired = String(getLauncherDefault(defaultKey) || "").trim();
+   04345:       if (!desired) return;
+   04346: 
+   04347:       const current = String(input.value || "").trim();
+>> 04348:       const builtin = String(BUILTIN_DEFAULTS[defaultKey] || "").trim();
+   04349: 
+   04350:       const safeToApply =
+   04351:         force ||
+   04352:         !current ||
+   04353:         current === builtin ||
+   04354:         input.dataset.appliedLauncherDefault === "true";
+   04355: 
+   04356:       if (!safeToApply) return;
+   04357: 
+   04358:       input.value = desired;
+   04359:       input.dataset.appliedLauncherDefault = "true";
+   04360:       input.dispatchEvent(new Event("input", {bubbles: true}));
+   04361:       input.dispatchEvent(new Event("change", {bubbles: true}));
+   04362:     });
+   04363: 
+   04364:     if (typeof window.updatePreview === "function") {
+   04365:       window.updatePreview();
+   04366:     }
+   04367:   }
+   04368: 
+>> 04369:   window.applyRuntimeLauncherPathDefaults = applyRuntimeLauncherPathDefaults;
+   04370: 
+   04371:   document.addEventListener("DOMContentLoaded", function () {
+   04372:     setTimeout(function () {
+>> 04373:       applyRuntimeLauncherPathDefaults(false);
+   04374:     }, 0);
+   04375:   });
+   04376: 
+>> 04377:   window.addEventListener("launcher-defaults-changed", function () {
+>> 04378:     applyRuntimeLauncherPathDefaults(true);
+   04379:   });
+   04380: })();
+   04381: </script>
+>> 04382: <!-- END runtime launcher path defaults patch -->
+   04383: 
+   04384: <!-- BEGIN permanent tab scrollbar script -->
+   04385: <script>
+   04386: (function () {
+   04387:   "use strict";
+   04388: 
+   04389:   function clamp(value, min, max) {
+   04390:     return Math.max(min, Math.min(max, value));
+   04391:   }
+   04392: 
+   04393:   function installOneTabScrollbar(strip) {
+   04394:     if (!strip || strip.dataset.permanentScrollbarReady === "true") return;
+   04395: 
+   04396:     const bar = document.createElement("div");
+   04397:     bar.className = "permanent-tab-scrollbar";
+   04398:     bar.setAttribute("aria-hidden", "true");
+   04399: 
+   04400:     const thumb = document.createElement("div");
+   04401:     thumb.className = "permanent-tab-scrollbar-thumb";
+   04402: 
+   04403:     bar.appendChild(thumb);
+   04404:     strip.insertAdjacentElement("afterend", bar);
+   04405: 
+   04406:     strip.dataset.permanentScrollbarReady = "true";
+   04407: 
+   04408:     let dragging = false;
+   04409:     let dragStartX = 0;
+   04410:     let dragStartScrollLeft = 0;
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html`
+
+Settings chunks: **11**  
+Matched settings-ish lines: **122**
+
+#### Settings chunk 1/11 — lines 570-996 — matches=59
+
+```text
+   00570: 
+   00571:   .permanent-tab-scrollbar[hidden] {
+   00572:     display: none !important;
+   00573:   }
+   00574: 
+   00575:   .permanent-tab-scrollbar-thumb {
+   00576:     position: absolute;
+   00577:     top: 3px;
+   00578:     bottom: 3px;
+   00579:     left: 0;
+   00580:     min-width: 80px;
+   00581:     border-radius: 999px;
+   00582:     background: #6b7280;
+   00583:     border: 1px solid #596170;
+   00584:     box-shadow: 0 1px 3px rgba(16, 24, 40, 0.24);
+   00585:     cursor: grab;
+   00586:   }
+   00587: 
+   00588:   .permanent-tab-scrollbar-thumb:active {
+   00589:     cursor: grabbing;
+   00590:   }
+   00591: </style>
+   00592: <!-- END permanent tab scrollbar patch -->
+   00593: 
+   00594: </head>
+   00595: <body>
+   00596:   <input type="hidden" data-key="pipeline_mode" data-type="string" value="preflight_only">
+   00597:   <input type="hidden" data-key="preprocess_mode" data-type="string" value="hydromt_build">
+>> 00598:   <input type="hidden" data-key="data_root" data-type="string" value="/proj/zefflab/projects/Flooding/Data/harris_county">
+   00599:   <input type="hidden" data-key="sfincs_container" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif">
+   00600:   <header>
+   00601:     <div class="header-grid">
+   00602:       <div>
+   00603:         <h1>Manual Mode</h1>
+   00604:         <p class="subtitle">Direct control over a standard SFINCS pipeline JSON config. Fill the tables in any order, save a normal backend config, load an existing config, and use the check tab before moving to backend preflight/build/submit.</p>
+   00605:       </div>
+   00606:       <div class="status-box" aria-label="Manual mode summary">
+   00607:         <div class="status-row"><span>Config format</span><span>normal JSON</span></div>
+   00608:         <div class="status-row"><span>Maintainer</span><span>Reichen Schaller</span></div>
+   00609:         <div class="status-row"><span>Version</span><span>v1.1 (6/1/26)</span></div>
+   00610:       </div>
+   00611:     </div>
+   00612:   </header>
+   00613: 
+   00614:   <main>
+   00615:     <div class="top-actions">
+   00616:       <div class="left-actions">
+   00617:         <a class="back-link" href="index.html">← Back to main menu</a>
+   00618:         <button class="secondary" type="button" id="check-button">Run page checks</button>
+   00619:       </div>
+   00620:       <div class="right-actions">
+   00621:         <button class="secondary" type="button" data-new-run-button>
+   00622:           New run / wipe page
+   00623:         </button>
+   00624:         <button class="primary" type="button" id="save-config-button">Save progress</button>
+   00625:         <label class="file-label" for="load-config-input">Load config</label>
+   00626:         <input id="load-config-input" type="file" accept=".json,application/json" />
+   00627:       </div>
+   00628:     </div>
+   00629: 
+   00630:     <div class="layout">
+   00631:       <section>
+>> 00632:         <div class="tab-strip-wrap">
+>> 00633:           <nav class="tab-strip" aria-label="Manual configuration tables">
+>> 00634:             <button class="tab active" data-tab="tab-0" type="button">0 Run identity</button>
+>> 00635:             <button class="tab" data-tab="tab-1" type="button">1 Pipeline</button>
+>> 00636:             <button class="tab" data-tab="tab-2" type="button">2 Slurm general</button>
+>> 00637:             <button class="tab" data-tab="tab-3" type="button">3 Stage resources</button>
+>> 00638:             <button class="tab" data-tab="tab-4" type="button">4 Data catalogs</button>
+>> 00639:             <button class="tab" data-tab="tab-5" type="button">5 Required inputs</button>
+>> 00640:             <button class="tab" data-tab="tab-6" type="button">6 Optional inputs</button>
+>> 00641:             <button class="tab" data-tab="tab-7" type="button">7 Model settings</button>
+>> 00642:             <button class="tab" data-tab="tab-8" type="button">8 Elevation/mask</button>
+>> 00643:             <button class="tab" data-tab="tab-9" type="button">9 Roughness</button>
+>> 00644:             <button class="tab" data-tab="tab-10" type="button">10 Subgrid</button>
+>> 00645:             <button class="tab" data-tab="tab-11" type="button">11 Forcing</button>
+>> 00646:             <button class="tab" data-tab="tab-12" type="button">12 Infiltration</button>
+>> 00647:             <button class="tab" data-tab="tab-13" type="button">13 Output</button>
+>> 00648:             <button class="tab" data-tab="tab-14" type="button">14 Advanced</button>
+>> 00649:             <button class="tab" data-tab="tab-15" type="button">15 Postprocess</button>
+>> 00650:             <button class="tab" data-tab="tab-16" type="button">16 Safety/debug</button>
+>> 00651:             <button class="tab" data-tab="tab-17" type="button">17 Backend paths</button>
+>> 00652:             <button class="tab check-tab" data-tab="tab-check" type="button">Check all</button>
+>> 00653:             <button class="tab submit-tab" data-tab="tab-submit" type="button">Submit</button>
+   00654:           </nav>
+   00655:         </div>
+   00656: 
+   00657:         <!-- TAB 0: RUN IDENTITY START -->
+>> 00658:         <div class="panel tab-panel active" id="tab-0">
+   00659:           <h2>0. Run identity / output locations</h2>
+>> 00660:           <p class="section-intro">These settings define the run name, the output root, and the metadata that will be saved into the same JSON config used by the backend runner.</p>
+>> 00661:           <table class="config-table">
+   00662:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00663:             <tbody>
+   00664:               <tr><td>event_name</td><td><input data-key="event_name" data-type="string" value="harvey_2017"></td><td>Convenience label. If edited, run_name updates to event_name + run_series.</td></tr>
+   00665:               <tr><td>run_series</td><td><input data-key="run_series" data-type="string" value="manual_001"></td><td>Convenience label for repeat experiments. If edited, run_name updates to event_name + run_series.</td></tr>
+   00666:               <tr><td>run_name</td><td><input data-key="run_name" data-type="string" value="harvey_2017_manual_001"></td><td>If left untouched, this is event_name + run_series. If you edit run_name directly, it becomes the full run folder name until event_name or run_series is edited again.</td></tr>
+>> 00667:               <tr><td>project_root</td><td><input data-key="project_root" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline"></td><td>Backend pipeline bundle root.</td></tr>
+>> 00668:               <tr><td>output_root</td><td><input data-key="output_root" data-type="string" value="/proj/zefflab/projects/Flooding/sfincs_runs"></td><td>Run folders will be created under this path by the backend.</td></tr>
+>> 00669:               <tr><td>planned run root</td><td><div id="run-root-preview" class="path-preview"></div></td><td>Preview only. This is computed as output_root / run_name.</td></tr>
+   00670:               <tr><td>overwrite_existing_run</td><td><select data-key="overwrite_existing_run" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Keep false unless you are deliberately replacing a run folder.</td></tr>
+   00671:               <tr><td>allow_writes_inside_proj</td><td><select data-key="allow_writes_inside_proj" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Shared project runs use /proj. Personal scratch runs may keep this false.</td></tr>
+   00672:               <tr><td>allow_missing_model_inputs</td><td><select data-key="allow_missing_model_inputs" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Real runs should normally keep this false. Skeleton tests may set it true.</td></tr>
+   00673:               <tr><td>run_description</td><td><input data-key="run_description" data-type="string" value="Manual launcher SFINCS pipeline run."></td><td>Short human description.</td></tr>
+   00674:               <tr><td>run_tags</td><td><textarea class="short-textarea" data-key="run_tags" data-type="json">["manual", "sfincs", "harris_county"]</textarea></td><td>JSON list of tags.</td></tr>
+   00675:             </tbody>
+   00676:           </table>
+   00677:         </div>
+   00678:         <!-- TAB 0: RUN IDENTITY END -->
+   00679: 
+   00680:         <!-- TAB 1: PIPELINE CONTROL START -->
+>> 00681:         <div class="panel tab-panel" id="tab-1">
+   00682:           <h2>1. Pipeline control</h2>
+   00683:           <p class="section-intro">Controls which stages are intended to run and which preprocessing strategy is being configured. Manual mode is kept clean; already-processed native-file routing belongs in Override Mode.</p>
+>> 00684:           <table class="config-table">
+   00685:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00686:             <tbody>
+   00687:               <tr><td>run_preprocessing_job</td><td><select data-key="run_preprocessing_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 1.</td></tr>
+   00688:               <tr><td>run_sfincs_job</td><td><select data-key="run_sfincs_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 2.</td></tr>
+   00689:               <tr><td>run_postprocessing_job</td><td><select data-key="run_postprocessing_job" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stage 3.</td></tr>
+   00690:               <tr><td>submit_with_dependencies</td><td><select data-key="submit_with_dependencies" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Normally true so later jobs wait for earlier jobs.</td></tr>
+   00691:               <tr><td>dependency_type</td><td><select data-key="dependency_type" data-type="string"><option selected>afterok</option></select></td><td>Currently the supported dependency style.</td></tr>
+   00692:             </tbody>
+   00693:           </table>
+   00694:         </div>
+   00695:         <!-- TAB 1: PIPELINE CONTROL END -->
+   00696: 
+   00697:         <!-- TAB 2: SLURM GENERAL START -->
+>> 00698:         <div class="panel tab-panel" id="tab-2">
+>> 00699:           <h2>2. Slurm general settings</h2>
+   00700:           <p class="section-intro">General Slurm metadata. Blank nullable values save as null.</p>
+>> 00701:           <table class="config-table">
+   00702:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00703:             <tbody>
+   00704:               <tr><td>slurm_account</td><td><input data-key="slurm_account" data-type="nullable" value=""></td><td>Leave blank unless the lab/cluster requires an account.</td></tr>
+   00705:               <tr><td>slurm_partition</td><td><input data-key="slurm_partition" data-type="nullable" value=""></td><td>Leave blank for default partition.</td></tr>
+   00706:               <tr><td>slurm_qos</td><td><input data-key="slurm_qos" data-type="nullable" value=""></td><td>Leave blank unless needed.</td></tr>
+   00707:               <tr><td>slurm_email</td><td><input data-key="slurm_email" data-type="nullable" value=""></td><td>Optional email for job notifications.</td></tr>
+   00708:               <tr><td>slurm_mail_type</td><td><input data-key="slurm_mail_type" data-type="string" value="END,FAIL"></td><td>Used only when slurm_email is set.</td></tr>
+   00709:               <tr><td>slurm_extra_directives</td><td><textarea class="short-textarea" data-key="slurm_extra_directives" data-type="json">[]</textarea></td><td>JSON list of extra #SBATCH lines. Usually empty.</td></tr>
+   00710:               <tr><td>bash_strict_mode</td><td><select data-key="bash_strict_mode" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Keep true unless debugging unusual shell behavior.</td></tr>
+   00711:             </tbody>
+   00712:           </table>
+   00713:         </div>
+   00714:         <!-- TAB 2: SLURM GENERAL END -->
+   00715: 
+   00716:         <!-- TAB 3: STAGE RESOURCES START -->
+>> 00717:         <div class="panel tab-panel" id="tab-3">
+   00718:           <h2>3. Slurm resources by stage</h2>
+>> 00719:           <p class="section-intro">CPU, memory, and wall-time settings for preprocessing, SFINCS, and postprocessing.</p>
+>> 00720:           <table class="config-table">
+   00721:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00722:             <tbody>
+   00723:               <tr><td>preprocess_time</td><td><input data-key="preprocess_time" data-type="string" value="01:00:00"></td><td>Wall time for preprocessing.</td></tr>
+   00724:               <tr><td>preprocess_nodes</td><td><input data-key="preprocess_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00725:               <tr><td>preprocess_ntasks</td><td><input data-key="preprocess_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00726:               <tr><td>preprocess_cpus_per_task</td><td><input data-key="preprocess_cpus_per_task" data-type="int" value="4"></td><td>More helpful for heavier preprocessing.</td></tr>
+   00727:               <tr><td>preprocess_mem</td><td><input data-key="preprocess_mem" data-type="string" value="16G"></td><td>Memory request.</td></tr>
+   00728:               <tr><td>sfincs_time</td><td><input data-key="sfincs_time" data-type="string" value="04:00:00"></td><td>Wall time for solver.</td></tr>
+   00729:               <tr><td>sfincs_nodes</td><td><input data-key="sfincs_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00730:               <tr><td>sfincs_ntasks</td><td><input data-key="sfincs_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00731:               <tr><td>sfincs_cpus_per_task</td><td><input data-key="sfincs_cpus_per_task" data-type="int" value="8"></td><td>OpenMP threads for SFINCS.</td></tr>
+   00732:               <tr><td>sfincs_mem</td><td><input data-key="sfincs_mem" data-type="string" value="32G"></td><td>Memory request.</td></tr>
+   00733:               <tr><td>postprocess_time</td><td><input data-key="postprocess_time" data-type="string" value="01:00:00"></td><td>Wall time for postprocessing.</td></tr>
+   00734:               <tr><td>postprocess_nodes</td><td><input data-key="postprocess_nodes" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00735:               <tr><td>postprocess_ntasks</td><td><input data-key="postprocess_ntasks" data-type="int" value="1"></td><td>Usually 1.</td></tr>
+   00736:               <tr><td>postprocess_cpus_per_task</td><td><input data-key="postprocess_cpus_per_task" data-type="int" value="2"></td><td>Can increase for heavy plotting.</td></tr>
+   00737:               <tr><td>postprocess_mem</td><td><input data-key="postprocess_mem" data-type="string" value="24G"></td><td>Memory request.</td></tr>
+   00738:               <tr><td>sfincs_use_openmp_threads</td><td><select data-key="sfincs_use_openmp_threads" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Usually true.</td></tr>
+   00739:               <tr><td>sfincs_omp_proc_bind</td><td><input data-key="sfincs_omp_proc_bind" data-type="string" value="true"></td><td>OpenMP binding setting.</td></tr>
+   00740:               <tr><td>sfincs_omp_places</td><td><input data-key="sfincs_omp_places" data-type="string" value="cores"></td><td>OpenMP placement setting.</td></tr>
+   00741:             </tbody>
+   00742:           </table>
+   00743:         </div>
+   00744:         <!-- TAB 3: STAGE RESOURCES END -->
+   00745: 
+   00746:         <!-- TAB 4: DATA CATALOGS START -->
+>> 00747:         <div class="panel tab-panel" id="tab-4">
+   00748:           <h2>4. HydroMT data catalogs</h2>
+   00749:           <p class="section-intro">Catalogs/sources used by preprocessing. In manual mode, these should be regular HydroMT catalog paths/names rather than native SFINCS override folders.</p>
+>> 00750:           <table class="config-table">
+   00751:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00752:             <tbody>
+   00753:               <tr>
+   00754:                 <td>data_catalogs</td>
+   00755:                 <td>
+   00756:                   <textarea
+   00757:                     class="short-textarea catalog-path-textarea"
+   00758:                     data-key="data_catalogs"
+   00759:                     data-type="json"
+   00760:                     style="min-height: 118px;"
+   00761:                   >[]</textarea>
+   00762: 
+   00763:                   <div
+   00764:                     style="
+   00765:                       display: grid;
+   00766:                       grid-template-columns: minmax(340px, 460px) auto auto;
+   00767:                       gap: 8px;
+   00768:                       align-items: center;
+   00769:                       margin-top: 10px;
+   00770:                     "
+   00771:                   >
+   00772:                     <input
+   00773:                       id="manual-catalog-add-input"
+   00774:                       type="text"
+>> 00775:                       placeholder="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/static/harris_county"
+   00776:                       style="width: 100%; font-family: var(--mono); font-size: 0.82rem;"
+   00777:                     >
+   00778: 
+   00779:                     <button
+   00780:                       type="button"
+   00781:                       class="secondary"
+   00782:                       data-browse-target="manual-catalog-add-input"
+   00783:                       data-browse-mode="directory"
+   00784:                       data-browse-default-key="catalogRoot"
+   00785:                       data-browse-start="/proj/zefflab/projects/Flooding/Data/harris_county/catalogs"
+   00786:                     >
+   00787:                       Browse
+   00788:                     </button>
+   00789: 
+   00790:                     <button
+   00791:                       type="button"
+   00792:                       class="primary"
+   00793:                       onclick="manualAddCatalogFromInput()"
+   00794:                     >
+   00795:                       Add catalog
+   00796:                     </button>
+   00797:                   </div>
+   00798: 
+   00799:                   <div class="button-row" style="margin-top: 10px;">
+   00800:                     <button type="button" class="secondary" onclick="manualRenderCatalogList()">Refresh selected list</button>
+   00801:                     <button type="button" class="secondary" onclick="manualDetectCatalogs(false)">Detect contents</button>
+   00802:                     <button type="button" class="primary" onclick="manualDetectCatalogs(true)">Autofill from catalogs</button>
+   00803:                   </div>
+   00804: 
+   00805:                   <div
+   00806:                     id="manual-catalog-list"
+   00807:                     class="path-preview"
+   00808:                     style="margin-top: 10px; min-height: 82px;"
+   00809:                   ></div>
+   00810:                   <div id="manual-catalog-detection-output" class="checks-list" style="margin-top: 10px;"></div>
+   00811:                 </td>
+   00812:                 <td>
+   00813:                   JSON list of HydroMT/source catalog paths. Normal flow: Browse → Add catalog → Detect contents → Autofill.
+   00814:                 </td>
+   00815:               </tr>
+   00816:             </tbody>
+   00817:           </table>
+   00818:         </div>
+   00819:         <!-- TAB 4: DATA CATALOGS END -->
+   00820: 
+   00821:         <!-- TAB 5: REQUIRED INPUTS START -->
+>> 00822:         <div class="panel tab-panel" id="tab-5">
+   00823:           <h2>5. Required input data</h2>
+   00824:           <p class="section-intro">Domain and elevation inputs. These matter most for HydroMT-build workflows where the model is built from source data.</p>
+>> 00825:           <table class="config-table">
+   00826:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00827:             <tbody>
+   00828:               <tr><td>region_mode</td><td><select data-key="region_mode" data-type="string"><option selected>geom</option><option>bbox</option></select></td><td>Region geometry or bounding box.</td></tr>
+   00829:               <tr><td>region_path</td><td><input data-key="region_path" data-type="nullable" value=""></td><td>Geometry path used when region_mode is geom.</td></tr>
+   00830:               <tr><td>region_bbox</td><td><textarea class="short-textarea" data-key="region_bbox" data-type="nullable_json"></textarea></td><td>JSON list like [xmin, ymin, xmax, ymax], or blank for null.</td></tr>
+   00831:               <tr><td>dem_paths</td><td><textarea class="short-textarea" data-key="dem_paths" data-type="json">[]</textarea></td><td>JSON list of DEM paths.</td></tr>
+   00832:               <tr><td>hydromt_dem_sources</td><td><textarea data-key="hydromt_dem_sources" data-type="json">[
+   00833:   {"elevation": "merit_hydro", "zmin": -50.0}
+   00834: ]</textarea></td><td>HydroMT DEM source definitions.</td></tr>
+   00835:               <tr><td>require_at_least_one_forcing</td><td><select data-key="require_at_least_one_forcing" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Safety: at least one forcing should be enabled.</td></tr>
+   00836:             </tbody>
+   00837:           </table>
+   00838:         </div>
+   00839:         <!-- TAB 5: REQUIRED INPUTS END -->
+   00840: 
+   00841:         <!-- TAB 6: OPTIONAL INPUTS START -->
+>> 00842:         <div class="panel tab-panel" id="tab-6">
+   00843:           <h2>6. Optional / additional input data</h2>
+   00844:           <p class="section-intro">Optional paths and source names for rainfall, water level, discharge, structures, and observations.</p>
+>> 00845:           <table class="config-table">
+   00846:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00847:             <tbody>
+   00848:               <tr><td>bathy_paths</td><td><textarea class="short-textarea" data-key="bathy_paths" data-type="json">[]</textarea></td><td>JSON list of bathymetry paths.</td></tr>
+   00849:               <tr><td>hydromt_bathy_sources</td><td><textarea data-key="hydromt_bathy_sources" data-type="json">[
+   00850:   {"elevation": "gebco"}
+   00851: ]</textarea></td><td>HydroMT bathy source definitions.</td></tr>
+   00852:               <tr><td>landcover_path</td><td><input data-key="landcover_path" data-type="nullable" value=""></td><td>Optional landcover file path.</td></tr>
+   00853:               <tr><td>landcover_source</td><td><input data-key="landcover_source" data-type="string" value="vito_2015"></td><td>HydroMT source name.</td></tr>
+>> 00854:               <tr><td>landcover_reclass_table</td><td><input data-key="landcover_reclass_table" data-type="nullable" value=""></td><td>Optional landcover-to-Manning reclass table.</td></tr>
+   00855:               <tr><td>hydromt_roughness_sources</td><td><textarea data-key="hydromt_roughness_sources" data-type="json">[]</textarea></td><td>Optional HydroMT roughness source definitions.</td></tr>
+   00856:               <tr><td>rainfall_path</td><td><input data-key="rainfall_path" data-type="nullable" value=""></td><td>Optional direct rainfall path.</td></tr>
+   00857:               <tr><td>rainfall_source</td><td><input data-key="rainfall_source" data-type="string" value="era5_hourly"></td><td>HydroMT rainfall source.</td></tr>
+   00858:               <tr><td>rainfall_variable</td><td><input data-key="rainfall_variable" data-type="string" value="precip"></td><td>Rainfall variable name.</td></tr>
+   00859:               <tr><td>waterlevel_path</td><td><input data-key="waterlevel_path" data-type="nullable" value=""></td><td>Optional direct water-level path.</td></tr>
+   00860:               <tr><td>waterlevel_source</td><td><input data-key="waterlevel_source" data-type="string" value="gtsmv3_eu_era5"></td><td>HydroMT water-level source.</td></tr>
+   00861:               <tr><td>waterlevel_variable</td><td><input data-key="waterlevel_variable" data-type="string" value="zeta"></td><td>Water-level variable/column.</td></tr>
+   00862:               <tr><td>discharge_source</td><td><input data-key="discharge_source" data-type="string" value="discharge_forcing"></td><td>HydroMT discharge source name or configured catalog source.</td></tr>
+   00863:               <tr><td>streamflow_site_info_path</td><td><input data-key="streamflow_site_info_path" data-type="nullable" value=""></td><td>Optional streamflow metadata path.</td></tr>
+   00864:               <tr><td>streamflow_data_path</td><td><input data-key="streamflow_data_path" data-type="nullable" value=""></td><td>Optional streamflow data path.</td></tr>
+   00865:               <tr><td>hydrography_path</td><td><input data-key="hydrography_path" data-type="nullable" value=""></td><td>Optional hydrography path.</td></tr>
+   00866:               <tr><td>hydrography_source</td><td><input data-key="hydrography_source" data-type="string" value="nhdplus_or_enhdplus"></td><td>Hydrography source name.</td></tr>
+   00867:               <tr><td>obs_points_path</td><td><input data-key="obs_points_path" data-type="nullable" value=""></td><td>Optional observation point file.</td></tr>
+   00868:               <tr><td>obs_lines_path</td><td><input data-key="obs_lines_path" data-type="nullable" value=""></td><td>Optional observation line / CRS file.</td></tr>
+   00869:               <tr><td>thin_dam_source_kind</td><td><select data-key="thin_dam_source_kind" data-type="string"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Thin-dam source style.</td></tr>
+   00870:               <tr><td>thin_dam_path</td><td><input data-key="thin_dam_path" data-type="nullable" value=""></td><td>Optional thin-dam path.</td></tr>
+   00871:               <tr><td>weir_source_kind</td><td><select data-key="weir_source_kind" data-type="string"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Weir source style.</td></tr>
+   00872:               <tr><td>weir_path</td><td><input data-key="weir_path" data-type="nullable" value=""></td><td>Optional weir path.</td></tr>
+   00873:               <tr><td>drainage_structure_source_kind</td><td><select data-key="drainage_structure_source_kind" data-type="string"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Drainage structure source style.</td></tr>
+   00874:               <tr><td>drainage_structure_path</td><td><input data-key="drainage_structure_path" data-type="nullable" value=""></td><td>Optional drainage structure path.</td></tr>
+   00875:               <tr><td>culvert_source_kind</td><td><select data-key="culvert_source_kind" data-type="string"><option selected>none</option><option>geodataframe</option><option>native_sfincs</option></select></td><td>Culvert source style.</td></tr>
+   00876:               <tr><td>culvert_path</td><td><input data-key="culvert_path" data-type="nullable" value=""></td><td>Optional culvert path.</td></tr>
+   00877:             </tbody>
+   00878:           </table>
+   00879:         </div>
+   00880:         <!-- TAB 6: OPTIONAL INPUTS END -->
+   00881: 
+>> 00882:         <!-- TAB 7: MODEL SETTINGS START -->
+>> 00883:         <div class="panel tab-panel" id="tab-7">
+>> 00884:           <h2>7. Normal model settings</h2>
+   00885:           <p class="section-intro">Core grid, time window, and feature toggles.</p>
+>> 00886:           <table class="config-table">
+   00887:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00888:             <tbody>
+   00889:               <tr><td>grid_resolution_m</td><td><input data-key="grid_resolution_m" data-type="float" value="100"></td><td>General target resolution.</td></tr>
+   00890:               <tr><td>grid_dx_m</td><td><input data-key="grid_dx_m" data-type="float" value="100"></td><td>Grid dx.</td></tr>
+   00891:               <tr><td>grid_dy_m</td><td><input data-key="grid_dy_m" data-type="float" value="100"></td><td>Grid dy.</td></tr>
+   00892:               <tr><td>grid_crs</td><td><input data-key="grid_crs" data-type="string" value="EPSG:32615"></td><td>CRS label/code for HydroMT build workflows. Harris County/Houston uses EPSG:32615.</td></tr>
+   00893:               <tr><td>grid_rotated</td><td><select data-key="grid_rotated" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Whether grid is rotated.</td></tr>
+   00894:               <tr><td>grid_rotation_deg</td><td><input data-key="grid_rotation_deg" data-type="nullable_float" value=""></td><td>Blank saves as null.</td></tr>
+   00895:               <tr><td>tref</td><td><input data-key="tref" data-type="string" value="2017-08-22 00:00:00"></td><td>Reference time.</td></tr>
+   00896:               <tr><td>tstart</td><td><input data-key="tstart" data-type="string" value="2017-08-22 00:00:00"></td><td>Model start.</td></tr>
+   00897:               <tr><td>tstop</td><td><input data-key="tstop" data-type="string" value="2017-09-17 01:00:00"></td><td>Model stop.</td></tr>
+   00898:               <tr><td>use_rainfall</td><td><select data-key="use_rainfall" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Rainfall forcing.</td></tr>
+   00899:               <tr><td>use_waterlevel_boundary</td><td><select data-key="use_waterlevel_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Boundary water-level forcing.</td></tr>
+   00900:               <tr><td>use_discharge_boundary</td><td><select data-key="use_discharge_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Discharge/source forcing.</td></tr>
+   00901:               <tr><td>use_infiltration</td><td><select data-key="use_infiltration" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Infiltration/SCS.</td></tr>
+   00902:               <tr><td>use_wind</td><td><select data-key="use_wind" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Wind forcing.</td></tr>
+   00903:               <tr><td>use_pressure</td><td><select data-key="use_pressure" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Pressure forcing.</td></tr>
+   00904:               <tr><td>use_structures</td><td><select data-key="use_structures" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Structures such as thin dams if configured.</td></tr>
+   00905:               <tr><td>use_obs_points</td><td><select data-key="use_obs_points" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Observation points.</td></tr>
+   00906:               <tr><td>use_obs_lines</td><td><select data-key="use_obs_lines" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Observation lines/cross sections.</td></tr>
+   00907:             </tbody>
+   00908:           </table>
+   00909:         </div>
+>> 00910:         <!-- TAB 7: MODEL SETTINGS END -->
+   00911: 
+   00912:         <!-- TAB 8: ELEVATION MASK START -->
+>> 00913:         <div class="panel tab-panel" id="tab-8">
+>> 00914:           <h2>8. Elevation / mask / boundary settings</h2>
+   00915:           <p class="section-intro">HydroMT-build controls for elevation handling, active area, and boundary creation.</p>
+>> 00916:           <table class="config-table">
+   00917:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00918:             <tbody>
+   00919:               <tr><td>dem_zmin</td><td><input data-key="dem_zmin" data-type="float" value="-50.0"></td><td>Minimum DEM threshold.</td></tr>
+   00920:               <tr><td>elevation_buffer_cells</td><td><input data-key="elevation_buffer_cells" data-type="int" value="1"></td><td>Elevation buffer cells.</td></tr>
+   00921:               <tr><td>active_zmin</td><td><input data-key="active_zmin" data-type="float" value="-50.0"></td><td>Active-cell elevation cutoff.</td></tr>
+   00922:               <tr><td>active_mask_path</td><td><input data-key="active_mask_path" data-type="nullable" value=""></td><td>Optional active-area gate.</td></tr>
+   00923:               <tr><td>active_mask_mode</td><td><select data-key="active_mask_mode" data-type="string"><option selected>sample_to_grid</option></select></td><td>Sample onto model grid.</td></tr>
+   00924:               <tr><td>mask_fill_area_km2</td><td><input data-key="mask_fill_area_km2" data-type="float" value="10.0"></td><td>Fill small areas.</td></tr>
+   00925:               <tr><td>mask_drop_area_km2</td><td><input data-key="mask_drop_area_km2" data-type="float" value="0.0"></td><td>Drop small areas.</td></tr>
+   00926:               <tr><td>waterlevel_boundary_zmax</td><td><input data-key="waterlevel_boundary_zmax" data-type="float" value="-5.0"></td><td>Boundary elevation filter.</td></tr>
+   00927:               <tr><td>reset_waterlevel_boundary</td><td><select data-key="reset_waterlevel_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Rebuild WL boundary.</td></tr>
+   00928:               <tr><td>stamp_waterlevel_boundary_on_mask</td><td><select data-key="stamp_waterlevel_boundary_on_mask" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Stamp BND cells as open.</td></tr>
+   00929:               <tr><td>waterlevel_boundary_stamp_search_radius_cells</td><td><input data-key="waterlevel_boundary_stamp_search_radius_cells" data-type="int" value="3"></td><td>Nearby-cell fallback.</td></tr>
+   00930:               <tr><td>open_boundary_mask_mode</td><td><select data-key="open_boundary_mask_mode" data-type="string"><option value="point_stamp" selected>point_stamp</option><option value="coastal_outline">coastal_outline</option><option value="none">none</option></select></td><td>How Manual classifies final sparse-mask open-boundary cells.</td></tr>
+   00931:               <tr><td>open_boundary_outline_path</td><td><input data-key="open_boundary_outline_path" data-type="nullable" value=""></td><td>Reviewed open-boundary line/polygon file. Can include coastal and non-coastal river outlet segments.</td></tr>
+   00932:               <tr><td>open_boundary_outline_buffer_m</td><td><input data-key="open_boundary_outline_buffer_m" data-type="float" value="150.0"></td><td>Distance from outline used to select active cells for msk=2.</td></tr>
+   00933:               <tr><td>open_boundary_min_cells</td><td><input data-key="open_boundary_min_cells" data-type="int" value="50"></td><td>Fail if coastal_outline creates fewer open-boundary cells than this.</td></tr>
+   00934:               <tr><td>open_boundary_max_cells</td><td><input data-key="open_boundary_max_cells" data-type="int" value="500"></td><td>Fail if coastal_outline creates more open-boundary cells than this. Use 0 to disable upper limit.</td></tr>
+   00935:               <tr><td>open_boundary_require_edge_adjacency</td><td><select data-key="open_boundary_require_edge_adjacency" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Only open cells that touch the active-domain edge or an inactive neighbor. Keeps interior lines from becoming drain holes.</td></tr>
+   00936:               <tr><td>open_boundary_allow_overwrite_special</td><td><select data-key="open_boundary_allow_overwrite_special" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Normally false. If false, only normal active cells are changed to msk=2.</td></tr>
+   00937:               <tr><td>outflow_boundary_polygon_path</td><td><input data-key="outflow_boundary_polygon_path" data-type="nullable" value=""></td><td>Optional outflow boundary polygon.</td></tr>
+   00938:               <tr><td>reset_outflow_boundary</td><td><select data-key="reset_outflow_boundary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Reset/create outflow boundary.</td></tr>
+   00939:             </tbody>
+   00940:           </table>
+   00941:         </div>
+   00942:         <!-- TAB 8: ELEVATION MASK END -->
+   00943: 
+   00944:         <!-- TAB 9: ROUGHNESS START -->
+>> 00945:         <div class="panel tab-panel" id="tab-9">
+>> 00946:           <h2>9. Roughness settings</h2>
+   00947:           <p class="section-intro">Manning roughness controls and landcover roughness behavior.</p>
+>> 00948:           <table class="config-table">
+   00949:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00950:             <tbody>
+   00951:               <tr><td>manning_uniform</td><td><input data-key="manning_uniform" data-type="float" value="0.04"></td><td>Uniform fallback Manning n.</td></tr>
+   00952:               <tr><td>manning_land</td><td><input data-key="manning_land" data-type="float" value="0.04"></td><td>Land Manning n.</td></tr>
+   00953:               <tr><td>manning_sea</td><td><input data-key="manning_sea" data-type="float" value="0.02"></td><td>Sea Manning n.</td></tr>
+   00954:               <tr><td>roughness_land_level_m</td><td><input data-key="roughness_land_level_m" data-type="float" value="0.0"></td><td>Land/sea threshold.</td></tr>
+   00955:               <tr><td>use_landcover_roughness_if_available</td><td><select data-key="use_landcover_roughness_if_available" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use landcover mapping when available.</td></tr>
+   00956:             </tbody>
+   00957:           </table>
+   00958:         </div>
+   00959:         <!-- TAB 9: ROUGHNESS END -->
+   00960: 
+   00961:         <!-- TAB 10: SUBGRID START -->
+>> 00962:         <div class="panel tab-panel" id="tab-10">
+>> 00963:           <h2>10. Subgrid settings</h2>
+   00964:           <p class="section-intro">Subgrid controls are important because they affect how fine-scale elevation and roughness are represented inside coarser SFINCS cells. This page supports either generating subgrid data from source inputs or pointing to a pre-made subgrid file.</p>
+   00965: 
+   00966: 
+   00967: 
+>> 00968:           <table class="config-table">
+   00969:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   00970:             <tbody>
+   00971:               <tr>
+   00972:                 <td>use_subgrid</td>
+   00973:                 <td>
+   00974:                   <select data-key="use_subgrid" data-type="bool">
+   00975:                     <option value="true" selected>true</option>
+   00976:                     <option value="false">false</option>
+   00977:                   </select>
+   00978:                 </td>
+   00979:                 <td>Master toggle for subgrid use.</td>
+   00980:               </tr>
+   00981:               
+   00982:               
+   00983:               <tr>
+   00984:                 <td>subgrid_nr_pixels</td>
+   00985:                 <td><input data-key="subgrid_nr_pixels" data-type="int" value="6"></td>
+   00986:                 <td>Subgrid pixels per model cell. Higher values can improve detail but increase preprocessing cost and storage.</td>
+   00987:               </tr>
+   00988: 
+   00989:               <tr>
+   00990:                 <td>subgrid_write_dep_tif</td>
+   00991:                 <td>
+   00992:                   <select data-key="subgrid_write_dep_tif" data-type="bool">
+   00993:                     <option value="true" selected>true</option>
+   00994:                     <option value="false">false</option>
+   00995:                   </select>
+   00996:                 </td>
+```
+
+#### Settings chunk 2/11 — lines 1014-1082 — matches=4
+
+Scope: `<table class="config-table">`
+
+```text
+   01014:                   <select data-key="subgrid_use_rivers" data-type="bool">
+   01015:                     <option value="false" selected>false</option>
+   01016:                     <option value="true">true</option>
+   01017:                   </select>
+   01018:                 </td>
+   01019:                 <td>Use river network information in subgrid generation when supported by the preprocessing path.</td>
+   01020:               </tr>
+   01021: 
+   01022:               <tr>
+   01023:                 <td>subgrid_river_path</td>
+   01024:                 <td><input data-key="subgrid_river_path" data-type="nullable" value=""></td>
+   01025:                 <td>Optional river network path for subgrid generation.</td>
+   01026:               </tr>
+   01027: 
+   01028:               <tr>
+   01029:                 <td>subgrid_river_source</td>
+   01030:                 <td><input data-key="subgrid_river_source" data-type="string" value="river_network_for_subgrid"></td>
+   01031:                 <td>River source name in a HydroMT catalog.</td>
+   01032:               </tr>
+   01033: 
+   01034:               <tr>
+   01035:                 <td>use_spatially_variable_roughness</td>
+   01036:                 <td>
+   01037:                   <select data-key="use_spatially_variable_roughness" data-type="bool">
+   01038:                     <option value="true" selected>true</option>
+   01039:                     <option value="false">false</option>
+   01040:                   </select>
+   01041:                 </td>
+>> 01042:                 <td>Related roughness/subgrid behavior. Keep aligned with the roughness settings tab.</td>
+   01043:               </tr>
+   01044:             </tbody>
+   01045:           </table>
+   01046:         </div>
+   01047:         <!-- TAB 10: SUBGRID END -->
+   01048:         
+   01049:         <!-- TAB 11: FORCING START -->
+>> 01050:         <div class="panel tab-panel" id="tab-11">
+>> 01051:           <h2>11. Forcing settings</h2>
+   01052:           <p class="section-intro">Rainfall, water-level, discharge, and meteorological forcing behavior. Fields ending in “kind” are dropdowns because only specific backend modes should be allowed.</p>
+   01053: 
+>> 01054:           <table class="config-table">
+   01055:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   01056:             <tbody>
+   01057:               <tr>
+   01058:                 <td>rainfall_kind</td>
+   01059:                 <td>
+   01060:                   <select data-key="rainfall_kind" data-type="string">
+   01061:                     <option selected>spatial</option>
+   01062:                     <option>uniform</option>
+   01063:                     <option>event_catalog_aorc</option>
+   01064:                   </select>
+   01065:                 </td>
+   01066:                 <td>spatial = gridded/catalog rainfall; uniform = one constant rainfall rate; event_catalog_aorc = reduced-event AORC rainfall path used by hybrid workflows.</td>
+   01067:               </tr>
+   01068: 
+   01069:               <tr>
+   01070:                 <td>rainfall_uniform_mm_hr</td>
+   01071:                 <td><input data-key="rainfall_uniform_mm_hr" data-type="nullable_float" value=""></td>
+   01072:                 <td>Used only for uniform rainfall. Blank saves as null.</td>
+   01073:               </tr>
+   01074: 
+   01075:               <tr>
+   01076:                 <td>rainfall_clip_to_model_time</td>
+   01077:                 <td>
+   01078:                   <select data-key="rainfall_clip_to_model_time" data-type="bool">
+   01079:                     <option value="true" selected>true</option>
+   01080:                     <option value="false">false</option>
+   01081:                   </select>
+   01082:                 </td>
+```
+
+#### Settings chunk 3/11 — lines 1196-1451 — matches=18
+
+Scope: `<div class="panel tab-panel" id="tab-12">`
+
+```text
+   01196:                 <td>wind_path</td>
+   01197:                 <td><input data-key="wind_path" data-type="nullable" value=""></td>
+   01198:                 <td>Optional wind path.</td>
+   01199:               </tr>
+   01200: 
+   01201:               <tr>
+   01202:                 <td>pressure_path</td>
+   01203:                 <td><input data-key="pressure_path" data-type="nullable" value=""></td>
+   01204:                 <td>Optional pressure path.</td>
+   01205:               </tr>
+   01206: 
+   01207:               <tr>
+   01208:                 <td>wind_source</td>
+   01209:                 <td><input data-key="wind_source" data-type="string" value="wind_forcing"></td>
+   01210:                 <td>Wind source name.</td>
+   01211:               </tr>
+   01212: 
+   01213:               <tr>
+   01214:                 <td>pressure_source</td>
+   01215:                 <td><input data-key="pressure_source" data-type="string" value="pressure_forcing"></td>
+   01216:                 <td>Pressure source name.</td>
+   01217:               </tr>
+   01218:             </tbody>
+   01219:           </table>
+   01220:         </div>
+   01221:         <!-- TAB 11: FORCING END -->
+   01222: 
+   01223:         <!-- TAB 12: INFILTRATION START -->
+>> 01224:         <div class="panel tab-panel" id="tab-12">
+>> 01225:           <h2>12. Infiltration settings</h2>
+   01226:           <p class="section-intro">Infiltration mode and supporting optional paths. The mode is a dropdown because only specific backend modes should be allowed.</p>
+>> 01227:           <table class="config-table">
+   01228:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   01229:             <tbody>
+   01230:               <tr>
+   01231:                 <td>infiltration_mode</td>
+   01232:                 <td>
+   01233:                   <select data-key="infiltration_mode" data-type="string">
+   01234:                     <option selected>none</option>
+   01235:                     <option>constant</option>
+   01236:                     <option>spatial_constant</option>
+   01237:                     <option>curve_number</option>
+   01238:                     <option>curve_number_with_ks</option>
+   01239:                     <option>native_sfincs</option>
+   01240:                   </select>
+   01241:                 </td>
+   01242:                 <td>Choose one of the supported/planned infiltration modes. Native SFINCS is usually for override/native-file workflows.</td>
+   01243:               </tr>
+   01244:               <tr><td>qinf_mm_hr</td><td><input data-key="qinf_mm_hr" data-type="float" value="0.0"></td><td>Constant infiltration if used.</td></tr>
+   01245:               <tr><td>qinf_zmin_m</td><td><input data-key="qinf_zmin_m" data-type="float" value="0.0"></td><td>Threshold if used.</td></tr>
+   01246:               <tr><td>scs_initial_abstraction_factor</td><td><input data-key="scs_initial_abstraction_factor" data-type="float" value="0.2"></td><td>SCS parameter.</td></tr>
+   01247:               <tr><td>infiltration_path</td><td><input data-key="infiltration_path" data-type="nullable" value=""></td><td>Optional HydroMT infiltration source path.</td></tr>
+   01248:               <tr><td>curve_number_path</td><td><input data-key="curve_number_path" data-type="nullable" value=""></td><td>Optional HydroMT/Curve Number source path.</td></tr>
+   01249:               <tr><td>hsg_path</td><td><input data-key="hsg_path" data-type="nullable" value=""></td><td>Optional hydrologic soil group path.</td></tr>
+   01250:               <tr><td>soil_storage_path</td><td><input data-key="soil_storage_path" data-type="nullable" value=""></td><td>Optional soil storage path.</td></tr>
+   01251:               
+   01252:               <tr><td>qinf_path</td><td><input data-key="qinf_path" data-type="nullable" value=""></td><td>Manual SFINCS qinf file. Copies to sfincs.qinf and writes qinffile.</td></tr>
+   01253:               <tr><td>smax_path</td><td><input data-key="smax_path" data-type="nullable" value=""></td><td>Manual maximum soil storage file. Copies to sfincs.smax and writes smaxfile.</td></tr>
+   01254:               <tr><td>seff_path</td><td><input data-key="seff_path" data-type="nullable" value=""></td><td>Manual initial/effective soil storage file. Copies to sfincs.seff and writes sefffile.</td></tr>
+   01255:               <tr><td>ks_path</td><td><input data-key="ks_path" data-type="nullable" value=""></td><td>Manual saturated hydraulic conductivity file. Copies to sfincs.ks and writes ksfile.</td></tr>
+   01256:             
+   01257:               <tr><td>sigma_path</td><td><input data-key="sigma_path" data-type="nullable" value=""></td><td>Manual Green-Ampt sigma file. Copies to sfincs.sigma and writes sigmafile.</td></tr>
+   01258:               <tr><td>psi_path</td><td><input data-key="psi_path" data-type="nullable" value=""></td><td>Manual Green-Ampt psi file. Copies to sfincs.psi and writes psifile.</td></tr>
+   01259:             
+   01260:               <tr><td>f0_path</td><td><input data-key="f0_path" data-type="nullable" value=""></td><td>Manual Horton f0 file. Copies to sfincs.f0 and writes f0file.</td></tr>
+   01261:               <tr><td>fc_path</td><td><input data-key="fc_path" data-type="nullable" value=""></td><td>Manual Horton fc file. Copies to sfincs.fc and writes fcfile.</td></tr>
+   01262:               <tr><td>kd_path</td><td><input data-key="kd_path" data-type="nullable" value=""></td><td>Manual Horton decay coefficient file. Copies to sfincs.kd and writes kdfile.</td></tr>
+   01263:             
+   01264:               <tr><td>vol_path</td><td><input data-key="vol_path" data-type="nullable" value=""></td><td>Manual storage volume file. Copies to sfincs.vol and writes volfile.</td></tr>
+   01265:             </tbody>
+   01266:           </table>
+   01267:         </div>
+   01268:         <!-- TAB 12: INFILTRATION END -->
+   01269: 
+   01270:         <!-- TAB 13: OUTPUT START -->
+>> 01271:         <div class="panel tab-panel" id="tab-13">
+>> 01272:           <h2>13. SFINCS output settings</h2>
+   01273:           <p class="section-intro">Output cadence and extra saved output variables.</p>
+>> 01274:           <table class="config-table">
+   01275:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   01276:             <tbody>
+   01277:               <tr><td>output_format</td><td><input data-key="output_format" data-type="string" value="net"></td><td>Output format.</td></tr>
+   01278:               <tr><td>dtout_s</td><td><input data-key="dtout_s" data-type="int" value="3600"></td><td>Map output interval.</td></tr>
+   01279:               <tr><td>dthisout_s</td><td><input data-key="dthisout_s" data-type="int" value="900"></td><td>History output interval.</td></tr>
+   01280:               <tr><td>dtmaxout_s</td><td><input data-key="dtmaxout_s" data-type="float" value="99999.0"></td><td>Maximum output interval.</td></tr>
+   01281:               <tr><td>dtrstout_s</td><td><input data-key="dtrstout_s" data-type="int" value="259200"></td><td>Restart output interval.</td></tr>
+   01282:               <tr><td>store_wet_duration</td><td><select data-key="store_wet_duration" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Save wet duration.</td></tr>
+   01283:               <tr><td>store_velocity</td><td><select data-key="store_velocity" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Save velocity.</td></tr>
+   01284:               <tr><td>store_max_velocity</td><td><select data-key="store_max_velocity" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Save max velocity.</td></tr>
+   01285:               <tr><td>store_max_flux</td><td><select data-key="store_max_flux" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Save max flux.</td></tr>
+   01286:               <tr><td>store_cumulative_precip</td><td><select data-key="store_cumulative_precip" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Writes SFINCS storecumprcp. Keep true for Curve Number/SCS infiltration.</td></tr>
+   01287:               <tr><td>store_hmax_subgrid</td><td><select data-key="store_hmax_subgrid" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Save hmax subgrid.</td></tr>
+   01288:             </tbody>
+   01289:           </table>
+   01290:         </div>
+   01291:         <!-- TAB 13: OUTPUT END -->
+   01292: 
+   01293:         <!-- TAB 14: ADVANCED START -->
+>> 01294:         <div class="panel tab-panel" id="tab-14">
+>> 01295:           <h2>14. Advanced / tuning settings</h2>
+   01296:           <p class="section-intro">Advanced SFINCS input keys. The text area is intentionally long so the webpage scrolls instead of trapping you in a tiny nested scroll box.</p>
+>> 01297:           <table class="config-table">
+   01298:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   01299:             <tbody>
+   01300:               <tr>
+   01301:                 <td>advanced_config</td>
+   01302:                 <td><textarea class="long-page-textarea" data-key="advanced_config" data-type="json">{
+   01303:   "latitude": 0,
+   01304:   "tspinup": 86400,
+   01305:   "trstout": -999,
+   01306:   "dtwnd": 1800,
+   01307:   "storecumprcp": 1,
+   01308:   "alpha": 0.5,
+   01309:   "theta": 1,
+   01310:   "huthresh": 0.05,
+   01311:   "manning": 0.04,
+   01312:   "zsini": -0.5,
+   01313:   "rhoa": 1.25,
+   01314:   "rhow": 1024,
+   01315:   "dtmax": 60,
+   01316:   "advection": 1,
+   01317:   "baro": 0,
+   01318:   "pavbnd": 0,
+   01319:   "gapres": 101200,
+   01320:   "stopdepth": 100,
+   01321:   "crsgeo": 0,
+   01322:   "coriolis": 0,
+   01323:   "btfilter": 60,
+   01324:   "viscosity": 1,
+   01325:   "inputformat": "bin",
+   01326:   "cdnrb": 3,
+   01327:   "cdwnd": [
+   01328:     0,
+   01329:     28,
+   01330:     50
+   01331:   ],
+   01332:   "cdval": [
+   01333:     0.001,
+   01334:     0.0025,
+   01335:     0.0015
+   01336:   ],
+   01337:   "min_lev_hmax": -20
+   01338: }</textarea></td>
+   01339:                 <td>Must be valid JSON. These keys are written as advanced SFINCS controls.</td>
+   01340:               </tr>
+   01341:             </tbody>
+   01342:           </table>
+   01343:         </div>
+   01344:         <!-- TAB 14: ADVANCED END -->
+   01345: 
+   01346:         <!-- TAB 15: POSTPROCESS START -->
+>> 01347:         <div class="panel tab-panel" id="tab-15">
+>> 01348:           <h2>15. Post-processing settings</h2>
+>> 01349:           <p class="section-intro">Summary, plotting, basemap, and variable-name candidate settings for postprocessing.</p>
+>> 01350:           <table class="config-table">
+   01351:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   01352:             <tbody>
+   01353:               <tr><td>postprocess_create_summary_txt</td><td><select data-key="postprocess_create_summary_txt" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Create summary text.</td></tr>
+   01354:               <tr><td>postprocess_create_summary_json</td><td><select data-key="postprocess_create_summary_json" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Create summary JSON.</td></tr>
+   01355:               <tr><td>postprocess_list_output_variables</td><td><select data-key="postprocess_list_output_variables" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>List output variables.</td></tr>
+   01356:               <tr><td>postprocess_make_quicklook_plots</td><td><select data-key="postprocess_make_quicklook_plots" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Make quicklook plots.</td></tr>
+   01357:               <tr><td>postprocess_plot_max_water_level</td><td><select data-key="postprocess_plot_max_water_level" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot max water level.</td></tr>
+   01358:               <tr><td>postprocess_plot_max_flood_depth</td><td><select data-key="postprocess_plot_max_flood_depth" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot max flood depth.</td></tr>
+   01359:               <tr><td>postprocess_plot_final_water_level</td><td><select data-key="postprocess_plot_final_water_level" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot final water level.</td></tr>
+   01360:               <tr><td>postprocess_plot_obs_hydrographs</td><td><select data-key="postprocess_plot_obs_hydrographs" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Plot observation hydrographs.</td></tr>
+   01361:               <tr><td>postprocess_use_basemap</td><td><select data-key="postprocess_use_basemap" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use basemap for maps.</td></tr>
+   01362:               <tr><td>postprocess_basemap_source</td><td><input data-key="postprocess_basemap_source" data-type="nullable" value="sat"></td><td>Basemap source.</td></tr>
+   01363:               <tr><td>postprocess_basemap_zoomlevel</td><td><input data-key="postprocess_basemap_zoomlevel" data-type="string_or_number" value="auto"></td><td>Enter a number, or Auto.</td></tr>
+   01364:               <tr><td>postprocess_use_rotated_map_plots</td><td><select data-key="postprocess_use_rotated_map_plots" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Use rotated map plots.</td></tr>
+   01365:               <tr><td>postprocess_use_basemap_on_result_maps</td><td><select data-key="postprocess_use_basemap_on_result_maps" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Overlay result maps on basemap.</td></tr>
+   01366:               <tr><td>postprocess_result_map_alpha</td><td><input data-key="postprocess_result_map_alpha" data-type="float" value="0.85"></td><td>Result layer opacity.</td></tr>
+   01367:               <tr><td>postprocess_result_map_background_fade_alpha</td><td><input data-key="postprocess_result_map_background_fade_alpha" data-type="float" value="0.35"></td><td>Basemap fade amount.</td></tr>
+   01368:               <tr><td>postprocess_result_map_show_model_features</td><td><select data-key="postprocess_result_map_show_model_features" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show model features.</td></tr>
+   01369:               <tr><td>postprocess_result_map_show_obs</td><td><select data-key="postprocess_result_map_show_obs" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show observation points.</td></tr>
+   01370:               <tr><td>postprocess_result_map_show_boundaries</td><td><select data-key="postprocess_result_map_show_boundaries" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show boundaries.</td></tr>
+   01371:               <tr><td>postprocess_result_map_show_dep_layer</td><td><select data-key="postprocess_result_map_show_dep_layer" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show bed/elevation layer.</td></tr>
+   01372:               <tr><td>postprocess_result_map_show_layout_legend</td><td><select data-key="postprocess_result_map_show_layout_legend" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Show layout legend.</td></tr>
+   01373:               <tr><td>postprocess_waterlevel_var_candidates</td><td><textarea class="short-textarea" data-key="postprocess_waterlevel_var_candidates" data-type="json">["zs", "waterlevel", "water_level"]</textarea></td><td>Candidate variable names.</td></tr>
+   01374:               <tr><td>postprocess_bedlevel_var_candidates</td><td><textarea class="short-textarea" data-key="postprocess_bedlevel_var_candidates" data-type="json">["zb", "bedlevel", "bed_level", "dep"]</textarea></td><td>Candidate variable names.</td></tr>
+   01375:               <tr><td>postprocess_depth_var_candidates</td><td><textarea class="short-textarea" data-key="postprocess_depth_var_candidates" data-type="json">["h", "depth", "flood_depth"]</textarea></td><td>Candidate variable names.</td></tr>
+   01376:               <tr><td>postprocess_max_waterlevel_var_candidates</td><td><textarea class="short-textarea" data-key="postprocess_max_waterlevel_var_candidates" data-type="json">["zsmax", "max_zs", "waterlevel_max"]</textarea></td><td>Candidate variable names.</td></tr>
+   01377:               <tr><td>postprocess_max_depth_var_candidates</td><td><textarea class="short-textarea" data-key="postprocess_max_depth_var_candidates" data-type="json">["hmax", "max_h", "flood_depth_max"]</textarea></td><td>Candidate variable names.</td></tr>
+   01378:               <tr><td>postprocess_matplotlib_backend</td><td><input data-key="postprocess_matplotlib_backend" data-type="string" value="Agg"></td><td>Non-interactive plotting backend.</td></tr>
+   01379:               <tr><td>postprocess_max_plot_cells</td><td><input data-key="postprocess_max_plot_cells" data-type="int" value="2000000"></td><td>Plot downsampling guard.</td></tr>
+   01380:             </tbody>
+   01381:           </table>
+   01382:         </div>
+   01383:         <!-- TAB 15: POSTPROCESS END -->
+   01384: 
+   01385:         <!-- TAB 16: SAFETY DEBUG START -->
+>> 01386:         <div class="panel tab-panel" id="tab-16">
+>> 01387:           <h2>16. Safety / debug settings</h2>
+   01388:           <p class="section-intro">This is where failed checks can be understood. Some safety checks can be relaxed deliberately, but the page should make that choice visible.</p>
+>> 01389:           <table class="config-table">
+   01390:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   01391:             <tbody>
+   01392:               <tr><td>print_config_summary</td><td><select data-key="print_config_summary" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Print summary in backend logs.</td></tr>
+   01393:               <tr><td>validate_paths_before_submit</td><td><select data-key="validate_paths_before_submit" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Safety path validation.</td></tr>
+   01394:               <tr><td>stop_if_required_path_missing</td><td><select data-key="stop_if_required_path_missing" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Set false only if you truly want warnings instead of stops.</td></tr>
+   01395:               <tr><td>save_data_inventory</td><td><select data-key="save_data_inventory" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Save data inventory.</td></tr>
+   01396:               <tr><td>save_config_json</td><td><select data-key="save_config_json" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Backend should write frozen run_config.json.</td></tr>
+   01397:               <tr><td>save_job_ids</td><td><select data-key="save_job_ids" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Save Slurm job IDs.</td></tr>
+   01398:               <tr><td>print_optional_path_warnings</td><td><select data-key="print_optional_path_warnings" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Print optional path warnings.</td></tr>
+   01399:               <tr><td>warn_unknown_config_keys</td><td><select data-key="warn_unknown_config_keys" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Schema hardening warning.</td></tr>
+   01400:               <tr><td>strict_schema_validation</td><td><select data-key="strict_schema_validation" data-type="bool"><option value="false" selected>false</option><option value="true">true</option></select></td><td>Use true for final strict checking.</td></tr>
+   01401:               <tr><td>warn_schema_type_mismatches</td><td><select data-key="warn_schema_type_mismatches" data-type="bool"><option value="true" selected>true</option><option value="false">false</option></select></td><td>Schema hardening type warning.</td></tr>
+   01402:               <tr>
+   01403:                 <td>preprocess_enable_hydromt_file_logging</td>
+   01404:                 <td>
+   01405:                   <select data-key="preprocess_enable_hydromt_file_logging" data-type="bool">
+   01406:                     <option value="false" selected>false</option>
+   01407:                     <option value="true">true</option>
+   01408:                   </select>
+   01409:                 </td>
+   01410:                 <td>Keep false by default; HydroMT file logging is slow. Slurm stdout/stderr logs still capture preprocessing messages.</td>
+   01411:               </tr>              
+   01412:             </tbody>
+   01413:           </table>
+   01414:         </div>
+   01415:         <!-- TAB 16: SAFETY DEBUG END -->
+   01416: 
+   01417:         <!-- TAB 17: BACKEND PATHS START -->
+>> 01418:         <div class="panel tab-panel" id="tab-17">
+   01419:           <h2>17. Backend paths / advanced runtime</h2>
+   01420:           <p class="section-intro">Usually these should remain stable. They define the Python environment, stage scripts, and SFINCS container used by generated Slurm scripts.</p>
+   01421: 
+   01422: 
+>> 01423:           <table class="config-table">
+   01424:             <thead><tr><th>Setting</th><th>Value</th><th>Notes</th></tr></thead>
+   01425:             <tbody>
+   01426:               <tr>
+   01427:                 <td>prefer_pipeline_bundle_runtime_paths</td>
+   01428:                 <td>
+   01429:                   <select data-key="prefer_pipeline_bundle_runtime_paths" data-type="bool">
+   01430:                     <option value="true" selected>true</option>
+   01431:                     <option value="false">false</option>
+   01432:                   </select>
+   01433:                 </td>
+   01434:                 <td>Prefer runtime paths inside the shared pipeline bundle when available.</td>
+   01435:               </tr>
+   01436: 
+   01437:               <tr>
+   01438:                 <td>anaconda_module</td>
+   01439:                 <td><input data-key="anaconda_module" data-type="string" value="anaconda"></td>
+   01440:                 <td>Longleaf module name.</td>
+   01441:               </tr>
+   01442: 
+   01443:               <tr>
+   01444:                 <td>apptainer_module</td>
+   01445:                 <td><input data-key="apptainer_module" data-type="string" value="apptainer"></td>
+   01446:                 <td>Longleaf module name.</td>
+   01447:               </tr>
+   01448: 
+   01449:               <tr>
+   01450:                 <td>preprocess_stage_script</td>
+   01451:                 <td><input data-key="preprocess_stage_script" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/code/preprocess_stage.py"></td>
+```
+
+#### Settings chunk 4/11 — lines 1466-1542 — matches=2
+
+Scope: `<div class="panel tab-panel" id="tab-check">`
+
+```text
+   01466: 
+   01467:               <tr>
+   01468:                 <td>conda_python</td>
+   01469:                 <td><input data-key="conda_python" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python"></td>
+   01470:                 <td>Desired shared Python executable. </td>
+   01471:               </tr>
+   01472: 
+   01473:               <tr>
+   01474:                 <td>sfincs_container_path</td>
+   01475:                 <td><input data-key="sfincs_container_path" data-type="string" value="/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"></td>
+   01476:                 <td>SFINCS Apptainer image inside the shared pipeline bundle.</td>
+   01477:               </tr>
+   01478: 
+   01479:               <tr>
+   01480:                 <td>preprocess timing report</td>
+   01481:                 <td>
+   01482:                   <select disabled>
+   01483:                     <option>backend hook needed</option>
+   01484:                   </select>
+   01485:                 </td>
+   01486:                 <td>Timing blocks already exist in preprocessing, but making this configurable from the web page requires a small backend/config hook. Not worth adding as a fake HTML-only setting.</td>
+   01487:               </tr>
+   01488:             </tbody>
+   01489:           </table>
+   01490:         </div>
+   01491:         <!-- TAB 17: BACKEND PATHS END -->
+   01492: 
+   01493:         <!-- CHECK ALL START -->
+>> 01494:         <div class="panel tab-panel" id="tab-check">
+   01495:           <h2>Check all tables</h2>
+   01496:           <p class="section-intro">
+   01497:             These page-level checks catch obvious form/config problems before backend preflight.
+   01498:             Backend preflight remains the source of truth before build or submit.
+   01499:           </p>
+   01500:         
+   01501:           <div class="button-row">
+   01502:             <button class="primary" type="button" id="check-button-2">Run page checks</button>
+   01503:             <button class="secondary" type="button" id="geometry-check-local-button">Run Geometry Check Locally</button>
+   01504:             <button class="secondary" type="button" id="geometry-check-submit-button">Submit Geometry Check</button>
+   01505:           </div>
+   01506:         
+   01507:           <div id="runtime-window-review-output"></div>
+   01508:           <pre id="geometry-check-output" class="runner-output">Geometry check output will appear here.</pre>
+   01509:           <div id="checks-output" class="checks-list"></div>
+   01510:         </div>
+   01511:         <!-- CHECK ALL END -->
+   01512: 
+   01513:         <!-- SUBMIT START -->
+>> 01514:         <div class="panel tab-panel" id="tab-submit">
+   01515:           <h2>Final submit</h2>
+   01516:           <p class="section-intro">
+   01517:             This sends the current Manual Mode config to Flask, saves a staged JSON config,
+   01518:             and calls <span class="mono">pipeline_runner.py</span> with a safe whitelisted mode.
+   01519:             Run backend preflight first, then build scripts, then submit.
+   01520:           </p>
+   01521: 
+   01522:           <div class="callout warn">
+   01523:             Keep <span class="mono">preprocess_mode = hydromt_build</span> for clean Manual Mode testing.
+   01524:             Use Override Mode for already-native or hybrid reduced-event catalog workflows unless you are intentionally debugging those backend paths from Manual.
+   01525:           </div>
+   01526: 
+   01527:           <div class="submit-review-grid">
+   01528:             <div class="submit-review-row">
+   01529:               <strong>Action order</strong>
+   01530:               <span>Preflight → Build Scripts → Submit Slurm Chain</span>
+   01531:             </div>
+   01532:             <div class="submit-review-row">
+   01533:               <strong>Runner target</strong>
+   01534:               <span class="mono">/proj/zefflab/projects/Flooding/pipeline/code/pipeline_runner.py</span>
+   01535:             </div>
+   01536:             <div class="submit-review-row">
+   01537:               <strong>Manual behavior</strong>
+   01538:               <span>Uses the full visible config surface. It does not auto-strip fields like Override Mode.</span>
+   01539:             </div>
+   01540:           </div>
+   01541: 
+   01542:           <div class="button-row">
+```
+
+#### Settings chunk 5/11 — lines 1860-1916 — matches=1
+
+Scope: `const outputRoot = (cfg.output_root || '').replace(/\/+$/, '');`
+
+```text
+   01860: 
+   01861:       document.querySelectorAll('[data-key]').forEach(el => {
+   01862:         const key = el.dataset.key;
+   01863:         try {
+   01864:           cfg[key] = parseValue(el);
+   01865:           el.style.borderColor = '';
+   01866:         } catch (err) {
+   01867:           cfg[key] = `JSON_PARSE_ERROR: ${err.message}`;
+   01868:           el.style.borderColor = 'var(--bad)';
+   01869:         }
+   01870:       });
+   01871: 
+   01872:       const fixedCfg = applyManualFixedConfig(cfg);
+   01873:       manualSyncDemSourceZmin(fixedCfg);
+   01874:       manualSyncStoreCumulativePrecip(fixedCfg);
+   01875:       manualStripGridAuthorityAdvancedKeys(fixedCfg);
+   01876:       return fixedCfg;
+   01877:     }
+   01878: 
+   01879:     function setFieldValue(key, value) {
+   01880:       const el = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
+   01881:       if (!el) return false;
+   01882:       const type = el.dataset.type || 'string';
+   01883:       el.value = stringifyForField(value, type);
+   01884:       return true;
+   01885:     }
+   01886: 
+   01887:     function plannedRunRoot(cfg) {
+>> 01888:       const outputRoot = (cfg.output_root || '').replace(/\/+$/, '');
+   01889:       const runName = cfg.run_name || 'UNSET_RUN_NAME';
+   01890:       return outputRoot ? `${outputRoot}/${runName}` : runName;
+   01891:     }
+   01892: 
+   01893:     function updatePreview() {
+   01894:       const cfg = getConfig();
+   01895:       const root = plannedRunRoot(cfg);
+   01896:       if (runRootPreview) runRootPreview.textContent = root;
+   01897:       if (sideRunRootPreview) sideRunRootPreview.textContent = `${root}/run_config.json`;
+   01898:       if (preview) preview.textContent = JSON.stringify(cfg, null, 2);
+   01899:     }
+   01900: 
+   01901:     function makeCheck(status, message, detail) {
+   01902:       const div = document.createElement('div');
+   01903:       div.className = `check-item ${status}`;
+   01904:       const label = status === 'good' ? 'OK' : status === 'warn' ? 'WARN' : 'FAIL';
+   01905:       div.innerHTML = `<div class="check-status">${label}</div><div><b>${message}</b><br><span class="muted">${detail || ''}</span></div>`;
+   01906:       return div;
+   01907:     }
+   01908:     
+   01909:     function manualReviewEsc(value) {
+   01910:       return String(value ?? '')
+   01911:         .replaceAll('&', '&amp;')
+   01912:         .replaceAll('<', '&lt;')
+   01913:         .replaceAll('>', '&gt;')
+   01914:         .replaceAll('"', '&quot;')
+   01915:         .replaceAll("'", '&#039;');
+   01916:     }
+```
+
+#### Settings chunk 6/11 — lines 2616-2689 — matches=6
+
+Scope: `const checks = [];`
+
+```text
+   02616: 
+   02617:         if (!response.ok || !result.ok) {
+   02618:           setGeometryButtonState(button, 'bad');
+   02619:           return;
+   02620:         }
+   02621: 
+   02622:         setGeometryButtonState(button, 'submitted');
+   02623:       } catch (err) {
+   02624:         setGeometryButtonState(button, 'bad');
+   02625:         if (target) {
+   02626:           target.textContent = `Geometry check submit request failed:\n${err.stack || err.message}`;
+   02627:         }
+   02628:       }
+   02629:     }
+   02630: 
+   02631:     function runChecks(navigate = true) {
+   02632:       const cfg = getConfig();
+   02633:       checksOutput.innerHTML = '';
+   02634:       const checks = [];
+   02635:     
+   02636:       runRuntimeWindowReviewCheck();
+   02637: 
+   02638:       if (/^[A-Za-z0-9_.-]+$/.test(cfg.run_name || '')) {
+   02639:         checks.push(makeCheck('good', 'run_name format is safe.', cfg.run_name));
+   02640:       } else {
+   02641:         checks.push(makeCheck('bad', 'run_name has unsafe characters.', 'Use only letters, numbers, underscores, dashes, and periods.'));
+   02642:       }
+   02643: 
+>> 02644:       if (cfg.output_root) {
+>> 02645:         checks.push(makeCheck('good', 'output_root is set.', cfg.output_root));
+   02646:       } else {
+>> 02647:         checks.push(makeCheck('bad', 'output_root is blank.', 'The backend needs a root folder for run outputs.'));
+   02648:       }
+   02649: 
+   02650:       if (lastStoreCumPrecipImportRepair) {
+   02651:         checks.push(makeCheck(
+   02652:           'good',
+   02653:           'Loaded config was upgraded for cumulative precipitation storage.',
+   02654:           `${lastStoreCumPrecipImportRepair} The next saved/submitted Manual config will not preserve top-level storecumprcp.`
+   02655:         ));
+   02656:       }
+   02657: 
+>> 02658:       if (cfg.project_root) {
+>> 02659:         checks.push(makeCheck('good', 'project_root is set.', cfg.project_root));
+   02660:       } else {
+>> 02661:         checks.push(makeCheck('bad', 'project_root is blank.', 'The backend needs the pipeline bundle root.'));
+   02662:       }
+   02663: 
+   02664:       function parseManualDate(value) {
+   02665:         const text = String(value || '').trim();
+   02666: 
+   02667:         if (!text) {
+   02668:           return null;
+   02669:         }
+   02670: 
+   02671:         const normalized = text.includes('T') ? text : text.replace(' ', 'T');
+   02672:         const date = new Date(normalized);
+   02673: 
+   02674:         return Number.isNaN(date.getTime()) ? null : date;
+   02675:       }
+   02676: 
+   02677:       const trefDate = parseManualDate(cfg.tref);
+   02678:       const tstartDate = parseManualDate(cfg.tstart);
+   02679:       const tstopDate = parseManualDate(cfg.tstop);
+   02680: 
+   02681:       if (trefDate && tstartDate && tstopDate) {
+   02682:         checks.push(makeCheck(
+   02683:           'good',
+   02684:           'Model time fields parse as dates.',
+   02685:           `tref=${cfg.tref}, tstart=${cfg.tstart}, tstop=${cfg.tstop}`
+   02686:         ));
+   02687: 
+   02688:         if (tstartDate < tstopDate) {
+   02689:           checks.push(makeCheck(
+```
+
+#### Settings chunk 7/11 — lines 2827-2883 — matches=1
+
+Scope: `const catalogList = asList(cfg.data_catalogs);`
+
+```text
+   02827: 
+   02828:       // Data catalog sanity.
+   02829:       const catalogList = asList(cfg.data_catalogs);
+   02830: 
+   02831:       if (catalogList.length > 0) {
+   02832:         checks.push(makeCheck(
+   02833:           'good',
+   02834:           'At least one data catalog/source is listed.',
+   02835:           catalogList.join(', ')
+   02836:         ));
+   02837:       } else {
+   02838:         checks.push(makeCheck(
+   02839:           'bad',
+   02840:           'data_catalogs is empty.',
+   02841:           'HydroMT-build Manual Mode needs at least one usable data catalog or named source collection.'
+   02842:         ));
+   02843:       }
+   02844: 
+   02845:       if (catalogList.length === 1 && String(catalogList[0]).trim() === 'artifact_data') {
+   02846:         checks.push(makeCheck(
+   02847:           'warn',
+   02848:           'data_catalogs still uses artifact_data.',
+   02849:           'This is okay for a tiny artifact test, but probably wrong for a real Harris County run.'
+   02850:         ));
+   02851:       }
+   02852: 
+   02853: 
+   02854: 
+>> 02855:       // Required/important visible path defaults.
+   02856:       if (cfg.region_mode === 'geom') {
+   02857:         if (isBlank(cfg.region_path)) {
+   02858:           checks.push(makeCheck(
+   02859:             'bad',
+   02860:             'region_mode is geom but region_path is blank.',
+   02861:             'Use Browse to select a region GeoJSON, or switch region_mode to bbox and fill region_bbox.'
+   02862:           ));
+   02863:         } else {
+   02864:           checks.push(makeCheck(
+   02865:             'good',
+   02866:             'Region geometry path is set.',
+   02867:             cfg.region_path
+   02868:           ));
+   02869:         }
+   02870:       }
+   02871: 
+   02872:       if (cfg.region_mode === 'bbox') {
+   02873:         const bboxList = asList(cfg.region_bbox);
+   02874: 
+   02875:         if (bboxList.length === 4) {
+   02876:           checks.push(makeCheck(
+   02877:             'good',
+   02878:             'Region bbox has four values.',
+   02879:             JSON.stringify(bboxList)
+   02880:           ));
+   02881:         } else {
+   02882:           checks.push(makeCheck(
+   02883:             'bad',
+```
+
+#### Settings chunk 8/11 — lines 2959-3015 — matches=1
+
+Scope: `const enabledForcings = [`
+
+```text
+   02959:             `rainfall_kind = ${cfg.rainfall_kind}, rainfall_source = ${cfg.rainfall_source || '(blank)'}`
+   02960:           ));
+   02961:         }
+   02962:       } else {
+   02963:         checks.push(makeCheck(
+   02964:           'warn',
+   02965:           'Rainfall is disabled.',
+   02966:           'Confirm this is intentional for the event.'
+   02967:         ));
+   02968:       }
+   02969: 
+   02970:       // Water-level consistency.
+   02971:       if (cfg.use_waterlevel_boundary) {
+   02972:         if (cfg.waterlevel_source_kind === 'native_sfincs') {
+   02973:           checks.push(makeCheck(
+   02974:             'warn',
+   02975:             'Water-level source kind is native_sfincs in Manual Mode.',
+   02976:             'Native SFINCS files are usually better handled in Override Mode.'
+   02977:           ));
+   02978:         } else if (cfg.waterlevel_source_kind === 'csv' && isBlank(cfg.waterlevel_path)) {
+   02979:           checks.push(makeCheck(
+   02980:             'bad',
+   02981:             'CSV water-level mode needs waterlevel_path.',
+   02982:             'Set waterlevel_path or choose a catalog/geodataset source kind.'
+   02983:           ));
+   02984:         } else {
+   02985:           checks.push(makeCheck(
+   02986:             'good',
+>> 02987:             'Water-level boundary settings are structurally plausible.',
+   02988:             `waterlevel_source_kind = ${cfg.waterlevel_source_kind}`
+   02989:           ));
+   02990:         }
+   02991:       }
+   02992: 
+   02993:       // Manual coastal/open-boundary outline sanity.
+   02994:       if (String(cfg.open_boundary_mask_mode || '').trim() === 'coastal_outline') {
+   02995:         const outlinePath = String(cfg.open_boundary_outline_path || '').trim();
+   02996:         const bufferM = Number(cfg.open_boundary_outline_buffer_m);
+   02997:         const minCells = Number(cfg.open_boundary_min_cells);
+   02998:         const maxCells = Number(cfg.open_boundary_max_cells);
+   02999: 
+   03000:         if (isBlank(outlinePath)) {
+   03001:           checks.push(makeCheck(
+   03002:             'bad',
+   03003:             'coastal_outline mode needs open_boundary_outline_path.',
+   03004:             'Set a reviewed GeoPackage/Shapefile/GeoJSON line that defines the open coastal/channel boundary span.'
+   03005:           ));
+   03006:         } else if (!/\.(gpkg|shp|geojson|json)$/i.test(outlinePath)) {
+   03007:           checks.push(makeCheck(
+   03008:             'warn',
+   03009:             'open_boundary_outline_path has an unusual file extension.',
+   03010:             outlinePath
+   03011:           ));
+   03012:         } else {
+   03013:           checks.push(makeCheck(
+   03014:             'good',
+   03015:             'coastal_outline mode has an outline path set.',
+```
+
+#### Settings chunk 9/11 — lines 3057-3113 — matches=1
+
+Scope: `const hasSeries = !isBlank(cfg.discharge_timeseries_csv_path);`
+
+```text
+   03057:       // Discharge consistency.
+   03058:       if (cfg.use_discharge_boundary) {
+   03059:         if (cfg.discharge_source_kind === 'native_sfincs') {
+   03060:           checks.push(makeCheck(
+   03061:             'warn',
+   03062:             'Discharge source kind is native_sfincs in Manual Mode.',
+   03063:             'Native SFINCS files are usually better handled in Override Mode.'
+   03064:           ));
+   03065:         } else if (cfg.discharge_source_kind === 'csv') {
+   03066:           const hasPoints = !isBlank(cfg.discharge_points_csv_path);
+   03067:           const hasSeries = !isBlank(cfg.discharge_timeseries_csv_path);
+   03068: 
+   03069:           if (hasPoints && hasSeries) {
+   03070:             checks.push(makeCheck(
+   03071:               'good',
+   03072:               'CSV discharge has both points and time-series files.',
+   03073:               `${cfg.discharge_points_csv_path} + ${cfg.discharge_timeseries_csv_path}`
+   03074:             ));
+   03075:           } else {
+   03076:             checks.push(makeCheck(
+   03077:               'bad',
+   03078:               'CSV discharge needs both points and time-series CSV paths.',
+   03079:               `points=${cfg.discharge_points_csv_path || '(blank)'}, timeseries=${cfg.discharge_timeseries_csv_path || '(blank)'}`
+   03080:             ));
+   03081:           }
+   03082:         } else {
+   03083:           checks.push(makeCheck(
+   03084:             'good',
+>> 03085:             'Discharge boundary settings are structurally plausible.',
+   03086:             `discharge_source_kind = ${cfg.discharge_source_kind}`
+   03087:           ));
+   03088:         }
+   03089:       }
+   03090: 
+   03091:       // Wind/pressure consistency.
+   03092:       if (cfg.use_wind && !hasAnyValue(['wind_path', 'wind_source'])) {
+   03093:         checks.push(makeCheck(
+   03094:           'bad',
+   03095:           'Wind is enabled but no wind path/source is set.',
+   03096:           'Set wind_path or wind_source, or disable wind.'
+   03097:         ));
+   03098:       } else if (cfg.use_wind) {
+   03099:         checks.push(makeCheck(
+   03100:           'good',
+   03101:           'Wind is enabled with a path/source.',
+   03102:           cfg.wind_path || cfg.wind_source
+   03103:         ));
+   03104:       }
+   03105: 
+   03106:       if (cfg.use_pressure && !hasAnyValue(['pressure_path', 'pressure_source'])) {
+   03107:         checks.push(makeCheck(
+   03108:           'bad',
+   03109:           'Pressure is enabled but no pressure path/source is set.',
+   03110:           'Set pressure_path or pressure_source, or disable pressure.'
+   03111:         ));
+   03112:       } else if (cfg.use_pressure) {
+   03113:         checks.push(makeCheck(
+```
+
+#### Settings chunk 10/11 — lines 3341-3400 — matches=2
+
+Scope: `const containerPath = cfg.sfincs_container_path || cfg.sfincs_container;`
+
+```text
+   03341:           'Set conda_python before backend preflight/build/submit.'
+   03342:         ));
+   03343:       }
+   03344: 
+   03345:       const containerPath = cfg.sfincs_container_path || cfg.sfincs_container;
+   03346: 
+   03347:       if (!isBlank(containerPath)) {
+   03348:         if (String(containerPath).endsWith('.sif')) {
+   03349:           checks.push(makeCheck(
+   03350:             'good',
+   03351:             'SFINCS container path is set.',
+   03352:             containerPath
+   03353:           ));
+   03354:         } else {
+   03355:           checks.push(makeCheck(
+   03356:             'warn',
+   03357:             'SFINCS container path does not end in .sif.',
+   03358:             containerPath
+   03359:           ));
+   03360:         }
+   03361:       } else {
+   03362:         checks.push(makeCheck(
+   03363:           'bad',
+   03364:           'SFINCS container path is blank.',
+   03365:           'Set sfincs_container_path before build/submit.'
+   03366:         ));
+   03367:       }
+   03368: 
+>> 03369:       if (String(cfg.output_root || '').startsWith('/proj/') && !cfg.allow_writes_inside_proj) {
+   03370:         checks.push(makeCheck(
+   03371:           'bad',
+>> 03372:           'output_root is inside /proj but allow_writes_inside_proj is false.',
+   03373:           'Either enable allow_writes_inside_proj or choose a /work run root.'
+   03374:         ));
+   03375:       }
+   03376: 
+   03377:       if (cfg.overwrite_existing_run) {
+   03378:         checks.push(makeCheck(
+   03379:           'warn',
+   03380:           'overwrite_existing_run is true.',
+   03381:           'Only use this when intentionally replacing a prior run folder.'
+   03382:         ));
+   03383:       }
+   03384: 
+   03385: 
+   03386:       const forcingOn = Boolean(cfg.use_rainfall || cfg.use_waterlevel_boundary || cfg.use_discharge_boundary || cfg.use_wind || cfg.use_pressure);
+   03387:       if (!cfg.require_at_least_one_forcing || forcingOn || cfg.allow_missing_model_inputs) {
+   03388:         checks.push(makeCheck('good', 'Forcing safety check passed.', `forcing enabled = ${forcingOn}`));
+   03389:       } else {
+   03390:         checks.push(makeCheck('bad', 'No forcing is enabled.', 'Turn on at least one forcing or intentionally relax require_at_least_one_forcing / allow_missing_model_inputs.'));
+   03391:       }
+   03392: 
+   03393:       if (cfg.preprocess_mode === 'hybrid' || cfg.preprocess_mode === 'native_sfincs_assembly') {
+   03394:         checks.push(makeCheck('warn', 'This preprocess mode usually belongs in Override Mode.', `preprocess_mode = ${cfg.preprocess_mode}; manual mode no longer exposes full native-file routing controls.`));
+   03395:       } else {
+   03396:         checks.push(makeCheck('good', 'Manual preprocess mode is clean.', `preprocess_mode = ${cfg.preprocess_mode}`));
+   03397:       }
+   03398: 
+   03399: 
+   03400:       if (cfg.pipeline_mode === 'submit_slurm_chain') {
+```
+
+#### Settings chunk 11/11 — lines 3555-3762 — matches=27
+
+Scope: `const repairedCfg = getConfig();`
+
+```text
+   03555:     tabs.forEach(tab => tab.addEventListener('click', () => showTab(tab.dataset.tab)));
+   03556:     document.querySelectorAll('[data-key]').forEach(el => {
+   03557:       el.addEventListener('input', updatePreview);
+   03558:       el.addEventListener('change', updatePreview);
+   03559:     });
+   03560:     document.getElementById('save-config-button').addEventListener('click', saveConfig);
+   03561:     document.getElementById('load-config-input').addEventListener('change', event => loadConfigFromFile(event.target.files[0]));
+   03562:     document.getElementById('check-button').addEventListener('click', () => runChecks(true));
+   03563:     document.getElementById('check-button-2').addEventListener('click', () => runChecks(false));
+   03564:     document.getElementById('geometry-check-local-button').addEventListener('click', runManualGeometryCheckLocal);
+   03565:     document.getElementById('geometry-check-submit-button').addEventListener('click', submitManualGeometryCheck);
+   03566: 
+   03567:     // Expose Manual Mode hooks for reusable static helpers such as pipeline_actions.js.
+   03568:     window.getConfig = getConfig;
+   03569:     window.setFieldValue = setFieldValue;
+   03570:     window.updatePreview = updatePreview;
+   03571:     window.runChecks = runChecks;
+   03572:     window.runManualGeometryCheckLocal = runManualGeometryCheckLocal;
+   03573:     window.submitManualGeometryCheck = submitManualGeometryCheck;
+   03574:     window.showTab = showTab;
+   03575:     window.getExtraLoadedConfig = () => ({ ...extraLoadedConfig });
+   03576:     window.applyManualFixedConfig = applyManualFixedConfig;
+   03577:     window.MANUAL_FIXED_CONFIG = MANUAL_FIXED_CONFIG;
+   03578: 
+   03579: 
+   03580:     manualRenderCatalogList();
+   03581:     updatePreview();
+   03582:   </script>
+>> 03583: <script src="static/launcher_defaults.js"></script>
+   03584: <script>
+   03585:   window.CONFIG_PATH_BROWSE_SETTINGS = {
+   03586:     sectionNumbers: ["0", "5", "6", "8", "10", "11", "12", "17"],
+   03587:     specialPathKeys: [
+>> 03588:       "project_root",
+>> 03589:       "output_root",
+   03590:       "region_path",
+   03591:       "dem_paths",
+   03592:       "bathy_paths",
+   03593:       "landcover_path",
+   03594:       "landcover_reclass_table",
+   03595:       "rainfall_path",
+   03596:       "waterlevel_path",
+   03597:       "streamflow_site_info_path",
+   03598:       "streamflow_data_path",
+   03599:       "hydrography_path",
+   03600:       "obs_points_path",
+   03601:       "obs_lines_path",
+   03602:       "thin_dam_path",
+   03603:       "weir_path",
+   03604:       "drainage_structure_path",
+   03605:       "culvert_path",
+   03606:       "outflow_boundary_polygon_path",
+   03607:       "active_mask_path",
+   03608:       "open_boundary_outline_path",
+   03609:       "subgrid_river_path",
+   03610:       "discharge_points_csv_path",
+   03611:       "discharge_timeseries_csv_path",
+   03612:       "wind_path",
+   03613:       "pressure_path",
+   03614:       "infiltration_path",
+   03615:       "curve_number_path",
+   03616:       "hsg_path",
+   03617:       "soil_storage_path",
+   03618:       "qinf_path",
+   03619:       "smax_path",
+   03620:       "seff_path",
+   03621:       "ks_path",
+   03622:       "sigma_path",
+   03623:       "psi_path",
+   03624:       "f0_path",
+   03625:       "fc_path",
+   03626:       "kd_path",
+   03627:       "vol_path",
+   03628:       "conda_env_path",
+   03629:       "conda_python",
+   03630:       "sfincs_container_path"
+   03631:     ],
+>> 03632:     defaultStart: "/proj/zefflab/projects/Flooding/Data/harris_county"
+   03633:   };
+   03634: </script>
+>> 03635: <script src="static/config_path_browse_buttons.js"></script>
+>> 03636: <script src="static/path_browser.js"></script>
+   03637: <script src="static/pipeline_actions.js"></script>
+   03638: <script src="static/page_reset.js"></script>
+   03639:   <a class="help-button" href="guide.html?tab=manual" title="Open Manual guide">?</a>
+   03640: 
+>> 03641: <!-- BEGIN runtime launcher path defaults patch -->
+   03642: <script>
+   03643: (function () {
+   03644:   "use strict";
+   03645: 
+   03646:   const FIELD_TO_DEFAULT = {
+>> 03647:     project_root: "projectRoot",
+   03648:     conda_env_path: "condaEnvPath",
+   03649:     conda_python: "condaPython",
+   03650:     sfincs_container: "sfincsContainerPath",
+   03651:     sfincs_container_path: "sfincsContainerPath"
+   03652:   };
+   03653: 
+>> 03654:   const BUILTIN_DEFAULTS = {
+   03655:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   03656:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   03657:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   03658:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   03659:   };
+   03660: 
+>> 03661:   function defaultsApi() {
+>> 03662:     return window.SFINCS_LAUNCHER_DEFAULTS ||
+>> 03663:            window.SfincsLauncherDefaults ||
+>> 03664:            window.launcherDefaults ||
+   03665:            {};
+   03666:   }
+   03667: 
+   03668:   function getLauncherDefault(key) {
+>> 03669:     const api = defaultsApi();
+   03670: 
+   03671:     if (typeof api.getDefault === "function") {
+>> 03672:       return api.getDefault(key) || BUILTIN_DEFAULTS[key] || "";
+   03673:     }
+   03674: 
+   03675:     if (typeof api.get === "function") {
+>> 03676:       return api.get(key) || BUILTIN_DEFAULTS[key] || "";
+   03677:     }
+   03678: 
+   03679:     if (typeof api.getAll === "function") {
+   03680:       const all = api.getAll() || {};
+>> 03681:       return all[key] || BUILTIN_DEFAULTS[key] || "";
+   03682:     }
+   03683: 
+>> 03684:     if (api.defaults && api.defaults[key]) {
+>> 03685:       return api.defaults[key];
+   03686:     }
+   03687: 
+>> 03688:     return BUILTIN_DEFAULTS[key] || "";
+   03689:   }
+   03690: 
+>> 03691:   function applyRuntimeLauncherPathDefaults(force) {
+   03692:     Object.entries(FIELD_TO_DEFAULT).forEach(([fieldKey, defaultKey]) => {
+   03693:       const input = document.querySelector(`[data-key="${fieldKey}"]`);
+   03694:       if (!input) return;
+   03695: 
+   03696:       const desired = String(getLauncherDefault(defaultKey) || "").trim();
+   03697:       if (!desired) return;
+   03698: 
+   03699:       const current = String(input.value || "").trim();
+>> 03700:       const builtin = String(BUILTIN_DEFAULTS[defaultKey] || "").trim();
+   03701: 
+   03702:       const safeToApply =
+   03703:         force ||
+   03704:         !current ||
+   03705:         current === builtin ||
+   03706:         input.dataset.appliedLauncherDefault === "true";
+   03707: 
+   03708:       if (!safeToApply) return;
+   03709: 
+   03710:       input.value = desired;
+   03711:       input.dataset.appliedLauncherDefault = "true";
+   03712:       input.dispatchEvent(new Event("input", {bubbles: true}));
+   03713:       input.dispatchEvent(new Event("change", {bubbles: true}));
+   03714:     });
+   03715: 
+   03716:     if (typeof window.updatePreview === "function") {
+   03717:       window.updatePreview();
+   03718:     }
+   03719:   }
+   03720: 
+>> 03721:   window.applyRuntimeLauncherPathDefaults = applyRuntimeLauncherPathDefaults;
+   03722: 
+   03723:   document.addEventListener("DOMContentLoaded", function () {
+   03724:     setTimeout(function () {
+>> 03725:       applyRuntimeLauncherPathDefaults(false);
+   03726:     }, 0);
+   03727:   });
+   03728: 
+>> 03729:   window.addEventListener("launcher-defaults-changed", function () {
+>> 03730:     applyRuntimeLauncherPathDefaults(true);
+   03731:   });
+   03732: })();
+   03733: </script>
+>> 03734: <!-- END runtime launcher path defaults patch -->
+   03735: 
+   03736: <!-- BEGIN permanent tab scrollbar script -->
+   03737: <script>
+   03738: (function () {
+   03739:   "use strict";
+   03740: 
+   03741:   function clamp(value, min, max) {
+   03742:     return Math.max(min, Math.min(max, value));
+   03743:   }
+   03744: 
+   03745:   function installOneTabScrollbar(strip) {
+   03746:     if (!strip || strip.dataset.permanentScrollbarReady === "true") return;
+   03747: 
+   03748:     const bar = document.createElement("div");
+   03749:     bar.className = "permanent-tab-scrollbar";
+   03750:     bar.setAttribute("aria-hidden", "true");
+   03751: 
+   03752:     const thumb = document.createElement("div");
+   03753:     thumb.className = "permanent-tab-scrollbar-thumb";
+   03754: 
+   03755:     bar.appendChild(thumb);
+   03756:     strip.insertAdjacentElement("afterend", bar);
+   03757: 
+   03758:     strip.dataset.permanentScrollbarReady = "true";
+   03759: 
+   03760:     let dragging = false;
+   03761:     let dragStartX = 0;
+   03762:     let dragStartScrollLeft = 0;
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py`
+
+Settings chunks: **11**  
+Matched settings-ish lines: **68**
+
+#### Settings chunk 1/11 — lines 13-69 — matches=1
+
+```text
+   00013: actions around the real backend runner.
+   00014: """
+   00015: 
+   00016: from __future__ import annotations
+   00017: 
+   00018: import json
+   00019: import os
+   00020: import re
+   00021: from pathlib import Path
+   00022: from typing import Any
+   00023: import subprocess
+   00024: import shlex
+   00025: import traceback
+   00026: from datetime import datetime
+   00027: import csv
+   00028: 
+   00029: from flask import Flask, jsonify, render_template, request, send_from_directory
+   00030: 
+   00031: 
+   00032: APP_DIR = Path(__file__).resolve().parent
+   00033: 
+   00034: app = Flask(
+   00035:     __name__,
+   00036:     template_folder=str(APP_DIR),
+   00037:     static_folder=str(APP_DIR / "static"),
+   00038: )
+   00039: 
+   00040: # ---------------------------------------------------------------------
+>> 00041: # Safety settings
+   00042: # ---------------------------------------------------------------------
+   00043: 
+   00044: RUN_NAME_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
+   00045: 
+   00046: ALLOWED_ROOTS = [
+   00047:     Path("/proj/zefflab/projects/Flooding"),
+   00048:     Path("/work/users"),
+   00049:     Path.home(),
+   00050: ]
+   00051: 
+   00052: MAX_SCAN_DEPTH = 4
+   00053: MAX_SCANNED_FILES = 10000
+   00054: 
+   00055: PIPELINE_ROOT = APP_DIR.parent
+   00056: RUNNER_SCRIPT = PIPELINE_ROOT / "code" / "pipeline_runner.py"
+   00057: 
+   00058: # Use the known-good SFINCS/backend Python for now.
+   00059: # Later this can switch to /proj/.../pipeline/envs/sfincs/bin/python once tested.
+   00060: RUNNER_PYTHON = os.environ.get(
+   00061:     "SFINCS_RUNNER_PYTHON",
+   00062:     "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00063: )
+   00064: 
+   00065: ALLOWED_RUNNER_MODES = {"preflight", "build_scripts", "submit"}
+   00066: 
+   00067: MODE_TO_PIPELINE_MODE = {
+   00068:     "preflight": "preflight_only",
+   00069:     "build_scripts": "build_scripts_only",
+```
+
+#### Settings chunk 2/11 — lines 323-450 — matches=18
+
+```text
+   00323:     },
+   00324:     "volfile": {
+   00325:         "group": "other",
+   00326:         "primary": "sfincs.vol",
+   00327:         "aliases": [],
+   00328:         "description": "Storage volume file.",
+   00329:     },
+   00330:     "bzifile": {
+   00331:         "group": "other",
+   00332:         "primary": "sfincs.bzi",
+   00333:         "aliases": [],
+   00334:         "description": "Boundary initial water-level file.",
+   00335:     },
+   00336:     "netbndbzsbzifile": {
+   00337:         "group": "other",
+   00338:         "primary": "sfincs_netbndbzsbzifile.nc",
+   00339:         "aliases": [],
+   00340:         "description": "Combined boundary NetCDF.",
+   00341:     },
+   00342:     "netsrcdisfile": {
+   00343:         "group": "other",
+   00344:         "primary": "sfincs_netsrcdisfile.nc",
+   00345:         "aliases": [],
+   00346:         "description": "Combined source/discharge NetCDF.",
+   00347:     },
+   00348: }
+   00349: 
+   00350: # ---------------------------------------------------------------------
+>> 00351: # Launcher site defaults
+   00352: # ---------------------------------------------------------------------
+   00353: 
+>> 00354: LAUNCHER_DEFAULTS_PATH = Path(__file__).resolve().parent / "launcher_site_defaults.json"
+   00355: 
+   00356: LAUNCHER_DEFAULT_KEYS = {
+   00357:     "dataRoot",
+   00358:     "catalogRoot",
+   00359:     "eventCatalogRoot",
+   00360:     "nativeSfincsRoot",
+   00361:     "overrideSourceRoot",
+   00362:     "runRoot",
+   00363:     "projectRoot",
+   00364:     "condaEnvPath",
+   00365:     "condaPython",
+   00366:     "sfincsContainerPath",
+   00367: }
+   00368: 
+>> 00369: LAUNCHER_BUILTIN_DEFAULTS = {
+   00370:     "dataRoot": "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00371:     "catalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00372:     "eventCatalogRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00373:     "nativeSfincsRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00374:     "overrideSourceRoot": "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00375:     "runRoot": "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00376:     "sfincsContainerPath": "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif",
+   00377:     "condaPython": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00378:     "condaEnvPath": "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00379:     "projectRoot": "/proj/zefflab/projects/Flooding/pipeline",
+   00380: }
+   00381: 
+   00382: 
+>> 00383: def _read_launcher_site_defaults() -> dict:
+>> 00384:     defaults = dict(LAUNCHER_BUILTIN_DEFAULTS)
+   00385: 
+>> 00386:     if not LAUNCHER_DEFAULTS_PATH.exists():
+>> 00387:         return defaults
+   00388: 
+   00389:     try:
+>> 00390:         data = json.loads(LAUNCHER_DEFAULTS_PATH.read_text(encoding="utf-8"))
+   00391:     except Exception:
+>> 00392:         return defaults
+   00393: 
+   00394:     if not isinstance(data, dict):
+>> 00395:         return defaults
+   00396: 
+   00397:     for key in LAUNCHER_DEFAULT_KEYS:
+   00398:         value = str(data.get(key, "")).strip()
+   00399:         if value:
+>> 00400:             defaults[key] = value
+   00401: 
+>> 00402:     return defaults
+   00403: 
+   00404: 
+>> 00405: def _write_launcher_site_defaults(values: dict) -> dict:
+   00406:     cleaned = {}
+   00407: 
+   00408:     for key in LAUNCHER_DEFAULT_KEYS:
+   00409:         value = str(values.get(key, "")).strip()
+   00410:         if value:
+   00411:             cleaned[key] = value
+   00412: 
+>> 00413:     LAUNCHER_DEFAULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+   00414: 
+>> 00415:     tmp_path = LAUNCHER_DEFAULTS_PATH.with_suffix(".json.tmp")
+   00416:     tmp_path.write_text(
+   00417:         json.dumps(cleaned, indent=2, sort_keys=True) + "\n",
+   00418:         encoding="utf-8",
+   00419:     )
+>> 00420:     tmp_path.replace(LAUNCHER_DEFAULTS_PATH)
+   00421: 
+>> 00422:     return _read_launcher_site_defaults()
+   00423: 
+   00424: def _review_runtime_normalize_path_list(value):
+   00425:     if value is None:
+   00426:         return []
+   00427: 
+   00428:     if isinstance(value, list):
+   00429:         return [str(v).strip() for v in value if str(v).strip()]
+   00430: 
+   00431:     text = str(value).strip()
+   00432:     if not text:
+   00433:         return []
+   00434: 
+   00435:     if text.startswith("["):
+   00436:         try:
+   00437:             parsed = json.loads(text)
+   00438:             if isinstance(parsed, list):
+   00439:                 return [str(v).strip() for v in parsed if str(v).strip()]
+   00440:         except Exception:
+   00441:             pass
+   00442: 
+   00443:     parts = []
+   00444:     for chunk in text.replace(",", "\n").splitlines():
+   00445:         chunk = chunk.strip()
+   00446:         if chunk:
+   00447:             parts.append(chunk)
+   00448:     return parts
+   00449: 
+   00450: 
+```
+
+#### Settings chunk 3/11 — lines 2060-2148 — matches=13
+
+Scope: `def api_detect_data_catalogs():`
+
+```text
+   02060: @app.post("/api/detect-data-catalogs")
+   02061: @app.post("/api/detect-manual-catalogs")
+   02062: def api_detect_data_catalogs():
+   02063:     payload = request.get_json(silent=True) or {}
+   02064:     cfg = payload.get("config") or {}
+   02065: 
+   02066:     if not isinstance(cfg, dict):
+   02067:         return jsonify({
+   02068:             "ok": False,
+   02069:             "error": "Request must contain a JSON object named config.",
+   02070:         }), 400
+   02071: 
+   02072:     try:
+   02073:         result = detect_data_catalogs_from_config(cfg)
+   02074:         return jsonify({
+   02075:             "ok": True,
+   02076:             **result,
+   02077:         })
+   02078:     except Exception as exc:
+   02079:         return jsonify({
+   02080:             "ok": False,
+   02081:             "error": str(exc),
+   02082:             "catalogs": [],
+   02083:             "suggested_config": {},
+   02084:             "warnings": [str(exc)],
+   02085:         }), 500
+   02086: 
+   02087: 
+>> 02088: @app.get("/api/launcher-defaults")
+>> 02089: def api_get_launcher_defaults():
+   02090:     return jsonify({
+   02091:         "ok": True,
+>> 02092:         "defaults": _read_launcher_site_defaults(),
+>> 02093:         "defaults_path": str(LAUNCHER_DEFAULTS_PATH),
+   02094:     })
+   02095: 
+   02096: 
+>> 02097: @app.post("/api/launcher-defaults")
+>> 02098: def api_set_launcher_defaults():
+   02099:     payload = request.get_json(silent=True) or {}
+>> 02100:     values = payload.get("defaults", payload)
+   02101: 
+   02102:     if not isinstance(values, dict):
+   02103:         return jsonify({
+   02104:             "ok": False,
+>> 02105:             "error": "Expected a JSON object of launcher defaults.",
+   02106:         }), 400
+   02107: 
+   02108:     try:
+>> 02109:         saved = _write_launcher_site_defaults(values)
+   02110:     except Exception as exc:
+   02111:         return jsonify({
+   02112:             "ok": False,
+>> 02113:             "error": f"Could not write launcher defaults: {exc}",
+>> 02114:             "defaults_path": str(LAUNCHER_DEFAULTS_PATH),
+   02115:         }), 500
+   02116: 
+   02117:     return jsonify({
+   02118:         "ok": True,
+>> 02119:         "defaults": saved,
+>> 02120:         "defaults_path": str(LAUNCHER_DEFAULTS_PATH),
+   02121:     })
+   02122: # ---------------------------------------------------------------------
+   02123: # Helper functions
+   02124: # ---------------------------------------------------------------------
+   02125: 
+   02126: def parse_sfincs_inp_value(value: str) -> Any:
+   02127:     value = str(value).strip()
+   02128: 
+   02129:     # Strip simple inline comments.
+   02130:     for marker in ["!", "#"]:
+   02131:         if marker in value:
+   02132:             value = value.split(marker, 1)[0].strip()
+   02133: 
+   02134:     if value == "":
+   02135:         return ""
+   02136: 
+   02137:     try:
+   02138:         if any(ch in value for ch in [".", "e", "E"]):
+   02139:             return float(value)
+   02140:         return int(value)
+   02141:     except ValueError:
+   02142:         return value
+   02143: 
+   02144: 
+   02145: def sfincs_time_to_launcher_time(value: Any) -> str:
+   02146:     """
+   02147:     Convert SFINCS time like:
+   02148:       20170822 000000
+```
+
+#### Settings chunk 4/11 — lines 2433-2493 — matches=4
+
+Scope: `def staged_config_path(cfg: dict[str, Any], mode: str) -> tuple[Path, Path, Path]:`
+
+```text
+   02433:     if not path_text or not str(path_text).strip():
+   02434:         raise ValueError("Path is blank.")
+   02435: 
+   02436:     raw = Path(str(path_text)).expanduser()
+   02437: 
+   02438:     if not raw.is_absolute():
+   02439:         raise ValueError("Path must be absolute.")
+   02440: 
+   02441:     try:
+   02442:         resolved = raw.resolve(strict=False)
+   02443:     except RuntimeError as exc:
+   02444:         raise ValueError(f"Could not resolve path: {exc}") from exc
+   02445: 
+   02446:     allowed_resolved = [root.resolve(strict=False) for root in ALLOWED_ROOTS]
+   02447:     if not any(resolved == root or root in resolved.parents for root in allowed_resolved):
+   02448:         allowed_text = ", ".join(str(root) for root in ALLOWED_ROOTS)
+   02449:         raise ValueError(f"Path is outside allowed roots: {allowed_text}")
+   02450: 
+   02451:     return resolved
+   02452: 
+   02453: 
+   02454: def safe_run_name(run_name: str) -> str:
+   02455:     if not run_name or not RUN_NAME_RE.match(run_name):
+   02456:         raise ValueError("run_name must use only letters, numbers, underscores, dashes, and periods.")
+   02457:     return run_name
+   02458: 
+   02459: def staged_config_path(cfg: dict[str, Any], mode: str) -> tuple[Path, Path, Path]:
+   02460:     run_name = safe_run_name(str(cfg.get("run_name", "")).strip())
+>> 02461:     output_root = safe_resolve(str(cfg.get("output_root", "")).strip())
+   02462: 
+>> 02463:     launcher_config_root = output_root / "_launcher_configs"
+>> 02464:     launcher_log_root = output_root / "_launcher_logs" / run_name
+>> 02465:     run_root = output_root / run_name
+   02466: 
+   02467:     launcher_config_root.mkdir(parents=True, exist_ok=True)
+   02468:     launcher_log_root.mkdir(parents=True, exist_ok=True)
+   02469: 
+   02470:     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+   02471:     config_path = launcher_config_root / f"{run_name}_{stamp}_{mode}.json"
+   02472: 
+   02473:     return config_path, launcher_log_root, run_root
+   02474: 
+   02475: 
+   02476: def write_staged_runner_config(cfg: dict[str, Any], mode: str) -> tuple[Path, Path, Path]:
+   02477:     if mode not in ALLOWED_RUNNER_MODES:
+   02478:         raise ValueError(f"Unsupported runner mode: {mode}")
+   02479: 
+   02480:     cfg = dict(cfg)
+   02481:     cfg["pipeline_mode"] = MODE_TO_PIPELINE_MODE[mode]
+   02482: 
+   02483:     config_path, launcher_log_root, run_root = staged_config_path(cfg, mode)
+   02484: 
+   02485:     with config_path.open("w", encoding="utf-8") as f:
+   02486:         json.dump(cfg, f, indent=2)
+   02487: 
+   02488:     return config_path, launcher_log_root, run_root
+   02489: 
+   02490: 
+   02491: def run_pipeline_runner(config_path: Path, mode: str, launcher_log_root: Path) -> dict[str, Any]:
+   02492:     if mode not in ALLOWED_RUNNER_MODES:
+   02493:         raise ValueError(f"Unsupported runner mode: {mode}")
+```
+
+#### Settings chunk 5/11 — lines 2540-2603 — matches=4
+
+Scope: `def _write_staged_geometry_check_config(cfg: dict[str, Any], flavor: str) -> dict[str, Any]:`
+
+```text
+   02540: def _read_json_if_exists(path: Path) -> dict[str, Any] | None:
+   02541:     if not path.exists():
+   02542:         return None
+   02543: 
+   02544:     try:
+   02545:         return json.loads(path.read_text(encoding="utf-8"))
+   02546:     except Exception:
+   02547:         return None
+   02548: 
+   02549: 
+   02550: def _write_staged_geometry_check_config(cfg: dict[str, Any], flavor: str) -> dict[str, Any]:
+   02551:     """
+   02552:     Stage a Manual geometry-check config under launcher-owned folders.
+   02553: 
+   02554:     Important: do not write this into run_root/geometry_check because that would
+   02555:     make inspect_run_root() think a real run artifact already exists and could
+   02556:     block build/submit for overwrite_existing_run=false.
+   02557:     """
+   02558:     if not isinstance(cfg, dict):
+   02559:         raise ValueError("Request must contain a JSON object named config.")
+   02560: 
+   02561:     if not cfg:
+   02562:         raise ValueError("Config payload is empty. The page did not send getConfig() output.")
+   02563: 
+   02564:     if "run_name" not in cfg:
+   02565:         raise ValueError("Config payload is missing run_name. The page likely sent an incomplete config.")
+   02566: 
+   02567:     run_name = safe_run_name(str(cfg.get("run_name", "")).strip())
+>> 02568:     output_root = safe_resolve(str(cfg.get("output_root", "")).strip())
+   02569: 
+   02570:     cfg = dict(cfg)
+   02571:     cfg["pipeline_mode"] = "preflight_only"
+   02572: 
+>> 02573:     run_root = output_root / run_name
+>> 02574:     launcher_config_root = output_root / "_launcher_configs"
+>> 02575:     geometry_root = output_root / "_launcher_logs" / run_name / "geometry_check"
+   02576: 
+   02577:     launcher_config_root.mkdir(parents=True, exist_ok=True)
+   02578:     geometry_root.mkdir(parents=True, exist_ok=True)
+   02579: 
+   02580:     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+   02581: 
+   02582:     config_path = launcher_config_root / f"{run_name}_{stamp}_geometry_check_{flavor}.json"
+   02583:     audit_path = geometry_root / f"{stamp}_manual_geometry_check_audit.json"
+   02584:     stdout_log = geometry_root / f"{stamp}_manual_geometry_check_{flavor}.out"
+   02585:     stderr_log = geometry_root / f"{stamp}_manual_geometry_check_{flavor}.err"
+   02586:     sbatch_path = geometry_root / f"{stamp}_manual_geometry_check.sbatch"
+   02587:     status_path = geometry_root / f"{stamp}_manual_geometry_check_status.json"
+   02588: 
+   02589:     config_path.write_text(
+   02590:         json.dumps(cfg, indent=2, sort_keys=True) + "\n",
+   02591:         encoding="utf-8",
+   02592:     )
+   02593: 
+   02594:     return {
+   02595:         "run_name": run_name,
+   02596:         "run_root": run_root,
+   02597:         "geometry_root": geometry_root,
+   02598:         "config_path": config_path,
+   02599:         "audit_path": audit_path,
+   02600:         "stdout_log": stdout_log,
+   02601:         "stderr_log": stderr_log,
+   02602:         "sbatch_path": sbatch_path,
+   02603:         "status_path": status_path,
+```
+
+#### Settings chunk 6/11 — lines 3202-3270 — matches=4
+
+Scope: `def _validate_launcher_config_for_run(cfg):`
+
+```text
+   03202:         if isinstance(value, str):
+   03203:             return value.strip() == ""
+   03204:         return False
+   03205:     
+   03206:     
+   03207:     def _validate_launcher_config_for_run(cfg):
+   03208:         """Fast Flask-side guard before calling pipeline_runner.py.
+   03209:     
+   03210:         This catches broken frontend wiring, empty payloads, and obviously blank
+   03211:         configs. The backend runner/preflight remains the deeper source of truth.
+   03212:         """
+   03213:         if not isinstance(cfg, dict):
+   03214:             return "Config payload is not a JSON object."
+   03215:     
+   03216:         if not cfg:
+   03217:             return "Config payload is empty. The page did not send getConfig() output."
+   03218:     
+   03219:         # Manual has ~217 fields and Override has ~129. A tiny config means
+   03220:         # frontend helper wiring is probably broken.
+   03221:         if len(cfg) < 20:
+   03222:             return (
+   03223:                 f"Config payload only has {len(cfg)} keys. "
+   03224:                 "This is too small for Manual/Override Mode and probably means "
+   03225:                 "pipeline_actions.js could not read the page getConfig() function."
+   03226:             )
+   03227:     
+   03228:         required_present = [
+   03229:             "run_name",
+>> 03230:             "output_root",
+>> 03231:             "project_root",
+   03232:             "pipeline_mode",
+   03233:             "preprocess_mode",
+   03234:         ]
+   03235:         missing = [key for key in required_present if key not in cfg]
+   03236:         if missing:
+   03237:             return "Config is missing required core key(s): " + ", ".join(missing)
+   03238:     
+   03239:         required_nonblank = [
+   03240:             "run_name",
+>> 03241:             "output_root",
+>> 03242:             "project_root",
+   03243:             "preprocess_mode",
+   03244:         ]
+   03245:         blank = [key for key in required_nonblank if _is_blank_value(cfg.get(key))]
+   03246:         if blank:
+   03247:             return "Config has blank required core value(s): " + ", ".join(blank)
+   03248:     
+   03249:         # These are especially important for actual backend execution.
+   03250:         # Manual currently uses sfincs_container_path; some older/other configs may use sfincs_container.
+   03251:         important_paths = [
+   03252:             "conda_python",
+   03253:         ]
+   03254: 
+   03255:         blank_paths = [
+   03256:             key for key in important_paths
+   03257:             if key in cfg and _is_blank_value(cfg.get(key))
+   03258:         ]
+   03259: 
+   03260:         container_value = (
+   03261:             cfg.get("sfincs_container_path")
+   03262:             if "sfincs_container_path" in cfg
+   03263:             else cfg.get("sfincs_container")
+   03264:         )
+   03265: 
+   03266:         if _is_blank_value(container_value):
+   03267:             blank_paths.append("sfincs_container_path/sfincs_container")
+   03268: 
+   03269:         if blank_paths:
+   03270:             return "Config has blank backend path value(s): " + ", ".join(blank_paths)
+```
+
+#### Settings chunk 7/11 — lines 3277-3338 — matches=5
+
+Scope: `def _validate_launcher_config_for_run(cfg):`
+
+```text
+   03277:         return jsonify({
+   03278:             "ok": False,
+   03279:             "mode": mode,
+   03280:             "error": config_error,
+   03281:             "returncode": 2,
+   03282:             "stdout": "",
+   03283:             "stderr": config_error,
+   03284:         }), 400
+   03285:     if not isinstance(cfg, dict):
+   03286:         return json_error("Request must contain a JSON object named 'config'.", 400)
+   03287: 
+   03288:     if mode not in ALLOWED_RUNNER_MODES:
+   03289:         return json_error(
+   03290:             f"Unsupported mode '{mode}'. Allowed modes: {sorted(ALLOWED_RUNNER_MODES)}",
+   03291:             400,
+   03292:         )
+   03293: 
+   03294:     run_name = str(cfg.get("run_name", "")).strip()
+   03295:     if not run_name:
+   03296:         return json_error("run_name is required.", 400)
+   03297: 
+   03298:     if not RUN_NAME_RE.match(run_name):
+   03299:         return json_error(
+   03300:             "run_name may only contain letters, numbers, underscores, hyphens, and periods.",
+   03301:             400,
+   03302:             run_name=run_name,
+   03303:         )
+   03304: 
+>> 03305:     output_root_text = str(cfg.get("output_root", "")).strip()
+>> 03306:     if not output_root_text:
+>> 03307:         return json_error("output_root is required.", 400)
+   03308: 
+>> 03309:     output_root = safe_resolve(output_root_text)
+>> 03310:     run_root = output_root / run_name
+   03311: 
+   03312:     overwrite = bool(cfg.get("overwrite_existing_run", False))
+   03313:     run_state = inspect_run_root(run_root)
+   03314: 
+   03315:     if mode in {"build_scripts", "submit"} and run_state["has_real_run"] and not overwrite:
+   03316:         return json_error(
+   03317:             "This run folder appears to already contain real generated run artifacts. "
+   03318:             "Use a new run_name, or set overwrite_existing_run=true only if you intentionally want to overwrite this run.",
+   03319:             409,
+   03320:             run_root=str(run_root),
+   03321:             run_state=run_state,
+   03322:         )
+   03323: 
+   03324:     try:
+   03325:         config_path, launcher_log_root, run_root = write_staged_runner_config(cfg, mode)
+   03326: 
+   03327:         # Build/submit will create or reuse the actual run folder through pipeline_runner.py.
+   03328:         # If it already exists and overwrite_existing_run is false, stop early with a clear message.
+   03329:         overwrite = bool(cfg.get("overwrite_existing_run", False))
+   03330:         run_state = inspect_run_root(run_root)
+   03331:         
+   03332:         if mode in {"build_scripts", "submit"} and run_state["has_real_run"] and not overwrite:
+   03333:             return json_error(
+   03334:                 "This run folder appears to already contain generated run artifacts. "
+   03335:                 "Use a new run_name, or set overwrite_existing_run=true only if you intentionally want to overwrite this run.",
+   03336:                 409,
+   03337:                 run_root=str(run_root),
+   03338:                 staged_config_path=str(config_path),
+```
+
+#### Settings chunk 8/11 — lines 3385-3441 — matches=1
+
+Scope: `def api_health():`
+
+```text
+   03385:             )
+   03386: 
+   03387:         path = safe_resolve(path_text)
+   03388: 
+   03389:         if not path.exists():
+   03390:             return json_error(f"Path does not exist: {path}", 404)
+   03391: 
+   03392:         if path.is_file():
+   03393:             path = path.parent
+   03394: 
+   03395:         result = directory_listing(path)
+   03396: 
+   03397:     except Exception as exc:
+   03398:         return json_error(str(exc), 400)
+   03399: 
+   03400:     return jsonify(result)
+   03401: 
+   03402: @app.get("/api/health")
+   03403: def api_health():
+   03404:     return jsonify(
+   03405:         {
+   03406:             "ok": True,
+   03407:             "app_dir": str(APP_DIR),
+   03408:             "allowed_roots": [str(path) for path in ALLOWED_ROOTS],
+   03409:         }
+   03410:     )
+   03411: 
+   03412: 
+>> 03413: @app.post("/api/detect-sfincs-files")
+   03414: def api_detect_sfincs_files():
+   03415:     payload = request.get_json(silent=True) or {}
+   03416: 
+   03417:     raw_sources = payload.get("source_paths")
+   03418: 
+   03419:     # Backward compatibility with the old one-path version.
+   03420:     if raw_sources is None:
+   03421:         raw_sources = [payload.get("source_path", "")]
+   03422: 
+   03423:     if isinstance(raw_sources, str):
+   03424:         raw_sources = [raw_sources]
+   03425: 
+   03426:     if not isinstance(raw_sources, list):
+   03427:         return json_error("source_paths must be a list of absolute folder paths.", 400)
+   03428: 
+   03429:     try:
+   03430:         sources = []
+   03431:         for source_text in raw_sources:
+   03432:             source_text = str(source_text).strip()
+   03433:             if not source_text:
+   03434:                 continue
+   03435:             sources.append(safe_resolve(source_text))
+   03436: 
+   03437:         if not sources:
+   03438:             return json_error("No source folders were provided.", 400)
+   03439: 
+   03440:         result = detect_sfincs_files_multiple(sources)
+   03441: 
+```
+
+#### Settings chunk 9/11 — lines 3447-3508 — matches=5
+
+Scope: `def save_config():`
+
+```text
+   03447: 
+   03448: @app.post("/api/save-config")
+   03449: def save_config():
+   03450:     payload = request.get_json(silent=True) or {}
+   03451: 
+   03452:     cfg = payload.get("config")
+   03453:     if cfg is None:
+   03454:         cfg = {
+   03455:             k: v for k, v in payload.items()
+   03456:             if k not in {"confirm_update"}
+   03457:         }
+   03458: 
+   03459:     confirm_update = bool(payload.get("confirm_update", False))
+   03460: 
+   03461:     if not isinstance(cfg, dict):
+   03462:         return json_error("Expected a JSON object config.", 400)
+   03463: 
+   03464:     run_name = str(cfg.get("run_name", "")).strip()
+   03465:     if not run_name:
+   03466:         return json_error("run_name is required before saving.", 400)
+   03467: 
+   03468:     if not RUN_NAME_RE.match(run_name):
+   03469:         return json_error(
+   03470:             "run_name may only contain letters, numbers, underscores, hyphens, and periods.",
+   03471:             400,
+   03472:             run_name=run_name,
+   03473:         )
+   03474: 
+>> 03475:     output_root_text = str(cfg.get("output_root", "")).strip()
+>> 03476:     if not output_root_text:
+>> 03477:         return json_error("output_root is required before saving.", 400)
+   03478: 
+>> 03479:     output_root = safe_resolve(output_root_text)
+>> 03480:     run_root = output_root / run_name
+   03481:     config_path = run_root / "run_config.json"
+   03482: 
+   03483:     run_state = inspect_run_root(run_root)
+   03484:     existed_before = config_path.exists()
+   03485: 
+   03486:     if existed_before and not confirm_update:
+   03487:         return jsonify({
+   03488:             "ok": False,
+   03489:             "needs_confirmation": True,
+   03490:             "message": "A saved run_config.json already exists for this run_name. Do you want to update it?",
+   03491:             "run_root": str(run_root),
+   03492:             "config_path": str(config_path),
+   03493:             "run_state": run_state,
+   03494:         }), 409
+   03495: 
+   03496:     run_root.mkdir(parents=True, exist_ok=True)
+   03497: 
+   03498:     config_path.write_text(
+   03499:         json.dumps(cfg, indent=2, sort_keys=True) + "\n",
+   03500:         encoding="utf-8",
+   03501:     )
+   03502: 
+   03503:     return jsonify({
+   03504:         "ok": True,
+   03505:         "saved": True,
+   03506:         "updated_existing": existed_before,
+   03507:         "run_root": str(run_root),
+   03508:         "config_path": str(config_path),
+```
+
+#### Settings chunk 10/11 — lines 4050-4127 — matches=10
+
+Scope: `def _review_default_run_root() -> _ReviewPath:`
+
+```text
+   04050: # === REVIEW V1 ROUTES BEGIN ===
+   04051: # =============================================================================
+   04052: # REVIEW V1 ROUTES — paste into web_launcher/app.py after app = Flask(...),
+   04053: # but before the final if __name__ == "__main__" block.
+   04054: #
+   04055: # These routes are read-only. They do not modify runs, rebuild models, submit jobs,
+   04056: # or rerun postprocess. The summary route shells out to code/review_run.py using
+   04057: # the SFINCS/backend Python so app.py's lighter Flask env does not need xarray/numpy.
+   04058: # =============================================================================
+   04059: 
+   04060: import json as _review_json
+   04061: import subprocess as _review_subprocess
+   04062: from pathlib import Path as _ReviewPath
+   04063: from flask import abort as _review_abort
+   04064: from flask import jsonify as _review_jsonify
+   04065: from flask import request as _review_request
+   04066: from flask import send_file as _review_send_file
+   04067: 
+   04068: 
+   04069: def _review_pipeline_root() -> _ReviewPath:
+   04070:     return _ReviewPath(__file__).resolve().parents[1]
+   04071: 
+   04072: 
+   04073: def _review_web_root() -> _ReviewPath:
+   04074:     return _ReviewPath(__file__).resolve().parent
+   04075: 
+   04076: 
+   04077: def _review_default_run_root() -> _ReviewPath:
+>> 04078:     """Prefer launcher_site_defaults.json runRoot, fall back to project default."""
+>> 04079:     defaults_path = _review_web_root() / "launcher_site_defaults.json"
+>> 04080:     if defaults_path.exists():
+   04081:         try:
+>> 04082:             defaults = _review_json.loads(defaults_path.read_text(encoding="utf-8"))
+>> 04083:             for key in ("runRoot", "run_root", "output_root"):
+>> 04084:                 value = defaults.get(key)
+   04085:                 if value:
+   04086:                     return _ReviewPath(value)
+   04087:         except Exception:
+   04088:             pass
+   04089:     return _ReviewPath("/proj/zefflab/projects/Flooding/sfincs_runs")
+   04090: 
+   04091: 
+   04092: def _review_backend_python() -> str:
+   04093:     """Use the backend/SFINCS env for NetCDF/raster/numpy/xarray review checks."""
+>> 04094:     defaults_path = _review_web_root() / "launcher_site_defaults.json"
+>> 04095:     if defaults_path.exists():
+   04096:         try:
+>> 04097:             defaults = _review_json.loads(defaults_path.read_text(encoding="utf-8"))
+   04098:             for key in ("condaPython", "conda_python", "sfincsPython", "sfincs_python"):
+>> 04099:                 value = defaults.get(key)
+   04100:                 if value:
+   04101:                     return str(value)
+   04102:         except Exception:
+   04103:             pass
+   04104:     return "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python"
+   04105: 
+   04106: 
+   04107: def _review_resolve_run(run_name: str) -> _ReviewPath:
+   04108:     """Resolve a run name safely under the configured run root."""
+   04109:     if not run_name:
+   04110:         raise ValueError("blank run name")
+   04111:     if "/" in run_name or "\\" in run_name or run_name in {".", ".."}:
+   04112:         raise ValueError("run must be a run folder name, not a path")
+   04113:     run_root = _review_default_run_root().resolve()
+   04114:     run_dir = (run_root / run_name).resolve()
+   04115:     try:
+   04116:         run_dir.relative_to(run_root)
+   04117:     except ValueError:
+   04118:         raise ValueError("resolved run escaped run root")
+   04119:     return run_dir
+   04120: 
+   04121: 
+   04122: def _review_quick_status(run_dir: _ReviewPath) -> str:
+   04123:     if (run_dir / "preprocess_failed.json").exists() or (run_dir / "sfincs_failed.json").exists() or (run_dir / "postprocess_failed.json").exists():
+   04124:         return "failed"
+   04125:     if (run_dir / "model" / "sfincs_map.nc").exists() and (run_dir / "model" / "sfincs_his.nc").exists():
+   04126:         if (run_dir / "postprocess" / "run_summary.json").exists() or (run_dir / "postprocess" / "output_variables.txt").exists():
+   04127:             return "completed"
+```
+
+#### Settings chunk 11/11 — lines 4324-4388 — matches=3
+
+Scope: `def _review_maps_safe_run_root(run_name):`
+
+```text
+   04324:                 err_tail = latest_err.read_text(encoding="utf-8", errors="replace")[-4000:]
+   04325:         except Exception:
+   04326:             err_tail = ""
+   04327: 
+   04328:         try:
+   04329:             if latest_out and latest_out.exists():
+   04330:                 out_tail = latest_out.read_text(encoding="utf-8", errors="replace")[-4000:]
+   04331:         except Exception:
+   04332:             out_tail = ""
+   04333: 
+   04334:         status["state"] = "failed"
+   04335:         status["message"] = "Static map job left Slurm without producing a usable layer manifest."
+   04336:         status["error"] = err_tail.strip() or out_tail.strip() or "No layers_manifest.json or map output error text was found."
+   04337:         status["stdout_relpath_checked"] = str(latest_out.resolve().relative_to(run_root.resolve())) if latest_out else None
+   04338:         status["stderr_relpath_checked"] = str(latest_err.resolve().relative_to(run_root.resolve())) if latest_err else None
+   04339: 
+   04340:         return status
+   04341: 
+   04342:     except Exception as exc:
+   04343:         status["scheduler_check_error"] = f"{type(exc).__name__}: {exc}"
+   04344:         return status
+   04345:     
+   04346:     
+   04347:     
+   04348:     
+   04349: def _review_maps_safe_run_root(run_name):
+   04350:     from pathlib import Path
+   04351: 
+>> 04352:     runs_root = Path("/proj/zefflab/projects/Flooding/sfincs_runs").resolve()
+   04353:     safe_name = Path(str(run_name or "")).name
+   04354: 
+   04355:     if not safe_name:
+   04356:         raise ValueError("Missing run name.")
+   04357: 
+>> 04358:     run_root = (runs_root / safe_name).resolve()
+   04359: 
+>> 04360:     if run_root == runs_root or runs_root not in run_root.parents:
+   04361:         raise ValueError("Unsafe run path.")
+   04362: 
+   04363:     if not run_root.exists():
+   04364:         raise FileNotFoundError(f"Run folder not found: {safe_name}")
+   04365: 
+   04366:     return run_root
+   04367: 
+   04368: 
+   04369: def _review_maps_read_json(path):
+   04370:     import json
+   04371: 
+   04372:     if not path.exists():
+   04373:         return None
+   04374: 
+   04375:     return json.loads(path.read_text(encoding="utf-8"))
+   04376: 
+   04377: 
+   04378: @app.route("/api/review/maps/status", methods=["GET"])
+   04379: def api_review_maps_status():
+   04380:     from flask import request, jsonify
+   04381: 
+   04382:     try:
+   04383:         run_root = _review_maps_safe_run_root(request.args.get("run", ""))
+   04384: 
+   04385:         status_path = run_root / "review" / "maps" / "map_status.json"
+   04386:         manifest_path = run_root / "review" / "maps" / "layers_manifest.json"
+   04387: 
+   04388:         status = _review_maps_read_json(status_path)
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js`
+
+Settings chunks: **2**  
+Matched settings-ish lines: **93**
+
+#### Settings chunk 1/2 — lines 1-329 — matches=74
+
+Scope: `const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";`
+
+```text
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+>> 00004:   const STORAGE_KEY = "sfincs_web_launcher_defaults_v1";
+>> 00005:   const SERVER_DEFAULTS_URL = "/api/launcher-defaults";
+>> 00006:   let SERVER_DEFAULTS = {};
+>> 00007:   let SERVER_DEFAULTS_LOADED = false;
+   00008: 
+>> 00009:   const DEFAULTS = {
+   00010:     dataRoot: "/proj/zefflab/projects/Flooding/Data/harris_county",
+   00011:     catalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+>> 00012:     eventCatalogRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs/events_reduced",
+   00013:     nativeSfincsRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00014:     overrideSourceRoot: "/proj/zefflab/projects/Flooding/Data/harris_county/catalogs",
+   00015:     runRoot: "/proj/zefflab/projects/Flooding/sfincs_runs",
+   00016:     projectRoot: "/proj/zefflab/projects/Flooding/pipeline",
+   00017:     condaEnvPath: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs",
+   00018:     condaPython: "/proj/zefflab/projects/Flooding/pipeline/envs/sfincs/bin/python",
+   00019:     sfincsContainerPath: "/proj/zefflab/projects/Flooding/pipeline/containers/sfincs-v2.3.0-mt-Faber-Release.sif"
+   00020:   };
+   00021: 
+   00022:   const DEFAULT_LABELS = {
+   00023:     dataRoot: "Data root",
+   00024:     catalogRoot: "Catalog root",
+   00025:     eventCatalogRoot: "Event catalog root",
+   00026:     nativeSfincsRoot: "Native SFINCS root",
+   00027:     overrideSourceRoot: "Override detect/source browse root",
+   00028:     runRoot: "Run/output root",
+   00029:     projectRoot: "Project/pipeline root",
+   00030:     condaEnvPath: "SFINCS conda env path",
+   00031:     condaPython: "SFINCS Python executable",
+   00032:     sfincsContainerPath: "SFINCS container path"
+   00033:   };
+   00034: 
+   00035:   const DEFAULT_HELP = {
+   00036:     dataRoot: "Fallback root for general input files.",
+   00037:     catalogRoot: "Root for static, event, validation, and reduced catalogs.",
+   00038:     eventCatalogRoot: "Default place to browse for events_reduced folders.",
+   00039:     nativeSfincsRoot: "Default place to browse for folders containing native sfincs.* files.",
+   00040:     overrideSourceRoot: "Default starting folder for Override Mode Detect + overrides source Browse buttons.",
+   00041:     runRoot: "Default place for completed runs and compare inputs.",
+   00042:     projectRoot: "Shared pipeline bundle root used by backend runner.",
+   00043:     condaEnvPath: "Shared SFINCS/HydroMT environment path.",
+   00044:     condaPython: "Python executable used by backend preprocessing/postprocessing stages.",
+   00045:     sfincsContainerPath: "Apptainer/Singularity SFINCS container image path."
+   00046:   };
+   00047: 
+   00048: 
+>> 00049:   function readStoredDefaults() {
+   00050:     try {
+>> 00051:       const raw = window.localStorage.getItem(STORAGE_KEY);
+   00052:       if (!raw) return {};
+   00053:       const parsed = JSON.parse(raw);
+   00054:       return parsed && typeof parsed === "object" ? parsed : {};
+   00055:     } catch (err) {
+>> 00056:       console.warn("Could not read launcher defaults:", err);
+   00057:       return {};
+   00058:     }
+   00059:   }
+   00060: 
+>> 00061:   function getAllDefaults() {
+>> 00062:     if (SERVER_DEFAULTS_LOADED) {
+>> 00063:       return Object.assign({}, DEFAULTS, SERVER_DEFAULTS);
+   00064:     }
+   00065: 
+>> 00066:     return Object.assign({}, DEFAULTS, readStoredDefaults());
+   00067:   }
+   00068:   
+>> 00069:   async function saveDefaults(values) {
+   00070:     const cleaned = {};
+   00071: 
+>> 00072:     Object.keys(DEFAULTS).forEach((key) => {
+   00073:       const value = String(values[key] || "").trim();
+   00074:       if (value) cleaned[key] = value;
+   00075:     });
+   00076: 
+   00077:     try {
+>> 00078:       const response = await fetch(SERVER_DEFAULTS_URL, {
+   00079:         method: "POST",
+   00080:         headers: {"Content-Type": "application/json"},
+>> 00081:         body: JSON.stringify({defaults: cleaned})
+   00082:       });
+   00083: 
+   00084:       const data = await response.json();
+   00085: 
+   00086:       if (!response.ok || !data.ok) {
+>> 00087:         throw new Error(data.error || "Server rejected launcher defaults.");
+   00088:       }
+   00089: 
+>> 00090:       SERVER_DEFAULTS = data.defaults || cleaned;
+>> 00091:       SERVER_DEFAULTS_LOADED = true;
+   00092: 
+>> 00093:       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(SERVER_DEFAULTS, null, 2));
+>> 00094:       return getAllDefaults();
+   00095:     } catch (err) {
+>> 00096:       console.warn("Could not save launcher defaults to server; using browser fallback:", err);
+>> 00097:       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned, null, 2));
+>> 00098:       return getAllDefaults();
+   00099:     }
+   00100:   }
+   00101: 
+>> 00102:   async function resetDefaults() {
+   00103:     try {
+>> 00104:       const response = await fetch(SERVER_DEFAULTS_URL, {
+   00105:         method: "POST",
+   00106:         headers: {"Content-Type": "application/json"},
+>> 00107:         body: JSON.stringify({defaults: {}})
+   00108:       });
+   00109: 
+   00110:       const data = await response.json();
+   00111: 
+   00112:       if (!response.ok || !data.ok) {
+>> 00113:         throw new Error(data.error || "Server rejected launcher defaults reset.");
+   00114:       }
+   00115: 
+>> 00116:       SERVER_DEFAULTS = data.defaults || {};
+>> 00117:       SERVER_DEFAULTS_LOADED = true;
+>> 00118:       window.localStorage.removeItem(STORAGE_KEY);
+>> 00119:       return getAllDefaults();
+   00120:     } catch (err) {
+>> 00121:       console.warn("Could not reset launcher defaults on server; resetting browser fallback:", err);
+>> 00122:       window.localStorage.removeItem(STORAGE_KEY);
+>> 00123:       return getAllDefaults();
+   00124:     }
+   00125:   }
+   00126: 
+   00127:   function getDefault(key) {
+>> 00128:     return getAllDefaults()[key] || DEFAULTS[key] || "";
+   00129:   }
+   00130: 
+>> 00131:   async function loadServerDefaults() {
+   00132:     try {
+>> 00133:       const response = await fetch(SERVER_DEFAULTS_URL);
+   00134:       const data = await response.json();
+   00135: 
+   00136:       if (!response.ok || !data.ok) {
+>> 00137:         throw new Error(data.error || "Could not load server launcher defaults.");
+   00138:       }
+   00139: 
+>> 00140:       SERVER_DEFAULTS = data.defaults || {};
+>> 00141:       SERVER_DEFAULTS_LOADED = true;
+   00142: 
+>> 00143:       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(SERVER_DEFAULTS, null, 2));
+   00144: 
+>> 00145:       window.dispatchEvent(new CustomEvent("launcher-defaults-changed", {
+>> 00146:         detail: getAllDefaults()
+   00147:       }));
+   00148:     } catch (err) {
+>> 00149:       console.warn("Could not load server launcher defaults; using browser fallback:", err);
+>> 00150:       SERVER_DEFAULTS_LOADED = false;
+   00151:     }
+   00152:   }
+   00153: 
+   00154:   function ensureStyle() {
+>> 00155:     if (document.getElementById("launcher-defaults-style")) return;
+   00156: 
+   00157:     const style = document.createElement("style");
+>> 00158:     style.id = "launcher-defaults-style";
+   00159:     style.textContent = `
+>> 00160:       .launcher-settings-button {
+   00161:         position: fixed;
+   00162:         left: 74px;
+   00163:         bottom: 18px;
+   00164:         z-index: 2000;
+   00165:         width: 46px;
+   00166:         height: 46px;
+   00167:         border-radius: 999px;
+   00168:         border: 1px solid var(--border, #d0d7de);
+   00169:         background: var(--panel, #ffffff);
+   00170:         box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+   00171:         cursor: pointer;
+   00172:         font-size: 20px;
+   00173:         line-height: 1;
+   00174:       }
+   00175: 
+>> 00176:       .launcher-settings-button:hover {
+   00177:         transform: translateY(-1px);
+   00178:       }
+   00179: 
+>> 00180:       .launcher-settings-backdrop {
+   00181:         position: fixed;
+   00182:         inset: 0;
+   00183:         z-index: 2500;
+   00184:         background: rgba(0,0,0,0.35);
+   00185:         display: none;
+   00186:         align-items: center;
+   00187:         justify-content: center;
+   00188:         padding: 24px;
+   00189:       }
+   00190: 
+>> 00191:       .launcher-settings-backdrop.open {
+   00192:         display: flex;
+   00193:       }
+   00194: 
+>> 00195:       .launcher-settings-modal {
+   00196:         width: min(920px, 96vw);
+   00197:         max-height: 88vh;
+   00198:         overflow: auto;
+   00199:         background: var(--panel, #ffffff);
+   00200:         color: var(--text, #111827);
+   00201:         border: 1px solid var(--border, #d0d7de);
+   00202:         border-radius: 18px;
+   00203:         box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+   00204:         padding: 22px;
+   00205:       }
+   00206: 
+>> 00207:       .launcher-settings-modal h2 {
+   00208:         margin-top: 0;
+   00209:       }
+   00210: 
+>> 00211:       .launcher-settings-grid {
+   00212:         display: grid;
+   00213:         grid-template-columns: 220px minmax(0, 1fr);
+   00214:         gap: 12px 14px;
+   00215:         align-items: center;
+   00216:       }
+   00217: 
+>> 00218:       .launcher-settings-grid label {
+   00219:         font-weight: 650;
+   00220:       }
+   00221: 
+>> 00222:       .launcher-settings-grid input {
+   00223:         width: 100%;
+   00224:         min-width: 0;
+   00225:       }
+   00226: 
+>> 00227:       .launcher-settings-help {
+   00228:         margin: 10px 0 18px;
+   00229:         opacity: 0.82;
+   00230:         line-height: 1.45;
+   00231:       }
+   00232: 
+>> 00233:       .launcher-settings-actions {
+   00234:         display: flex;
+   00235:         gap: 10px;
+   00236:         justify-content: flex-end;
+   00237:         margin-top: 18px;
+   00238:         flex-wrap: wrap;
+   00239:       }
+   00240:     `;
+   00241: 
+   00242:     document.head.appendChild(style);
+   00243:   }
+   00244: 
+   00245:   function makeInputRow(grid, key, label, help) {
+   00246:     const labelEl = document.createElement("label");
+   00247:     labelEl.htmlFor = `launcher-default-${key}`;
+   00248:     labelEl.textContent = DEFAULT_LABELS[key] || label;
+   00249: 
+   00250:     const wrap = document.createElement("div");
+   00251: 
+   00252:     const input = document.createElement("input");
+   00253:     input.id = `launcher-default-${key}`;
+   00254:     input.dataset.launcherDefaultKey = key;
+   00255:     input.type = "text";
+   00256:     input.value = getDefault(key);
+>> 00257:     input.placeholder = DEFAULTS[key] || "";
+   00258: 
+   00259:     const small = document.createElement("div");
+>> 00260:     small.className = "muted launcher-settings-help";
+   00261:     small.textContent = DEFAULT_HELP[key] || help;
+   00262: 
+   00263:     wrap.appendChild(input);
+   00264:     wrap.appendChild(small);
+   00265: 
+   00266:     grid.appendChild(labelEl);
+   00267:     grid.appendChild(wrap);
+   00268:   }
+   00269: 
+   00270:   function buildSettingsUi() {
+>> 00271:     if (document.getElementById("launcher-settings-button")) return;
+   00272: 
+   00273:     ensureStyle();
+   00274: 
+   00275:     const button = document.createElement("button");
+>> 00276:     button.id = "launcher-settings-button";
+>> 00277:     button.className = "launcher-settings-button";
+   00278:     button.type = "button";
+>> 00279:     button.title = "Launcher settings";
+   00280:     button.textContent = "⚙";
+   00281: 
+   00282:     const backdrop = document.createElement("div");
+>> 00283:     backdrop.id = "launcher-settings-backdrop";
+>> 00284:     backdrop.className = "launcher-settings-backdrop";
+   00285: 
+   00286:     const modal = document.createElement("div");
+>> 00287:     modal.className = "launcher-settings-modal";
+   00288:     modal.setAttribute("role", "dialog");
+   00289:     modal.setAttribute("aria-modal", "true");
+>> 00290:     modal.setAttribute("aria-label", "Launcher settings");
+   00291: 
+   00292:     const title = document.createElement("h2");
+>> 00293:     title.textContent = "Launcher settings";
+   00294: 
+   00295:     const intro = document.createElement("p");
+>> 00296:     intro.className = "launcher-settings-help";
+   00297:     intro.textContent =
+>> 00298:       "These settings control where Browse buttons start. They are saved to this launcher folder when possible, so they persist across app restarts and browser sessions. Browser storage is used only as a fallback.";
+   00299: 
+   00300:     const grid = document.createElement("div");
+>> 00301:     grid.className = "launcher-settings-grid";
+   00302: 
+   00303:     makeInputRow(
+   00304:       grid,
+   00305:       "dataRoot",
+   00306:       "Data root",
+   00307:       "Fallback root for general input files."
+   00308:     );
+   00309: 
+   00310:     makeInputRow(
+   00311:       grid,
+   00312:       "catalogRoot",
+   00313:       "Catalog root",
+   00314:       "Root for static, event, validation, and reduced catalogs."
+   00315:     );
+   00316: 
+   00317:     makeInputRow(
+   00318:       grid,
+   00319:       "eventCatalogRoot",
+   00320:       "Event catalog root",
+   00321:       "Default place to browse for events_reduced folders."
+   00322:     );
+   00323: 
+   00324:     makeInputRow(
+   00325:       grid,
+   00326:       "nativeSfincsRoot",
+   00327:       "Native SFINCS root",
+   00328:       "Default place to browse for folders containing native sfincs.* files."
+   00329:     );
+```
+
+#### Settings chunk 2/2 — lines 346-479 — matches=19
+
+Scope: `const actions = document.createElement("div");`
+
+```text
+   00346:       grid,
+   00347:       "projectRoot",
+   00348:       "Project/pipeline root",
+   00349:       "Shared pipeline bundle root used by backend runner."
+   00350:     );
+   00351: 
+   00352:     makeInputRow(
+   00353:       grid,
+   00354:       "condaEnvPath",
+   00355:       "SFINCS conda env path",
+   00356:       "Shared SFINCS/HydroMT environment path."
+   00357:     );
+   00358: 
+   00359:     makeInputRow(
+   00360:       grid,
+   00361:       "condaPython",
+   00362:       "SFINCS Python executable",
+   00363:       "Python executable used by backend preprocessing/postprocessing stages."
+   00364:     );
+   00365: 
+   00366:     makeInputRow(
+   00367:       grid,
+   00368:       "sfincsContainerPath",
+   00369:       "SFINCS container path",
+   00370:       "Apptainer/Singularity SFINCS container image path."
+   00371:     );
+   00372: 
+   00373:     const actions = document.createElement("div");
+>> 00374:     actions.className = "launcher-settings-actions";
+   00375: 
+   00376:     const reset = document.createElement("button");
+   00377:     reset.type = "button";
+   00378:     reset.className = "secondary";
+>> 00379:     reset.textContent = "Reset defaults";
+   00380: 
+   00381:     const cancel = document.createElement("button");
+   00382:     cancel.type = "button";
+   00383:     cancel.className = "secondary";
+   00384:     cancel.textContent = "Cancel";
+   00385: 
+   00386:     const save = document.createElement("button");
+   00387:     save.type = "button";
+>> 00388:     save.textContent = "Save settings";
+   00389: 
+   00390:     actions.appendChild(reset);
+   00391:     actions.appendChild(cancel);
+   00392:     actions.appendChild(save);
+   00393: 
+   00394:     modal.appendChild(title);
+   00395:     modal.appendChild(intro);
+   00396:     modal.appendChild(grid);
+   00397:     modal.appendChild(actions);
+   00398:     backdrop.appendChild(modal);
+   00399: 
+   00400:     document.body.appendChild(button);
+   00401:     document.body.appendChild(backdrop);
+   00402: 
+   00403:     function openModal() {
+   00404:       document.querySelectorAll("[data-launcher-default-key]").forEach((input) => {
+   00405:         const key = input.dataset.launcherDefaultKey;
+   00406:         input.value = getDefault(key);
+   00407:       });
+   00408:       backdrop.classList.add("open");
+   00409:     }
+   00410: 
+   00411:     function closeModal() {
+   00412:       backdrop.classList.remove("open");
+   00413:     }
+   00414: 
+   00415:     button.addEventListener("click", openModal);
+   00416:     cancel.addEventListener("click", closeModal);
+   00417: 
+   00418:     backdrop.addEventListener("click", function (event) {
+   00419:       if (event.target === backdrop) closeModal();
+   00420:     });
+   00421: 
+   00422:     reset.addEventListener("click", async function () {
+>> 00423:       await resetDefaults();
+   00424:       document.querySelectorAll("[data-launcher-default-key]").forEach((input) => {
+   00425:         const key = input.dataset.launcherDefaultKey;
+   00426:         input.value = getDefault(key);
+   00427:       });
+>> 00428:       window.dispatchEvent(new CustomEvent("launcher-defaults-changed", {
+>> 00429:         detail: getAllDefaults()
+   00430:       }));
+   00431:     });
+   00432:     
+   00433:     save.addEventListener("click", async function () {
+   00434:       const values = {};
+   00435:       document.querySelectorAll("[data-launcher-default-key]").forEach((input) => {
+   00436:         values[input.dataset.launcherDefaultKey] = input.value;
+   00437:       });
+   00438: 
+>> 00439:       const saved = await saveDefaults(values);
+   00440: 
+>> 00441:       window.dispatchEvent(new CustomEvent("launcher-defaults-changed", {
+   00442:         detail: saved
+   00443:       }));
+   00444: 
+   00445:       closeModal();
+   00446:     });
+   00447:   }
+   00448: 
+>> 00449:   window.LauncherDefaults = {
+   00450:     get: getDefault,
+>> 00451:     getAll: getAllDefaults,
+>> 00452:     save: saveDefaults,
+>> 00453:     reset: resetDefaults,
+>> 00454:     loadServer: loadServerDefaults,
+   00455:     storageKey: STORAGE_KEY,
+>> 00456:     serverUrl: SERVER_DEFAULTS_URL
+   00457:   };
+   00458: 
+>> 00459:   function refreshSettingsInputsFromDefaults() {
+   00460:     document.querySelectorAll("[data-launcher-default-key]").forEach((input) => {
+   00461:       const key = input.dataset.launcherDefaultKey;
+   00462:       input.value = getDefault(key);
+   00463:     });
+   00464:   }
+   00465: 
+   00466:   document.addEventListener("DOMContentLoaded", function () {
+   00467:     // Build the UI immediately so the gear button always appears.
+>> 00468:     // Server/project-level defaults load afterward and then refresh the modal fields.
+   00469:     buildSettingsUi();
+   00470: 
+>> 00471:     loadServerDefaults()
+   00472:       .then(function () {
+>> 00473:         refreshSettingsInputsFromDefaults();
+   00474:       })
+   00475:       .catch(function (err) {
+>> 00476:         console.warn("Launcher defaults load failed after UI build:", err);
+   00477:       });
+   00478:   });
+   00479: })();
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js`
+
+Settings chunks: **3**  
+Matched settings-ish lines: **35**
+
+#### Settings chunk 1/3 — lines 1-229 — matches=30
+
+Scope: `const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";`
+
+```text
+   00001: (function () {
+   00002:   "use strict";
+   00003: 
+>> 00004:   const DEFAULT_DATA_ROOT = "/proj/zefflab/projects/Flooding/Data/harris_county";
+   00005: 
+   00006:   function getConfigPathBrowseSettings() {
+   00007:     return window.CONFIG_PATH_BROWSE_SETTINGS || {};
+   00008:   }
+   00009: 
+   00010:   function firstNonEmptyValueForKey(key) {
+   00011:     const el = document.querySelector(`[data-key="${key}"]`);
+   00012:     if (!el) return "";
+   00013: 
+   00014:     const raw = String(el.value || "").trim();
+   00015:     if (!raw) return "";
+   00016: 
+   00017:     if (raw.startsWith("[")) {
+   00018:       try {
+   00019:         const parsed = JSON.parse(raw);
+   00020:         if (Array.isArray(parsed) && parsed.length > 0) {
+   00021:           return String(parsed[0] || "").trim();
+   00022:         }
+   00023:       } catch (err) {
+   00024:         return raw;
+   00025:       }
+   00026:     }
+   00027: 
+   00028:     return raw;
+   00029:   }
+   00030: 
+   00031:   function currentDataRoot() {
+>> 00032:     const settings = getConfigPathBrowseSettings();
+>> 00033:     const launcherDefaults = window.LauncherDefaults && window.LauncherDefaults.getAll
+>> 00034:       ? window.LauncherDefaults.getAll()
+   00035:       : {};
+   00036: 
+   00037:     const fallback =
+>> 00038:       launcherDefaults.dataRoot ||
+>> 00039:       settings.defaultStart ||
+>> 00040:       DEFAULT_DATA_ROOT;
+   00041: 
+>> 00042:     const dataRootInput = document.querySelector('[data-key="data_root"]');
+   00043:     const value = dataRootInput ? String(dataRootInput.value || "").trim() : "";
+   00044: 
+   00045:     return value || fallback;
+   00046:   }
+   00047: 
+   00048:   function currentCatalogRoot() {
+>> 00049:     const launcherDefaults = window.LauncherDefaults && window.LauncherDefaults.getAll
+>> 00050:       ? window.LauncherDefaults.getAll()
+   00051:       : {};
+   00052: 
+   00053:     return (
+   00054:       firstNonEmptyValueForKey("reduced_event_catalog_path") ||
+   00055:       firstNonEmptyValueForKey("event_catalog_path") ||
+   00056:       firstNonEmptyValueForKey("data_catalogs") ||
+>> 00057:       launcherDefaults.eventCatalogRoot ||
+>> 00058:       launcherDefaults.catalogRoot ||
+   00059:       currentDataRoot()
+   00060:     );
+   00061:   }
+   00062: 
+   00063:   function currentPipelineRoot() {
+>> 00064:     const settings = getConfigPathBrowseSettings();
+>> 00065:     const launcherDefaults = window.LauncherDefaults && window.LauncherDefaults.getAll
+>> 00066:       ? window.LauncherDefaults.getAll()
+   00067:       : {};
+   00068: 
+   00069:     return (
+>> 00070:       settings.backendStart ||
+>> 00071:       settings.pipelineStart ||
+>> 00072:       launcherDefaults.projectRoot ||
+   00073:       "/proj/zefflab/projects/Flooding/pipeline"
+   00074:     );
+   00075:   }
+   00076: 
+   00077:   function keyIsBackendRuntimePath(key) {
+   00078:     return new Set([
+>> 00079:       "project_root",
+   00080:       "runner_file",
+   00081:       "runner_python",
+   00082:       "launcher_file",
+   00083:       "launcher_python",
+   00084:       "preprocess_stage_script",
+   00085:       "postprocess_stage_script",
+   00086:       "sfincs_container",
+   00087:       "sfincs_container_path"
+   00088:     ]).has(key);
+   00089:   }
+   00090: 
+   00091:   function currentBrowseStartForInput(input) {
+   00092:     const key = input ? String(input.dataset.key || "") : "";
+>> 00093:     const launcherDefaults = window.LauncherDefaults && window.LauncherDefaults.getAll
+>> 00094:       ? window.LauncherDefaults.getAll()
+   00095:       : {};
+   00096: 
+   00097:     const pipelineRoot = currentPipelineRoot();
+   00098:     const envRoot = `${pipelineRoot.replace(/\/+$/, "")}/envs`;
+   00099: 
+   00100:     // Environment folder picker: start at the folder containing all envs.
+   00101:     if (key === "conda_env_path") {
+   00102:       return envRoot;
+   00103:     }
+   00104: 
+   00105:     // Python executable picker: start in bin/ of the currently selected env.
+   00106:     if (key === "conda_python") {
+   00107:       const selectedEnv =
+   00108:         firstNonEmptyValueForKey("conda_env_path") ||
+>> 00109:         launcherDefaults.condaEnvPath ||
+   00110:         `${envRoot}/sfincs`;
+   00111: 
+   00112:       return `${String(selectedEnv).replace(/\/+$/, "")}/bin`;
+   00113:     }
+   00114: 
+   00115:     // Other backend/runtime files should start at the pipeline root.
+   00116:     if (keyIsBackendRuntimePath(key)) {
+   00117:       return pipelineRoot;
+   00118:     }
+   00119: 
+   00120:     if (
+   00121:       key.includes("native") ||
+   00122:       key.endsWith("_input_dirs")
+   00123:     ) {
+>> 00124:       return launcherDefaults.nativeSfincsRoot || currentDataRoot();
+   00125:     }
+   00126: 
+   00127:     if (
+   00128:       key === "reduced_event_catalog_path" ||
+   00129:       key === "event_catalog_path" ||
+   00130:       key === "data_catalogs"
+   00131:     ) {
+>> 00132:       return launcherDefaults.eventCatalogRoot || launcherDefaults.catalogRoot || currentDataRoot();
+   00133:     }
+   00134: 
+   00135:     if (
+   00136:       key.includes("run") ||
+>> 00137:       key === "output_root"
+   00138:     ) {
+>> 00139:       return launcherDefaults.runRoot || currentDataRoot();
+   00140:     }
+   00141: 
+   00142:     return currentCatalogRoot();
+   00143:   }
+   00144: 
+   00145:   function keyIsPathLike(key) {
+   00146:     if (!key) return false;
+   00147: 
+>> 00148:     const settings = getConfigPathBrowseSettings();
+>> 00149:     const specialPathKeys = settings.specialPathKeys || [
+   00150:       "data_catalogs",
+   00151:       "event_catalog_paths",
+   00152:       "reduced_event_catalog_path"
+   00153:     ];
+   00154: 
+   00155:     return (
+   00156:       specialPathKeys.includes(key) ||
+   00157:       key.endsWith("_path") ||
+   00158:       key.endsWith("_paths") ||
+   00159:       key.endsWith("_file_path") ||
+   00160:       key.endsWith("_input_dirs")
+   00161:     );
+   00162:   }
+   00163: 
+   00164:   function keyIsListLike(key, input) {
+   00165:     if (!key) return false;
+   00166: 
+   00167:     const dataType = String(input.dataset.type || "").toLowerCase();
+   00168: 
+   00169:     return (
+   00170:       key === "data_catalogs" ||
+   00171:       key === "event_catalog_paths" ||
+   00172:       key.endsWith("_paths") ||
+   00173:       key.endsWith("_input_dirs") ||
+   00174:       dataType === "list" ||
+   00175:       dataType === "json" ||
+   00176:       dataType === "array"
+   00177:     );
+   00178:   }
+   00179: 
+   00180:   function ensureInputId(input, key) {
+   00181:     if (input.id) return input.id;
+   00182: 
+   00183:     const safeKey = String(key || "path")
+   00184:       .replace(/[^A-Za-z0-9_-]+/g, "-")
+   00185:       .replace(/^-+|-+$/g, "");
+   00186: 
+   00187:     let id = `auto-browse-${safeKey}`;
+   00188:     let i = 2;
+   00189: 
+   00190:     while (document.getElementById(id)) {
+   00191:       id = `auto-browse-${safeKey}-${i}`;
+   00192:       i += 1;
+   00193:     }
+   00194: 
+   00195:     input.id = id;
+   00196:     return id;
+   00197:   }
+   00198: 
+   00199:   function selectedSectionRoots() {
+>> 00200:     const settings = getConfigPathBrowseSettings();
+>> 00201:     const sectionNumbers = settings.sectionNumbers || ["5", "6", "11", "12"];
+   00202: 
+   00203:     const roots = [];
+   00204: 
+   00205:     document.querySelectorAll("h2").forEach((h2) => {
+   00206:       const text = String(h2.textContent || "").trim();
+   00207: 
+   00208:       const matched = sectionNumbers.some((num) => {
+   00209:         return text.startsWith(`${num}.`) || text.startsWith(`${num} `);
+   00210:       });
+   00211: 
+   00212:       if (matched) {
+   00213:         roots.push(h2.parentElement || h2);
+   00214:       }
+   00215:     });
+   00216: 
+   00217:     return roots;
+   00218:   }
+   00219: 
+   00220:   function addBrowseStyles() {
+   00221:     if (document.getElementById("config-path-browse-style")) return;
+   00222: 
+   00223:     const style = document.createElement("style");
+   00224:     style.id = "config-path-browse-style";
+   00225:     style.textContent = `
+   00226:       .path-browse-wrap {
+   00227:         display: grid;
+   00228:         grid-template-columns: minmax(0, 1fr) auto;
+   00229:         gap: 8px;
+```
+
+#### Settings chunk 2/3 — lines 235-293 — matches=3
+
+Scope: `const directoryKeys = new Set([`
+
+```text
+   00235:       }
+   00236: 
+   00237:       .path-browse-wrap input,
+   00238:       .path-browse-wrap textarea {
+   00239:         width: 100%;
+   00240:         min-width: 0;
+   00241:       }
+   00242: 
+   00243:       .path-browse-wrap button {
+   00244:         white-space: nowrap;
+   00245:       }
+   00246:     `;
+   00247:     document.head.appendChild(style);
+   00248:   }
+   00249:   
+   00250:   function dirname(pathText) {
+   00251:     const text = String(pathText || "").trim();
+   00252:     if (!text || !text.startsWith("/")) return "";
+   00253: 
+   00254:     const cleaned = text.replace(/\/+$/, "");
+   00255:     const idx = cleaned.lastIndexOf("/");
+   00256:     if (idx <= 0) return "/";
+   00257: 
+   00258:     return cleaned.slice(0, idx);
+   00259:   }
+   00260: 
+   00261:   function inferBrowseModeForKey(key) {
+   00262:     const directoryKeys = new Set([
+>> 00263:       "project_root",
+>> 00264:       "output_root",
+>> 00265:       "data_root",
+   00266:       "conda_env_path",
+   00267:       "data_catalogs",
+   00268:       "event_catalog_path",
+   00269:       "event_catalog_paths",
+   00270:       "reduced_event_catalog_path",
+   00271:       "native_sfincs_input_dirs",
+   00272:       "native_static_sfincs_input_dirs",
+   00273:       "native_event_sfincs_input_dirs",
+   00274:       "sfincs_file_override_search_dirs"
+   00275:     ]);
+   00276: 
+   00277:     const fileKeys = new Set([
+   00278:       "conda_python",
+   00279:       "runner_python",
+   00280:       "launcher_python",
+   00281:       "sfincs_container",
+   00282:       "sfincs_container_path",
+   00283:       "preprocess_stage_script",
+   00284:       "postprocess_stage_script"
+   00285:     ]);
+   00286: 
+   00287:     if (directoryKeys.has(key)) return "directory";
+   00288:     if (fileKeys.has(key)) return "file";
+   00289: 
+   00290:     if (key.endsWith("_root")) return "directory";
+   00291:     if (key.endsWith("_dir")) return "directory";
+   00292:     if (key.endsWith("_dirs")) return "directory";
+   00293:     if (key.endsWith("_input_dirs")) return "directory";
+```
+
+#### Settings chunk 3/3 — lines 319-376 — matches=2
+
+Scope: `const settings = getConfigPathBrowseSettings();`
+
+```text
+   00319:     if (key === "conda_env_path" || key === "conda_python") {
+   00320:       button.dataset.browseForceStart = "true";
+   00321:     }
+   00322:     
+   00323:     button.dataset.autoBrowseButton = "true";
+   00324: 
+   00325:     if (keyIsListLike(key, input)) {
+   00326:       input.dataset.autoBrowseListLike = "true";
+   00327:     }
+   00328: 
+   00329:     input.parentNode.insertBefore(wrapper, input);
+   00330:     wrapper.appendChild(input);
+   00331:     wrapper.appendChild(button);
+   00332: 
+   00333:     input.dataset.autoBrowseAdded = "true";
+   00334:   }
+   00335: 
+   00336:   function enhanceConfigPathFields() {
+   00337:     addBrowseStyles();
+   00338: 
+   00339:     const roots = selectedSectionRoots();
+   00340: 
+   00341:     roots.forEach((root) => {
+   00342:       root.querySelectorAll("input[data-key], textarea[data-key]").forEach((input) => {
+   00343:         wrapWithBrowseButton(input);
+   00344:       });
+   00345:     });
+   00346: 
+>> 00347:     const settings = getConfigPathBrowseSettings();
+>> 00348:     const specialPathKeys = settings.specialPathKeys || [
+   00349:       "data_catalogs",
+   00350:       "event_catalog_paths",
+   00351:       "reduced_event_catalog_path"
+   00352:     ];
+   00353: 
+   00354:     specialPathKeys.forEach((key) => {
+   00355:       document.querySelectorAll(`[data-key="${key}"]`).forEach((input) => {
+   00356:         wrapWithBrowseButton(input);
+   00357:       });
+   00358:     });
+   00359:   }
+   00360: 
+   00361:   function normalizeListLikeValue(input) {
+   00362:     if (!input || input.dataset.autoBrowseListLike !== "true") return;
+   00363: 
+   00364:     const raw = String(input.value || "").trim();
+   00365:     if (!raw) return;
+   00366: 
+   00367:     if (raw.startsWith("[") || raw.startsWith("{")) return;
+   00368: 
+   00369:     input.value = JSON.stringify([raw]);
+   00370:   }
+   00371: 
+   00372:   document.addEventListener("DOMContentLoaded", enhanceConfigPathFields);
+   00373: 
+   00374:   document.addEventListener(
+   00375:     "click",
+   00376:     function (event) {
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js`
+
+Settings chunks: **6**  
+Matched settings-ish lines: **20**
+
+#### Settings chunk 1/6 — lines 229-285 — matches=1
+
+Scope: `const MANUAL_CONFIG_GROUPS = [`
+
+```text
+   00229:     return true;
+   00230:   }
+   00231: 
+   00232:   function startsAny(key, prefixes) {
+   00233:     return prefixes.some((prefix) => key.startsWith(prefix));
+   00234:   }
+   00235: 
+   00236:   function containsAny(key, parts) {
+   00237:     return parts.some((part) => key.includes(part));
+   00238:   }
+   00239: 
+   00240:   const MANUAL_CONFIG_GROUPS = [
+   00241:     {
+   00242:       title: "0. Run identity and launcher record",
+   00243:       test: (key) => (
+   00244:         [
+   00245:           "run_name", "event_name", "run_series", "run_description", "run_tags",
+   00246:           "pipeline_mode", "preprocess_mode", "created_at", "created_by_user",
+   00247:           "source_config_path", "save_config_json", "save_data_inventory",
+   00248:           "save_job_ids", "overwrite_existing_run"
+   00249:         ].includes(key)
+   00250:       ),
+   00251:     },
+   00252: 
+   00253:     {
+   00254:       title: "1. Project, output, backend, environment, and container paths",
+   00255:       test: (key) => (
+   00256:         [
+>> 00257:           "project_root", "output_root", "data_root",
+   00258:           "runner_file", "runner_python", "runner_python_version",
+   00259:           "conda_python", "conda_env_path", "anaconda_module", "apptainer_module",
+   00260:           "sfincs_container", "sfincs_container_path",
+   00261:           "prefer_pipeline_bundle_runtime_paths", "allow_writes_inside_proj"
+   00262:         ].includes(key)
+   00263:       ),
+   00264:     },
+   00265: 
+   00266:     {
+   00267:       title: "2. Data catalogs, native overrides, and HydroMT source setup",
+   00268:       test: (key) => (
+   00269:         [
+   00270:           "data_catalogs",
+   00271:           "native_sfincs_input_dirs", "native_static_sfincs_input_dirs", "native_event_sfincs_input_dirs",
+   00272:           "use_sfincs_file_overrides",
+   00273:           "hydromt_dem_sources", "hydromt_bathy_sources", "hydromt_roughness_sources",
+   00274:           "dem_paths", "bathy_paths",
+   00275:           "hydrography_source", "hydrography_path"
+   00276:         ].includes(key)
+   00277:       ),
+   00278:     },
+   00279: 
+   00280:     {
+   00281:       title: "3. Region, grid, CRS, mask, DEM, bathy, and elevation controls",
+   00282:       test: (key) => (
+   00283:         startsAny(key, [
+   00284:           "region_", "grid_", "mask_", "dem_", "bathy_", "elevation_"
+   00285:         ]) ||
+```
+
+#### Settings chunk 2/6 — lines 355-411 — matches=1
+
+Scope: `const MANUAL_CONFIG_GROUPS = [`
+
+```text
+   00355:           "thin_dam_", "weir_", "drainage_structure_", "culvert_", "obs_"
+   00356:         ]) ||
+   00357:         [
+   00358:           "use_obs_points", "use_obs_lines"
+   00359:         ].includes(key)
+   00360:       ),
+   00361:     },
+   00362: 
+   00363:     {
+   00364:       title: "8. Solver, Slurm, stage scripts, and job resources",
+   00365:       test: (key) => (
+   00366:         startsAny(key, ["slurm_"]) ||
+   00367:         [
+   00368:           "submit_with_dependencies", "dependency_type",
+   00369:           "run_preprocessing_job", "run_sfincs_job", "run_postprocessing_job",
+   00370:           "preprocess_stage_script", "postprocess_stage_script",
+   00371:           "preprocess_time", "preprocess_ntasks", "preprocess_cpus_per_task",
+   00372:           "preprocess_mem", "preprocess_nodes",
+   00373:           "sfincs_time", "sfincs_ntasks", "sfincs_cpus_per_task",
+   00374:           "sfincs_mem", "sfincs_nodes",
+   00375:           "sfincs_use_openmp_threads", "sfincs_omp_places", "sfincs_omp_proc_bind",
+   00376:           "postprocess_time", "postprocess_ntasks", "postprocess_cpus_per_task",
+   00377:           "postprocess_mem", "postprocess_nodes"
+   00378:         ].includes(key)
+   00379:       ),
+   00380:     },
+   00381: 
+   00382:     {
+>> 00383:       title: "9. Postprocess plots, quicklooks, result maps, and basemap settings",
+   00384:       test: (key) => (
+   00385:         startsAny(key, ["postprocess_"]) &&
+   00386:         ![
+   00387:           "postprocess_time", "postprocess_ntasks", "postprocess_cpus_per_task",
+   00388:           "postprocess_mem", "postprocess_nodes", "postprocess_stage_script"
+   00389:         ].includes(key)
+   00390:       ),
+   00391:     },
+   00392: 
+   00393:     {
+   00394:       title: "10. Validation, safety, schema, and advanced launcher behavior",
+   00395:       test: (key) => (
+   00396:         startsAny(key, ["warn_", "print_"]) ||
+   00397:         [
+   00398:           "strict_schema_validation",
+   00399:           "validate_paths_before_submit",
+   00400:           "stop_if_required_path_missing",
+   00401:           "allow_missing_model_inputs",
+   00402:           "bash_strict_mode",
+   00403:           "preprocess_enable_hydromt_file_logging"
+   00404:         ].includes(key)
+   00405:       ),
+   00406:     },
+   00407:   ];
+   00408: 
+   00409:   function renderManualOrderedConfig(review) {
+   00410:     const cfg = pickConfigSource(review);
+   00411: 
+```
+
+#### Settings chunk 3/6 — lines 632-688 — matches=1
+
+Scope: `function artifactUrl(relpath) {`
+
+```text
+   00632:         <div class="warning-mini-item"><strong>${counts.minor || 0}</strong><span>minor</span></div>
+   00633:         <div class="warning-mini-item"><strong>${counts.info || 0}</strong><span>info</span></div>
+   00634:       </div>
+   00635:     `;
+   00636:   }
+   00637: 
+   00638:   function renderWarnings(review) {
+   00639:     const warnings = review.warnings || [];
+   00640:     if (!warnings.length) {
+   00641:       $("warnings-panel").innerHTML = `<div class="empty-note">No warnings reported by the V1 review checks.</div>`;
+   00642:       return;
+   00643:     }
+   00644:     $("warnings-panel").innerHTML = warnings.map((w) => {
+   00645:       const sev = String(w.severity || "info").toLowerCase();
+   00646:       return `<div class="warning warning-${escapeHtml(sev)}">
+   00647:         <h4>${escapeHtml((w.severity || "info").toUpperCase())}: ${escapeHtml(w.title)}</h4>
+   00648:         <p>${escapeHtml(w.message)}</p>
+   00649:         ${w.next_step ? `<p><strong>Next:</strong> ${escapeHtml(w.next_step)}</p>` : ""}
+   00650:         ${w.details ? `<details><summary>Details</summary><pre>${escapeHtml(JSON.stringify(w.details, null, 2))}</pre></details>` : ""}
+   00651:       </div>`;
+   00652:     }).join("");
+   00653:   }
+   00654: 
+   00655:   function renderConfig(review) {
+   00656:     $("config-summary-panel").innerHTML = renderManualOrderedConfig(review);
+   00657:   }
+   00658: 
+   00659:   function artifactUrl(relpath) {
+>> 00660:     return `/api/review/file?run=${encodeURIComponent(state.selectedRun)}&rel=${encodeURIComponent(relpath)}`;
+   00661:   }
+   00662: 
+   00663:   function escapeAttr(value) {
+   00664:     return escapeHtml(String(value || "")).replace(/"/g, "&quot;");
+   00665:   }
+   00666: 
+   00667: 
+   00668:   function formatBytes(n) {
+   00669:     const value = Number(n || 0);
+   00670:     if (value < 1024) return `${value} B`;
+   00671:     if (value < 1024 * 1024) return `${(value / 1024).toFixed(1)} KB`;
+   00672:     return `${(value / (1024 * 1024)).toFixed(1)} MB`;
+   00673:   }
+   00674: 
+   00675: 
+   00676:   function revokeReviewAnimationBlobUrls() {
+   00677:     if (!window.__reviewAnimationBlobUrls) {
+   00678:       window.__reviewAnimationBlobUrls = [];
+   00679:       return;
+   00680:     }
+   00681: 
+   00682:     for (const url of window.__reviewAnimationBlobUrls) {
+   00683:       try {
+   00684:         URL.revokeObjectURL(url);
+   00685:       } catch (err) {
+   00686:         // ignore cleanup failures
+   00687:       }
+   00688:     }
+```
+
+#### Settings chunk 4/6 — lines 897-953 — matches=1
+
+Scope: `const inp = review.sfincs_inp || {};`
+
+```text
+   00897:         </div>
+   00898:       </details>
+   00899:     `;
+   00900:   }
+   00901: 
+   00902:   function renderNetcdf(review) {
+   00903:     const netcdf = review.netcdf || {};
+   00904:     const blocks = Object.entries(netcdf).map(([name, info]) => {
+   00905:       const available = info && info.available;
+   00906:       const variables = info && info.variables ? Object.keys(info.variables) : [];
+   00907:       return `<div class="artifact-card" style="margin-bottom:12px;">
+   00908:         <h3>${escapeHtml(name)} ${available ? "✅" : "⚠️"}</h3>
+   00909:         <div class="metric-row"><div class="metric-key">Available</div><div class="metric-val">${escapeHtml(available)}</div></div>
+   00910:         <div class="metric-row"><div class="metric-key">Dims</div><div class="metric-val"><pre>${escapeHtml(JSON.stringify(info.dims || {}, null, 2))}</pre></div></div>
+   00911:         <div class="metric-row"><div class="metric-key">Time</div><div class="metric-val"><pre>${escapeHtml(JSON.stringify(info.time || {}, null, 2))}</pre></div></div>
+   00912:         <div class="metric-row"><div class="metric-key">Variables</div><div class="metric-val">${escapeHtml(variables.join(", "))}</div></div>
+   00913:         ${info.error ? `<div class="warning warning-major"><p>${escapeHtml(info.error)}</p></div>` : ""}
+   00914:       </div>`;
+   00915:     }).join("");
+   00916:     $("tab-netcdf").innerHTML = blocks || `<div class="empty-note">No NetCDF summary available.</div>`;
+   00917:   }
+   00918: 
+   00919:   function renderChecks(review) {
+   00920:     const inp = review.sfincs_inp || {};
+   00921: 
+   00922:     $("tab-checks").innerHTML = `
+   00923:       <h3>Full model/sfincs.inp</h3>
+   00924:       <p class="section-intro">
+>> 00925:         This is the actual written SFINCS input file from the selected run. Use it as the source of truth for solver-facing runtime settings and file pointers.
+   00926:       </p>
+   00927:       <pre id="full-sfincs-inp-pre">Loading model/sfincs.inp…</pre>
+   00928: 
+   00929:       <details style="margin-top: 16px;">
+   00930:         <summary>Parsed sfincs.inp highlights</summary>
+   00931:         <div class="details-body">
+   00932:           ${renderMetricRows(inp)}
+   00933:         </div>
+   00934:       </details>
+   00935:     `;
+   00936: 
+   00937:     loadFullSfincsInp();
+   00938:   }
+   00939: 
+   00940:   function renderLogs(review) {
+   00941:     const logs = review.logs || {};
+   00942:     if (!Object.keys(logs).length) {
+   00943:       $("tab-logs").innerHTML = `<div class="empty-note">No log snippets found.</div>`;
+   00944:       return;
+   00945:     }
+   00946:     $("tab-logs").innerHTML = Object.entries(logs).map(([name, row]) => `
+   00947:       <details class="artifact-card" style="margin-bottom:10px;">
+   00948:         <summary class="mono">${escapeHtml(name)}</summary>
+   00949:         <pre>${escapeHtml(row.snippet || "")}</pre>
+   00950:       </details>
+   00951:     `).join("");
+   00952:   }
+   00953: 
+```
+
+#### Settings chunk 5/6 — lines 1926-2117 — matches=10
+
+Scope: `const cfg = pickConfigSource(state.review || {});`
+
+```text
+   01926:   }
+   01927: 
+   01928: 
+   01929:   function obsGaugeArtifactUrl(relpath) {
+   01930:     const base = artifactUrl(relpath);
+   01931:     const token = state.obsStatus && state.obsStatus.updated_at
+   01932:       ? encodeURIComponent(state.obsStatus.updated_at)
+   01933:       : String(Date.now());
+   01934:     return `${base}&v=${token}`;
+   01935:   }
+   01936: 
+   01937: 
+   01938:   function obsValidationStorageKey() {
+   01939:     return `reviewObsValidationCsv:${state.selectedRun || "default"}`;
+   01940:   }
+   01941: 
+   01942:   function configuredEventName() {
+   01943:     const cfg = pickConfigSource(state.review || {});
+   01944:     return cleanObsId(
+   01945:       cfg.event_name ||
+   01946:       (state.review && state.review.event_name) ||
+   01947:       ""
+   01948:     );
+   01949:   }
+   01950:   
+   01951:   function configuredDataRoot() {
+   01952:     const cfg = pickConfigSource(state.review || {});
+   01953:     return cleanObsId(
+>> 01954:       cfg.data_root ||
+   01955:       "/proj/zefflab/projects/Flooding/Data/harris_county"
+   01956:     );
+   01957:   }
+   01958:   
+   01959:   function inferEventCatalogRootFromPath(pathText) {
+   01960:     const text = String(pathText || "").trim();
+>> 01961:     const marker = "/catalogs/events/";
+   01962:     const idx = text.indexOf(marker);
+   01963:   
+   01964:     if (idx < 0) return "";
+   01965:   
+   01966:     const after = text.slice(idx + marker.length);
+   01967:     const eventName = after.split("/")[0];
+   01968:   
+   01969:     if (!eventName) return "";
+   01970:   
+   01971:     return text.slice(0, idx + marker.length + eventName.length);
+   01972:   }
+   01973:   
+   01974:   function currentEventCatalogRoot() {
+   01975:     const cfg = pickConfigSource(state.review || {});
+   01976:   
+   01977:     const catalogs = Array.isArray(cfg.data_catalogs) ? cfg.data_catalogs : [];
+   01978:     for (const pathText of catalogs) {
+   01979:       const root = inferEventCatalogRootFromPath(pathText);
+   01980:       if (root) return root;
+   01981:     }
+   01982:   
+   01983:     const pathCandidates = [
+   01984:       cfg.obs_points_path,
+   01985:       cfg.obs_lines_path,
+   01986:       cfg.rainfall_path,
+   01987:       cfg.waterlevel_path,
+   01988:       cfg.discharge_path,
+   01989:       cfg.wind_path,
+   01990:       cfg.pressure_path,
+   01991:     ];
+   01992:   
+   01993:     for (const pathText of pathCandidates) {
+   01994:       const root = inferEventCatalogRootFromPath(pathText);
+   01995:       if (root) return root;
+   01996:     }
+   01997:   
+   01998:     const eventName = configuredEventName();
+   01999:     const dataRoot = configuredDataRoot();
+   02000:   
+   02001:     if (eventName && dataRoot) {
+>> 02002:       return `${dataRoot}/catalogs/events/${eventName}`;
+   02003:     }
+   02004:   
+   02005:     return "";
+   02006:   }
+   02007:   
+   02008:   function eventsCatalogRoot() {
+   02009:     const eventRoot = currentEventCatalogRoot();
+   02010:   
+   02011:     if (eventRoot) {
+   02012:       return eventRoot.replace(/\/[^/]+$/, "");
+   02013:     }
+   02014:   
+>> 02015:     return `${configuredDataRoot()}/catalogs/events`;
+   02016:   }
+   02017:   
+   02018:   function defaultObsValidationCsvPath() {
+   02019:     const eventRoot = currentEventCatalogRoot();
+   02020:   
+   02021:     if (!eventRoot) {
+   02022:       return "";
+   02023:     }
+   02024:   
+   02025:     return `${eventRoot}/event_validation_gauges`;
+   02026:   }
+   02027: 
+   02028:   function isLegacyObsValidationCsvPath(path) {
+   02029:     const text = String(path || "").trim();
+   02030:     return text.endsWith("/input_gauge_validation.csv")
+   02031:       || text.endsWith("/observed_gauge_timeseries.csv");
+   02032:   }
+   02033: 
+   02034:   function initObsValidationCsvPath() {
+   02035:     if (state.obsValidationCsvPath && !isLegacyObsValidationCsvPath(state.obsValidationCsvPath)) {
+   02036:       return state.obsValidationCsvPath;
+   02037:     }
+   02038: 
+   02039:     try {
+>> 02040:       const saved = window.localStorage.getItem(obsValidationStorageKey());
+   02041:       if (saved && !isLegacyObsValidationCsvPath(saved)) {
+   02042:         state.obsValidationCsvPath = saved;
+   02043:         return saved;
+   02044:       }
+   02045:     } catch (err) {
+>> 02046:       // localStorage is optional
+   02047:     }
+   02048: 
+   02049:     const eventDefault = defaultObsValidationCsvPath();
+   02050:     
+   02051:     if (eventDefault) {
+   02052:       state.obsValidationCsvPath = eventDefault;
+   02053:       return eventDefault;
+   02054:     }
+   02055:     
+   02056:     state.obsValidationCsvPath = "";
+   02057:     return "";
+   02058:   }
+   02059: 
+   02060:   function currentObsValidationCsvPath() {
+   02061:     const input = $("obs-validation-csv-input");
+   02062:     const value = input ? input.value.trim() : String(state.obsValidationCsvPath || "").trim();
+   02063:     state.obsValidationCsvPath = value;
+   02064: 
+   02065:     try {
+   02066:       if (value) {
+>> 02067:         window.localStorage.setItem(obsValidationStorageKey(), value);
+   02068:       }
+   02069:     } catch (err) {
+>> 02070:       // localStorage is optional
+   02071:     }
+   02072: 
+   02073:     return value;
+   02074:   }
+   02075: 
+   02076:   function setObsValidationCsvPath(path) {
+   02077:     state.obsValidationCsvPath = String(path || "").trim();
+   02078: 
+   02079:     const input = $("obs-validation-csv-input");
+   02080:     if (input) {
+   02081:       input.value = state.obsValidationCsvPath;
+   02082:     }
+   02083: 
+   02084:     try {
+   02085:       if (state.obsValidationCsvPath) {
+>> 02086:         window.localStorage.setItem(obsValidationStorageKey(), state.obsValidationCsvPath);
+   02087:       }
+   02088:     } catch (err) {
+>> 02089:       // localStorage is optional
+   02090:     }
+   02091:   }
+   02092: 
+   02093:   function renderObsValidationPicker() {
+   02094:     const value = initObsValidationCsvPath();
+   02095: 
+   02096:     return `
+   02097:       <div class="obs-validation-picker">
+   02098:         <label for="obs-validation-csv-input">Validation CSV</label>
+   02099:         <div class="obs-validation-row">
+   02100:           <input
+   02101:             id="obs-validation-csv-input"
+   02102:             class="mono"
+   02103:             type="text"
+   02104:             value="${escapeAttr(value)}"
+   02105:             placeholder="/absolute/path/to/event_validation_gauges or validation CSV"
+   02106:           >
+   02107:           <button type="button" class="secondary" id="obs-validation-default-btn">Use event folder</button>
+   02108:           <button type="button" class="secondary" id="obs-validation-browse-btn">Browse</button>
+   02109:         </div>
+   02110:         <div class="obs-validation-help">
+   02111:           Auto-filled from this run's event_validation_gauges folder when possible. Files inside _misc are ignored. Browse or paste another CSV if needed.
+   02112:         </div>
+   02113:         <div id="obs-validation-browser" class="obs-file-browser" style="display:none;"></div>
+   02114:       </div>
+   02115:     `;
+   02116:   }
+   02117: 
+```
+
+#### Settings chunk 6/6 — lines 2149-2258 — matches=6
+
+Scope: `const startPath = current && !current.endsWith(".csv")`
+
+```text
+   02149: 
+   02150:     if (name.includes("observed") && (name.includes("timeseries") || name.includes("time_series"))) {
+   02151:       return 3;
+   02152:     }
+   02153: 
+   02154:     return 9;
+   02155:   }
+   02156: 
+   02157:   function chooseObsValidationCsvFromEntries(entries) {
+   02158:     const candidates = (Array.isArray(entries) ? entries : [])
+   02159:       .filter((entry) => {
+   02160:         const name = String(entry.name || "");
+   02161:         return entry.is_file
+   02162:           && name.toLowerCase().endsWith(".csv")
+   02163:           && !isIgnoredObsValidationEntryName(name);
+   02164:       })
+   02165:       .sort((a, b) => {
+   02166:         const ar = obsValidationCandidateRank(a);
+   02167:         const br = obsValidationCandidateRank(b);
+   02168:         if (ar !== br) return ar - br;
+   02169:         return String(a.name || "").localeCompare(String(b.name || ""));
+   02170:       });
+   02171: 
+   02172:     return candidates.length ? candidates[0] : null;
+   02173:   }
+   02174: 
+   02175:   async function autofillObsValidationCsvFromFolder() {
+   02176:     const current = String(state.obsValidationCsvPath || "").trim();
+>> 02177:     const startPath = current && !current.endsWith(".csv")
+   02178:       ? current
+   02179:       : (defaultObsValidationCsvPath() || eventsCatalogRoot());
+   02180: 
+   02181:     try {
+>> 02182:       const data = await postJson("/api/list-directory", { path: startPath });
+   02183:       const entries = Array.isArray(data.entries) ? data.entries : [];
+   02184:       const chosen = chooseObsValidationCsvFromEntries(entries);
+   02185: 
+   02186:       if (chosen && chosen.path) {
+   02187:         setObsValidationCsvPath(chosen.path);
+   02188:       }
+   02189:     } catch (err) {
+   02190:       // Autofill is convenience only. The user can still paste or browse.
+   02191:     }
+   02192:   }
+   02193: 
+   02194: 
+   02195:   async function browseObsValidationPath(pathText) {
+   02196:     const browser = $("obs-validation-browser");
+   02197:     if (!browser) return;
+   02198: 
+>> 02199:     const startPath = String(
+   02200:       pathText ||
+   02201:       currentObsValidationCsvPath() ||
+   02202:       defaultObsValidationCsvPath() ||
+   02203:       eventsCatalogRoot()
+   02204:     ).trim();
+   02205: 
+   02206:     browser.style.display = "block";
+>> 02207:     browser.innerHTML = `<div class="empty-note">Loading ${escapeHtml(startPath)}…</div>`;
+   02208: 
+   02209:     try {
+>> 02210:       const data = await postJson("/api/list-directory", { path: startPath });
+   02211:       const entries = Array.isArray(data.entries) ? data.entries : [];
+   02212: 
+   02213:       const visible = entries.filter((entry) => {
+   02214:         const name = String(entry.name || "").toLowerCase();
+   02215: 
+   02216:         if (isIgnoredObsValidationEntryName(name)) {
+   02217:           return false;
+   02218:         }
+   02219: 
+   02220:         if (entry.is_dir) {
+   02221:           return true;
+   02222:         }
+   02223: 
+   02224:         return entry.is_file && name.endsWith(".csv");
+   02225:       });
+   02226: 
+   02227:       browser.innerHTML = `
+   02228:         <div class="obs-browser-header">
+   02229:           <strong>Browse validation CSV</strong>
+>> 02230:           <span class="mono">${escapeHtml(data.path || startPath)}</span>
+   02231:         </div>
+   02232: 
+   02233:         <div class="obs-browser-actions">
+   02234:           ${data.parent ? `<button type="button" class="secondary" data-obs-browse-path="${escapeAttr(data.parent)}">Parent</button>` : ""}
+   02235:           <button type="button" class="secondary" id="obs-validation-close-browser-btn">Close</button>
+   02236:         </div>
+   02237: 
+   02238:         <div class="obs-browser-list">
+   02239:           ${visible.length ? visible.map((entry) => `
+   02240:             <button
+   02241:               type="button"
+   02242:               class="obs-browser-entry ${entry.is_dir ? "dir" : "file"}"
+   02243:               data-obs-browse-path="${escapeAttr(entry.path)}"
+   02244:               data-obs-is-file="${entry.is_file ? "1" : "0"}"
+   02245:             >
+   02246:               <span>${entry.is_dir ? "📁" : "📄"}</span>
+   02247:               <span class="mono">${escapeHtml(entry.name || entry.path)}</span>
+   02248:             </button>
+   02249:           `).join("") : `<div class="empty-note">No folders or CSV files found here.</div>`}
+   02250:         </div>
+   02251:       `;
+   02252: 
+   02253:       const closeBtn = $("obs-validation-close-browser-btn");
+   02254:       if (closeBtn) {
+   02255:         closeBtn.addEventListener("click", () => {
+   02256:           browser.style.display = "none";
+   02257:           browser.innerHTML = "";
+   02258:         });
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/path_browser.js`
+
+Settings chunks: **1**  
+Matched settings-ish lines: **5**
+
+#### Settings chunk 1/1 — lines 253-349 — matches=5
+
+Scope: `function extractUsableStartPath(rawValue) {`
+
+```text
+   00253:         }
+   00254:       });
+   00255: 
+   00256:       const useButton = document.createElement('button');
+   00257:       useButton.type = 'button';
+   00258: 
+   00259:       if (entry.is_dir && currentMode === 'directory') {
+   00260:         useButton.textContent = 'Use folder';
+   00261:         useButton.disabled = false;
+   00262:       } else if (entry.is_file && currentMode === 'file') {
+   00263:         useButton.textContent = 'Use file';
+   00264:         useButton.disabled = false;
+   00265:       } else {
+   00266:         useButton.textContent = 'Use';
+   00267:         useButton.disabled = true;
+   00268:       }
+   00269: 
+   00270:       useButton.addEventListener('click', () => choosePath(entry.path));
+   00271: 
+   00272:       row.appendChild(icon);
+   00273:       row.appendChild(name);
+   00274:       row.appendChild(openButton);
+   00275:       row.appendChild(useButton);
+   00276: 
+   00277:       body.appendChild(row);
+   00278:     });
+   00279:   }
+   00280: 
+>> 00281:   function extractUsableStartPath(rawValue) {
+   00282:     const text = String(rawValue || '').trim();
+   00283: 
+   00284:     if (!text) {
+   00285:       return '';
+   00286:     }
+   00287: 
+   00288:     // List-like fields such as data_catalogs may store a JSON list.
+   00289:     // Use the first absolute path inside the list instead of sending
+   00290:     // the literal JSON string to /api/list-directory.
+   00291:     if (text.startsWith('[')) {
+   00292:       try {
+   00293:         const parsed = JSON.parse(text);
+   00294: 
+   00295:         if (Array.isArray(parsed)) {
+   00296:           const firstAbsolute = parsed
+   00297:             .map(item => String(item || '').trim())
+   00298:             .find(item => item.startsWith('/'));
+   00299: 
+   00300:           return firstAbsolute || '';
+   00301:         }
+   00302:       } catch (err) {
+   00303:         return '';
+   00304:       }
+   00305:     }
+   00306: 
+   00307:     // Plain path fields should be absolute paths. If the value is a
+   00308:     // catalog nickname, blank label, or malformed value, fall back to
+   00309:     // the browse-start default instead of showing a scary error.
+   00310:     if (text.startsWith('/')) {
+   00311:       return text;
+   00312:     }
+   00313: 
+   00314:     return '';
+   00315:   }
+   00316: 
+   00317:   function openBrowserForButton(button) {
+   00318:     ensureModal();
+   00319: 
+   00320:     const targetId = button.dataset.browseTarget;
+   00321:     currentMode = button.dataset.browseMode || 'directory';
+   00322: 
+   00323:     currentTargetInput = document.getElementById(targetId);
+   00324: 
+   00325:     if (!currentTargetInput) {
+   00326:       alert(`Browse target not found: ${targetId}`);
+   00327:       return;
+   00328:     }
+   00329: 
+>> 00330:     const inputStart = extractUsableStartPath(currentTargetInput.value);
+>> 00331:     const buttonStart = extractUsableStartPath(button.dataset.browseStart);
+   00332:     const forceStart = button.dataset.browseForceStart === 'true';
+   00333: 
+>> 00334:     const startPath = forceStart
+   00335:       ? (buttonStart || inputStart || '')
+   00336:       : (inputStart || buttonStart || '');
+   00337: 
+   00338:     modal.style.display = 'flex';
+>> 00339:     loadPath(startPath);
+   00340:   }
+   00341: 
+   00342:   document.addEventListener('click', event => {
+   00343:     const button = event.target.closest('[data-browse-target]');
+   00344:     if (!button) return;
+   00345: 
+   00346:     event.preventDefault();
+   00347:     openBrowserForButton(button);
+   00348:   });
+   00349: })();
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/pipeline_actions.js`
+
+Settings chunks: **1**  
+Matched settings-ish lines: **1**
+
+#### Settings chunk 1/1 — lines 93-149 — matches=1
+
+Scope: `const ok = confirm(`
+
+```text
+   00093:     }
+   00094: 
+   00095:     parts.push(`Mode: ${result.mode}`);
+   00096:     parts.push(`Return code: ${result.returncode}`);
+   00097:     parts.push(`Run root: ${result.run_root || ''}`);
+   00098:     parts.push(`Config path: ${result.config_path || ''}`);
+   00099:     parts.push(`Command: ${commandText(result.command)}`);
+   00100:     parts.push('');
+   00101:     parts.push(`stdout log: ${result.stdout_log || ''}`);
+   00102:     parts.push(`stderr log: ${result.stderr_log || ''}`);
+   00103:     parts.push('');
+   00104:     parts.push('----- STDOUT -----');
+   00105:     parts.push(result.stdout || '');
+   00106:     parts.push('');
+   00107:     parts.push('----- STDERR -----');
+   00108:     parts.push(result.stderr || '');
+   00109: 
+   00110:     return parts.join('\n');
+   00111:   }
+   00112: 
+   00113:   async function runPipelineAction(button) {
+   00114:     const mode = button.dataset.pipelineAction;
+   00115:     const outputTarget = button.dataset.outputTarget || 'runner-output';
+   00116: 
+   00117:     if (mode === 'submit') {
+   00118:       const ok = confirm(
+   00119:         'Submit this run to Slurm?\n\n' +
+   00120:         'This will call pipeline_runner.py --mode submit.\n' +
+>> 00121:         'Make sure preflight passed and the run_name/output_root are correct.'
+   00122:       );
+   00123:       if (!ok) return;
+   00124:     }
+   00125: 
+   00126:     let cfg;
+   00127:     try {
+   00128:       cfg = getConfigFromPage();
+   00129:     } catch (err) {
+   00130:       alert(err.message);
+   00131:       return;
+   00132:     }
+   00133: 
+   00134:     setRunnerBusy(true);
+   00135:     setOutput(outputTarget, `Running ${mode}...\n\n`);
+   00136: 
+   00137:     try {
+   00138:       const response = await fetch('/api/run-pipeline', {
+   00139:         method: 'POST',
+   00140:         headers: { 'Content-Type': 'application/json' },
+   00141:         body: JSON.stringify({ mode, config: cfg })
+   00142:       });
+   00143: 
+   00144:       const result = await response.json();
+   00145: 
+   00146:       if (!response.ok) {
+   00147:         throw new Error(result.error || 'Runner request failed.');
+   00148:       }
+   00149: 
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/guide.html`
+
+Settings chunks: **13**  
+Matched settings-ish lines: **130**
+
+#### Settings chunk 1/13 — lines 436-1067 — matches=43
+
+Scope: `<div class="tabbar-wrap">`
+
+```text
+   00436:       }
+   00437: 
+   00438:       .hero,
+   00439:       .panel {
+   00440:         padding: 22px;
+   00441:       }
+   00442: 
+   00443:       .tabbar {
+   00444:         grid-template-columns: 1fr;
+   00445:       }
+   00446:     }
+   00447:   </style>
+   00448: </head>
+   00449: 
+   00450: <body>
+   00451:   <div class="shell">
+   00452:     <div class="topbar">
+   00453:       <a class="back-link" href="/">← Back to launcher</a>
+   00454:     </div>
+   00455: 
+   00456:     <header class="hero">
+   00457:       <h1>Sfincs Web launcher guide</h1>
+   00458:       <p class="byline">Reichen Schaller</p>
+   00459:       <p class="description">
+   00460:         The Sfincs intro tab is for someone brand new to SFINCS. The other tabs are for learning how to use each launcher mode, including manual setup, override runs, batch generation, the guided wizard, and run comparison.
+   00461:       </p>
+   00462:     </header>
+   00463: 
+>> 00464:     <div class="tabbar-wrap">
+>> 00465:       <nav class="tabbar" aria-label="Guide tabs">
+>> 00466:         <button class="tab-button" type="button" data-tab="intro">Sfincs intro</button>
+>> 00467:         <button class="tab-button" type="button" data-tab="manual">Manual</button>
+>> 00468:         <button class="tab-button" type="button" data-tab="override">Override</button>
+>> 00469:         <button class="tab-button" type="button" data-tab="batch">Batch</button>
+>> 00470:         <button class="tab-button" type="button" data-tab="wizard">Wizard</button>
+>> 00471:         <button class="tab-button" type="button" data-tab="compare">Comparison</button>
+   00472:       </nav>
+   00473:     </div>
+   00474: 
+   00475:     <main class="panel">
+>> 00476:       <section class="tab-section" id="tab-intro" data-title="Sfincs intro">
+   00477:         <h2>Sfincs intro</h2>
+   00478:         <p class="coming-soon">Coming Soon</p>
+   00479:       </section>
+   00480: <!--- ----------------------------------------------------------------------------------------------------------------- -->
+   00481: <!-- ----------------------------------------------------------------------------------------------------------------- -->
+   00482: <!-- ----------------------------------------------------------------------------------------------------------------- -->
+   00483: <!-- ----------------------------------------------------------------------------------------------------------------- -->
+   00484: 
+   00485: 
+>> 00486:       <section class="tab-section" id="tab-manual" data-title="Manual">
+   00487:         <div class="manual-guide-shell">
+   00488:           <div>
+   00489:             <h2>Manual</h2>
+   00490:             <p class="description">
+   00491:               Manual Mode is the direct configuration workflow. Use this guide section when you want to understand what each Manual tab, field, and action button means before creating or testing a run.
+   00492:             </p>
+   00493:           </div>
+   00494: 
+   00495:           <div class="manual-guide-controls">
+   00496:             <label class="manual-guide-label" for="manual-guide-select">
+   00497:               Manual guide tab
+   00498:               <span>Choose the Manual page tab you want explained.</span>
+   00499:               <select class="manual-guide-select" id="manual-guide-select">
+   00500:                 <option value="run_identity">0 — Run identity</option>
+   00501:                 <option value="pipeline">1 — Pipeline</option>
+   00502:                 <option value="slurm_general">2 — Slurm general</option>
+   00503:                 <option value="stage_resources">3 — Stage resources</option>
+   00504:                 <option value="data_catalogs">4 — Data catalogs</option>
+   00505:                 <option value="required_inputs">5 — Required inputs</option>
+   00506:                 <option value="optional_inputs">6 — Optional inputs</option>
+>> 00507:                 <option value="model_settings">7 — Model settings</option>
+   00508:                 <option value="elevation_mask">8 — Elevation / mask</option>
+   00509:                 <option value="roughness">9 — Roughness</option>
+   00510:                 <option value="subgrid">10 — Subgrid</option>
+   00511:                 <option value="forcing">11 — Forcing</option>
+   00512:                 <option value="infiltration">12 — Infiltration</option>
+   00513:                 <option value="output">13 — Output</option>
+   00514:                 <option value="advanced">14 — Advanced</option>
+   00515:                 <option value="postprocess">15 — Postprocess</option>
+   00516:                 <option value="safety_debug">16 — Safety / debug</option>
+   00517:                 <option value="backend_paths">17 — Backend paths</option>
+   00518:                 <option value="check_all">Check all</option>
+   00519:                 <option value="submit">Submit</option>
+   00520:               </select>
+   00521:             </label>
+   00522: 
+   00523:             <p class="manual-guide-hint">
+   00524:               This section mirrors the real Manual Mode tabs. Each guide tab explains what that part of the page is for, what the controls mean, when to change them, and what mistakes to avoid.
+   00525:             </p>
+   00526:           </div>
+   00527: 
+   00528:           <div class="manual-guide-panel" data-manual-guide-panel="run_identity">
+   00529:             <div class="manual-guide-card">
+   00530:               <h3>0 — Run identity</h3>
+   00531:               <p>
+   00532:                 The Run identity tab names the run and decides where the run folder will be written. These fields do not change the physics of the model, but they are important because they control how the run is organized, saved, and protected from accidental overwrite.
+   00533:               </p>
+   00534:               <p>
+   00535:                 A good run identity should make the run recognizable later. Use names that describe the event, experiment, version, or test purpose without depending on one specific computer or one temporary folder layout.
+   00536:               </p>
+   00537: 
+>> 00538:               <div class="manual-field-table-wrap">
+>> 00539:                 <table class="manual-field-table">
+   00540:                   <thead>
+   00541:                     <tr>
+   00542:                       <th>Field / preview</th>
+   00543:                       <th>What it means</th>
+   00544:                       <th>How to use it safely</th>
+   00545:                     </tr>
+   00546:                   </thead>
+   00547:                   <tbody>
+   00548:                     <tr>
+   00549:                       <td><span class="manual-inline-code">event_name</span></td>
+   00550:                       <td>A short label for the event, storm, scenario, or test case.</td>
+   00551:                       <td>Use this as a human-readable label. It helps organize runs, but the actual folder name is controlled by <span class="manual-inline-code">run_name</span>.</td>
+   00552:                     </tr>
+   00553:                     <tr>
+   00554:                       <td><span class="manual-inline-code">run_series</span></td>
+   00555:                       <td>A label for a group of related experiments.</td>
+   00556:                       <td>Useful when testing several versions of the same event, resource setup, forcing setup, or model configuration.</td>
+   00557:                     </tr>
+   00558:                     <tr>
+   00559:                       <td><span class="manual-inline-code">run_name</span></td>
+   00560:                       <td>The folder name for this specific run.</td>
+   00561:                       <td>Keep it unique and simple. Use letters, numbers, underscores, dashes, and periods. Avoid spaces and vague names like <span class="manual-inline-code">test</span>.</td>
+   00562:                     </tr>
+   00563:                     <tr>
+>> 00564:                       <td><span class="manual-inline-code">project_root</span></td>
+   00565:                       <td>The pipeline or launcher project folder used by the backend.</td>
+   00566:                       <td>Most users should leave this at the current shared project or deployed pipeline location. Change it only when deliberately testing another pipeline bundle.</td>
+   00567:                     </tr>
+   00568:                     <tr>
+>> 00569:                       <td><span class="manual-inline-code">output_root</span></td>
+   00570:                       <td>The parent folder where run folders are created.</td>
+   00571:                       <td>Choose a location meant for run outputs. Avoid mixing finished model outputs into source-data or code folders.</td>
+   00572:                     </tr>
+   00573:                     <tr>
+   00574:                       <td>planned run root</td>
+>> 00575:                       <td>A preview of the final run folder path, computed from <span class="manual-inline-code">output_root</span> and <span class="manual-inline-code">run_name</span>.</td>
+   00576:                       <td>This is a preview only. Check it before preflight/build/submit so you know exactly where the run will go.</td>
+   00577:                     </tr>
+   00578:                     <tr>
+   00579:                       <td><span class="manual-inline-code">overwrite_existing_run</span></td>
+   00580:                       <td>Allows the backend to replace or reuse an existing run folder.</td>
+   00581:                       <td>Keep this false unless you are intentionally replacing a scaffold or rerunning into a known folder. A finished run folder should not be overwritten casually.</td>
+   00582:                     </tr>
+   00583:                     <tr>
+   00584:                       <td><span class="manual-inline-code">allow_writes_inside_proj</span></td>
+   00585:                       <td>Controls whether the backend may write inside a shared project-style folder.</td>
+   00586:                       <td>Use the setting that matches the deployment. Shared project deployments may allow this; personal scratch workflows may keep it off.</td>
+   00587:                     </tr>
+   00588:                     <tr>
+   00589:                       <td><span class="manual-inline-code">allow_missing_model_inputs</span></td>
+   00590:                       <td>Lets some missing model inputs become warnings instead of hard stops.</td>
+   00591:                       <td>Real runs should normally keep this false. Only relax it for skeleton tests or deliberate backend debugging.</td>
+   00592:                     </tr>
+   00593:                     <tr>
+   00594:                       <td><span class="manual-inline-code">run_description</span></td>
+   00595:                       <td>A short plain-language description of the run.</td>
+   00596:                       <td>Use this to record why the run exists, especially when comparing several similar runs later.</td>
+   00597:                     </tr>
+   00598:                     <tr>
+   00599:                       <td><span class="manual-inline-code">run_tags</span></td>
+   00600:                       <td>A JSON list of labels saved with the config.</td>
+   00601:                       <td>Use simple tags like mode, event type, project name, or experiment family. Keep valid JSON syntax.</td>
+   00602:                     </tr>
+   00603:                   </tbody>
+   00604:                 </table>
+   00605:               </div>
+   00606:             </div>
+   00607: 
+   00608:             <div class="manual-callout">
+   00609:               <p>
+   00610:                 <strong>Safety note:</strong> Preflight can be useful for checking an imported or older config, but passing preflight does not prove the destination folder is safe to build or submit into. Build Scripts and Submit should still protect real existing run folders unless overwrite behavior is intentionally enabled.
+   00611:               </p>
+   00612:             </div>
+   00613:           </div>
+   00614: 
+   00615: 
+   00616:           <div class="manual-guide-panel" data-manual-guide-panel="pipeline">
+   00617:             <div class="manual-guide-card">
+   00618:               <h3>1 — Pipeline</h3>
+   00619:               <p>
+   00620:                 The Pipeline tab chooses which stages of the workflow should be included when the run is built or submitted. A normal full run has three stages: preprocessing, SFINCS, and postprocessing.
+   00621:               </p>
+   00622:               <p>
+   00623:                 These switches are useful for testing. For example, you may want to run only preprocessing while debugging input generation, or skip postprocessing while testing whether the model itself completes.
+   00624:               </p>
+   00625: 
+>> 00626:               <div class="manual-field-table-wrap">
+>> 00627:                 <table class="manual-field-table">
+   00628:                   <thead>
+   00629:                     <tr>
+   00630:                       <th>Field</th>
+   00631:                       <th>What it controls</th>
+   00632:                       <th>Recommended use</th>
+   00633:                     </tr>
+   00634:                   </thead>
+   00635:                   <tbody>
+   00636:                     <tr>
+   00637:                       <td><span class="manual-inline-code">run_preprocessing_job</span></td>
+   00638:                       <td>Controls whether the preprocessing stage is included.</td>
+   00639:                       <td>Usually true. Turn it off only when you already have the needed model inputs and are intentionally testing a later stage.</td>
+   00640:                     </tr>
+   00641:                     <tr>
+   00642:                       <td><span class="manual-inline-code">run_sfincs_job</span></td>
+   00643:                       <td>Controls whether the SFINCS solver stage is included.</td>
+   00644:                       <td>Usually true for real model runs. Turn it off only for scaffold, preprocessing, or postprocessing-specific tests.</td>
+   00645:                     </tr>
+   00646:                     <tr>
+   00647:                       <td><span class="manual-inline-code">run_postprocessing_job</span></td>
+   00648:                       <td>Controls whether the postprocessing stage is included.</td>
+   00649:                       <td>Usually true when you want maps, summaries, plots, or quicklooks after the model finishes.</td>
+   00650:                     </tr>
+   00651:                     <tr>
+   00652:                       <td><span class="manual-inline-code">submit_with_dependencies</span></td>
+   00653:                       <td>Controls whether later jobs wait for earlier jobs.</td>
+   00654:                       <td>Normally true. This prevents the solver from starting before preprocessing succeeds, and prevents postprocessing from starting before model output exists.</td>
+   00655:                     </tr>
+   00656:                     <tr>
+   00657:                       <td><span class="manual-inline-code">dependency_type</span></td>
+   00658:                       <td>The Slurm dependency rule used between stages.</td>
+   00659:                       <td>The normal dependency style is <span class="manual-inline-code">afterok</span>, meaning the next stage starts only if the previous stage exits successfully.</td>
+   00660:                     </tr>
+   00661:                   </tbody>
+   00662:                 </table>
+   00663:               </div>
+   00664:             </div>
+   00665: 
+   00666:             <div class="manual-callout">
+   00667:               <p>
+   00668:                 <strong>Manual Mode rule:</strong> Manual Mode should stay a clean manual/HydroMT-build workflow. Native-file override workflows belong in Override Mode unless you are deliberately debugging backend behavior.
+   00669:               </p>
+   00670:             </div>
+   00671:           </div>
+   00672: 
+   00673:           <div class="manual-guide-panel" data-manual-guide-panel="slurm_general">
+   00674:             <div class="manual-guide-card">
+   00675:               <h3>2 — Slurm general</h3>
+   00676:               <p>
+>> 00677:                 The Slurm general tab contains scheduler settings that apply to the generated job scripts. These settings do not change the flood model physics, but they affect how the cluster queues, runs, and reports the jobs.
+   00678:               </p>
+   00679:               <p>
+>> 00680:                 Most users should leave these fields blank or at the provided defaults unless the cluster, lab, or project requires specific scheduler options.
+   00681:               </p>
+   00682: 
+>> 00683:               <div class="manual-field-table-wrap">
+>> 00684:                 <table class="manual-field-table">
+   00685:                   <thead>
+   00686:                     <tr>
+   00687:                       <th>Field</th>
+   00688:                       <th>What it means</th>
+   00689:                       <th>How to use it safely</th>
+   00690:                     </tr>
+   00691:                   </thead>
+   00692:                   <tbody>
+   00693:                     <tr>
+   00694:                       <td><span class="manual-inline-code">slurm_account</span></td>
+   00695:                       <td>The Slurm account charged for the jobs, when the cluster requires one.</td>
+   00696:                       <td>Leave blank unless your project or cluster instructions tell you to use a specific account.</td>
+   00697:                     </tr>
+   00698:                     <tr>
+   00699:                       <td><span class="manual-inline-code">slurm_partition</span></td>
+   00700:                       <td>The cluster partition or queue where jobs should run.</td>
+   00701:                       <td>Leave blank for the default partition unless you know a specific partition is required for this run.</td>
+   00702:                     </tr>
+   00703:                     <tr>
+   00704:                       <td><span class="manual-inline-code">slurm_qos</span></td>
+   00705:                       <td>The quality-of-service setting, if your cluster uses one.</td>
+   00706:                       <td>Leave blank unless needed. A wrong QOS can cause submission failure or unexpected queue behavior.</td>
+   00707:                     </tr>
+   00708:                     <tr>
+   00709:                       <td><span class="manual-inline-code">slurm_email</span></td>
+   00710:                       <td>An optional email address for Slurm job notifications.</td>
+   00711:                       <td>Use only when you want email updates. Leaving it blank keeps email notifications off.</td>
+   00712:                     </tr>
+   00713:                     <tr>
+   00714:                       <td><span class="manual-inline-code">slurm_mail_type</span></td>
+   00715:                       <td>Which job events should trigger email notifications.</td>
+   00716:                       <td>Only matters when <span class="manual-inline-code">slurm_email</span> is set. Common values notify when jobs end or fail.</td>
+   00717:                     </tr>
+   00718:                     <tr>
+   00719:                       <td><span class="manual-inline-code">slurm_extra_directives</span></td>
+   00720:                       <td>A JSON list of extra scheduler directives to add to generated scripts.</td>
+   00721:                       <td>Usually keep this empty. Add directives only when you understand the scheduler option and the JSON syntax.</td>
+   00722:                     </tr>
+   00723:                     <tr>
+   00724:                       <td><span class="manual-inline-code">bash_strict_mode</span></td>
+   00725:                       <td>Controls whether generated shell scripts use stricter error handling.</td>
+   00726:                       <td>Keep true for normal runs. Turn it off only while debugging unusual shell behavior.</td>
+   00727:                     </tr>
+   00728:                   </tbody>
+   00729:                 </table>
+   00730:               </div>
+   00731:             </div>
+   00732: 
+   00733:             <div class="manual-callout">
+   00734:               <p>
+   00735:                 <strong>Cluster note:</strong> resource size belongs mostly in the next tab, Stage resources. This tab is mainly for scheduler identity, queue behavior, optional notifications, and extra scheduler lines.
+   00736:               </p>
+   00737:             </div>
+   00738:           </div>
+   00739: 
+   00740:           <div class="manual-guide-panel" data-manual-guide-panel="stage_resources">
+   00741:             <div class="manual-guide-card">
+   00742:               <h3>3 — Stage resources</h3>
+   00743:               <p>
+>> 00744:                 The Stage resources tab controls how much Slurm time, CPU, and memory each workflow stage requests. These settings do not directly change the model physics, but they strongly affect whether the run waits in the queue, finishes successfully, or gets killed for running out of time or memory.
+   00745:               </p>
+   00746:               <p>
+   00747:                 The workflow is split into three stages: preprocessing, the SFINCS solver, and postprocessing. Each stage can have different resource needs, so the page keeps their requests separate.
+   00748:               </p>
+   00749: 
+>> 00750:               <div class="manual-field-table-wrap">
+>> 00751:                 <table class="manual-field-table">
+   00752:                   <thead>
+   00753:                     <tr>
+   00754:                       <th>Field group</th>
+   00755:                       <th>What it controls</th>
+   00756:                       <th>How to think about it</th>
+   00757:                     </tr>
+   00758:                   </thead>
+   00759:                   <tbody>
+   00760:                     <tr>
+   00761:                       <td><span class="manual-inline-code">preprocess_time</span>, <span class="manual-inline-code">preprocess_nodes</span>, <span class="manual-inline-code">preprocess_ntasks</span>, <span class="manual-inline-code">preprocess_cpus_per_task</span>, <span class="manual-inline-code">preprocess_mem</span></td>
+   00762:                       <td>Resource requests for the preprocessing stage.</td>
+   00763:                       <td>Preprocessing builds or assembles model inputs. It may be light for small tests, but can become heavier when creating subgrid data, reading large rasters, or processing large forcing datasets.</td>
+   00764:                     </tr>
+   00765:                     <tr>
+   00766:                       <td><span class="manual-inline-code">sfincs_time</span>, <span class="manual-inline-code">sfincs_nodes</span>, <span class="manual-inline-code">sfincs_ntasks</span>, <span class="manual-inline-code">sfincs_cpus_per_task</span>, <span class="manual-inline-code">sfincs_mem</span></td>
+   00767:                       <td>Resource requests for the actual SFINCS solver stage.</td>
+   00768:                       <td>This is normally the main compute stage. CPU count matters most here, but requesting more CPUs only helps if the solver is actually configured to use them efficiently.</td>
+   00769:                     </tr>
+   00770:                     <tr>
+   00771:                       <td><span class="manual-inline-code">postprocess_time</span>, <span class="manual-inline-code">postprocess_nodes</span>, <span class="manual-inline-code">postprocess_ntasks</span>, <span class="manual-inline-code">postprocess_cpus_per_task</span>, <span class="manual-inline-code">postprocess_mem</span></td>
+   00772:                       <td>Resource requests for the postprocessing stage.</td>
+   00773:                       <td>Postprocessing makes summaries, maps, quicklooks, and plots. It can need extra memory for large result files or full-domain map products.</td>
+   00774:                     </tr>
+   00775:                     <tr>
+   00776:                       <td><span class="manual-inline-code">*_time</span></td>
+   00777:                       <td>The maximum wall time Slurm allows for that stage.</td>
+   00778:                       <td>Use shorter times for small tests and longer times for full runs. If the time limit is too short, Slurm can stop the job even if the setup is otherwise correct.</td>
+   00779:                     </tr>
+   00780:                     <tr>
+   00781:                       <td><span class="manual-inline-code">*_nodes</span> and <span class="manual-inline-code">*_ntasks</span></td>
+   00782:                       <td>How the stage is placed on the cluster.</td>
+   00783:                       <td>Most normal single-model runs use one node and one task per stage. Change these only if the backend workflow actually supports a different layout.</td>
+   00784:                     </tr>
+   00785:                     <tr>
+   00786:                       <td><span class="manual-inline-code">*_cpus_per_task</span></td>
+   00787:                       <td>How many CPU cores are requested for one task.</td>
+   00788:                       <td>This is most important for the solver stage. For preprocessing and postprocessing, extra CPUs only help if those stages use parallel work.</td>
+   00789:                     </tr>
+   00790:                     <tr>
+   00791:                       <td><span class="manual-inline-code">*_mem</span></td>
+   00792:                       <td>The memory request for each stage.</td>
+   00793:                       <td>Too little memory can kill a job. Too much memory may make the job harder to schedule. Increase memory when working with larger domains, larger outputs, or heavier plots.</td>
+   00794:                     </tr>
+   00795:                     <tr>
+   00796:                       <td><span class="manual-inline-code">sfincs_use_openmp_threads</span></td>
+   00797:                       <td>Whether the solver should use OpenMP-style threading.</td>
+   00798:                       <td>Usually keep this true when requesting multiple CPUs for SFINCS. Otherwise the job may reserve CPUs that the solver does not use.</td>
+   00799:                     </tr>
+   00800:                     <tr>
+   00801:                       <td><span class="manual-inline-code">sfincs_omp_proc_bind</span> and <span class="manual-inline-code">sfincs_omp_places</span></td>
+>> 00802:                       <td>Advanced OpenMP placement and binding settings.</td>
+   00803:                       <td>Most users should leave these alone. They control how solver threads are placed on CPU cores and are mainly useful for performance tuning.</td>
+   00804:                     </tr>
+   00805:                   </tbody>
+   00806:                 </table>
+   00807:               </div>
+   00808:             </div>
+   00809: 
+   00810:             <div class="manual-callout">
+   00811:               <p>
+   00812:                 <strong>Resource habit:</strong> start with conservative test resources, check actual CPU and memory use after the jobs finish, then adjust. Resource requests are not a badge of speed; they should match what the stages actually use.
+   00813:               </p>
+   00814:             </div>
+   00815:           </div>
+   00816: 
+   00817:           <div class="manual-guide-panel" data-manual-guide-panel="data_catalogs">
+   00818:             <div class="manual-guide-card">
+   00819:               <h3>4 — Data catalogs</h3>
+   00820:               <p>
+   00821:                 The Data catalogs tab tells the backend and HydroMT-style setup where to find named datasets, source files, and curated event inputs. A catalog is not usually the data itself; it is a map that lets the workflow find data by name.
+   00822:               </p>
+   00823:               <p>
+   00824:                 This is one of the most important setup fields because later tabs may refer to sources by catalog name. If the needed catalog is missing, a setting can look correct on the page but still fail when the backend tries to resolve it.
+   00825:               </p>
+   00826: 
+>> 00827:               <div class="manual-field-table-wrap">
+>> 00828:                 <table class="manual-field-table">
+   00829:                   <thead>
+   00830:                     <tr>
+   00831:                       <th>Field / behavior</th>
+   00832:                       <th>What it means</th>
+   00833:                       <th>How to use it safely</th>
+   00834:                     </tr>
+   00835:                   </thead>
+   00836:                   <tbody>
+   00837:                     <tr>
+   00838:                       <td><span class="manual-inline-code">data_catalogs</span></td>
+   00839:                       <td>A JSON list of catalog names or catalog paths available to the run.</td>
+   00840:                       <td>Keep valid JSON syntax. A single catalog should still be written as a list, such as <span class="manual-inline-code">["catalog_name"]</span>.</td>
+   00841:                     </tr>
+   00842:                     <tr>
+   00843:                       <td>Catalog names</td>
+   00844:                       <td>Short names that the backend knows how to resolve in the current deployment.</td>
+   00845:                       <td>Use these only when the project environment defines them. If the launcher is moved to a new project folder, names may need to be updated or replaced with explicit catalog paths.</td>
+   00846:                     </tr>
+   00847:                     <tr>
+   00848:                       <td>Catalog paths</td>
+   00849:                       <td>Full paths to catalog files or folders visible to the backend.</td>
+   00850:                       <td>Use paths that exist from the server or cluster point of view. A path on your laptop will not work unless it is also available to the backend.</td>
+   00851:                     </tr>
+   00852:                     <tr>
+   00853:                       <td>Browse button</td>
+   00854:                       <td>Uses the launcher path browser to choose catalog paths from allowed locations.</td>
+   00855:                       <td>Prefer browsing over manual typing when possible. It reduces typos and helps keep paths inside allowed roots.</td>
+   00856:                     </tr>
+   00857:                     <tr>
+   00858:                       <td>Catalog order</td>
+   00859:                       <td>The order in the list can matter when multiple catalogs define similar source names.</td>
+   00860:                       <td>Put the intended project or event catalog where the backend expects it. Avoid leaving old test catalogs in the list unless deliberately testing.</td>
+   00861:                     </tr>
+   00862:                   </tbody>
+   00863:                 </table>
+   00864:               </div>
+   00865:             </div>
+   00866: 
+   00867:             <div class="manual-callout">
+   00868:               <p>
+   00869:                 <strong>Important:</strong> selecting a catalog does not automatically prove every forcing file covers the model time window. Runtime-window review can catch some catalog-level timing problems, but deeper file-by-file forcing coverage checks are a separate validation layer.
+   00870:               </p>
+   00871:             </div>
+   00872:           </div>
+   00873: 
+   00874:           <div class="manual-guide-panel" data-manual-guide-panel="required_inputs">
+   00875:             <div class="manual-guide-card">
+   00876:               <h3>5 — Required inputs</h3>
+   00877:               <p>
+   00878:                 The Required inputs tab defines the minimum spatial inputs needed to build a Manual Mode model. This is where you describe the model region and tell the setup where elevation or topobathy information should come from.
+   00879:               </p>
+   00880:               <p>
+>> 00881:                 These settings are upstream of almost everything else. If the region, coordinate interpretation, or elevation source is wrong, the rest of the run can look organized but still represent the wrong physical model.
+   00882:               </p>
+   00883: 
+>> 00884:               <div class="manual-field-table-wrap">
+>> 00885:                 <table class="manual-field-table">
+   00886:                   <thead>
+   00887:                     <tr>
+   00888:                       <th>Field</th>
+   00889:                       <th>What it controls</th>
+   00890:                       <th>How to use it safely</th>
+   00891:                     </tr>
+   00892:                   </thead>
+   00893:                   <tbody>
+   00894:                     <tr>
+   00895:                       <td><span class="manual-inline-code">region_mode</span></td>
+   00896:                       <td>Chooses how the model region is defined.</td>
+   00897:                       <td>Use <span class="manual-inline-code">geom</span> when providing a region geometry path. Use <span class="manual-inline-code">bbox</span> when defining the region by bounding box values.</td>
+   00898:                     </tr>
+   00899:                     <tr>
+   00900:                       <td><span class="manual-inline-code">region_path</span></td>
+   00901:                       <td>A geometry file or dataset that defines the model region.</td>
+   00902:                       <td>Use this when the model area should follow a saved polygon or geometry. The path must be visible to the backend, not just to your local computer.</td>
+   00903:                     </tr>
+   00904:                     <tr>
+   00905:                       <td><span class="manual-inline-code">region_bbox</span></td>
+   00906:                       <td>A bounding-box definition of the model area.</td>
+   00907:                       <td>Use this only when the coordinate order, units, and coordinate reference system are clear. A bounding box in the wrong CRS can place the model in the wrong location.</td>
+   00908:                     </tr>
+   00909:                     <tr>
+   00910:                       <td><span class="manual-inline-code">dem_paths</span></td>
+   00911:                       <td>A JSON list of direct elevation or topobathy file paths.</td>
+   00912:                       <td>Use direct paths when you have specific files that should supply elevation/depth information. Keep units and vertical datum assumptions consistent.</td>
+   00913:                     </tr>
+   00914:                     <tr>
+   00915:                       <td><span class="manual-inline-code">hydromt_dem_sources</span></td>
+   00916:                       <td>A JSON list of catalog-based DEM or elevation source definitions.</td>
+   00917:                       <td>Use this when elevation data should be pulled from named catalog sources. The referenced source names must exist in the selected data catalogs.</td>
+   00918:                     </tr>
+   00919:                     <tr>
+   00920:                       <td><span class="manual-inline-code">require_at_least_one_forcing</span></td>
+   00921:                       <td>A safety check requiring at least one forcing family to be enabled.</td>
+   00922:                       <td>Keep true for normal runs. Turn it off only for deliberate scaffold tests or backend debugging where a no-forcing model is expected.</td>
+   00923:                     </tr>
+   00924:                   </tbody>
+   00925:                 </table>
+   00926:               </div>
+   00927:             </div>
+   00928: 
+   00929:             <div class="manual-callout">
+   00930:               <p>
+>> 00931:                 <strong>Model-building note:</strong> Required inputs are about defining the physical model area and base elevation information. Event-specific drivers such as rainfall, water levels, and discharge are handled later in the Model settings and Forcing tabs.
+   00932:               </p>
+   00933:             </div>
+   00934:           </div>
+   00935: 
+   00936:           <div class="manual-guide-panel" data-manual-guide-panel="optional_inputs">
+   00937:             <div class="manual-guide-card">
+   00938:               <h3>6 — Optional inputs</h3>
+   00939:               <p>
+   00940:                 The Optional inputs tab adds extra spatial data, forcing helpers, observation locations, hydrography, roughness support, and structure layers. These inputs are called optional because a basic model can sometimes be built without them, not because they are unimportant.
+   00941:               </p>
+   00942:               <p>
+   00943:                 In practice, many serious runs depend on optional inputs. For example, observation points are optional for running the model, but they are very useful for checking results. Structure layers are optional only if the model does not need those structures represented.
+   00944:               </p>
+   00945: 
+>> 00946:               <div class="manual-field-table-wrap">
+>> 00947:                 <table class="manual-field-table">
+   00948:                   <thead>
+   00949:                     <tr>
+   00950:                       <th>Field group</th>
+   00951:                       <th>What it controls</th>
+   00952:                       <th>How to use it safely</th>
+   00953:                     </tr>
+   00954:                   </thead>
+   00955:                   <tbody>
+   00956:                     <tr>
+   00957:                       <td><span class="manual-inline-code">bathy_paths</span> and <span class="manual-inline-code">hydromt_bathy_sources</span></td>
+   00958:                       <td>Optional bathymetry or below-water elevation sources.</td>
+   00959:                       <td>Use direct paths when you have specific bathymetry files. Use catalog source definitions when the data should be resolved through the selected data catalogs. Check units, horizontal CRS, and vertical datum before mixing bathymetry with land elevation.</td>
+   00960:                     </tr>
+   00961:                     <tr>
+   00962:                       <td><span class="manual-inline-code">landcover_path</span>, <span class="manual-inline-code">landcover_source</span>, and <span class="manual-inline-code">landcover_reclass_table</span></td>
+   00963:                       <td>Optional land-cover information used by roughness or other spatial parameter mapping.</td>
+   00964:                       <td>Use these when the setup should derive parameters from land-cover classes. The reclass table or mapping must match the land-cover product being used; otherwise class values may be interpreted incorrectly.</td>
+   00965:                     </tr>
+   00966:                     <tr>
+   00967:                       <td><span class="manual-inline-code">hydromt_roughness_sources</span></td>
+   00968:                       <td>Catalog-based roughness source definitions.</td>
+   00969:                       <td>This belongs with roughness workflows that resolve sources by name through a catalog. Leave it empty unless the roughness setup is expected to use catalog-defined sources.</td>
+   00970:                     </tr>
+   00971:                     <tr>
+   00972:                       <td><span class="manual-inline-code">rainfall_path</span>, <span class="manual-inline-code">rainfall_source</span>, and <span class="manual-inline-code">rainfall_variable</span></td>
+>> 00973:                       <td>Optional rainfall source hints or direct rainfall input settings.</td>
+>> 00974:                       <td>These fields can describe where rainfall comes from, but the actual rainfall behavior is controlled later by the Model settings and Forcing tabs. Do not assume a rainfall path is used unless rainfall is enabled and the chosen rainfall kind matches the source.</td>
+   00975:                     </tr>
+   00976:                     <tr>
+   00977:                       <td><span class="manual-inline-code">waterlevel_path</span>, <span class="manual-inline-code">waterlevel_source</span>, and <span class="manual-inline-code">waterlevel_variable</span></td>
+>> 00978:                       <td>Optional water-level boundary source hints or direct water-level input settings.</td>
+   00979:                       <td>Use these only when the selected boundary workflow expects them. Water-level forcing must match the model boundary locations and the model time window.</td>
+   00980:                     </tr>
+   00981:                     <tr>
+   00982:                       <td><span class="manual-inline-code">discharge_source</span>, <span class="manual-inline-code">streamflow_site_info_path</span>, and <span class="manual-inline-code">streamflow_data_path</span></td>
+   00983:                       <td>Optional discharge or streamflow source information.</td>
+   00984:                       <td>Discharge setup often needs both site metadata and time-series data. A source name alone is not enough unless the selected catalog already knows how to resolve the full discharge dataset.</td>
+   00985:                     </tr>
+   00986:                     <tr>
+   00987:                       <td><span class="manual-inline-code">hydrography_path</span> and <span class="manual-inline-code">hydrography_source</span></td>
+   00988:                       <td>Optional river, stream, or hydrography network information.</td>
+   00989:                       <td>Use these when the build workflow needs a river network for source placement, subgrid river handling, drainage interpretation, or other network-aware setup steps.</td>
+   00990:                     </tr>
+   00991:                     <tr>
+   00992:                       <td><span class="manual-inline-code">obs_points_path</span> and <span class="manual-inline-code">obs_lines_path</span></td>
+   00993:                       <td>Observation point and observation line locations for history output.</td>
+   00994:                       <td>These do not force the model. They tell SFINCS where to save time-series output for gauges, points, transects, or cross-section-like lines. Enable them when you want hydrographs or validation-friendly output.</td>
+   00995:                     </tr>
+   00996:                     <tr>
+   00997:                       <td><span class="manual-inline-code">thin_dam_source_kind</span> and <span class="manual-inline-code">thin_dam_path</span></td>
+   00998:                       <td>Optional thin-dam structure input.</td>
+   00999:                       <td>Use <span class="manual-inline-code">none</span> when not using thin dams. Use a geodataframe-style source when the backend should process spatial vector data. Use native SFINCS only when the backend truly supports that native file path in Manual Mode.</td>
+   01000:                     </tr>
+   01001:                     <tr>
+   01002:                       <td><span class="manual-inline-code">weir_source_kind</span> and <span class="manual-inline-code">weir_path</span></td>
+   01003:                       <td>Optional weir input.</td>
+   01004:                       <td>Weirs can strongly affect flow paths. Only enable them when the source data is intentionally prepared for this model domain and the backend supports the selected source style.</td>
+   01005:                     </tr>
+   01006:                     <tr>
+   01007:                       <td><span class="manual-inline-code">drainage_structure_source_kind</span> and <span class="manual-inline-code">drainage_structure_path</span></td>
+   01008:                       <td>Optional drainage-structure input.</td>
+   01009:                       <td>Drainage structures should not be enabled just because a path exists. The structure format, coordinate system, and backend support all need to match the selected source kind.</td>
+   01010:                     </tr>
+   01011:                     <tr>
+   01012:                       <td><span class="manual-inline-code">culvert_source_kind</span> and <span class="manual-inline-code">culvert_path</span></td>
+   01013:                       <td>Optional culvert input.</td>
+   01014:                       <td>Culverts can add connectivity that the grid alone may not represent. Use them only when the culvert dataset has been prepared for the model and the backend knows how to translate it.</td>
+   01015:                     </tr>
+   01016:                   </tbody>
+   01017:                 </table>
+   01018:               </div>
+   01019:             </div>
+   01020: 
+   01021:             <div class="manual-callout">
+   01022:               <p>
+   01023:                 <strong>Safe habit:</strong> optional input paths should usually stay blank unless the matching model toggle, source kind, or backend workflow will actually use them. A filled path does not automatically mean the feature is active.
+   01024:               </p>
+   01025:             </div>
+   01026:           </div>
+   01027: 
+>> 01028:           <div class="manual-guide-panel" data-manual-guide-panel="model_settings">
+   01029:             <div class="manual-guide-card">
+>> 01030:               <h3>7 — Model settings</h3>
+   01031:               <p>
+>> 01032:                 The Model settings tab defines the model grid, model clock, and major physics/feature toggles. This tab connects the physical model domain to the event being simulated.
+   01033:               </p>
+   01034:               <p>
+>> 01035:                 These settings are high impact. A run can pass basic page checks but still be scientifically wrong if the time window, grid, CRS, or forcing toggles do not match the intended event and input data.
+   01036:               </p>
+   01037: 
+>> 01038:               <div class="manual-field-table-wrap">
+>> 01039:                 <table class="manual-field-table">
+   01040:                   <thead>
+   01041:                     <tr>
+   01042:                       <th>Field group</th>
+   01043:                       <th>What it controls</th>
+   01044:                       <th>How to use it safely</th>
+   01045:                     </tr>
+   01046:                   </thead>
+   01047:                   <tbody>
+   01048:                     <tr>
+   01049:                       <td><span class="manual-inline-code">grid_resolution_m</span></td>
+   01050:                       <td>A general target resolution for the model setup.</td>
+   01051:                       <td>Treat this as a broad resolution target. Finer resolution can represent more detail, but it also increases model size, runtime, output size, and preprocessing cost.</td>
+   01052:                     </tr>
+   01053:                     <tr>
+   01054:                       <td><span class="manual-inline-code">grid_dx_m</span> and <span class="manual-inline-code">grid_dy_m</span></td>
+   01055:                       <td>The model grid spacing in the x and y directions.</td>
+   01056:                       <td>Keep these consistent with the intended model resolution. A small cell size over a large region can create an expensive run very quickly.</td>
+   01057:                     </tr>
+   01058:                     <tr>
+   01059:                       <td><span class="manual-inline-code">grid_crs</span></td>
+   01060:                       <td>The coordinate-reference-system setting or label used by the build workflow.</td>
+   01061:                       <td>Use a CRS appropriate for the region and units. Projected meter-based grids are usually easier to reason about for cell size, distance, and area than latitude/longitude grids.</td>
+   01062:                     </tr>
+   01063:                     <tr>
+   01064:                       <td><span class="manual-inline-code">grid_rotated</span> and <span class="manual-inline-code">grid_rotation_deg</span></td>
+   01065:                       <td>Whether the model grid is rotated and, if so, by how many degrees.</td>
+   01066:                       <td>Use rotation only when it is intentional. Rotated grids can fit a domain efficiently, but they make map interpretation and some debugging steps more complicated.</td>
+   01067:                     </tr>
+```
+
+#### Settings chunk 2/13 — lines 1078-1298 — matches=12
+
+Scope: `<table class="manual-field-table">`
+
+```text
+   01078:                     <tr>
+   01079:                       <td><span class="manual-inline-code">use_rainfall</span></td>
+   01080:                       <td>Turns rainfall forcing on or off.</td>
+   01081:                       <td>Set true only when the Forcing tab is configured to provide valid rainfall or when the selected catalog/source supplies it. The toggle enables the family; it does not create rainfall data by itself.</td>
+   01082:                     </tr>
+   01083:                     <tr>
+   01084:                       <td><span class="manual-inline-code">use_waterlevel_boundary</span></td>
+   01085:                       <td>Turns water-level boundary forcing on or off.</td>
+   01086:                       <td>Set true when the model has boundary locations and matching water-level time series. Boundary geometry and boundary forcing need to agree.</td>
+   01087:                     </tr>
+   01088:                     <tr>
+   01089:                       <td><span class="manual-inline-code">use_discharge_boundary</span></td>
+   01090:                       <td>Turns discharge or source-flow forcing on or off.</td>
+   01091:                       <td>Set true when discharge locations and discharge time series are configured. For CSV-style discharge, point metadata and time-series columns must line up.</td>
+   01092:                     </tr>
+   01093:                     <tr>
+   01094:                       <td><span class="manual-inline-code">use_infiltration</span></td>
+   01095:                       <td>Turns infiltration or runoff-loss behavior on or off.</td>
+   01096:                       <td>Set true only when the Infiltration tab is configured for the intended method. Infiltration method and infiltration inputs should agree.</td>
+   01097:                     </tr>
+   01098:                     <tr>
+   01099:                       <td><span class="manual-inline-code">use_wind</span> and <span class="manual-inline-code">use_pressure</span></td>
+   01100:                       <td>Turns atmospheric wind and pressure forcing on or off.</td>
+   01101:                       <td>Keep false unless the run is intentionally using these forcings and the Forcing tab has valid backend-visible inputs for them.</td>
+   01102:                     </tr>
+   01103:                     <tr>
+   01104:                       <td><span class="manual-inline-code">use_structures</span></td>
+   01105:                       <td>Turns structure handling on or off.</td>
+>> 01106:                       <td>Set true only when structure source kinds and paths are configured intentionally. Structure settings in Optional inputs should support this choice.</td>
+   01107:                     </tr>
+   01108:                     <tr>
+   01109:                       <td><span class="manual-inline-code">use_obs_points</span> and <span class="manual-inline-code">use_obs_lines</span></td>
+   01110:                       <td>Turns observation point and line output setup on or off.</td>
+   01111:                       <td>These are for extracting history output and validation-friendly time series. They require valid observation paths if enabled.</td>
+   01112:                     </tr>
+   01113:                   </tbody>
+   01114:                 </table>
+   01115:               </div>
+   01116:             </div>
+   01117: 
+   01118:             <div class="manual-callout">
+   01119:               <p>
+   01120:                 <strong>Key idea:</strong> the <span class="manual-inline-code">use_*</span> toggles and the source/path fields must agree. Turning a feature on without supplying the matching data usually creates a bad setup, while filling a path without enabling the feature may do nothing.
+   01121:               </p>
+   01122:             </div>
+   01123:           </div>
+   01124: 
+   01125:           <div class="manual-guide-panel" data-manual-guide-panel="elevation_mask">
+   01126:             <div class="manual-guide-card">
+   01127:               <h3>8 — Elevation / mask</h3>
+   01128:               <p>
+   01129:                 The Elevation / mask tab controls how the model turns elevation information into active cells, inactive cells, and boundary behavior. This is one of the most important geometry sections because it determines where water can exist and where water can enter or leave.
+   01130:               </p>
+   01131:               <p>
+>> 01132:                 Mask settings can make a model look clean while silently removing important areas, disconnecting flow paths, or creating invalid boundaries. Treat these settings as physical model-building controls, not just display options.
+   01133:               </p>
+   01134: 
+>> 01135:               <div class="manual-field-table-wrap">
+>> 01136:                 <table class="manual-field-table">
+   01137:                   <thead>
+   01138:                     <tr>
+   01139:                       <th>Field</th>
+   01140:                       <th>What it controls</th>
+   01141:                       <th>How to use it safely</th>
+   01142:                     </tr>
+   01143:                   </thead>
+   01144:                   <tbody>
+   01145:                     <tr>
+   01146:                       <td><span class="manual-inline-code">dem_zmin</span></td>
+   01147:                       <td>A minimum elevation or depth threshold used while preparing elevation data.</td>
+   01148:                       <td>Use this carefully when filtering elevation values. A threshold that is too aggressive can remove shallow or low-lying areas that matter for flooding.</td>
+   01149:                     </tr>
+   01150:                     <tr>
+   01151:                       <td><span class="manual-inline-code">elevation_buffer_cells</span></td>
+   01152:                       <td>The number of grid cells used as a buffer around elevation or active-area processing.</td>
+   01153:                       <td>A small buffer can help avoid edge artifacts. Too much buffering can expand processing beyond the intended area or make debugging harder.</td>
+   01154:                     </tr>
+   01155:                     <tr>
+   01156:                       <td><span class="manual-inline-code">active_zmin</span></td>
+   01157:                       <td>The elevation/depth threshold used to decide which cells are active in the model.</td>
+   01158:                       <td>This strongly affects the model mask. If the threshold is wrong, cells that should flood may be excluded, or cells that should be inactive may remain active.</td>
+   01159:                     </tr>
+   01160:                     <tr>
+   01161:                       <td><span class="manual-inline-code">mask_fill_area_km2</span></td>
+   01162:                       <td>A cleanup threshold for filling small holes or gaps in the active mask.</td>
+   01163:                       <td>Useful for removing small artifacts, but a value that is too large can fill areas that should remain disconnected or inactive.</td>
+   01164:                     </tr>
+   01165:                     <tr>
+   01166:                       <td><span class="manual-inline-code">mask_drop_area_km2</span></td>
+   01167:                       <td>A cleanup threshold for dropping small isolated active areas.</td>
+   01168:                       <td>Useful for removing tiny disconnected artifacts. Be careful not to drop real disconnected floodplain, channel, island, or coastal features that matter to the run.</td>
+   01169:                     </tr>
+   01170:                     <tr>
+   01171:                       <td><span class="manual-inline-code">waterlevel_boundary_zmax</span></td>
+   01172:                       <td>A threshold used when creating or resetting water-level boundary cells.</td>
+   01173:                       <td>This helps decide where water-level boundary behavior should apply. Check that the resulting boundary matches the intended open-water or coastal/river boundary areas.</td>
+   01174:                     </tr>
+   01175:                     <tr>
+   01176:                       <td><span class="manual-inline-code">reset_waterlevel_boundary</span></td>
+   01177:                       <td>Controls whether the water-level boundary is reset or recreated during setup.</td>
+>> 01178:                       <td>Use true when you want the workflow to regenerate the boundary from the current settings. Use false only when preserving an existing boundary is intentional.</td>
+   01179:                     </tr>
+   01180:                     <tr>
+   01181:                       <td><span class="manual-inline-code">outflow_boundary_polygon_path</span></td>
+   01182:                       <td>An optional polygon path used to define outflow boundary behavior.</td>
+   01183:                       <td>Use this only when you have a prepared geometry for outflow boundaries. The path must be visible to the backend and should match the model CRS or be safely reprojectable.</td>
+   01184:                     </tr>
+   01185:                     <tr>
+   01186:                       <td><span class="manual-inline-code">reset_outflow_boundary</span></td>
+   01187:                       <td>Controls whether outflow boundary cells are reset or recreated during setup.</td>
+>> 01188:                       <td>Use true when the outflow boundary should be generated from the current settings. Use false when intentionally preserving a boundary already prepared elsewhere.</td>
+   01189:                     </tr>
+   01190:                   </tbody>
+   01191:                 </table>
+   01192:               </div>
+   01193:             </div>
+   01194: 
+   01195:             <div class="manual-callout">
+   01196:               <p>
+>> 01197:                 <strong>Geometry check:</strong> after changing elevation or mask settings, inspect the generated model layout before trusting a run. A model can submit successfully even when the active mask or boundary placement is physically wrong.
+   01198:               </p>
+   01199:             </div>
+   01200:           </div>
+   01201: 
+   01202:           <div class="manual-guide-panel" data-manual-guide-panel="roughness">
+   01203:             <div class="manual-guide-card">
+   01204:               <h3>9 — Roughness</h3>
+   01205:               <p>
+   01206:                 The Roughness tab controls how much resistance the model applies to flowing water. In SFINCS-style flood modeling, roughness is commonly represented with Manning values. Higher roughness slows flow more; lower roughness allows water to move more easily.
+   01207:               </p>
+   01208:               <p>
+   01209:                 Roughness can be simple, such as one uniform value, or more spatially detailed, such as separate land/sea values or land-cover-derived values. The best choice depends on the model purpose, available data, and how much spatial detail the run needs.
+   01210:               </p>
+   01211: 
+>> 01212:               <div class="manual-field-table-wrap">
+>> 01213:                 <table class="manual-field-table">
+   01214:                   <thead>
+   01215:                     <tr>
+   01216:                       <th>Field</th>
+   01217:                       <th>What it controls</th>
+   01218:                       <th>How to use it safely</th>
+   01219:                     </tr>
+   01220:                   </thead>
+   01221:                   <tbody>
+   01222:                     <tr>
+   01223:                       <td><span class="manual-inline-code">manning_uniform</span></td>
+   01224:                       <td>A single fallback Manning roughness value.</td>
+   01225:                       <td>Use this as a simple baseline or fallback. It is easy to understand, but it cannot represent different surfaces such as roads, channels, wetlands, buildings, or open water.</td>
+   01226:                     </tr>
+   01227:                     <tr>
+   01228:                       <td><span class="manual-inline-code">manning_land</span></td>
+   01229:                       <td>The Manning value used for land areas when the setup separates land and water roughness.</td>
+   01230:                       <td>Use a value that makes sense for the land surface being modeled. A value that is too high may slow flood movement too much; a value that is too low may make water spread unrealistically fast.</td>
+   01231:                     </tr>
+   01232:                     <tr>
+   01233:                       <td><span class="manual-inline-code">manning_sea</span></td>
+   01234:                       <td>The Manning value used for sea, bay, channel, or open-water areas when land and water are separated.</td>
+   01235:                       <td>Usually this is lower than land roughness because open water often has less flow resistance than vegetated or built land areas.</td>
+   01236:                     </tr>
+   01237:                     <tr>
+   01238:                       <td><span class="manual-inline-code">roughness_land_level_m</span></td>
+   01239:                       <td>The elevation threshold used to separate land-style roughness from sea/open-water-style roughness.</td>
+   01240:                       <td>Use this carefully because it controls which cells are treated as land versus water for roughness purposes. It should be consistent with the elevation and vertical-datum assumptions in the model.</td>
+   01241:                     </tr>
+   01242:                     <tr>
+   01243:                       <td><span class="manual-inline-code">use_landcover_roughness_if_available</span></td>
+   01244:                       <td>Controls whether land-cover-based roughness should be used when land-cover inputs are available.</td>
+   01245:                       <td>Set true only when the land-cover source and reclassification/mapping are valid for the run. If land-cover mapping is incomplete or mismatched, a simpler roughness setup may be safer.</td>
+   01246:                     </tr>
+   01247:                   </tbody>
+   01248:                 </table>
+   01249:               </div>
+   01250:             </div>
+   01251: 
+   01252:             <div class="manual-callout">
+   01253:               <p>
+   01254:                 <strong>Safe habit:</strong> roughness choices should match the surface data actually being used. Do not assume a land-cover path changes the model unless the roughness workflow is configured to use it.
+   01255:               </p>
+   01256:             </div>
+   01257:           </div>
+   01258: 
+   01259:           <div class="manual-guide-panel" data-manual-guide-panel="subgrid">
+   01260:             <div class="manual-guide-card">
+   01261:               <h3>10 — Subgrid</h3>
+   01262:               <p>
+   01263:                 The Subgrid tab controls whether the model uses finer elevation and roughness detail inside each coarser model cell. Subgrid data can make a relatively coarse model represent small-scale topography more realistically, but it also adds preprocessing cost and file complexity.
+   01264:               </p>
+   01265:               <p>
+>> 01266:                 Think of the main grid as the computational grid and the subgrid as extra detail stored inside those cells. This can be very useful for flood modeling, but only when the elevation, roughness, and subgrid settings are internally consistent.
+   01267:               </p>
+   01268: 
+>> 01269:               <div class="manual-field-table-wrap">
+>> 01270:                 <table class="manual-field-table">
+   01271:                   <thead>
+   01272:                     <tr>
+   01273:                       <th>Field</th>
+   01274:                       <th>What it controls</th>
+   01275:                       <th>How to use it safely</th>
+   01276:                     </tr>
+   01277:                   </thead>
+   01278:                   <tbody>
+   01279:                     <tr>
+   01280:                       <td><span class="manual-inline-code">use_subgrid</span></td>
+   01281:                       <td>Master toggle for using subgrid data.</td>
+   01282:                       <td>Keep true when the run is intended to use subgrid tables. Set false only for model setups that are meant to run without subgrid detail.</td>
+   01283:                     </tr>
+   01284:                     <tr>
+   01285:                       <td><span class="manual-inline-code">subgrid_source_kind</span></td>
+   01286:                       <td>Chooses whether subgrid data is generated, supplied from a pre-made file, or not used.</td>
+   01287:                       <td>Use <span class="manual-inline-code">hydromt_generate</span> for the normal Manual-style path. Use <span class="manual-inline-code">premade_sbgfile</span> only when backend support for that path is confirmed. Use <span class="manual-inline-code">none</span> only when subgrid should be skipped.</td>
+   01288:                     </tr>
+   01289:                     <tr>
+   01290:                       <td><span class="manual-inline-code">subgrid_native_file_path</span></td>
+   01291:                       <td>A path to a pre-made native subgrid file when using the pre-made subgrid option.</td>
+   01292:                       <td>This should stay blank unless <span class="manual-inline-code">subgrid_source_kind</span> is set to use a pre-made file and the backend really copies or links that file correctly into the run setup.</td>
+   01293:                     </tr>
+   01294:                     <tr>
+   01295:                       <td><span class="manual-inline-code">subgrid_nr_pixels</span></td>
+   01296:                       <td>The number of fine subgrid pixels represented within each main model cell.</td>
+   01297:                       <td>Higher values can capture more detail but increase preprocessing work and output size. Use a value that matches the available source-data resolution and the run size.</td>
+   01298:                     </tr>
+```
+
+#### Settings chunk 3/13 — lines 1321-1381 — matches=3
+
+Scope: `<table class="manual-field-table">`
+
+```text
+   01321:                       <td>A catalog source name for river-network data.</td>
+   01322:                       <td>Use this when the river data should be resolved through the selected data catalogs. The source name must exist in those catalogs.</td>
+   01323:                     </tr>
+   01324:                     <tr>
+   01325:                       <td><span class="manual-inline-code">use_spatially_variable_roughness</span></td>
+   01326:                       <td>Controls whether spatially varying roughness is used with the subgrid setup.</td>
+   01327:                       <td>Keep this aligned with the Roughness and Optional inputs tabs. Spatially variable roughness is only useful when the required roughness or land-cover inputs are available.</td>
+   01328:                     </tr>
+   01329:                   </tbody>
+   01330:                 </table>
+   01331:               </div>
+   01332:             </div>
+   01333: 
+   01334:             <div class="manual-callout">
+   01335:               <p>
+   01336:                 <strong>Implementation caution:</strong> pre-made subgrid support should stay treated as a confirmed-backend feature, not just a visible dropdown option. A safe implementation must place the file where the run expects it and avoid conflicting with generated subgrid output.
+   01337:               </p>
+   01338:             </div>
+   01339:           </div>
+   01340: 
+   01341: 
+   01342:           <div class="manual-guide-panel" data-manual-guide-panel="forcing">
+   01343:             <div class="manual-guide-card">
+   01344:               <h3>11 — Forcing</h3>
+   01345:               <p>
+   01346:                 The Forcing tab describes the time-dependent inputs that drive the model. Common forcing families include rainfall over the domain, water levels along boundaries, discharge at source points, and optional atmospheric inputs such as wind or pressure.
+   01347:               </p>
+   01348:               <p>
+>> 01349:                 The feature toggles in Model settings decide which forcing families are active. The Forcing tab explains where those active inputs come from and how they should be interpreted.
+   01350:               </p>
+   01351: 
+>> 01352:               <div class="manual-field-table-wrap">
+>> 01353:                 <table class="manual-field-table">
+   01354:                   <thead>
+   01355:                     <tr>
+   01356:                       <th>Field group</th>
+   01357:                       <th>What it controls</th>
+   01358:                       <th>How to use it safely</th>
+   01359:                     </tr>
+   01360:                   </thead>
+   01361:                   <tbody>
+   01362:                     <tr>
+   01363:                       <td><span class="manual-inline-code">rainfall_kind</span></td>
+   01364:                       <td>Chooses the rainfall input style.</td>
+   01365:                       <td>Use <span class="manual-inline-code">spatial</span> for gridded or catalog rainfall, <span class="manual-inline-code">uniform</span> for one constant rainfall rate, and event/catalog options only when the selected catalog provides that event rainfall.</td>
+   01366:                     </tr>
+   01367:                     <tr>
+   01368:                       <td><span class="manual-inline-code">rainfall_uniform_mm_hr</span></td>
+   01369:                       <td>The constant rainfall rate used when rainfall kind is uniform.</td>
+   01370:                       <td>Only matters for uniform rainfall. Leave blank or null when rainfall is not uniform.</td>
+   01371:                     </tr>
+   01372:                     <tr>
+   01373:                       <td><span class="manual-inline-code">rainfall_clip_to_model_time</span></td>
+   01374:                       <td>Controls whether rainfall data is clipped to the model start/stop window.</td>
+   01375:                       <td>Usually keep true. Clipping helps prevent extra forcing data outside the run period from confusing the setup.</td>
+   01376:                     </tr>
+   01377:                     <tr>
+   01378:                       <td><span class="manual-inline-code">waterlevel_source_kind</span></td>
+   01379:                       <td>Chooses the source style for boundary water-level forcing.</td>
+   01380:                       <td>Use catalog or dataset styles when the backend should build boundary forcing. Use CSV when providing table-like time series. Native SFINCS options are usually better handled through Override Mode unless Manual support is intentionally confirmed.</td>
+   01381:                     </tr>
+```
+
+#### Settings chunk 4/13 — lines 1417-1499 — matches=4
+
+Scope: `<table class="manual-field-table">`
+
+```text
+   01417:                     <tr>
+   01418:                       <td><span class="manual-inline-code">discharge_value_columns</span></td>
+   01419:                       <td>A JSON list of discharge value columns to use.</td>
+   01420:                       <td>An empty list can mean all non-time columns, depending on backend behavior. Use an explicit list when you want to control exactly which source columns are used.</td>
+   01421:                     </tr>
+   01422:                     <tr>
+   01423:                       <td><span class="manual-inline-code">discharge_time_format</span></td>
+   01424:                       <td>How discharge timestamps should be parsed.</td>
+   01425:                       <td><span class="manual-inline-code">auto</span> is usually safest for common timestamp formats. Use a specific format only when the CSV requires it.</td>
+   01426:                     </tr>
+   01427:                     <tr>
+   01428:                       <td><span class="manual-inline-code">discharge_units</span></td>
+   01429:                       <td>The units of the discharge values.</td>
+   01430:                       <td>Make sure the values use the units expected by the backend and model setup. Unit mistakes can make a run look successful while producing physically wrong results.</td>
+   01431:                     </tr>
+   01432:                     <tr>
+   01433:                       <td><span class="manual-inline-code">meteo_update_interval_s</span></td>
+   01434:                       <td>The update interval for meteorological forcing.</td>
+   01435:                       <td>Use a value consistent with the temporal resolution of the forcing data. Too coarse may miss variation; too fine may imply precision the data does not have.</td>
+   01436:                     </tr>
+   01437:                     <tr>
+   01438:                       <td><span class="manual-inline-code">wind_path</span> and <span class="manual-inline-code">pressure_path</span></td>
+   01439:                       <td>Optional direct paths to wind and pressure forcing inputs.</td>
+   01440:                       <td>Leave blank unless wind or pressure is enabled and the run has backend-visible files prepared for those forcing families.</td>
+   01441:                     </tr>
+   01442:                     <tr>
+   01443:                       <td><span class="manual-inline-code">wind_source</span> and <span class="manual-inline-code">pressure_source</span></td>
+   01444:                       <td>Catalog source names for wind and pressure forcing.</td>
+>> 01445:                       <td>Use these only when the selected data catalogs define those sources and the Model settings tab enables the matching forcing family.</td>
+   01446:                     </tr>
+   01447:                   </tbody>
+   01448:                 </table>
+   01449:               </div>
+   01450:             </div>
+   01451: 
+   01452:             <div class="manual-callout">
+   01453:               <p>
+   01454:                 <strong>Safe habit:</strong> forcing setup needs three things to agree: the model time window, the selected forcing kind, and the actual source/path fields. A filled path is not enough by itself, and an enabled toggle is not enough by itself.
+   01455:               </p>
+   01456:             </div>
+   01457:           </div>
+   01458: 
+   01459: 
+   01460:           <div class="manual-guide-panel" data-manual-guide-panel="infiltration">
+   01461:             <div class="manual-guide-card">
+   01462:               <h3>12 — Infiltration</h3>
+   01463:               <p>
+   01464:                 The Infiltration tab controls how rainfall is reduced by soil storage, infiltration capacity, or runoff-loss assumptions before it becomes surface water in the model. Infiltration can be disabled, represented simply, or supplied through more detailed spatial inputs.
+   01465:               </p>
+   01466:               <p>
+>> 01467:                 This section matters most for rainfall-driven flooding. If rainfall is disabled, infiltration settings may have little or no effect. If rainfall is enabled, the infiltration method should match the available data and the assumptions of the run.
+   01468:               </p>
+   01469: 
+>> 01470:               <div class="manual-field-table-wrap">
+>> 01471:                 <table class="manual-field-table">
+   01472:                   <thead>
+   01473:                     <tr>
+   01474:                       <th>Field group</th>
+   01475:                       <th>What it controls</th>
+   01476:                       <th>How to use it safely</th>
+   01477:                     </tr>
+   01478:                   </thead>
+   01479:                   <tbody>
+   01480:                     <tr>
+   01481:                       <td><span class="manual-inline-code">infiltration_mode</span></td>
+   01482:                       <td>Chooses the infiltration method.</td>
+   01483:                       <td>Use <span class="manual-inline-code">none</span> when infiltration should be disabled. Use constant or spatial methods only when their parameters are set. Use curve-number methods only when the needed curve-number or soil inputs are available. Native SFINCS options usually belong in native-file workflows unless Manual support is confirmed.</td>
+   01484:                     </tr>
+   01485:                     <tr>
+   01486:                       <td><span class="manual-inline-code">qinf_mm_hr</span></td>
+   01487:                       <td>A constant infiltration rate, usually interpreted as millimeters per hour.</td>
+   01488:                       <td>Only meaningful for constant-style infiltration. Check units carefully because a unit mistake can strongly change runoff volume.</td>
+   01489:                     </tr>
+   01490:                     <tr>
+   01491:                       <td><span class="manual-inline-code">qinf_zmin_m</span></td>
+   01492:                       <td>A threshold related to where constant infiltration is applied.</td>
+   01493:                       <td>Use this only when the selected infiltration method expects it. It should be consistent with the elevation/depth convention used in the model.</td>
+   01494:                     </tr>
+   01495:                     <tr>
+   01496:                       <td><span class="manual-inline-code">scs_initial_abstraction_factor</span></td>
+   01497:                       <td>The initial-abstraction factor for SCS/curve-number style runoff behavior.</td>
+   01498:                       <td>This is a model assumption, not just a formatting value. Keep it consistent with the curve-number method being used.</td>
+   01499:                     </tr>
+```
+
+#### Settings chunk 5/13 — lines 1538-1601 — matches=3
+
+Scope: `<table class="manual-field-table">`
+
+```text
+   01538:                       <td>Use only when the selected infiltration method expects these parameters. Do not mix parameter families casually.</td>
+   01539:                     </tr>
+   01540:                     <tr>
+   01541:                       <td><span class="manual-inline-code">f0_path</span>, <span class="manual-inline-code">fc_path</span>, and <span class="manual-inline-code">kd_path</span></td>
+   01542:                       <td>Paths to Horton-style initial rate, final rate, and decay parameter files.</td>
+   01543:                       <td>Use these as a set when the selected infiltration method expects Horton-style behavior. The files should be prepared with consistent units and coverage.</td>
+   01544:                     </tr>
+   01545:                     <tr>
+   01546:                       <td><span class="manual-inline-code">vol_path</span></td>
+   01547:                       <td>Path to a prepared storage-volume file.</td>
+   01548:                       <td>Use only when the model setup expects an explicit storage-volume input. Leave blank for methods that do not use it.</td>
+   01549:                     </tr>
+   01550:                   </tbody>
+   01551:                 </table>
+   01552:               </div>
+   01553:             </div>
+   01554: 
+   01555:             <div class="manual-callout">
+   01556:               <p>
+   01557:                 <strong>Safe habit:</strong> choose one infiltration story and make the fields match it. Mixing curve-number, constant, Green-Ampt, Horton, and native-file inputs without a clear method can create a config that is technically filled out but physically unclear.
+   01558:               </p>
+   01559:             </div>
+   01560:           </div>
+   01561: 
+   01562:           <div class="manual-guide-panel" data-manual-guide-panel="output">
+   01563:             <div class="manual-guide-card">
+   01564:               <h3>13 — Output</h3>
+   01565:               <p>
+>> 01566:                 The Output tab controls what SFINCS writes while the model is running. These settings affect file size, runtime, postprocessing cost, and what kinds of results can be inspected later.
+   01567:               </p>
+   01568:               <p>
+   01569:                 More output is not always better. Very frequent map output can create large NetCDF files and make postprocessing slower or more memory-heavy. A safer habit is to save enough output to answer the question being studied, without writing unnecessary full-domain snapshots.
+   01570:               </p>
+   01571: 
+>> 01572:               <div class="manual-field-table-wrap">
+>> 01573:                 <table class="manual-field-table">
+   01574:                   <thead>
+   01575:                     <tr>
+   01576:                       <th>Field</th>
+   01577:                       <th>What it controls</th>
+   01578:                       <th>How to use it safely</th>
+   01579:                     </tr>
+   01580:                   </thead>
+   01581:                   <tbody>
+   01582:                     <tr>
+   01583:                       <td><span class="manual-inline-code">output_format</span></td>
+   01584:                       <td>The general output format written by the model.</td>
+   01585:                       <td>Use the normal backend/SFINCS-supported format for the current workflow. Changing this can affect which output files postprocessing expects to read.</td>
+   01586:                     </tr>
+   01587:                     <tr>
+   01588:                       <td><span class="manual-inline-code">dtout_s</span></td>
+   01589:                       <td>The main map-output interval, in seconds.</td>
+   01590:                       <td>This controls how often full-grid map-style outputs are written. Smaller values give more time detail but can greatly increase file size.</td>
+   01591:                     </tr>
+   01592:                     <tr>
+   01593:                       <td><span class="manual-inline-code">dthisout_s</span></td>
+   01594:                       <td>The history-output interval, in seconds.</td>
+   01595:                       <td>This affects gauge, point, line, or cross-section time series. History output is usually much smaller than full map output and is useful for validation plots.</td>
+   01596:                     </tr>
+   01597:                     <tr>
+   01598:                       <td><span class="manual-inline-code">dtmaxout_s</span></td>
+   01599:                       <td>The interval or control for maximum-output products.</td>
+   01600:                       <td>Use this when the model should track maximum water level, maximum depth, or related summary-style outputs. It should make sense for the event duration.</td>
+   01601:                     </tr>
+```
+
+#### Settings chunk 6/13 — lines 1625-1847 — matches=16
+
+Scope: `<table class="manual-field-table">`
+
+```text
+   01625:                       <td>Flux output can help diagnose flow pathways and structure/source behavior, but it is extra output. Enable intentionally.</td>
+   01626:                     </tr>
+   01627:                     <tr>
+   01628:                       <td><span class="manual-inline-code">store_cumulative_precip</span></td>
+   01629:                       <td>Controls whether cumulative precipitation is saved.</td>
+   01630:                       <td>Useful for rainfall-driven events and checking whether rainfall forcing accumulated as expected. It matters less when rainfall is disabled.</td>
+   01631:                     </tr>
+   01632:                     <tr>
+   01633:                       <td><span class="manual-inline-code">store_hmax_subgrid</span></td>
+   01634:                       <td>Controls whether subgrid maximum-depth style output is stored.</td>
+   01635:                       <td>Useful for subgrid flood-depth products. If the model is not using subgrid, this may not matter or may be ignored by the backend/model.</td>
+   01636:                     </tr>
+   01637:                   </tbody>
+   01638:                 </table>
+   01639:               </div>
+   01640:             </div>
+   01641: 
+   01642:             <div class="manual-callout">
+   01643:               <p>
+   01644:                 <strong>Output habit:</strong> choose output intervals based on the question you need to answer. For debugging, use lighter output. For final analysis, save enough map/history output to support validation and interpretation.
+   01645:               </p>
+   01646:             </div>
+   01647:           </div>
+   01648: 
+   01649:           <div class="manual-guide-panel" data-manual-guide-panel="advanced">
+   01650:             <div class="manual-guide-card">
+   01651:               <h3>14 — Advanced</h3>
+   01652:               <p>
+>> 01653:                 The Advanced tab is for raw configuration keys that are not represented by normal form fields. It is powerful because it can pass specialized backend or SFINCS settings through the launcher, but it is also one of the easiest places to create a hard-to-diagnose mistake.
+   01654:               </p>
+   01655:               <p>
+   01656:                 Use this tab only when you know what the key does, why it is needed, and whether it belongs in Manual Mode. Normal users should usually leave Advanced Config alone unless they are following a tested template or debugging a specific backend option.
+   01657:               </p>
+   01658: 
+>> 01659:               <div class="manual-field-table-wrap">
+>> 01660:                 <table class="manual-field-table">
+   01661:                   <thead>
+   01662:                     <tr>
+   01663:                       <th>Field / concept</th>
+   01664:                       <th>What it controls</th>
+   01665:                       <th>How to use it safely</th>
+   01666:                     </tr>
+   01667:                   </thead>
+   01668:                   <tbody>
+   01669:                     <tr>
+   01670:                       <td><span class="manual-inline-code">advanced_config</span></td>
+   01671:                       <td>A raw JSON-style configuration area for extra keys.</td>
+   01672:                       <td>Keep valid JSON syntax. A missing comma, quote, brace, or wrong value type can break preflight before a run even starts.</td>
+   01673:                     </tr>
+   01674:                     <tr>
+   01675:                       <td>Advanced SFINCS controls</td>
+>> 01676:                       <td>Can include model-size, numerical, output, or specialized SFINCS settings not exposed elsewhere.</td>
+   01677:                       <td>Only add keys that the backend and SFINCS actually understand. A familiar-looking key from another workflow may not be valid in this one.</td>
+   01678:                     </tr>
+   01679:                     <tr>
+   01680:                       <td>Backend-only controls</td>
+>> 01681:                       <td>Can include special runner or preprocessing settings if the backend schema supports them.</td>
+   01682:                       <td>Do not use Advanced Config to bypass page checks. If a setting is important and repeated, it should eventually become a normal field or schema-backed option.</td>
+   01683:                     </tr>
+   01684:                     <tr>
+   01685:                       <td>Loaded old configs</td>
+>> 01686:                       <td>Advanced Config can preserve unusual settings from older saved configs.</td>
+   01687:                       <td>Review old keys carefully. A stale key may have made sense for a past version but no longer affect the current backend.</td>
+   01688:                     </tr>
+   01689:                     <tr>
+   01690:                       <td>Unknown-key warnings</td>
+   01691:                       <td>Warn when the config contains keys the schema may not recognize.</td>
+   01692:                       <td>Warnings are useful when importing old configs. For final runs or batches, strict schema behavior may be safer.</td>
+   01693:                     </tr>
+   01694:                     <tr>
+   01695:                       <td>Mode separation</td>
+   01696:                       <td>Manual Mode should stay a Manual/HydroMT-build workflow.</td>
+   01697:                       <td>Do not use Advanced Config to sneak Override/native metadata into Manual Mode. Native-file workflows belong in Override Mode.</td>
+   01698:                     </tr>
+   01699:                   </tbody>
+   01700:                 </table>
+   01701:               </div>
+   01702:             </div>
+   01703: 
+   01704:             <div class="manual-callout">
+   01705:               <p>
+   01706:                 <strong>Rule of thumb:</strong> if you cannot explain what an advanced key changes in the final run folder or <span class="manual-inline-code">sfincs.inp</span>, do not change it here.
+   01707:               </p>
+   01708:             </div>
+   01709:           </div>
+   01710: 
+   01711:           <div class="manual-guide-panel" data-manual-guide-panel="postprocess">
+   01712:             <div class="manual-guide-card">
+   01713:               <h3>15 — Postprocess</h3>
+   01714:               <p>
+   01715:                 The Postprocess tab controls the human-readable products created after SFINCS finishes. These products help you quickly check whether the run completed, what variables were written, where water accumulated, and how observation points or lines behaved.
+   01716:               </p>
+   01717:               <p>
+>> 01718:                 Postprocessing is not just decoration. It is the first QA/QC layer after a run. However, maps with basemaps, overlays, and large full-domain products can become memory-heavy, so these settings should match the size of the run and the purpose of the analysis.
+   01719:               </p>
+   01720: 
+>> 01721:               <div class="manual-field-table-wrap">
+>> 01722:                 <table class="manual-field-table">
+   01723:                   <thead>
+   01724:                     <tr>
+   01725:                       <th>Field group</th>
+   01726:                       <th>What it controls</th>
+   01727:                       <th>How to use it safely</th>
+   01728:                     </tr>
+   01729:                   </thead>
+   01730:                   <tbody>
+   01731:                     <tr>
+   01732:                       <td><span class="manual-inline-code">postprocess_create_summary_txt</span> and <span class="manual-inline-code">postprocess_create_summary_json</span></td>
+   01733:                       <td>Create plain-text and JSON run summaries.</td>
+>> 01734:                       <td>Keep these enabled for normal runs. They provide quick information about outputs, settings, and postprocess results.</td>
+   01735:                     </tr>
+   01736:                     <tr>
+   01737:                       <td><span class="manual-inline-code">postprocess_list_output_variables</span></td>
+   01738:                       <td>Writes a list of variables found in model output files.</td>
+   01739:                       <td>Keep enabled. It is one of the fastest ways to confirm what SFINCS actually wrote.</td>
+   01740:                     </tr>
+   01741:                     <tr>
+   01742:                       <td><span class="manual-inline-code">postprocess_make_quicklook_plots</span></td>
+   01743:                       <td>Master switch for making quicklook figures.</td>
+   01744:                       <td>Useful for normal runs. For very large domains or memory-limited tests, this can be disabled to reduce postprocess load.</td>
+   01745:                     </tr>
+   01746:                     <tr>
+   01747:                       <td><span class="manual-inline-code">postprocess_plot_max_water_level</span>, <span class="manual-inline-code">postprocess_plot_max_flood_depth</span>, and <span class="manual-inline-code">postprocess_plot_final_water_level</span></td>
+   01748:                       <td>Controls major map-style water-level and flood-depth plots.</td>
+   01749:                       <td>These are usually the most useful map products. They can also be expensive for large domains, especially with basemaps or overlays.</td>
+   01750:                     </tr>
+   01751:                     <tr>
+   01752:                       <td><span class="manual-inline-code">postprocess_plot_obs_hydrographs</span></td>
+   01753:                       <td>Creates hydrographs from observation point or line history output.</td>
+   01754:                       <td>Requires history output and observation definitions. If no observations exist, this may do little or produce a warning.</td>
+   01755:                     </tr>
+   01756:                     <tr>
+   01757:                       <td><span class="manual-inline-code">postprocess_use_basemap</span>, <span class="manual-inline-code">postprocess_basemap_source</span>, and <span class="manual-inline-code">postprocess_basemap_zoomlevel</span></td>
+   01758:                       <td>Controls whether map context is added behind plots and what basemap source/zoom is used.</td>
+   01759:                       <td>Basemaps make plots easier to read, but they add time and can fail if map tiles or network access are unavailable. Use a reasonable zoom level.</td>
+   01760:                     </tr>
+   01761:                     <tr>
+   01762:                       <td><span class="manual-inline-code">postprocess_use_rotated_map_plots</span></td>
+   01763:                       <td>Controls whether plots respect rotated-grid layout.</td>
+   01764:                       <td>Use this when the model grid is rotated and you want plots to match the physical model orientation more accurately.</td>
+   01765:                     </tr>
+   01766:                     <tr>
+   01767:                       <td><span class="manual-inline-code">postprocess_use_basemap_on_result_maps</span></td>
+   01768:                       <td>Controls whether basemap context is used on result maps, not just layout maps.</td>
+   01769:                       <td>Helpful for visual interpretation, but make sure the data layer remains visible and not visually overpowered by the background.</td>
+   01770:                     </tr>
+   01771:                     <tr>
+   01772:                       <td><span class="manual-inline-code">postprocess_result_map_alpha</span> and <span class="manual-inline-code">postprocess_result_map_background_fade_alpha</span></td>
+   01773:                       <td>Control result-layer transparency and background fading.</td>
+>> 01774:                       <td>Use these as visual settings only. They should make the map easier to read, not hide low-depth or important model results.</td>
+   01775:                     </tr>
+   01776:                     <tr>
+   01777:                       <td><span class="manual-inline-code">postprocess_result_map_show_model_features</span>, <span class="manual-inline-code">postprocess_result_map_show_obs</span>, <span class="manual-inline-code">postprocess_result_map_show_boundaries</span>, <span class="manual-inline-code">postprocess_result_map_show_dep_layer</span>, and <span class="manual-inline-code">postprocess_result_map_show_layout_legend</span></td>
+   01778:                       <td>Control optional overlays on result maps.</td>
+   01779:                       <td>Use overlays to help interpret the model, but avoid clutter. For presentation figures, fewer overlays may be clearer; for debugging, more overlays may be helpful.</td>
+   01780:                     </tr>
+   01781:                     <tr>
+   01782:                       <td><span class="manual-inline-code">postprocess_waterlevel_var_candidates</span>, <span class="manual-inline-code">postprocess_bedlevel_var_candidates</span>, <span class="manual-inline-code">postprocess_depth_var_candidates</span>, <span class="manual-inline-code">postprocess_max_waterlevel_var_candidates</span>, and <span class="manual-inline-code">postprocess_max_depth_var_candidates</span></td>
+   01783:                       <td>Candidate variable names to search for in SFINCS output files.</td>
+>> 01784:                       <td>Leave the defaults unless the output files use different variable names. These lists help postprocessing find the right fields across slightly different output conventions.</td>
+   01785:                     </tr>
+   01786:                     <tr>
+   01787:                       <td><span class="manual-inline-code">postprocess_matplotlib_backend</span></td>
+   01788:                       <td>The plotting backend used by matplotlib.</td>
+   01789:                       <td>For cluster jobs, a non-interactive backend such as <span class="manual-inline-code">Agg</span> is normally safest.</td>
+   01790:                     </tr>
+   01791:                     <tr>
+   01792:                       <td><span class="manual-inline-code">postprocess_max_plot_cells</span></td>
+   01793:                       <td>A safety limit for how many cells are plotted.</td>
+   01794:                       <td>Use this to prevent huge plots from overwhelming memory. Raise it only when the postprocess Slurm resources can support it.</td>
+   01795:                     </tr>
+   01796:                   </tbody>
+   01797:                 </table>
+   01798:               </div>
+   01799:             </div>
+   01800: 
+   01801:             <div class="manual-callout">
+   01802:               <p>
+   01803:                 <strong>Memory note:</strong> if a model run succeeds but postprocessing fails, the model may still be fine. Check SFINCS logs and output files, then reduce heavy plots or increase postprocess memory before rerunning postprocess.
+   01804:               </p>
+   01805:             </div>
+   01806:           </div>
+   01807: 
+   01808:           <div class="manual-guide-panel" data-manual-guide-panel="safety_debug">
+   01809:             <div class="manual-guide-card">
+   01810:               <h3>16 — Safety / debug</h3>
+   01811:               <p>
+>> 01812:                 The Safety / debug tab controls guardrails, logging, warnings, saved metadata, and schema behavior. These settings help prevent expensive or confusing mistakes before a run reaches Slurm.
+   01813:               </p>
+   01814:               <p>
+>> 01815:                 Most safety settings should stay enabled for normal work. Turn them off only when you are deliberately debugging a specific failure and understand what protection you are bypassing.
+   01816:               </p>
+   01817: 
+>> 01818:               <div class="manual-field-table-wrap">
+>> 01819:                 <table class="manual-field-table">
+   01820:                   <thead>
+   01821:                     <tr>
+   01822:                       <th>Field</th>
+   01823:                       <th>What it controls</th>
+   01824:                       <th>Recommended use</th>
+   01825:                     </tr>
+   01826:                   </thead>
+   01827:                   <tbody>
+   01828:                     <tr>
+   01829:                       <td><span class="manual-inline-code">print_config_summary</span></td>
+   01830:                       <td>Prints a readable summary of the configuration during backend actions.</td>
+   01831:                       <td>Keep true. It makes backend output easier to review and helps confirm what the launcher actually sent.</td>
+   01832:                     </tr>
+   01833:                     <tr>
+   01834:                       <td><span class="manual-inline-code">validate_paths_before_submit</span></td>
+   01835:                       <td>Checks important paths before submitting or building run actions.</td>
+   01836:                       <td>Keep true. Missing or stale paths are one of the most common setup errors.</td>
+   01837:                     </tr>
+   01838:                     <tr>
+   01839:                       <td><span class="manual-inline-code">stop_if_required_path_missing</span></td>
+   01840:                       <td>Turns missing required paths into hard failures.</td>
+   01841:                       <td>Keep true for real runs. A required file missing at preflight is better than a failed Slurm job later.</td>
+   01842:                     </tr>
+   01843:                     <tr>
+   01844:                       <td><span class="manual-inline-code">save_data_inventory</span></td>
+   01845:                       <td>Saves a record of discovered/used data inputs.</td>
+   01846:                       <td>Keep true when reproducibility matters. It helps explain what data was available to the run.</td>
+   01847:                     </tr>
+```
+
+#### Settings chunk 7/13 — lines 1866-1929 — matches=4
+
+Scope: `<table class="manual-field-table">`
+
+```text
+   01866:                       <td>Keep true. This helps catch typos and stale loaded-config keys without necessarily blocking development runs.</td>
+   01867:                     </tr>
+   01868:                     <tr>
+   01869:                       <td><span class="manual-inline-code">strict_schema_validation</span></td>
+   01870:                       <td>Controls whether unknown keys or schema issues become fatal.</td>
+   01871:                       <td>Leave false while developing or importing old configs. Use true for final templates, batch runs, or expensive production-style runs where typo protection matters more.</td>
+   01872:                     </tr>
+   01873:                     <tr>
+   01874:                       <td><span class="manual-inline-code">warn_schema_type_mismatches</span></td>
+   01875:                       <td>Warns when a setting has an unexpected type, such as a string where a number or boolean is expected.</td>
+   01876:                       <td>Keep true. Type mismatches can make a field look filled out while the backend interprets it incorrectly.</td>
+   01877:                     </tr>
+   01878:                   </tbody>
+   01879:                 </table>
+   01880:               </div>
+   01881:             </div>
+   01882: 
+   01883:             <div class="manual-callout">
+   01884:               <p>
+   01885:                 <strong>Debugging habit:</strong> treat warnings as information, not decoration. Some warnings are acceptable for scaffold tests, but a real run should have every warning either fixed or intentionally understood.
+   01886:               </p>
+   01887:             </div>
+   01888:           </div>
+   01889: 
+   01890:           <div class="manual-guide-panel" data-manual-guide-panel="backend_paths">
+   01891:             <div class="manual-guide-card">
+   01892:               <h3>17 — Backend paths</h3>
+   01893:               <p>
+>> 01894:                 The Backend paths tab tells the launcher which runtime tools, Python environment, stage scripts, and SFINCS container the backend should use. These settings are mostly infrastructure controls, not model-physics controls.
+   01895:               </p>
+   01896:               <p>
+>> 01897:                 Normal users should usually leave these at the current pipeline-bundle defaults. Change them only when testing a different backend bundle, debugging a broken environment, or intentionally running with a different container/script set.
+   01898:               </p>
+   01899: 
+>> 01900:               <div class="manual-field-table-wrap">
+>> 01901:                 <table class="manual-field-table">
+   01902:                   <thead>
+   01903:                     <tr>
+   01904:                       <th>Field</th>
+   01905:                       <th>What it controls</th>
+   01906:                       <th>How to use it safely</th>
+   01907:                     </tr>
+   01908:                   </thead>
+   01909:                   <tbody>
+   01910:                     <tr>
+   01911:                       <td><span class="manual-inline-code">prefer_pipeline_bundle_runtime_paths</span></td>
+   01912:                       <td>Prefers runtime paths from the current launcher/pipeline bundle instead of trusting paths loaded from an old config.</td>
+   01913:                       <td>Keep true for normal shared-launcher use. This helps prevent old personal paths or stale saved-config paths from replacing the current working environment.</td>
+   01914:                     </tr>
+   01915:                     <tr>
+   01916:                       <td><span class="manual-inline-code">anaconda_module</span></td>
+   01917:                       <td>The cluster module name used for Anaconda/Conda, when module loading is needed.</td>
+   01918:                       <td>Leave at the deployment default unless the cluster module name changes.</td>
+   01919:                     </tr>
+   01920:                     <tr>
+   01921:                       <td><span class="manual-inline-code">apptainer_module</span></td>
+   01922:                       <td>The cluster module name used for Apptainer/Singularity container execution.</td>
+   01923:                       <td>Leave at the deployment default unless Longleaf/module instructions change.</td>
+   01924:                     </tr>
+   01925:                     <tr>
+   01926:                       <td><span class="manual-inline-code">preprocess_stage_script</span></td>
+   01927:                       <td>The Python script used for the preprocessing stage.</td>
+   01928:                       <td>Use the shared pipeline script for normal runs. Do not point this to a temporary personal copy unless deliberately testing a backend change.</td>
+   01929:                     </tr>
+```
+
+#### Settings chunk 8/13 — lines 1939-2088 — matches=6
+
+Scope: `<table class="manual-field-table">`
+
+```text
+   01939:                     </tr>
+   01940:                     <tr>
+   01941:                       <td><span class="manual-inline-code">conda_python</span></td>
+   01942:                       <td>The exact Python executable used to call backend runner and stage scripts.</td>
+   01943:                       <td>This must exist and be executable from the backend/cluster point of view. A missing Python path should fail preflight.</td>
+   01944:                     </tr>
+   01945:                     <tr>
+   01946:                       <td><span class="manual-inline-code">sfincs_container_path</span></td>
+   01947:                       <td>The Apptainer/Singularity image used to run the SFINCS solver.</td>
+   01948:                       <td>This must point to the intended SFINCS container. A missing or wrong container path can stop the solver stage even if preprocessing succeeds.</td>
+   01949:                     </tr>
+   01950:                     <tr>
+   01951:                       <td><span class="manual-inline-code">preprocess_enable_hydromt_file_logging</span></td>
+   01952:                       <td>Controls whether HydroMT writes its own file logs during preprocessing.</td>
+   01953:                       <td>Keep false by default. Slurm stdout/stderr logs still capture messages, and HydroMT file logging previously caused a major preprocessing slowdown.</td>
+   01954:                     </tr>
+   01955:                     <tr>
+   01956:                       <td>preprocess timing report</td>
+   01957:                       <td>A placeholder/status row for exposing timing diagnostics from preprocessing.</td>
+   01958:                       <td>Treat this as a backend-hook reminder unless the actual config/backend hook is implemented. Do not rely on a fake HTML-only toggle.</td>
+   01959:                     </tr>
+   01960:                   </tbody>
+   01961:                 </table>
+   01962:               </div>
+   01963:             </div>
+   01964: 
+   01965:             <div class="manual-callout">
+   01966:               <p>
+>> 01967:                 <strong>Infrastructure rule:</strong> backend paths should be boring and stable. If a model suddenly fails before running, check Python, scripts, container, and module paths before assuming the flood-model settings are wrong.
+   01968:               </p>
+   01969:             </div>
+   01970:           </div>
+   01971: 
+   01972:           <div class="manual-guide-panel" data-manual-guide-panel="check_all">
+   01973:             <div class="manual-guide-card">
+   01974:               <h3>Check all</h3>
+   01975:               <p>
+   01976:                 Check all is the page-level review step before backend preflight. It is meant to catch obvious mistakes while you are still in the browser: missing paths, invalid JSON, unsafe overwrite choices, suspicious timing, incompatible toggles, and mode-mixing problems.
+   01977:               </p>
+   01978:               <p>
+   01979:                 This button is not a replacement for backend preflight. It is the first pass. The backend still has the final authority because it sees the resolved config, filesystem paths, schema behavior, runner mode, and generated run workflow.
+   01980:               </p>
+   01981: 
+>> 01982:               <div class="manual-field-table-wrap">
+>> 01983:                 <table class="manual-field-table">
+   01984:                   <thead>
+   01985:                     <tr>
+   01986:                       <th>Check / area</th>
+   01987:                       <th>What it is checking</th>
+   01988:                       <th>How to treat the result</th>
+   01989:                     </tr>
+   01990:                   </thead>
+   01991:                   <tbody>
+   01992:                     <tr>
+   01993:                       <td><span class="manual-inline-code">Run page checks</span> / <span class="manual-inline-code">check-button-2</span></td>
+   01994:                       <td>Runs the local browser-side review for the current Manual setup.</td>
+   01995:                       <td>Use this before backend preflight. It is faster than launching backend actions and helps catch easy mistakes early.</td>
+   01996:                     </tr>
+   01997:                     <tr>
+   01998:                       <td>Run identity and output folder</td>
+   01999:                       <td>Checks run name, output root, overwrite choices, and whether the planned run folder looks safe.</td>
+   02000:                       <td>Fix confusing names and unsafe overwrite choices before building scripts or submitting.</td>
+   02001:                     </tr>
+   02002:                     <tr>
+   02003:                       <td>Manual/Override separation</td>
+   02004:                       <td>Checks that Manual Mode remains a Manual/HydroMT-build workflow and does not accidentally inherit Override/native metadata.</td>
+   02005:                       <td>If a loaded config came from Override Mode, confirm fixed Manual keys are protected and native override metadata is stripped.</td>
+   02006:                     </tr>
+   02007:                     <tr>
+   02008:                       <td>Runtime-window review</td>
+   02009:                       <td>Compares requested model times against available runtime metadata when the selected catalogs provide that information.</td>
+   02010:                       <td>Use this as an early timing warning. It is not the same as a full file-by-file forcing timestamp coverage audit.</td>
+   02011:                     </tr>
+   02012:                     <tr>
+   02013:                       <td>Required paths</td>
+>> 02014:                       <td>Checks visible required paths such as project/output paths, region/DEM paths, backend scripts, Python, and container settings.</td>
+   02015:                       <td>Missing required paths should be fixed before preflight. Backend-visible paths matter more than paths that only exist on a local laptop.</td>
+   02016:                     </tr>
+   02017:                     <tr>
+   02018:                       <td>Feature toggles and matching inputs</td>
+   02019:                       <td>Checks whether enabled features have matching source kinds, paths, values, or catalog definitions.</td>
+   02020:                       <td>A toggle without matching data is usually a bad setup. A path without the matching toggle may do nothing.</td>
+   02021:                     </tr>
+   02022:                     <tr>
+   02023:                       <td>JSON/text fields</td>
+   02024:                       <td>Checks fields that expect JSON lists or raw JSON, such as tags, catalogs, advanced config, value-column lists, and variable candidates.</td>
+   02025:                       <td>Fix syntax errors before backend preflight. Invalid JSON can stop the workflow before the cluster jobs are even written.</td>
+   02026:                     </tr>
+   02027:                     <tr>
+   02028:                       <td>Warnings</td>
+   02029:                       <td>Suspicious choices that may be allowed but deserve attention.</td>
+   02030:                       <td>Read every warning. Some are acceptable in test/scaffold work; final runs should have warnings intentionally resolved or justified.</td>
+   02031:                     </tr>
+   02032:                     <tr>
+   02033:                       <td>Errors</td>
+   02034:                       <td>Choices that should block the workflow.</td>
+   02035:                       <td>Fix errors before preflight, Build Scripts, or Submit. Do not treat errors as cosmetic.</td>
+   02036:                     </tr>
+   02037:                   </tbody>
+   02038:                 </table>
+   02039:               </div>
+   02040:             </div>
+   02041: 
+   02042:             <div class="manual-callout">
+   02043:               <p>
+   02044:                 <strong>Order of operations:</strong> use Check all first, then backend preflight, then Build Slurm scripts, then Submit. Each step catches a different class of problem.
+   02045:               </p>
+   02046:             </div>
+   02047:           </div>
+   02048: 
+   02049:           <div class="manual-guide-panel" data-manual-guide-panel="submit">
+   02050:             <div class="manual-guide-card">
+   02051:               <h3>Submit</h3>
+   02052:               <p>
+   02053:                 The Submit area turns the current browser setup into backend actions. Treat the three backend buttons as separate gates: preflight checks the setup, Build Slurm scripts prepares the run scaffold and job scripts, and Submit launches the Slurm dependency chain.
+   02054:               </p>
+   02055:               <p>
+   02056:                 Save/Load are convenience tools. You do not need to click Save Progress before a normal one-off preflight. Backend preflight receives the current page setup and records the run config/scaffold needed for that workflow.
+   02057:               </p>
+   02058: 
+>> 02059:               <div class="manual-field-table-wrap">
+>> 02060:                 <table class="manual-field-table">
+   02061:                   <thead>
+   02062:                     <tr>
+   02063:                       <th>Button / area</th>
+   02064:                       <th>What it does</th>
+   02065:                       <th>What it does not mean</th>
+   02066:                     </tr>
+   02067:                   </thead>
+   02068:                   <tbody>
+   02069:                     <tr>
+   02070:                       <td>Save Progress</td>
+   02071:                       <td>Saves the current page setup for later reuse, sharing, or review.</td>
+   02072:                       <td>It is not required before a normal one-off preflight. It also does not mean scripts were built or jobs were submitted.</td>
+   02073:                     </tr>
+   02074:                     <tr>
+   02075:                       <td>Load Config</td>
+   02076:                       <td>Loads a saved JSON setup back into the page.</td>
+   02077:                       <td>It should not allow Override/native metadata to contaminate Manual Mode. After loading, run Check all before preflight.</td>
+   02078:                     </tr>
+   02079:                     <tr>
+   02080:                       <td>Run backend preflight</td>
+   02081:                       <td>Sends the current config to the backend, applies schema/default/path checks, and validates whether the setup is ready for later actions.</td>
+   02082:                       <td>Passing preflight does not mean SFINCS has run. It also does not guarantee Build Scripts or Submit will allow overwriting an existing real run folder.</td>
+   02083:                     </tr>
+   02084:                     <tr>
+   02085:                       <td>Build Slurm scripts</td>
+   02086:                       <td>Creates the run-folder scaffold, frozen run config, and Slurm scripts for the selected workflow stages.</td>
+   02087:                       <td>A scaffold is not completed model output. Seeing folders like scripts, logs, model, and postprocess does not mean the solver has run.</td>
+   02088:                     </tr>
+```
+
+#### Settings chunk 9/13 — lines 2096-2152 — matches=1
+
+Scope: `<section class="tab-section" id="tab-override" data-title="Override">`
+
+```text
+   02096:                       <td>Shows backend stdout/stderr, return code, staged-config paths, log paths, and top-level success/failure messages.</td>
+   02097:                       <td>The top message is only a summary. For failures, read the stdout/stderr details and then inspect Slurm logs if jobs were submitted.</td>
+   02098:                     </tr>
+   02099:                     <tr>
+   02100:                       <td>Build/Submit enable state</td>
+   02101:                       <td>Build Scripts and Submit should stay disabled until preflight passes in the current browser session.</td>
+   02102:                       <td>A previously saved config or old browser state should not be treated as proof that the current page is safe to submit.</td>
+   02103:                     </tr>
+   02104:                   </tbody>
+   02105:                 </table>
+   02106:               </div>
+   02107:             </div>
+   02108: 
+   02109:             <div class="manual-callout">
+   02110:               <p>
+   02111:                 <strong>Scaffold vs. real output:</strong> after Build Scripts, it is normal to see a run-folder scaffold. Real model outputs such as <span class="manual-inline-code">sfincs_map.nc</span>, <span class="manual-inline-code">sfincs_his.nc</span>, and postprocess products appear only after submitted jobs complete successfully.
+   02112:               </p>
+   02113:             </div>
+   02114: 
+   02115:             <div class="manual-callout">
+   02116:               <p>
+   02117:                 <strong>Safety note:</strong> Build Scripts or Submit can fail after preflight passes when the destination run folder already contains real artifacts. That is intentional overwrite protection, not necessarily a bug.
+   02118:               </p>
+   02119:             </div>
+   02120:           </div>
+   02121:          </div>
+   02122:         </section>
+   02123: 
+>> 02124:     <section class="tab-section" id="tab-override" data-title="Override">
+   02125:       <style>
+   02126:         .guide-section {
+   02127:           display: grid;
+   02128:           gap: 24px;
+   02129:         }
+   02130:     
+   02131:         .guide-lede {
+   02132:           color: #344054;
+   02133:           font-size: 1.04rem;
+   02134:           line-height: 1.65;
+   02135:           max-width: 900px;
+   02136:           margin: 0;
+   02137:         }
+   02138:     
+   02139:         .guide-card {
+   02140:           background: var(--panel-soft);
+   02141:           border: 1px solid var(--border);
+   02142:           border-radius: 20px;
+   02143:           padding: 22px;
+   02144:         }
+   02145:     
+   02146:         .guide-card h3 {
+   02147:           margin: 0 0 12px;
+   02148:           font-size: 1.28rem;
+   02149:           letter-spacing: -0.02em;
+   02150:         }
+   02151:     
+   02152:         .guide-card h4 {
+```
+
+#### Settings chunk 10/13 — lines 2372-2549 — matches=7
+
+```text
+   02372:           <p>
+   02373:             This split matters because you often want to reuse the same physical model setup for many different events. For example, the topography, bathymetry, mask, roughness, boundary locations, source locations, and observation locations may stay the same, while the rainfall, water-level boundary, discharge time series, wind, pressure, or restart state changes event to event.
+   02374:           </p>
+   02375:         
+   02376:           <div class="guide-grid-2">
+   02377:             <div class="mini-card">
+   02378:               <h4>Static files</h4>
+   02379:               <p>
+   02380:                 Static files describe things inherent to the model area or model design. These are the pieces that usually do not change just because the event changes.
+   02381:               </p>
+   02382:               <p>
+   02383:                 Examples include topography/bathymetry, active-cell masks, grid index files, subgrid tables, roughness, infiltration layers, boundary/source geometry, observation points, cross-sections, and structures.
+   02384:               </p>
+   02385:             </div>
+   02386:         
+   02387:             <div class="mini-card">
+   02388:               <h4>Event files</h4>
+   02389:               <p>
+   02390:                 Event files describe what happens during a specific run period. These are usually time-dependent files or initial-state files.
+   02391:               </p>
+   02392:               <p>
+   02393:                 Examples include water-level boundary time series, discharge time series, rainfall, wind, atmospheric pressure, wave-related forcing, and restart or initial water-level files.
+   02394:               </p>
+   02395:             </div>
+   02396:           </div>
+   02397:         
+   02398:           <div class="callout">
+   02399:             <p>
+>> 02400:               <strong>Note:</strong> this Override guide focuses on the special file-detection and override workflow. For a deeper review of the normal launcher tabs and settings, use the Manual section of this guide.
+   02401:             </p>
+   02402:           </div>
+   02403:         </div>
+   02404: 
+   02405:         <figure class="guide-image">
+   02406: 
+   02407:           <img src="static/guide_images/override_01_folder_selection.png" alt="Image 1 — Override folder selection">
+   02408: 
+   02409:           <figcaption>
+   02410: 
+   02411:             <strong>Image 1 — Override folder selection.</strong> Static and event folder selection before detection. In this example, the static folder supplies the fixed model setup and the event folder supplies event-specific inputs.
+   02412: 
+   02413:           </figcaption>
+   02414: 
+   02415:         </figure>
+   02416:     
+   02417:         <div class="guide-card">
+   02418:           <h3>How Override differs from Manual</h3>
+   02419:           <p>
+>> 02420:             Override Mode is basically Manual Mode with an extra native-file step at the beginning. In Manual Mode, you mostly enter settings directly. In Override Mode, you first choose static and/or event folders, detect native SFINCS files, and select which detected files should override the normal generated inputs.
+   02421:           </p>
+   02422:           <p>
+>> 02423:             After the override files are selected, the page becomes closer to a stripped-down Manual Mode. You still choose the run name, output folder, timing, resources, advanced settings, review checks, and submit behavior. The difference is that some settings may already be controlled by selected native files.
+   02424:           </p>
+   02425:           <p>
+   02426:             When a selected native file controls part of the setup, the matching manual control may become hidden, locked, or greyed out. This is intentional. It prevents the page from suggesting that a setting is editable when the chosen override file is actually controlling it.
+   02427:           </p>
+   02428:         
+   02429:           <div class="callout">
+   02430:             <p>
+   02431:               <strong>Important:</strong> detecting a file is not always the same as using it. Detection finds possible files. The selected override list decides which files are actually copied into the run and pointed to by the generated <span class="inline-code">sfincs.inp</span>.
+   02432:             </p>
+   02433:           </div>
+   02434:         </div>
+   02435: 
+   02436:         <div class="guide-card">
+   02437:           <h3>Normal Override workflow checklist</h3>
+   02438:           <ul class="workflow-checklist">
+   02439:             <li>
+   02440:               <span>1</span>
+   02441:               <div>Choose the static native SFINCS folder and/or event native SFINCS folder.</div>
+   02442:             </li>
+   02443:             <li>
+   02444:               <span>2</span>
+   02445:               <div>Click Detect Files and confirm the expected files appear.</div>
+   02446:             </li>
+   02447:             <li>
+   02448:               <span>3</span>
+   02449:               <div>Select the detected files that should actually be used as overrides.</div>
+   02450:             </li>
+   02451:             <li>
+   02452:               <span>4</span>
+   02453:               <div>Review hidden, locked, or greyed-out controls so you understand what the selected files now control.</div>
+   02454:             </li>
+   02455:             <li>
+   02456:               <span>5</span>
+>> 02457:               <div>Set the run name, output folder, timing, resources, and remaining editable settings.</div>
+   02458:             </li>
+   02459:             <li>
+   02460:               <span>6</span>
+>> 02461:               <div>Inspect <span class="inline-code">sfincs.inp</span>-related settings and Advanced Config before running.</div>
+   02462:             </li>
+   02463:             <li>
+   02464:               <span>7</span>
+   02465:               <div>Read the review checks and fix missing-file, invalid-config, timing, or overwrite warnings before moving on.</div>
+   02466:             </li>
+   02467:             <li>
+   02468: 
+   02469:               <span>8</span>
+   02470: 
+   02471:               <div>Optionally use Save Config if you want to pause, make a reusable template, or later restore the setup with Load Config.</div>
+   02472: 
+   02473:             </li>
+   02474: 
+   02475:             <li>
+   02476: 
+   02477:               <span>9</span>
+   02478: 
+   02479:               <div>Run preflight. Preflight validates the setup and records the current page config/scaffold for the run workflow.</div>
+   02480: 
+   02481:             </li>
+   02482: 
+   02483:             <li>
+   02484: 
+   02485:               <span>10</span>
+   02486: 
+   02487:               <div>Build the Slurm scripts and confirm the scaffold was created correctly.</div>
+   02488: 
+   02489:             </li>
+   02490: 
+   02491:             <li>
+   02492: 
+   02493:               <span>11</span>
+   02494: 
+   02495:               <div>Submit the run only after the folders, overrides, timing, resources, and warnings look correct.</div>
+   02496: 
+   02497:             </li>
+   02498: 
+   02499:             <li>
+   02500: 
+   02501:               <span>12</span>
+   02502: 
+   02503:               <div>After the jobs finish, check logs and outputs such as <span class="inline-code">sfincs_map.nc</span>, <span class="inline-code">sfincs_his.nc</span>, and postprocessing products.</div>
+   02504: 
+   02505:             </li>
+   02506:           </ul>
+   02507:         </div>
+   02508:     
+   02509:     
+   02510:         <div class="guide-card">
+   02511:           <h3>Native SFINCS files available for override</h3>
+   02512:           <p>
+   02513:             These tables are a launcher-oriented reference for native SFINCS files. They are not meant to teach every file from scratch. If you are using Override Mode, the assumption is that your files already came from a trusted SFINCS setup, preprocessing workflow, or previous run.
+   02514:           </p>
+   02515:           <p>
+   02516:             Some files are normally static, some are normally event-specific, and a few can be either depending on the workflow. The launcher should eventually expose all of these as possible native override options, but a project setup may only use a small subset.
+   02517:           </p>
+   02518:         
+   02519:           <h4>Static / physical setup files</h4>
+>> 02520:           <div class="guide-table-wrap">
+>> 02521:             <table class="guide-table">
+   02522:               <thead>
+   02523:                 <tr>
+   02524:                   <th>File / pointer</th>
+   02525:                   <th>Usual role</th>
+   02526:                   <th>Usually changes event to event?</th>
+   02527:                 </tr>
+   02528:               </thead>
+   02529:               <tbody>
+   02530:                 <tr>
+   02531:                   <td><code>sfincs.dep</code> / <code>depfile</code></td>
+   02532:                   <td>Topography/bathymetry or depth/elevation at grid cells.</td>
+   02533:                   <td>No, unless rebuilding the physical domain.</td>
+   02534:                 </tr>
+   02535:                 <tr>
+   02536:                   <td><code>sfincs.msk</code> / <code>mskfile</code></td>
+   02537:                   <td>Active/inactive/boundary-cell mask.</td>
+   02538:                   <td>No.</td>
+   02539:                 </tr>
+   02540:                 <tr>
+   02541:                   <td><code>sfincs.ind</code> / <code>indexfile</code></td>
+   02542:                   <td>Index file used with binary grid-style inputs.</td>
+   02543:                   <td>No.</td>
+   02544:                 </tr>
+   02545:                 <tr>
+   02546:                   <td><code>sfincs.sbg</code> or subgrid NetCDF / <code>sbgfile</code></td>
+   02547:                   <td>Subgrid table information for subgrid SFINCS runs.</td>
+   02548:                   <td>No.</td>
+   02549:                 </tr>
+```
+
+#### Settings chunk 11/13 — lines 2587-2744 — matches=6
+
+Scope: `<div class="guide-table-wrap">`
+
+```text
+   02587:                   <td>Green-Ampt soil moisture deficit input.</td>
+   02588:                   <td>Usually no.</td>
+   02589:                 </tr>
+   02590:                 <tr>
+   02591:                   <td><code>sfincs.f0</code> / <code>f0file</code></td>
+   02592:                   <td>Horton maximum initial infiltration capacity.</td>
+   02593:                   <td>Usually no.</td>
+   02594:                 </tr>
+   02595:                 <tr>
+   02596:                   <td><code>sfincs.fc</code> / <code>fcfile</code></td>
+   02597:                   <td>Horton minimum/asymptotic infiltration capacity.</td>
+   02598:                   <td>Usually no.</td>
+   02599:                 </tr>
+   02600:                 <tr>
+   02601:                   <td><code>sfincs.kd</code> / <code>kdfile</code></td>
+   02602:                   <td>Horton decay constant.</td>
+   02603:                   <td>Usually no.</td>
+   02604:                 </tr>
+   02605:                 <tr>
+   02606:                   <td><code>sfincs.vol</code> / <code>volfile</code></td>
+   02607:                   <td>Spatially varying storage volume, such as green infrastructure storage.</td>
+   02608:                   <td>Usually no.</td>
+   02609:                 </tr>
+   02610:               </tbody>
+   02611:             </table>
+   02612:           </div>
+   02613:         
+   02614:           <h4>Geometry, output-request, and structure files</h4>
+>> 02615:           <div class="guide-table-wrap">
+>> 02616:             <table class="guide-table">
+   02617:               <thead>
+   02618:                 <tr>
+   02619:                   <th>File / pointer</th>
+   02620:                   <th>Usual role</th>
+   02621:                   <th>Usually changes event to event?</th>
+   02622:                 </tr>
+   02623:               </thead>
+   02624:               <tbody>
+   02625:                 <tr>
+   02626:                   <td><code>sfincs.bnd</code> / <code>bndfile</code></td>
+   02627:                   <td>Water-level boundary point locations.</td>
+   02628:                   <td>Usually no.</td>
+   02629:                 </tr>
+   02630:                 <tr>
+   02631:                   <td><code>sfincs.src</code> / <code>srcfile</code></td>
+   02632:                   <td>Source/discharge point locations.</td>
+   02633:                   <td>Usually no.</td>
+   02634:                 </tr>
+   02635:                 <tr>
+   02636:                   <td><code>sfincs.obs</code> / <code>obsfile</code></td>
+   02637:                   <td>Observation point locations for history output.</td>
+   02638:                   <td>Usually no, but can change for validation-output reruns.</td>
+   02639:                 </tr>
+   02640:                 <tr>
+   02641:                   <td><code>sfincs.crs</code> / <code>crsfile</code></td>
+   02642:                   <td>Cross-section lines for discharge output.</td>
+   02643:                   <td>Usually no, but can change for validation-output reruns.</td>
+   02644:                 </tr>
+   02645:                 <tr>
+   02646:                   <td><code>sfincs.thd</code> / <code>thdfile</code></td>
+   02647:                   <td>Thin dams, treated like fully blocking barriers.</td>
+   02648:                   <td>No.</td>
+   02649:                 </tr>
+   02650:                 <tr>
+   02651:                   <td><code>sfincs.weir</code> / <code>weirfile</code></td>
+   02652:                   <td>Weirs or levee-like barriers with a height and coefficient.</td>
+   02653:                   <td>No.</td>
+   02654:                 </tr>
+   02655:                 <tr>
+   02656:                   <td><code>sfincs.drn</code> / <code>drnfile</code></td>
+   02657:                   <td>Drainage pumps, culverts, or check valves.</td>
+   02658:                   <td>Usually no, unless testing structure scenarios.</td>
+   02659:                 </tr>
+   02660:               </tbody>
+   02661:             </table>
+   02662:           </div>
+   02663:         
+   02664:           <h4>Event forcing and initial-state files</h4>
+>> 02665:           <div class="guide-table-wrap">
+>> 02666:             <table class="guide-table">
+   02667:               <thead>
+   02668:                 <tr>
+   02669:                   <th>File / pointer</th>
+   02670:                   <th>Usual role</th>
+   02671:                   <th>Usually changes event to event?</th>
+   02672:                 </tr>
+   02673:               </thead>
+   02674:               <tbody>
+   02675:                 <tr>
+   02676:                   <td><code>sfincs.bzs</code> / <code>bzsfile</code></td>
+   02677:                   <td>Water-level boundary time series.</td>
+   02678:                   <td>Yes.</td>
+   02679:                 </tr>
+   02680:                 <tr>
+   02681:                   <td><code>sfincs.bzi</code> / <code>bzifile</code></td>
+   02682:                   <td>Quickly varying water-level or wave-related boundary time series.</td>
+   02683:                   <td>Yes.</td>
+   02684:                 </tr>
+   02685:                 <tr>
+   02686:                   <td><code>sfincs_netbndbzsbzifile.nc</code> / <code>netbndbzsbzifile</code></td>
+   02687:                   <td>NetCDF package containing boundary locations and water-level/wave forcing.</td>
+   02688:                   <td>Yes.</td>
+   02689:                 </tr>
+   02690:                 <tr>
+   02691:                   <td><code>sfincs.dis</code> / <code>disfile</code></td>
+   02692:                   <td>Discharge/source time series.</td>
+   02693:                   <td>Yes.</td>
+   02694:                 </tr>
+   02695:                 <tr>
+   02696:                   <td><code>sfincs_netsrcdisfile.nc</code> / <code>netsrcdisfile</code></td>
+   02697:                   <td>NetCDF package containing source locations and discharge forcing.</td>
+   02698:                   <td>Yes.</td>
+   02699:                 </tr>
+   02700:                 <tr>
+   02701:                   <td><code>sfincs.ini</code> / <code>inifile</code></td>
+   02702:                   <td>Spatially varying initial water level.</td>
+   02703:                   <td>Often yes.</td>
+   02704:                 </tr>
+   02705:                 <tr>
+   02706:                   <td><code>sfincs.rst</code> / <code>rstfile</code></td>
+   02707:                   <td>Restart file from a previous SFINCS run.</td>
+   02708:                   <td>Yes.</td>
+   02709:                 </tr>
+   02710:               </tbody>
+   02711:             </table>
+   02712:           </div>
+   02713:         
+   02714:           <h4>Meteo forcing files</h4>
+>> 02715:           <div class="guide-table-wrap">
+>> 02716:             <table class="guide-table">
+   02717:               <thead>
+   02718:                 <tr>
+   02719:                   <th>File / pointer</th>
+   02720:                   <th>Usual role</th>
+   02721:                   <th>Usually changes event to event?</th>
+   02722:                 </tr>
+   02723:               </thead>
+   02724:               <tbody>
+   02725:                 <tr>
+   02726:                   <td><code>sfincs.spw</code> / <code>spwfile</code></td>
+   02727:                   <td>Spiderweb wind, pressure, and sometimes rainfall forcing.</td>
+   02728:                   <td>Yes.</td>
+   02729:                 </tr>
+   02730:                 <tr>
+   02731:                   <td><code>spiderweb.nc</code> / <code>netspwfile</code></td>
+   02732:                   <td>NetCDF spiderweb forcing.</td>
+   02733:                   <td>Yes.</td>
+   02734:                 </tr>
+   02735:                 <tr>
+   02736:                   <td><code>sfincs.amu</code> / <code>amufile</code></td>
+   02737:                   <td>Delft3D-meteo style wind speed in x-direction.</td>
+   02738:                   <td>Yes.</td>
+   02739:                 </tr>
+   02740:                 <tr>
+   02741:                   <td><code>sfincs.amv</code> / <code>amvfile</code></td>
+   02742:                   <td>Delft3D-meteo style wind speed in y-direction.</td>
+   02743:                   <td>Yes.</td>
+   02744:                 </tr>
+```
+
+#### Settings chunk 12/13 — lines 2757-3055 — matches=21
+
+Scope: `<div class="guide-table-wrap">`
+
+```text
+   02757:                   <td>Spatially uniform wind forcing.</td>
+   02758:                   <td>Yes.</td>
+   02759:                 </tr>
+   02760:                 <tr>
+   02761:                   <td><code>sfincs.prcp</code> / <code>precipfile</code></td>
+   02762:                   <td>Spatially uniform precipitation forcing.</td>
+   02763:                   <td>Yes.</td>
+   02764:                 </tr>
+   02765:                 <tr>
+   02766:                   <td><code>sfincs_netamuamvfile.nc</code> / <code>netamuamvfile</code></td>
+   02767:                   <td>NetCDF wind forcing with both x and y wind components.</td>
+   02768:                   <td>Yes.</td>
+   02769:                 </tr>
+   02770:                 <tr>
+   02771:                   <td><code>sfincs_netampfile.nc</code> / <code>netampfile</code></td>
+   02772:                   <td>NetCDF atmospheric pressure forcing.</td>
+   02773:                   <td>Yes.</td>
+   02774:                 </tr>
+   02775:                 <tr>
+   02776:                   <td><code>sfincs_netamprfile.nc</code>, <code>precip_2d.nc</code> / <code>netamprfile</code></td>
+   02777:                   <td>NetCDF precipitation forcing.</td>
+   02778:                   <td>Yes.</td>
+   02779:                 </tr>
+   02780:               </tbody>
+   02781:             </table>
+   02782:           </div>
+   02783:         
+   02784:           <h4>Special file</h4>
+>> 02785:           <div class="guide-table-wrap">
+>> 02786:             <table class="guide-table">
+   02787:               <thead>
+   02788:                 <tr>
+   02789:                   <th>File / pointer</th>
+   02790:                   <th>Usual role</th>
+   02791:                   <th>Override note</th>
+   02792:                 </tr>
+   02793:               </thead>
+   02794:               <tbody>
+   02795:                 <tr>
+   02796:                   <td><code>sfincs.inp</code></td>
+>> 02797:                   <td>Main SFINCS input file. It contains model settings and file pointers.</td>
+   02798:                   <td>
+>> 02799:                     Treat this as special. The launcher can read it to populate timing/settings, but directly overriding it should be an intentional reproduction choice.
+   02800:                   </td>
+   02801:                 </tr>
+   02802:                 <tr>
+   02803:                   <td>Custom <code>*file</code> keys</td>
+   02804:                   <td>Project-specific or future SFINCS input files referenced by <code>sfincs.inp</code>.</td>
+   02805:                   <td>
+   02806:                     The launcher should only allow these if the backend resolver knows how to copy them and validate the final file pointer.
+   02807:                   </td>
+   02808:                 </tr>
+   02809:               </tbody>
+   02810:             </table>
+   02811:           </div>
+   02812:         </div>
+   02813: 
+   02814:         <figure class="guide-image">
+   02815: 
+   02816:           <img src="static/guide_images/override_02_detected_files.png" alt="Image 2 — Detected native files">
+   02817: 
+   02818:           <figcaption>
+   02819: 
+   02820:             <strong>Image 2 — Detected native files.</strong> Detected native SFINCS files after scanning the selected source folders. Detection finds candidate files; the selected override switches decide what will actually be used.
+   02821: 
+   02822:           </figcaption>
+   02823: 
+   02824:         </figure>
+   02825:     
+   02826:         <div class="guide-card">
+   02827:           <h3>Step-by-step Override workflow</h3>
+   02828:     
+   02829:           <ol class="guide-steps">
+   02830:             <li>
+   02831:               <strong>Choose the static and/or event folders.</strong>
+   02832:               Start by selecting the folder that contains the static native files, the folder that contains the event native files, or both. For example, a Harvey 2017 example might use a trusted static model folder plus a Harvey-specific event folder.
+   02833:             </li>
+   02834:     
+   02835:             <li>
+   02836:               <strong>Detect available native files.</strong>
+   02837:               Use the detection button to scan the selected folders. This lets the page find files such as <span class="inline-code">sfincs.dep</span>, <span class="inline-code">sfincs.msk</span>, <span class="inline-code">sfincs.bzs</span>, <span class="inline-code">sfincs.dis</span>, and <span class="inline-code">precip_2d.nc</span>.
+   02838:             </li>
+   02839:     
+   02840:             <li>
+   02841:               <strong>Select the files you actually want to override with.</strong>
+   02842:               Detection only finds candidates. The selected override list is what tells the launcher which native files should be copied into the run folder and referenced by the generated model input.
+   02843:             </li>
+   02844:     
+   02845:             <li>
+   02846:               <strong>Review fields that become hidden, locked, or greyed out.</strong>
+   02847:               If a selected native file already supplies part of the model, the corresponding manual control may no longer matter. In that case, the launcher may hide it, lock it, or grey it out so the page does not imply that changing the field will affect the run.
+   02848:             </li>
+   02849:     
+   02850:             <li>
+   02851:               <strong>Set the run identity and output location.</strong>
+   02852:               Choose a clear run name and a run output folder. The run folder is where the launcher writes the final config, scripts, logs, copied native inputs, SFINCS outputs, and postprocessing outputs.
+   02853:             </li>
+   02854:     
+   02855:             <li>
+>> 02856:               <strong>Check the timing and model settings.</strong>
+>> 02857:               If a detected <span class="inline-code">sfincs.inp</span> is available, the launcher may use it to fill timing fields like reference time, start time, and stop time. Even when <span class="inline-code">sfincs.inp</span> itself is overridden, the model settings and advanced config area should stay visible because those settings are important to inspect before running.
+   02858:             </li>
+   02859:     
+   02860:             <li>
+   02861:               <strong>Set resources and submit behavior.</strong>
+   02862:               Choose the Slurm resources for preprocessing, SFINCS, and postprocessing. The correct values depend on model size, event length, output frequency, and how heavy postprocessing will be.
+   02863:             </li>
+   02864:     
+   02865:             <li>
+>> 02866:               <strong>Use Advanced Config only for settings you understand.</strong>
+>> 02867:               Advanced Config is for SFINCS keys or backend settings that are not exposed as normal page controls. This is useful for expert edits, but it expects valid syntax and assumes you know what the keys mean.
+   02868:             </li>
+   02869:     
+   02870:             <li>
+   02871:               <strong>Run the review checks.</strong>
+   02872:               Before submitting, review the detected files, selected overrides, model timing, output folder, overwrite behavior, resources, and any warnings. Page-level checks are helpful, but the backend preflight is still the real check before a run should be submitted.
+   02873:             </li>
+   02874:     
+   02875:             <li>
+   02876: 
+   02877:               <strong>Use Save/Load only when useful; then preflight, build, and submit.</strong>
+   02878: 
+   02879:               Save Config is mainly for pausing your work, making a reusable template, or coming back later with Load Config. You do not need to manually save before a normal run. Running backend preflight records the current page setup and creates the config/scaffold needed for the run workflow. Build Scripts prepares the Slurm scripts, and Submit launches the jobs. A scaffold is not completed model output; real outputs only exist after the jobs finish.
+   02880: 
+   02881:             </li>
+   02882:           </ol>
+   02883:         </div>
+   02884:         <div class="guide-card">
+   02885: 
+   02886:           <h3>Save Config and Load Config</h3>
+   02887: 
+   02888:           <p>
+   02889: 
+   02890:             Save Config and Load Config are convenience tools, not required steps for every run. Use Save Config when you want to pause and come back later, create a reusable template, duplicate a setup, or share the setup with someone else.
+   02891: 
+   02892:           </p>
+   02893: 
+   02894:           <p>
+   02895: 
+>> 02896:             Load Config restores a saved JSON setup back into the page. This is useful when you want to continue a previous setup without re-entering all folders, overrides, timing, resources, and advanced settings by hand.
+   02897: 
+   02898:           </p>
+   02899: 
+   02900:           <p>
+   02901: 
+   02902:             For a normal one-off run, you do not need to click Save Config before running. Running backend preflight sends the current page setup to the backend and records the config/scaffold needed for that run workflow.
+   02903: 
+   02904:           </p>
+   02905: 
+   02906:         </div>
+   02907: 
+   02908:         <figure class="guide-image">
+   02909: 
+   02910:           <img src="static/guide_images/override_03_greyed_controls.png" alt="Image 3 — Hidden or greyed-out controls">
+   02911: 
+   02912:           <figcaption>
+   02913: 
+   02914:             <strong>Image 3 — Hidden or greyed-out controls.</strong> Manual controls may become hidden, locked, or greyed out when selected native files already control that part of the setup.
+   02915: 
+   02916:           </figcaption>
+   02917: 
+   02918:         </figure>
+   02919:     
+   02920:         <div class="guide-card">
+   02921:           <h3>About <span class="inline-code">sfincs.inp</span> in Override Mode</h3>
+   02922:           <p>
+>> 02923:             <span class="inline-code">sfincs.inp</span> is different from the other native files because it controls the run settings and points to the other input files. In Override Mode, the safer pattern is usually to let the launcher generate a fresh <span class="inline-code">sfincs.inp</span> from the page settings, while using detected native files for the model inputs.
+   02924:           </p>
+   02925:           <p>
+>> 02926:             You may still use a detected <span class="inline-code">sfincs.inp</span> as a reference for timing or settings. Directly overriding <span class="inline-code">sfincs.inp</span> should be treated as an intentional reproduction choice, not the default beginner path.
+   02927:           </p>
+   02928:     
+   02929:           <div class="callout">
+   02930:             <p>
+>> 02931:               <strong>Why the settings stay visible:</strong> even when <span class="inline-code">sfincs.inp</span> is selected or parsed, the model settings and Advanced Config areas remain visible so you can inspect important values before running.
+   02932:             </p>
+   02933:           </div>
+   02934:         </div>
+   02935:     
+   02936:         <div class="guide-card">
+   02937:           <h3>Advanced Config</h3>
+   02938:           <p>
+>> 02939:             Advanced Config is a raw settings area for keys that are not represented by the normal page controls. Use it for deliberate SFINCS or backend settings that you understand, such as projection behavior, numerical controls, output options, or specialized forcing switches.
+   02940:           </p>
+   02941:           <p>
+   02942:             The main rule is simple: if you are not sure what a key does, do not change it here. A typo, wrong value type, missing comma, or outdated setting can change the run or make it fail before SFINCS starts.
+   02943:           </p>
+   02944:         </div>
+   02945: 
+   02946:         <figure class="guide-image">
+   02947: 
+>> 02948:           <img src="static/guide_images/override_04_advanced_config.png" alt="Image 4 — Advanced Config and model settings">
+   02949: 
+   02950:           <figcaption>
+   02951: 
+>> 02952:             <strong>Image 4 — Advanced Config and model settings.</strong> Model settings and Advanced Config stay visible so important SFINCS settings can still be checked before running.
+   02953: 
+   02954:           </figcaption>
+   02955: 
+   02956:         </figure>
+   02957:     
+   02958:         <div class="guide-card">
+   02959:           <h3>Review checks</h3>
+   02960:           <p>
+   02961:             The review section is the “slow down and check yourself” part of the workflow. It should summarize the run name, output folder, selected static/event folders, detected files, selected overrides, timing, resources, overwrite behavior, and any warnings.
+   02962:           </p>
+   02963:           <p>
+   02964:             These warnings are general checks. They do not mean every run is wrong, but they point to things that deserve attention before you submit. Missing file pointers, suspicious empty fields, invalid JSON, overwrite warnings, and mismatched static/event choices should not be ignored.
+   02965:           </p>
+   02966:         
+>> 02967:           <div class="guide-table-wrap">
+>> 02968:             <table class="guide-table">
+   02969:               <thead>
+   02970:                 <tr>
+   02971:                   <th>Review item</th>
+   02972:                   <th>What it is checking</th>
+   02973:                   <th>Why it matters</th>
+   02974:                 </tr>
+   02975:               </thead>
+   02976:               <tbody>
+   02977:                 <tr>
+   02978:                   <td>Run name and output folder</td>
+   02979:                   <td>Where the run will be written.</td>
+   02980:                   <td>Prevents accidentally overwriting or confusing runs.</td>
+   02981:                 </tr>
+   02982:                 <tr>
+   02983:                   <td>Static/event folder choices</td>
+   02984:                   <td>Which native files are being pulled from which folders.</td>
+   02985:                   <td>Prevents mixing the wrong physical setup with the wrong event.</td>
+   02986:                 </tr>
+   02987:                 <tr>
+   02988:                   <td>Selected override files</td>
+   02989:                   <td>Which detected files are actually active overrides.</td>
+   02990:                   <td>Detection alone does not mean a file is being used.</td>
+   02991:                 </tr>
+   02992:                 <tr>
+   02993:                   <td>Timing fields</td>
+   02994:                   <td>Reference time, start time, stop time, and output intervals.</td>
+   02995:                   <td>Bad timing can make forcing files misalign or shorten the run accidentally.</td>
+   02996:                 </tr>
+   02997:                 <tr>
+   02998:                   <td>Advanced Config</td>
+>> 02999:                   <td>Raw advanced settings and JSON syntax.</td>
+   03000:                   <td>A typo or invalid value can break the run or change model behavior.</td>
+   03001:                 </tr>
+   03002:                 <tr>
+   03003:                   <td>File-pointer checks</td>
+   03004:                   <td>Whether files referenced by <code>sfincs.inp</code> will exist in the run folder.</td>
+   03005:                   <td>SFINCS should not be submitted with missing declared inputs.</td>
+   03006:                 </tr>
+   03007:               </tbody>
+   03008:             </table>
+   03009:           </div>
+   03010:         </div>
+   03011:         
+   03012:         <div class="guide-card">
+   03013:           <h3>Preflight, build scripts, and submit</h3>
+   03014:           <p>
+   03015: 
+>> 03016:             The submit section turns the reviewed page settings into backend actions. Treat Preflight, Build Scripts, and Submit as separate steps, not one giant button.
+   03017: 
+   03018:           </p>
+   03019: 
+   03020:           <p>
+   03021: 
+   03022:             Run backend preflight first. Preflight validates the current setup and records the config/scaffold needed by the run workflow. Build Scripts then prepares the Slurm scripts. Submit launches the Slurm chain.
+   03023: 
+   03024:           </p>
+   03025:         
+>> 03026:           <div class="guide-table-wrap">
+>> 03027:             <table class="guide-table">
+   03028:               <thead>
+   03029:                 <tr>
+   03030:                   <th>Button / action</th>
+   03031:                   <th>What it does</th>
+   03032:                   <th>What to check</th>
+   03033:                 </tr>
+   03034:               </thead>
+   03035:               <tbody>
+   03036:                 <tr>
+   03037: 
+   03038:                   <td>Preflight</td>
+   03039: 
+   03040:                   <td>Runs backend validation and records the current page setup for the run workflow.</td>
+   03041: 
+   03042:                   <td>Fix errors before moving on. Warnings should be read, not skipped blindly.</td>
+   03043: 
+   03044:                 </tr>
+   03045:                 <tr>
+   03046:                   <td>Build scripts</td>
+   03047:                   <td>Creates the run-folder scaffold and Slurm scripts.</td>
+   03048:                   <td>A scaffold is normal. It is not completed model output.</td>
+   03049:                 </tr>
+   03050:                 <tr>
+   03051:                   <td>Submit</td>
+   03052:                   <td>Submits the Slurm workflow for preprocessing, SFINCS, and postprocessing.</td>
+   03053:                   <td>Only submit after the config, review checks, and output folder look correct.</td>
+   03054:                 </tr>
+   03055:                 <tr>
+```
+
+#### Settings chunk 13/13 — lines 3064-3189 — matches=4
+
+Scope: `<section class="tab-section" id="tab-batch" data-title="Batch">`
+
+```text
+   03064:           <div class="callout">
+   03065:             <p>
+   03066:               <strong>Scaffold vs. real output:</strong> after Build Scripts, it is normal to see folders like scripts, logs, model, and postprocess. That does not mean the model has run yet. Real outputs appear only after the submitted jobs complete.
+   03067:             </p>
+   03068:           </div>
+   03069:         </div>
+   03070: 
+   03071:         <figure class="guide-image">
+   03072: 
+   03073:           <img src="static/guide_images/override_05_review_submit.png" alt="Image 5 — Final review before submit">
+   03074: 
+   03075:           <figcaption>
+   03076: 
+   03077:             <strong>Image 5 — Final review before submit.</strong> Final review and submit area. The basic order is to read warnings, run preflight, build scripts, and then submit.
+   03078: 
+   03079:           </figcaption>
+   03080: 
+   03081:         </figure>
+   03082:     
+   03083:         
+   03084:       </div>
+   03085:     </section>
+   03086:     
+   03087:     
+   03088: <!--- ----------------------------------------------------------------------------------------------------------------- -->
+   03089: <!--- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+   03090: <!--- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+   03091: <!--- ----------------------------------------------------------------------------------------------------------------- -->    
+>> 03092:       <section class="tab-section" id="tab-batch" data-title="Batch">
+   03093:         <h2>Batch</h2>
+   03094:         <p class="coming-soon">Coming Soon</p>
+   03095:       </section>
+   03096: 
+>> 03097:       <section class="tab-section" id="tab-wizard" data-title="Wizard">
+   03098:         <h2>Wizard</h2>
+   03099:         <p class="coming-soon">Coming Soon</p>
+   03100:       </section>
+   03101: 
+>> 03102:       <section class="tab-section" id="tab-compare" data-title="Comparison">
+   03103:         <h2>Comparison</h2>
+   03104:         <p class="coming-soon">Coming Soon</p>
+   03105:       </section>
+   03106:     </main>
+   03107:   </div>
+   03108: 
+   03109:   <script>
+   03110:     const VALID_TABS = ["intro", "manual", "override", "batch", "wizard", "compare"];
+   03111: 
+   03112:     const TAB_ALIASES = {
+   03113:       sfincs: "intro",
+   03114:       general: "intro",
+   03115:       home: "intro",
+   03116:       guided: "wizard",
+   03117:       guide: "wizard",
+   03118:       comparison: "compare",
+   03119:       "compare-runs": "compare",
+   03120:       compare_runs: "compare",
+   03121:       results: "compare",
+   03122:       result: "compare"
+   03123:     };
+   03124: 
+   03125: 
+   03126:     const VALID_MANUAL_GUIDE_TABS = [
+   03127:       "run_identity",
+   03128:       "pipeline",
+   03129:       "slurm_general",
+   03130:       "stage_resources",
+   03131:       "data_catalogs",
+   03132:       "required_inputs",
+   03133:       "optional_inputs",
+   03134:       "model_settings",
+   03135:       "elevation_mask",
+   03136:       "roughness",
+   03137:       "subgrid",
+   03138:       "forcing",
+   03139:       "infiltration",
+   03140:       "output",
+   03141:       "advanced",
+   03142:       "postprocess",
+   03143:       "safety_debug",
+   03144:       "backend_paths",
+   03145:       "check_all",
+   03146:       "submit"
+   03147:     ];
+   03148: 
+   03149:     const MANUAL_GUIDE_ALIASES = {
+   03150:       run: "run_identity",
+   03151:       identity: "run_identity",
+   03152:       paths: "backend_paths",
+   03153:       backend: "backend_paths",
+   03154:       resources: "stage_resources",
+   03155:       slurm: "slurm_general",
+   03156:       catalogs: "data_catalogs",
+   03157:       inputs: "required_inputs",
+   03158:       required: "required_inputs",
+   03159:       optional: "optional_inputs",
+   03160:       model: "model_settings",
+>> 03161:       settings: "model_settings",
+   03162:       elevation: "elevation_mask",
+   03163:       mask: "elevation_mask",
+   03164:       checks: "check_all",
+   03165:       review: "check_all",
+   03166:       preflight: "submit",
+   03167:       build: "submit"
+   03168:     };
+   03169: 
+   03170:     function normalizeTab(raw) {
+   03171:       if (!raw) return "intro";
+   03172: 
+   03173:       const cleaned = String(raw).trim().toLowerCase().replace(/^#/, "");
+   03174:       const normalized = TAB_ALIASES[cleaned] || cleaned;
+   03175: 
+   03176:       return VALID_TABS.includes(normalized) ? normalized : "intro";
+   03177:     }
+   03178: 
+   03179:     function getInitialTab() {
+   03180:       const params = new URLSearchParams(window.location.search);
+   03181:       return normalizeTab(params.get("tab") || window.location.hash);
+   03182:     }
+   03183: 
+   03184: 
+   03185:     function normalizeManualGuideTab(raw) {
+   03186:       if (!raw) return "run_identity";
+   03187: 
+   03188:       const cleaned = String(raw).trim().toLowerCase().replace(/^#/, "").replaceAll("-", "_");
+   03189:       const normalized = MANUAL_GUIDE_ALIASES[cleaned] || cleaned;
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/compare_result.html`
+
+Settings chunks: **5**  
+Matched settings-ish lines: **12**
+
+#### Settings chunk 1/5 — lines 475-531 — matches=1
+
+Scope: `<div class="table-wrap">`
+
+```text
+   00475:             <td>${esc(usage.elapsed_raw || "n/a")}</td>
+   00476:             <td>${esc(formatGB(usage.max_rss_gb))}</td>
+   00477:             <td>${esc(usage.average_cpu_cores_used == null ? "n/a" : Number(usage.average_cpu_cores_used).toFixed(2))}</td>
+   00478:             <td>${esc(formatPct(usage.cpu_utilization_percent_of_request))}</td>
+   00479:           </tr>
+   00480:         `;
+   00481:       }).join("");
+   00482: 
+   00483:       return `
+   00484:         <div class="card">
+   00485:           <h2>Utilization summary</h2>
+   00486:           <div class="summary-grid">
+   00487:             ${metric("Requested RAM", note.requested_mem)}
+   00488:             ${metric("RAM used", `${formatGB(note.max_pair_process_rss_gb)} / ${note.requested_mem || "n/a"}`)}
+   00489:             ${metric("RAM use %", formatPct(note.approx_mem_utilization_percent, 2))}
+   00490:             ${metric("Requested CPUs", note.requested_cpus)}
+   00491:             ${metric("CPU used", cpuValue)}
+   00492:             ${metric("CPU use %", formatPct(note.max_pair_cpu_utilization_percent_of_request, 1))}
+   00493:           </div>
+   00494: 
+   00495:           ${(note.recommendation || note.cpu_recommendation) ? `
+   00496:             <ul class="takeaway-list">
+   00497:               ${note.recommendation ? `<li>${esc(note.recommendation)}</li>` : ""}
+   00498:               ${note.cpu_recommendation ? `<li>${esc(note.cpu_recommendation)}</li>` : ""}
+   00499:             </ul>
+   00500:           ` : ""}
+   00501: 
+   00502:           <h3>Pair utilization</h3>
+>> 00503:           <div class="table-wrap">
+   00504:             <table>
+   00505:               <thead>
+   00506:                 <tr>
+   00507:                   <th>Pair</th>
+   00508:                   <th>Elapsed</th>
+   00509:                   <th>Peak RAM</th>
+   00510:                   <th>Avg CPU cores</th>
+   00511:                   <th>CPU % of request</th>
+   00512:                 </tr>
+   00513:               </thead>
+   00514:               <tbody>
+   00515:                 ${pairRows || `<tr><td colspan="5">No pair utilization data available.</td></tr>`}
+   00516:               </tbody>
+   00517:             </table>
+   00518:           </div>
+   00519: 
+   00520:           <p>${esc(note.note || "")}</p>
+   00521:           ${note.cpu_note ? `<p>${esc(note.cpu_note)}</p>` : ""}
+   00522:         </div>
+   00523:       `;
+   00524:     }
+   00525: 
+   00526:     function renderTakeaways(data) {
+   00527:       const pairs = data.pairs || [];
+   00528:       const items = [];
+   00529: 
+   00530:       for (const pair of pairs) {
+   00531:         const s = pair.summary || {};
+```
+
+#### Settings chunk 2/5 — lines 543-599 — matches=1
+
+Scope: `function renderPairTabs(pairs) {`
+
+```text
+   00543:         if (Number(s.physical_nonzero_count || 0) > 0) {
+   00544:           items.push(`${label}: ${s.physical_nonzero_count} physical NetCDF difference(s) found.`);
+   00545:         }
+   00546: 
+   00547:         if (Number(s.shape_mismatch_count || 0) > 0) {
+   00548:           items.push(`${label}: ${s.shape_mismatch_count} NetCDF shape mismatch(es) found.`);
+   00549:         }
+   00550:       }
+   00551: 
+   00552:       if (!items.length) {
+   00553:         items.push("No major warnings were reported by the comparison summary.");
+   00554:       }
+   00555: 
+   00556:       return `
+   00557:         <div class="card">
+   00558:           <h2>Important takeaways</h2>
+   00559:           <ul class="takeaway-list">
+   00560:             ${items.map(item => `<li>${esc(item)}</li>`).join("")}
+   00561:           </ul>
+   00562:         </div>
+   00563:       `;
+   00564:     }
+   00565: 
+   00566:     function renderPairTabs(pairs) {
+   00567:       if (!pairs.length) return `<p>No pair comparisons were found in the result JSON.</p>`;
+   00568: 
+   00569:       return pairs.map(pair => `
+   00570:         <button
+>> 00571:           class="pair-tab"
+   00572:           data-pair-index="${esc(pair.pair_index)}"
+   00573:           data-result-file="${esc(pair.result_file)}"
+   00574:           title="${esc(pairDisplay(pair))}"
+   00575:         >
+   00576:           ${esc(pairDisplay(pair))}
+   00577:         </button>
+   00578:       `).join("");
+   00579:     }
+   00580: 
+   00581:     function bindPairTabs() {
+   00582:       document.querySelectorAll(".pair-tab").forEach(button => {
+   00583:         button.addEventListener("click", () => {
+   00584:           selectPair(Number(button.dataset.pairIndex), button.dataset.resultFile);
+   00585:         });
+   00586:       });
+   00587:     }
+   00588: 
+   00589:     function updatePairTabs(pairIndex) {
+   00590:       document.querySelectorAll(".pair-tab").forEach(button => {
+   00591:         button.classList.toggle("active", Number(button.dataset.pairIndex) === Number(pairIndex));
+   00592:       });
+   00593:     }
+   00594: 
+   00595:     function renderPairSummary(pair) {
+   00596:       const s = pair.summary || {};
+   00597:       const warnings = s.warnings || [];
+   00598: 
+   00599:       return `
+```
+
+#### Settings chunk 3/5 — lines 664-850 — matches=8
+
+Scope: `<div class="subtabs">`
+
+```text
+   00664:         target.innerHTML = renderPairSummary(pair) + renderPairDetail(pairIndex, data);
+   00665:         showPairSection(pairIndex, "overview");
+   00666: 
+   00667:       } catch (err) {
+   00668:         target.innerHTML = renderPairSummary(pair) + `<div class="error">${esc(err.message)}</div>`;
+   00669:       }
+   00670:     }
+   00671: 
+   00672:     async function loadPairDetail(pairIndex, resultFile) {
+   00673:       return selectPair(pairIndex, resultFile);
+   00674:     }
+   00675: 
+   00676:     function showPairSection(pairIndex, sectionName) {
+   00677:       const shell = document.getElementById(`pair-detail-shell-${pairIndex}`);
+   00678:       if (!shell) return;
+   00679: 
+   00680:       shell.querySelectorAll(".pair-section").forEach(section => {
+   00681:         section.classList.toggle("active", section.dataset.section === sectionName);
+   00682:       });
+   00683: 
+   00684:       shell.querySelectorAll(".subtab").forEach(button => {
+   00685:         button.classList.toggle("active", button.dataset.section === sectionName);
+   00686:       });
+   00687:     }
+   00688: 
+   00689:     function renderPairDetail(pairIndex, data) {
+   00690:       return `
+   00691:         <div id="pair-detail-shell-${pairIndex}">
+>> 00692:           <div class="subtabs">
+>> 00693:             <button class="subtab active" data-section="overview" onclick="showPairSection(${pairIndex}, 'overview')">Overview</button>
+>> 00694:             <button class="subtab" data-section="inp" onclick="showPairSection(${pairIndex}, 'inp')">sfincs.inp</button>
+>> 00695:             <button class="subtab" data-section="files" onclick="showPairSection(${pairIndex}, 'files')">Input files</button>
+>> 00696:             <button class="subtab" data-section="netcdf" onclick="showPairSection(${pairIndex}, 'netcdf')">NetCDF outputs</button>
+   00697:           </div>
+   00698: 
+   00699:           <div class="pair-section active" data-section="overview">
+   00700:             ${renderPairOverview(data)}
+   00701:           </div>
+   00702: 
+   00703:           <div class="pair-section" data-section="inp">
+   00704:             ${renderImportantInp(data)}
+   00705:             ${renderInpDiffs(data)}
+   00706:           </div>
+   00707: 
+   00708:           <div class="pair-section" data-section="files">
+   00709:             ${renderByteFiles(data)}
+   00710:           </div>
+   00711: 
+   00712:           <div class="pair-section" data-section="netcdf">
+   00713:             ${renderNetcdfControls(pairIndex, data)}
+   00714:           </div>
+   00715:         </div>
+   00716:       `;
+   00717:     }
+   00718: 
+   00719:     function renderPairOverview(data) {
+   00720:       const s = data.summary || {};
+   00721:       const warnings = s.warnings || [];
+   00722: 
+   00723:       return `
+   00724:         <div class="section-card">
+   00725:           <h3>Pair overview</h3>
+   00726:           <div class="summary-grid">
+   00727:             ${metric("Clean physical match", s.clean_physical_match ?? "n/a", s.clean_physical_match ? "good" : "bad")}
+   00728:             ${metric("sfincs.inp diffs", s.inp_diff_count ?? "n/a", Number(s.inp_diff_count || 0) === 0 ? "good" : "warn")}
+   00729:             ${metric("Physical diffs", s.physical_nonzero_count ?? "n/a", Number(s.physical_nonzero_count || 0) === 0 ? "good" : "bad")}
+   00730:             ${metric("Shape mismatches", s.shape_mismatch_count ?? "n/a", Number(s.shape_mismatch_count || 0) === 0 ? "good" : "bad")}
+   00731:           </div>
+   00732: 
+   00733:           ${warnings.length ? `
+   00734:             <h3>Warnings</h3>
+   00735:             <ul class="takeaway-list">
+   00736:               ${warnings.map(w => `<li>${esc(w)}</li>`).join("")}
+   00737:             </ul>
+   00738:           ` : `<p class="good">No pair warnings reported.</p>`}
+   00739:         </div>
+   00740:       `;
+   00741:     }
+   00742: 
+   00743:     function renderImportantInp(data) {
+   00744:       const rows = (data.inp && data.inp.important_rows) || [];
+   00745: 
+   00746:       return `
+   00747:         <div class="section-card">
+   00748:           <h3>Important sfincs.inp keys side-by-side</h3>
+>> 00749:           <div class="table-wrap">
+   00750:             <table>
+   00751:               <thead>
+   00752:                 <tr>
+   00753:                   <th>Key</th>
+   00754:                   <th>Same?</th>
+   00755:                   <th>Baseline</th>
+   00756:                   <th>Compared run</th>
+   00757:                 </tr>
+   00758:               </thead>
+   00759:               <tbody>
+   00760:                 ${rows.length ? rows.map(row => `
+   00761:                   <tr>
+   00762:                     <td><code>${esc(row.key)}</code></td>
+   00763:                     <td class="${row.same ? "good" : "bad"}">${esc(row.same)}</td>
+   00764:                     <td>${esc(row.old)}</td>
+   00765:                     <td>${esc(row.new)}</td>
+   00766:                   </tr>
+   00767:                 `).join("") : `<tr><td colspan="4">No important sfincs.inp rows were reported.</td></tr>`}
+   00768:               </tbody>
+   00769:             </table>
+   00770:           </div>
+   00771:         </div>
+   00772:       `;
+   00773:     }
+   00774: 
+   00775:     function renderInpDiffs(data) {
+   00776:       const diffs = (data.inp && data.inp.diffs) || [];
+   00777: 
+   00778:       if (!diffs.length) {
+   00779:         return `
+   00780:           <div class="section-card">
+   00781:             <h3>All sfincs.inp diffs</h3>
+   00782:             <p class="good">No meaningful key/value differences after normalization.</p>
+   00783:           </div>
+   00784:         `;
+   00785:       }
+   00786: 
+   00787:       return `
+   00788:         <div class="section-card">
+   00789:           <h3>All sfincs.inp diffs (${diffs.length})</h3>
+>> 00790:           <div class="table-wrap">
+   00791:             <table>
+   00792:               <thead>
+   00793:                 <tr>
+   00794:                   <th>Key</th>
+   00795:                   <th>Important?</th>
+   00796:                   <th>Baseline</th>
+   00797:                   <th>Compared run</th>
+   00798:                 </tr>
+   00799:               </thead>
+   00800:               <tbody>
+   00801:                 ${diffs.map(row => `
+   00802:                   <tr>
+   00803:                     <td><code>${esc(row.key)}</code></td>
+   00804:                     <td>${esc(row.important)}</td>
+   00805:                     <td>${esc(row.old)}</td>
+   00806:                     <td>${esc(row.new)}</td>
+   00807:                   </tr>
+   00808:                 `).join("")}
+   00809:               </tbody>
+   00810:             </table>
+   00811:           </div>
+   00812:         </div>
+   00813:       `;
+   00814:     }
+   00815: 
+   00816:     function renderByteFiles(data) {
+   00817:       const rows = data.byte_files || [];
+   00818: 
+   00819:       return `
+   00820:         <div class="section-card">
+   00821:           <h3>File existence, size, and byte identity</h3>
+>> 00822:           <div class="table-wrap">
+   00823:             <table>
+   00824:               <thead>
+   00825:                 <tr>
+   00826:                   <th>File</th>
+   00827:                   <th>Baseline exists</th>
+   00828:                   <th>Compared exists</th>
+   00829:                   <th>Baseline size</th>
+   00830:                   <th>Compared size</th>
+   00831:                   <th>Byte-identical</th>
+   00832:                 </tr>
+   00833:               </thead>
+   00834:               <tbody>
+   00835:                 ${rows.length ? rows.map(row => `
+   00836:                   <tr>
+   00837:                     <td><code>${esc(row.file)}</code></td>
+   00838:                     <td>${esc(row.old_exists)}</td>
+   00839:                     <td>${esc(row.new_exists)}</td>
+   00840:                     <td>${esc(row.old_size)}</td>
+   00841:                     <td>${esc(row.new_size)}</td>
+   00842:                     <td class="${row.byte_identical === true ? "good" : row.byte_identical === false ? "warn" : ""}">${esc(row.byte_identical)}</td>
+   00843:                   </tr>
+   00844:                 `).join("") : `<tr><td colspan="6">No byte-file rows were reported.</td></tr>`}
+   00845:               </tbody>
+   00846:             </table>
+   00847:           </div>
+   00848:         </div>
+   00849:       `;
+   00850:     }
+```
+
+#### Settings chunk 4/5 — lines 912-968 — matches=1
+
+Scope: `<div class="table-wrap">`
+
+```text
+   00912:     }
+   00913: 
+   00914:     function renderNetcdfFileTables(data) {
+   00915:       let html = "";
+   00916: 
+   00917:       for (const [file, nc] of Object.entries(data.netcdf || {})) {
+   00918:         if (!isSfincsOutputNetcdf(file)) continue;
+   00919: 
+   00920:         const rows = nc.variables || [];
+   00921:         const skipped = nc.skipped_numeric || [];
+   00922:         const onlyOld = nc.only_old || [];
+   00923:         const onlyNew = nc.only_new || [];
+   00924: 
+   00925:         html += `
+   00926:           <div class="section-card">
+   00927:             <h3>${esc(file)} (${rows.length} compared variable rows)</h3>
+   00928: 
+   00929:             <div class="summary-grid">
+   00930:               ${metric("Baseline exists", nc.old_exists)}
+   00931:               ${metric("Compared exists", nc.new_exists)}
+   00932:               ${metric("Baseline only", onlyOld.length)}
+   00933:               ${metric("Compared only", onlyNew.length)}
+   00934:             </div>
+   00935: 
+   00936:             ${onlyOld.length ? `<p>Only in baseline run: <span class="path">${esc(onlyOld.join(", "))}</span></p>` : ""}
+   00937:             ${onlyNew.length ? `<p>Only in compared run: <span class="path">${esc(onlyNew.join(", "))}</span></p>` : ""}
+   00938:             ${skipped.length ? `<p>Skipped numeric variables: <span class="path">${esc(skipped.join(", "))}</span></p>` : ""}
+   00939: 
+>> 00940:             <div class="table-wrap">
+   00941:               <table>
+   00942:                 <thead>
+   00943:                   <tr>
+   00944:                     <th>Variable</th>
+   00945:                     <th>Category</th>
+   00946:                     <th>Units</th>
+   00947:                     <th>Shape</th>
+   00948:                     <th>Max abs</th>
+   00949:                     <th>Mean abs</th>
+   00950:                     <th>RMSE</th>
+   00951:                     <th>p95</th>
+   00952:                     <th>p99</th>
+   00953:                     <th>Max mm</th>
+   00954:                     <th>Mean mm</th>
+   00955:                   </tr>
+   00956:                 </thead>
+   00957:                 <tbody>
+   00958:                   ${rows.length ? rows.map(row => `
+   00959:                     <tr>
+   00960:                       <td><code>${esc(row.name)}</code></td>
+   00961:                       <td>${esc(row.category)}</td>
+   00962:                       <td>${esc(row.units)}</td>
+   00963:                       <td>${esc(JSON.stringify(row.shape || row.old_shape || ""))}</td>
+   00964:                       <td>${esc(fmt(row.max_abs))}</td>
+   00965:                       <td>${esc(fmt(row.mean_abs))}</td>
+   00966:                       <td>${esc(fmt(row.rmse))}</td>
+   00967:                       <td>${esc(fmt(row.p95))}</td>
+   00968:                       <td>${esc(fmt(row.p99))}</td>
+```
+
+#### Settings chunk 5/5 — lines 1007-1054 — matches=1
+
+Scope: `<div class="pair-tabs">`
+
+```text
+   01007:           <div class="card">
+   01008:             <h2>Job summary</h2>
+   01009:             <div class="summary-grid">
+   01010:               ${metric("Level", data.level)}
+   01011:               ${metric("Pairs", pairs.length)}
+   01012:               ${metric("Mode", data.comparison_mode)}
+   01013:               ${metric("Status", data.status, data.status === "done" ? "good" : "warn")}
+   01014:             </div>
+   01015: 
+   01016:             <div class="run-meta">
+   01017:               <div class="run-meta-box">
+   01018:                 <div class="label">Baseline run</div>
+   01019:                 <div class="path">${esc(baselineName)}</div>
+   01020:               </div>
+   01021:               <div class="run-meta-box">
+   01022:                 <div class="label">Job folder</div>
+   01023:                 <div class="path">${esc(jobDir)}</div>
+   01024:               </div>
+   01025:             </div>
+   01026:           </div>
+   01027: 
+   01028:           ${renderUtil(data.utilization_note, pairs)}
+   01029: 
+   01030:           ${renderTakeaways(data)}
+   01031: 
+   01032:           <div class="card">
+   01033:             <h2>Pair comparisons</h2>
+   01034:             <p>Click a pair tab to view its comparison. The sections inside the pair switch between overview, sfincs.inp, input files, and NetCDF outputs.</p>
+>> 01035:             <div class="pair-tabs">
+   01036:               ${renderPairTabs(pairs)}
+   01037:             </div>
+   01038:             <div id="pair-panel" class="pair-panel empty">
+   01039:               Select a pair tab above to view its comparison.
+   01040:             </div>
+   01041:           </div>
+   01042:         `;
+   01043: 
+   01044:         bindPairTabs();
+   01045: 
+   01046:       } catch (err) {
+   01047:         content.innerHTML = `<div class="error">${esc(err.message)}</div>`;
+   01048:       }
+   01049:     }
+   01050:     loadResult();
+   01051:   </script>
+   01052:   <a class="help-button" href="guide.html" title="Open launcher guide">?</a>
+   01053: </body>
+   01054: </html>
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/compare.html`
+
+Settings chunks: **1**  
+Matched settings-ish lines: **3**
+
+#### Settings chunk 1/1 — lines 350-444 — matches=3
+
+```text
+   00350:                   data-browse-start="/proj/zefflab/projects/Flooding/sfincs_runs">
+   00351:             Browse
+   00352:           </button>
+   00353:         </div>
+   00354:         <p class="muted">Pick a folder that contains run folders. Default is the shared sfincs_runs folder.</p>
+   00355:         
+   00356:         <label for="runSearch">Search run folders</label>
+   00357:         <div class="row">
+   00358:           <input id="runSearch" placeholder="Example: override_006, harvey, /proj/.../sfincs_runs/run_name">
+   00359:           <button class="secondary" onclick="searchRuns()">Search</button>
+   00360:         </div>
+   00361: 
+   00362:         <div id="searchResults" class="search-results"></div>
+   00363: 
+   00364:         <label for="manualPath">Or paste a run folder path</label>
+   00365:         <div class="row">
+   00366:           <input id="manualPath" placeholder="/proj/zefflab/projects/Flooding/sfincs_runs/...">
+   00367:           <button class="secondary" onclick="addManualRun()">Add</button>
+   00368:         </div>
+   00369: 
+   00370:         <div id="runList" class="run-list"></div>
+   00371: 
+   00372:         <div class="note">
+   00373:           Current cap is 12 runs. This first version compares baseline-vs-each-other, not every pair.
+   00374:         </div>
+   00375:       </div>
+   00376: 
+   00377:       <div class="card">
+>> 00378:         <h2>2. Compare settings</h2>
+   00379: 
+   00380:         <label for="level">Comparison level</label>
+   00381:         <select id="level" onchange="refreshRecommendation()">
+   00382:           <option value="quick">Quick — config, files, NetCDF metadata</option>
+   00383:           <option value="standard">Standard — selected physical variables</option>
+   00384:           <option value="full">Full — all numeric NetCDF variables</option>
+   00385:         </select>
+   00386: 
+   00387:         <div class="card future" style="margin-top: 14px; box-shadow: none;">
+   00388:           <strong>Later visual layer</strong>
+   00389:           <p class="muted">
+   00390:             Reserved for time-stepped difference heatmaps, timestep spacing, and optional map/satellite overlay.
+   00391:           </p>
+   00392:         </div>
+   00393: 
+>> 00394:         <label>Recommended Slurm settings</label>
+   00395:         <div id="recommendBox" class="recommend-box">Select at least two runs.</div>
+   00396: 
+   00397:         <label for="mem">Memory</label>
+   00398:         <input id="mem" placeholder="Example: 64G">
+   00399: 
+   00400:         <label for="cpus">CPUs per task</label>
+   00401:         <input id="cpus" placeholder="Example: 2" type="number" min="1" step="1">
+   00402: 
+   00403:         <label for="time">Wall time</label>
+   00404:         <input id="time" placeholder="Example: 00:45:00">
+   00405: 
+   00406:         <div class="footer-actions">
+   00407:           <button onclick="submitCompare()">Submit Compare Job</button>
+   00408:           <button class="secondary" onclick="refreshRecommendation()">Refresh recommendation</button>
+   00409:         </div>
+   00410: 
+   00411:         <div id="errorBox" class="error"></div>
+   00412:       </div>
+   00413:     </div>
+   00414:   </div>
+   00415: 
+>> 00416:   <script src="static/path_browser.js"></script>
+   00417:   
+   00418:   <script>
+   00419:     const selectedRuns = [];
+   00420:     const MAX_RUNS = 12;
+   00421: 
+   00422:     function showError(message) {
+   00423:       const box = document.getElementById("errorBox");
+   00424:       box.style.display = "block";
+   00425:       box.textContent = message;
+   00426:     }
+   00427: 
+   00428:     function clearError() {
+   00429:       const box = document.getElementById("errorBox");
+   00430:       box.style.display = "none";
+   00431:       box.textContent = "";
+   00432:     }
+   00433: 
+   00434:     function shortName(path) {
+   00435:       const parts = String(path).split("/").filter(Boolean);
+   00436:       return parts.length ? parts[parts.length - 1] : path;
+   00437:     }
+   00438: 
+   00439:     function renderRuns() {
+   00440:       const list = document.getElementById("runList");
+   00441:       list.innerHTML = "";
+   00442: 
+   00443:       selectedRuns.forEach((path, index) => {
+   00444:         const item = document.createElement("div");
+```
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/index.html`
+
+Settings chunks: **1**  
+Matched settings-ish lines: **1**
+
+#### Settings chunk 1/1 — lines 165-221 — matches=1
+
+```text
+   00165: 
+   00166:     @media (max-width: 720px) {
+   00167:       .home-grid { grid-template-columns: 1fr; }
+   00168:       header { padding-bottom: 22px; }
+   00169:     }
+   00170:   </style>
+   00171: </head>
+   00172: <body>
+   00173:   <header>
+   00174:     <div class="header-grid">
+   00175:       <div>
+   00176:         <h1>SFINCS Pipeline Launcher</h1>
+   00177:         <p class="subtitle">Cluster-local launcher for building JSON configs, checking them with the existing backend runner, and preparing SFINCS jobs without editing stage scripts directly.</p>
+   00178:       </div>
+   00179:       <div class="status-box" aria-label="Backend status summary">
+   00180:         <div class="status-row"><span>Backend root</span><span>/proj/.../Flooding/pipeline</span></div>
+   00181:         <div class="status-row"><span>Runner</span><span>code/pipeline_runner.py</span></div>
+   00182:         <div class="status-row"><span>Session</span><span>Longleaf desktop</span></div>
+   00183:       </div>
+   00184:     </div>
+   00185:   </header>
+   00186: 
+   00187:   <main>
+   00188:     <section class="home-grid" aria-label="Main launcher options">
+   00189:       <a class="home-button" href="manual.html">
+   00190:         <div>
+   00191:           <span class="mode-label">Manual</span>
+   00192:           <strong>Manual Mode</strong>
+>> 00193:           <p>Direct control over SFINCS inputs, paths, forcing options, runtime settings, and backend run configuration.</p>
+   00194:         </div>
+   00195:         <p class="footer-note">V1 working.</p>
+   00196:       </a>
+   00197: 
+   00198:       <a class="home-button" href="override.html">
+   00199:         <div>
+   00200:           <span class="mode-label">Override</span>
+   00201:           <strong>Override Mode</strong>
+   00202:           <p>Skip setup steps by using already processed SFINCS input files and routing them into a new run configuration.</p>
+   00203:         </div>
+   00204:         <p class="footer-note">V1 working.</p>
+   00205:       </a>
+   00206: 
+   00207:       <a class="home-button" href="batch.html">
+   00208:         <div>
+   00209:           <span class="mode-label">Batch</span>
+   00210:           <strong>Batch Generation</strong>
+   00211:           <p>Generate many saved JSON configs from events or parameter sweeps before preflighting and submitting them.</p>
+   00212:         </div>
+   00213:         <p class="footer-note">Coming Soon.</p>
+   00214:       </a>
+   00215: 
+   00216:       <a class="home-button" href="guided.html">
+   00217:         <div>
+   00218:           <span class="mode-label">Guided</span>
+   00219:           <strong>Guided Wizard</strong>
+   00220:           <p>A guided workflow for new users that walks through the required choices one step at a time.</p>
+   00221:         </div>
+```
+
+
+---
+
+## HTML script include inventory
+
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/compare.html`
+
+- `static/path_browser.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/path_browser.js` exists=True
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html`
+
+- `static/launcher_defaults.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js` exists=True
+- `static/config_path_browse_buttons.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js` exists=True
+- `static/path_browser.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/path_browser.js` exists=True
+- `static/pipeline_actions.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/pipeline_actions.js` exists=True
+- `static/page_reset.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/page_reset.js` exists=True
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html`
+
+- `static/launcher_defaults.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js` exists=True
+- `static/config_path_browse_buttons.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js` exists=True
+- `static/path_browser.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/path_browser.js` exists=True
+- `static/pipeline_actions.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/pipeline_actions.js` exists=True
+- `static/page_reset.js` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/page_reset.js` exists=True
+
+### `/proj/zefflab/projects/Flooding/pipeline/web_launcher/review.html`
+
+- `static/review.js?v=review_v1_maps_8_20260617` → `/proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js?v=review_v1_maps_8_20260617` exists=False

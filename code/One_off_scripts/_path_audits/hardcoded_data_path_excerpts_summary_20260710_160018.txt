@@ -1,0 +1,46 @@
+HARDCODED DATA PATH EXCERPT AUDIT SUMMARY
+Timestamp: 20260710_160018
+
+Total hits: 182
+Files with hits: 20
+
+Category counts:
+  OLD_PROJ_DATA_ROOT: 182
+
+Usage-guess counts:
+  LIKELY_BROWSE_OR_DEFAULT_ONLY: 26
+  LIKELY_DOC_OR_LINK: 63
+  POSSIBLY_LOAD_BEARING: 46
+  PROBABLY_DEFAULT_BUT_REVIEW: 9
+  UNCLEAR_REVIEW: 38
+
+Files by hit count:
+    85  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/catalog_detector_full_audit_20260612_172311.txt
+    22  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/hydromt_yaml_state_audit_20260612_183544.txt
+    22  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/hydromt_yaml_state_audit_20260612_183824.txt
+    15  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/backend_hydromt_catalog_audit_20260612_174808.txt
+     6  /proj/zefflab/projects/Flooding/pipeline/web_launcher/override.html
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/app.py
+     5  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/launcher_defaults.js
+     4  /proj/zefflab/projects/Flooding/pipeline/web_launcher/manual.html
+     2  /proj/zefflab/projects/Flooding/Validation/Code/raw_dem_depth_correlation_graph_generator.py
+     2  /proj/zefflab/projects/Flooding/pipeline/code/config_schema.py
+     2  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/dem_active_hole_test_20260612_195202/summary.txt
+     2  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_audit_reports/dem_nan_coverage_20260612_194733/summary.txt
+     2  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_guide_audits/manual_notes_and_behavior_20260602_150544.json
+     2  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_guide_audits/manual_notes_and_behavior_20260602_150544.md
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/apply_harvey_3_boundary_catalog_repair.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/Data Catalog Validation Scripts/audit_14_event_boundary_point_maps.py
+     1  /proj/zefflab/projects/Flooding/Validation/Code/correlation_graph_generator.py
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/_guide_audits/manual_guide_audit_20260602_150041.json
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/config_path_browse_buttons.js
+     1  /proj/zefflab/projects/Flooding/pipeline/web_launcher/static/review.js
+
+Replacement preview:
+  proposed replacement rows: 1377
+  proposed new paths that do not exist now: 789
+
+Outputs:
+  report_txt          = /proj/zefflab/projects/Flooding/pipeline/code/_path_audits/hardcoded_data_path_excerpts_20260710_160018.txt
+  hits_csv            = /proj/zefflab/projects/Flooding/pipeline/code/_path_audits/hardcoded_data_path_excerpts_20260710_160018.csv
+  replace_preview_csv = /proj/zefflab/projects/Flooding/pipeline/code/_path_audits/hardcoded_data_path_replace_preview_20260710_160018.csv
