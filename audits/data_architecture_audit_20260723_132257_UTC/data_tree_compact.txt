@@ -1,0 +1,2894 @@
+/users/e/p/epsilon/Data/Data/harris_county
+├── analysis
+│   ├── aorc_approved_pm30_refresh
+│   │   ├── run_20260617_105832
+│   │   │   └── aorc_approved_pm30_refresh_summary.csv
+│   │   └── run_20260617_110248
+│   │       ├── aorc_approved_pm30_refresh_summary.csv
+│   │       ├── download_progress.csv
+│   │       ├── download_summary.csv
+│   │       └── needed_year_store_map.csv
+│   ├── aorc_event_coverage_audit
+│   │   [contents omitted]
+│   ├── aorc_event_pull_check
+│   │   └── run_20260617_102123
+│   │       └── aorc_event_pull_check_summary.csv
+│   ├── aorc_final_model_window_manual_finish_pm15
+│   │   ├── run_20260622_140110
+│   │   │   ├── plots
+│   │   │   ├── timeseries
+│   │   │   ├── event_runtime_windows_DONE_FOR_NOW.csv
+│   │   │   ├── event_runtime_windows_MANUAL_FINISH_PM15_REVIEW.csv
+│   │   │   └── event_runtime_windows_STILL_NOT_DONE.csv
+│   │   └── run_20260622_140935
+│   │       ├── plots
+│   │       ├── timeseries
+│   │       ├── event_runtime_windows_DONE_FOR_NOW.csv
+│   │       ├── event_runtime_windows_MANUAL_FINISH_PM15_REVIEW.csv
+│   │       └── event_runtime_windows_STILL_NOT_DONE.csv
+│   ├── aorc_final_model_window_pm10_review
+│   │   ├── run_20260617_112705
+│   │   │   ├── plots
+│   │   │   ├── timeseries
+│   │   │   ├── event_runtime_windows_FINAL_APPROVED.csv
+│   │   │   └── event_runtime_windows_FINAL_PM10_REVIEW.csv
+│   │   ├── run_20260617_114717
+│   │   │   ├── plots
+│   │   │   ├── timeseries
+│   │   │   ├── event_runtime_windows_FINAL_APPROVED.csv
+│   │   │   └── event_runtime_windows_FINAL_PM10_REVIEW.csv
+│   │   └── run_20260617_114838
+│   │       ├── plots
+│   │       ├── timeseries
+│   │       ├── event_runtime_windows_FINAL_APPROVED.csv
+│   │       └── event_runtime_windows_FINAL_PM10_REVIEW.csv
+│   ├── aorc_final_model_window_y_n_pass
+│   │   └── run_20260622_133502
+│   │       ├── plots
+│   │       ├── timeseries
+│   │       ├── event_runtime_windows_FINAL_GOOD_ONLY.csv
+│   │       ├── event_runtime_windows_FINAL_NOT_GOOD.csv
+│   │       └── event_runtime_windows_FINAL_Y_N_REVIEW.csv
+│   ├── aorc_rain_window_review
+│   │   └── run_20260617_102236
+│   │       ├── plots
+│   │       ├── rain_timeseries
+│   │       ├── event_runtime_windows_APPROVED_DRAFT.csv
+│   │       ├── event_window_autofit_review.html
+│   │       ├── event_window_autofit_review_sheet.csv
+│   │       └── event_window_autofit_review_sheet_REVIEWED.csv
+│   ├── aorc_restart_audit
+│   │   [contents omitted]
+│   ├── aorc_s3_harris_download
+│   │   ├── run_20260616_112939
+│   │   │   ├── discovered_zarr_stores.csv
+│   │   │   └── needed_year_store_map.csv
+│   │   ├── run_20260616_114614
+│   │   │   ├── discovered_zarr_stores.csv
+│   │   │   ├── event_download_progress.csv
+│   │   │   ├── event_download_summary.csv
+│   │   │   └── needed_year_store_map.csv
+│   │   └── run_20260616_115057
+│   │       ├── discovered_zarr_stores.csv
+│   │       ├── event_download_progress.csv
+│   │       ├── event_download_summary.csv
+│   │       └── needed_year_store_map.csv
+│   ├── catalog_decontamination_archive
+│   │   └── decontaminate_static_event_20260616_151313
+│   │       ├── static_harris_county
+│   │       └── moved_files_manifest.csv
+│   ├── compare_harvey_2017_vs_harvey_2017_mrms_20260616_135422
+│   │   ├── all_files_compare.csv
+│   │   ├── boundary_waterlevel_candidate_files.csv
+│   │   ├── csv_schemas_and_columns.csv
+│   │   ├── explicit_boundary_table_candidates.csv
+│   │   ├── highlights.txt
+│   │   ├── keyword_text_hits.csv
+│   │   └── shapefile_summaries.csv
+│   ├── event_catalog_fill_runtime_exact_precip
+│   │   ├── run_20260622_143753
+│   │   │   └── event_catalog_fill_runtime_exact_precip_summary.csv
+│   │   └── run_20260622_144226
+│   │       └── event_catalog_fill_runtime_exact_precip_summary.csv
+│   ├── event_catalog_fill_runtime_precip
+│   │   └── run_20260622_143015
+│   │       └── event_catalog_fill_runtime_precip_summary.csv
+│   ├── event_catalog_fill_tropical_wind_pressure
+│   │   ├── run_20260622_145336
+│   │   │   ├── needed_year_store_map.csv
+│   │   │   ├── progress.csv
+│   │   │   └── tropical_wind_pressure_aorc_summary.csv
+│   │   └── run_20260622_145939
+│   │       ├── needed_year_store_map.csv
+│   │       ├── progress.csv
+│   │       └── tropical_wind_pressure_aorc_summary.csv
+│   ├── fima_nfip_claims_timeline
+│   │   ├── run_20260615_145303
+│   │   │   ├── plots
+│   │   │   ├── simple_spatial_scatters
+│   │   │   ├── 00_column_inventory.csv
+│   │   │   └── 01_detected_columns.json
+│   │   └── run_20260615_145545
+│   │       ├── event_candidates
+│   │       ├── plots
+│   │       ├── simple_spatial_scatters
+│   │       ├── 00_column_inventory.csv
+│   │       ├── 01_detected_columns.json
+│   │       ├── 02_chunk_filter_diagnostics.csv
+│   │       ├── 02_harris_claims_slim.csv
+│   │       ├── 03_weekly_harris_claim_timeseries.csv
+│   │       ├── 04_top_spike_weeks.csv
+│   │       └── 99_run_manifest.json
+│   ├── noaa_station_active_dem_shape_map
+│   │   └── run_20260622_153241
+│   ├── noaa_station_dem_outline_map
+│   │   ├── run_20260622_151848
+│   │   │   ├── noaa_metadata_cache
+│   │   │   ├── noaa_stations_metadata.csv
+│   │   │   ├── professor_dem_outline_noaa_stations_satellite.png
+│   │   │   └── professor_sfincs_outline.geojson
+│   │   └── run_20260622_152512
+│   │       ├── noaa_metadata_cache
+│   │       ├── noaa_stations_metadata.csv
+│   │       ├── professor_dem_outline_noaa_stations_satellite.png
+│   │       └── professor_sfincs_outline.geojson
+│   ├── noaa_station_static_active_mask_map
+│   │   └── run_20260622_162652
+│   ├── noaa_station_static_active_mask_map_light
+│   │   ├── run_20260622_164025
+│   │   │   ├── active_mask_noaa_stations_LIGHT.png
+│   │   │   └── noaa_station_coords.csv
+│   │   ├── run_20260622_164330
+│   │   │   ├── active_mask_noaa_stations_LIGHT.png
+│   │   │   └── noaa_station_coords.csv
+│   │   └── run_20260622_164758
+│   │       ├── active_mask_noaa_stations_LIGHT.png
+│   │       └── noaa_station_coords.csv
+│   ├── review_mask_source_audit
+│   │   [contents omitted]
+│   ├── waterlevel_station_general_audit_20260616_140946
+│   │   [contents omitted]
+│   └── heavy_rain_2014_08_dateofloss_check.csv
+├── catalogs
+│   ├── _misc
+│   │   [contents omitted]
+│   ├── events
+│   │   ├── _misc
+│   │   │   [contents omitted]
+│   │   ├── alicia_1983
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── allison_1989
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── allison_2001
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── beryl_2024
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── claudette_1979
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── erin_2007
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1979_04
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1979_09
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1981_04
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1981_06
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1983_09
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1984_10
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1989_05
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1989_07
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1992_03
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1994_10
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1998_10
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2002_10
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2003_11
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2009_04
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2012_01
+│   │   │   ├── _misc
+│   │   │   │   [contents omitted]
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2019_05
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── frances_1998
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── halloween_2015
+│   │   │   ├── _misc
+│   │   │   │   [contents omitted]
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── harvey_2017
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── README_harvey_2017.txt
+│   │   ├── harvey_2017_full
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_validation_gauges
+│   │   │   └── event_wind
+│   │   ├── harvey_2017_mrms
+│   │   │   ├── _manifests
+│   │   │   ├── _misc
+│   │   │   │   [contents omitted]
+│   │   │   ├── _misc_cleanup_logs
+│   │   │   │   [contents omitted]
+│   │   │   ├── _notes
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── harvey_2017_ppe
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_wind
+│   │   │   ├── restarts
+│   │   │   ├── source_reference_from_professor
+│   │   │   ├── precip_2d.nc
+│   │   │   ├── README_harvey_2017_ppe.txt
+│   │   │   ├── sfincs.bzs
+│   │   │   ├── sfincs.dis
+│   │   │   └── sfincs.inp
+│   │   ├── heavy_rain_2006_06
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── heavy_rain_2012_07
+│   │   │   ├── _misc
+│   │   │   │   [contents omitted]
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── heavy_rain_2014_08
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── heavy_rain_2024_04_05
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── ike_2008
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── imelda_2019
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── memorial_2015
+│   │   │   ├── _misc
+│   │   │   │   [contents omitted]
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── memorial_2016
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── tax_day_2016
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_validation_gauges
+│   │   │   ├── event_validation_lines
+│   │   │   ├── event_validation_points
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   ├── event_wind
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   └── td8_1981
+│   │       ├── event_boundary_table
+│   │       ├── event_discharge
+│   │       ├── event_discharge_points
+│   │       ├── event_forcing_qc
+│   │       ├── event_metadata
+│   │       ├── event_precip
+│   │       ├── event_pressure
+│   │       ├── event_runtime_window
+│   │       ├── event_source_table
+│   │       ├── event_validation_gauges
+│   │       ├── event_validation_lines
+│   │       ├── event_validation_points
+│   │       ├── event_waterlevel
+│   │       ├── event_waterlevel_points
+│   │       ├── event_wind
+│   │       └── _CATALOG_SKELETON_README.txt
+│   ├── Old
+│   │   [contents omitted]
+│   ├── static
+│   │   ├── _quarantine_outside_detected_sources
+│   │   │   [contents omitted]
+│   │   ├── harris_county
+│   │   │   ├── _audit
+│   │   │   │   [contents omitted]
+│   │   │   ├── _manifests
+│   │   │   ├── _notes
+│   │   │   ├── bathy
+│   │   │   ├── boundary_points_static
+│   │   │   ├── curve_number
+│   │   │   ├── dem
+│   │   │   ├── grid_template
+│   │   │   ├── infiltration
+│   │   │   ├── landcover
+│   │   │   ├── manning_reclass_table
+│   │   │   ├── mask
+│   │   │   ├── obs_lines_static
+│   │   │   ├── obs_points_static
+│   │   │   ├── open_boundary_outlines
+│   │   │   ├── region_geom
+│   │   │   ├── roughness
+│   │   │   ├── scs_infiltration
+│   │   │   ├── source_points_static
+│   │   │   ├── static_metadata
+│   │   │   ├── structures_drainage
+│   │   │   ├── structures_levees
+│   │   │   ├── structures_thin_dams
+│   │   │   ├── structures_weirs
+│   │   │   ├── subgrid
+│   │   │   ├── topobathy
+│   │   │   ├── vertical_datum_notes
+│   │   │   ├── README.md
+│   │   │   └── README_harris_county.txt
+│   │   ├── harris_county_ppp
+│   │   │   ├── figs
+│   │   │   ├── gis
+│   │   │   ├── subgrid
+│   │   │   ├── template_audit
+│   │   │   │   [contents omitted]
+│   │   │   ├── hydromt.log
+│   │   │   ├── README_harris_county_ppp.txt
+│   │   │   ├── sfincs.bnd
+│   │   │   ├── sfincs.crs
+│   │   │   ├── sfincs.dep
+│   │   │   ├── sfincs.ind
+│   │   │   ├── sfincs.manning
+│   │   │   ├── sfincs.msk
+│   │   │   ├── sfincs.obs
+│   │   │   ├── sfincs.sbg
+│   │   │   ├── sfincs.scs
+│   │   │   ├── sfincs.src
+│   │   │   └── sfincs.thd
+│   │   └── harris_county_ppp_latest
+│   │       ├── _misc
+│   │       │   [contents omitted]
+│   │       ├── gis
+│   │       ├── subgrid
+│   │       ├── sfincs.dep
+│   │       ├── sfincs.ind
+│   │       ├── sfincs.manning
+│   │       ├── sfincs.msk
+│   │       ├── sfincs.scs
+│   │       ├── sfincs.thd
+│   │       └── sfincs_subgrid.nc
+│   ├── validation
+│   │   ├── alicia_1983
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── allison_1989
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── allison_2001
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── beryl_2024
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── claudette_1979
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── erin_2007
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1979_04
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1979_09
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1981_04
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1981_06
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1983_09
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1984_10
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1989_05
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1989_07
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1992_03
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1994_10
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_1998_10
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2002_10
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2003_11
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2009_04
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2012_01
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── flood_2019_05
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── frances_1998
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── halloween_2015
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── harvey_2017
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── heavy_rain_2006_06
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── heavy_rain_2012_07
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── heavy_rain_2014_08
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── heavy_rain_2024_04_05
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── ike_2008
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── imelda_2019
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── memorial_2015
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── memorial_2016
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   ├── tax_day_2016
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   ├── validation_usgs_stage
+│   │   │   └── _CATALOG_SKELETON_README.txt
+│   │   └── td8_1981
+│   │       ├── validation_depth_points
+│   │       ├── validation_excluded_inputs
+│   │       ├── validation_flood_extent
+│   │       ├── validation_gauge_points
+│   │       ├── validation_gauge_timeseries
+│   │       ├── validation_hwms
+│   │       ├── validation_metadata
+│   │       ├── validation_metrics_config
+│   │       ├── validation_noaa_waterlevels
+│   │       ├── validation_qc
+│   │       ├── validation_usgs_discharge
+│   │       ├── validation_usgs_stage
+│   │       └── _CATALOG_SKELETON_README.txt
+│   └── README_catalog_layout.txt
+├── logs
+│   ├── aorc_harris_all_events_download_20260616_115056.out
+│   ├── nlcd_extra_layers_20260519_122047.log
+│   ├── noaa_coops_6min_monthly_2000_present_20260519_123009.log
+│   ├── noaa_coops_eagle_point_msl_20260519_131923.log
+│   ├── noaa_twdb_coastal_2018_dem_wget_20260519_104414.log
+│   ├── noaa_twdb_coastal_2018_dem_wget_20260519_104737.log
+│   ├── noaa_twdb_coastal_2018_dem_wget_20260519_104945.log
+│   ├── usgs_iv_curl_worker_0_20260519_164457.log
+│   ├── usgs_iv_curl_worker_1_20260519_164457.log
+│   └── usgs_iv_monthly_2000_present_20260519_133520.log
+├── metadata
+├── processed
+│   ├── bathymetry
+│   │   ├── merged_review
+│   │   ├── noaa_g260
+│   │   └── usace_surveys
+│   ├── boundary_waterlevel_online_staging
+│   │   └── staged_online_boundary_raw_20260707_133419
+│   │       ├── datum_adjusted_eagle_point_NAVD88_NGS_USACE_20260707_143025
+│   │       ├── datum_adjusted_eagle_point_navd_20260707_141348
+│   │       ├── eagle_point_offset_harder_check_20260707_142355
+│   │       ├── flood_2012_01
+│   │       ├── halloween_2015
+│   │       ├── heavy_rain_2012_07
+│   │       ├── lake_houston_best_nearby_gauge_inference_20260707_150351
+│   │       ├── lake_houston_downstream_usgs_search_20260707_145744
+│   │       ├── lake_houston_gap_rainfall_interactive_20260707_144845
+│   │       ├── lake_houston_gap_vs_hcfcd_rainfall_20260707_143930
+│   │       ├── lake_houston_gap_vs_rainfall_20260707_143548
+│   │       ├── lake_houston_physically_valid_inference_20260707_151428
+│   │       ├── lake_houston_warped_08069500_fill_20260707_152444
+│   │       ├── memorial_2015
+│   │       ├── event_boundary_decision_checklist.csv
+│   │       ├── fetch_settings.json
+│   │       ├── README_STAGED_BOUNDARY_DATA.md
+│   │       └── staged_source_missing_blocks.csv
+│   ├── catalog_backups
+│   │   ├── events_reduced_cleanup
+│   │   │   └── 20260521_163429
+│   │   └── repair_2014_precip_20260526_125738
+│   │       └── aorc_precip_event_bad_empty.nc
+│   ├── dem
+│   ├── discharge
+│   │   ├── hydrographs
+│   │   ├── qa
+│   │   └── source_points
+│   ├── events
+│   │   ├── allison_2001
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── beryl_2024
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── flood_2009_04
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── halloween_2015
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── harvey_2017
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── harvey_2017_full
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2006_06
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2012_07
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2014_08
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2024_04_05
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── ike_2008
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── imelda_2019
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── memorial_2015
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   ├── memorial_2016
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_discharge_points
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   ├── event_waterlevel_points
+│   │   │   └── event_wind
+│   │   └── tax_day_2016
+│   │       ├── event_boundary_table
+│   │       ├── event_discharge
+│   │       ├── event_discharge_points
+│   │       ├── event_forcing_qc
+│   │       ├── event_metadata
+│   │       ├── event_precip
+│   │       ├── event_pressure
+│   │       ├── event_runtime_window
+│   │       ├── event_source_table
+│   │       ├── event_waterlevel
+│   │       ├── event_waterlevel_points
+│   │       └── event_wind
+│   ├── events_staged_links
+│   │   ├── allison_2001
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── beryl_2024
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── flood_2009_04
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── halloween_2015
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── harvey_2017
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2006_06
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2012_07
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2014_08
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── heavy_rain_2024_04_05
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── ike_2008
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── imelda_2019
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── memorial_2015
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   ├── memorial_2016
+│   │   │   ├── event_boundary_table
+│   │   │   ├── event_discharge
+│   │   │   ├── event_forcing_qc
+│   │   │   ├── event_metadata
+│   │   │   ├── event_precip
+│   │   │   ├── event_pressure
+│   │   │   ├── event_runtime_window
+│   │   │   ├── event_source_table
+│   │   │   ├── event_waterlevel
+│   │   │   └── event_wind
+│   │   └── tax_day_2016
+│   │       ├── event_boundary_table
+│   │       ├── event_discharge
+│   │       ├── event_forcing_qc
+│   │       ├── event_metadata
+│   │       ├── event_precip
+│   │       ├── event_pressure
+│   │       ├── event_runtime_window
+│   │       ├── event_source_table
+│   │       ├── event_waterlevel
+│   │       └── event_wind
+│   ├── infiltration
+│   │   ├── qa
+│   │   ├── scs_curve_number
+│   │   └── sfincs_scs
+│   ├── meteo
+│   │   ├── aorc_forcing
+│   │   ├── mrms_forcing
+│   │   ├── qa
+│   │   ├── sfincs_precip
+│   │   └── wind_pressure
+│   ├── ml_features
+│   ├── professor_static_box_source_audit_20260526_172922
+│   │   [contents omitted]
+│   ├── roughness
+│   │   ├── manning_rasters
+│   │   ├── manning_tables
+│   │   └── qa
+│   ├── staging_backup_20260521_103749
+│   │   ├── events_staged_links_old
+│   │   │   ├── allison_2001
+│   │   │   ├── beryl_2024
+│   │   │   ├── flood_2009_04
+│   │   │   ├── halloween_2015
+│   │   │   ├── harvey_2017_ppe
+│   │   │   ├── heavy_rain_2006_06
+│   │   │   ├── heavy_rain_2012_07
+│   │   │   ├── heavy_rain_2014_08
+│   │   │   ├── heavy_rain_2024_04_05
+│   │   │   ├── ike_2008
+│   │   │   ├── imelda_2019
+│   │   │   ├── memorial_2015
+│   │   │   ├── memorial_2016
+│   │   │   └── tax_day_2016
+│   │   └── validation_staged_links_old
+│   │       ├── allison_2001
+│   │       ├── beryl_2024
+│   │       ├── flood_2009_04
+│   │       ├── halloween_2015
+│   │       ├── harvey_2017
+│   │       ├── heavy_rain_2006_06
+│   │       ├── heavy_rain_2012_07
+│   │       ├── heavy_rain_2014_08
+│   │       ├── heavy_rain_2024_04_05
+│   │       ├── ike_2008
+│   │       ├── imelda_2019
+│   │       ├── memorial_2015
+│   │       ├── memorial_2016
+│   │       └── tax_day_2016
+│   ├── staging_reports
+│   │   ├── EVENT_VALIDATION_LINK_REPORT.csv
+│   │   └── EVENT_VALIDATION_LINK_SUMMARY.csv
+│   ├── structures
+│   │   ├── hydraulic_structures
+│   │   ├── levees
+│   │   ├── qa
+│   │   └── sfincs_features
+│   ├── subgrid
+│   ├── topobathy
+│   │   ├── drafts
+│   │   └── final
+│   ├── usgs_master_archive
+│   │   ├── .Rproj.user
+│   │   │   ├── 173D78BF
+│   │   │   └── shared
+│   │   ├── datum_adjusted_v1
+│   │   │   ├── _datum_metadata
+│   │   │   └── parameter_00065
+│   │   ├── logs
+│   │   ├── merged_raw_pre_datum_v1
+│   │   │   ├── _merge_metadata
+│   │   │   ├── parameter_00060
+│   │   │   └── parameter_00065
+│   │   ├── metadata
+│   │   │   ├── audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── datum_llm_parse_inputs
+│   │   │   ├── datum_offset_references
+│   │   │   ├── event_validation_builds
+│   │   │   ├── final_audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── legacy
+│   │   │   ├── merge_design_audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── normalizer_design_audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── post_merge_audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── post_normalization_audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── pre_normalization_audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── time_series_audits
+│   │   │   │   [contents omitted]
+│   │   │   ├── universal_validation_points
+│   │   │   ├── usgs_2024_FIRST25_SMOKE_manifest_20260709_121208.csv
+│   │   │   ├── usgs_2024_FIRST25_SMOKE_timeseries_duplicate_QA_20260709_121845.csv
+│   │   │   ├── usgs_2024_FULL_BROAD_INVENTORY_manifest_20260709_122054.csv
+│   │   │   ├── usgs_2024_smoke_pull_manifest_20260708_160359.csv
+│   │   │   ├── usgs_2024_smoke_pull_manifest_20260708_160742.csv
+│   │   │   ├── usgs_active_year_batch_summary_20260709_152705.csv
+│   │   │   ├── usgs_active_year_batch_summary_20260710_100850.csv
+│   │   │   ├── usgs_year_1979_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1979_EVER89_manifest_backup_20260710_135641.csv
+│   │   │   ├── usgs_year_1981_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1981_EVER89_manifest_backup_20260710_134849.csv
+│   │   │   ├── usgs_year_1983_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1983_EVER89_manifest_backup_20260710_134041.csv
+│   │   │   ├── usgs_year_1984_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1984_EVER89_manifest_backup_20260710_124457.csv
+│   │   │   ├── usgs_year_1989_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1989_EVER89_manifest_backup_20260710_123633.csv
+│   │   │   ├── usgs_year_1992_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1992_EVER89_manifest_backup_20260710_122700.csv
+│   │   │   ├── usgs_year_1994_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1994_EVER89_manifest_backup_20260710_121721.csv
+│   │   │   ├── usgs_year_1998_EVER89_manifest.csv
+│   │   │   ├── usgs_year_1998_EVER89_manifest_backup_20260710_120647.csv
+│   │   │   ├── usgs_year_2001_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2001_EVER89_manifest_backup_20260710_115438.csv
+│   │   │   ├── usgs_year_2002_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2002_EVER89_manifest_backup_20260710_114149.csv
+│   │   │   ├── usgs_year_2003_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2003_EVER89_manifest_backup_20260710_112842.csv
+│   │   │   ├── usgs_year_2006_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2006_EVER89_manifest_backup_20260710_111338.csv
+│   │   │   ├── usgs_year_2007_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2007_EVER89_manifest_backup_20260710_105441.csv
+│   │   │   ├── usgs_year_2008_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2008_EVER89_manifest_backup_20260710_103111.csv
+│   │   │   ├── usgs_year_2009_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2009_EVER89_manifest_backup_20260710_100851.csv
+│   │   │   ├── usgs_year_2012_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2012_EVER89_manifest_backup_20260709_164836.csv
+│   │   │   ├── usgs_year_2014_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2014_EVER89_manifest_backup_20260709_162134.csv
+│   │   │   ├── usgs_year_2015_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2015_EVER89_manifest_backup_20260709_155332.csv
+│   │   │   ├── usgs_year_2016_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2016_EVER89_manifest_backup_20260709_152706.csv
+│   │   │   ├── usgs_year_2017_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2017_EVER89_manifest_backup_20260709_145337.csv
+│   │   │   ├── usgs_year_2019_EVER89_manifest.csv
+│   │   │   ├── usgs_year_2019_EVER89_manifest_backup_20260709_141330.csv
+│   │   │   ├── usgs_year_2024_EVER89_manifest.csv
+│   │   │   └── usgs_year_2024_EVER89_manifest_backup_20260709_140859.csv
+│   │   ├── normalized_v1
+│   │   │   ├── legacy
+│   │   │   └── modern
+│   │   ├── parsed_legacy_downloads
+│   │   │   └── instantaneous_archive
+│   │   ├── raw_legacy_downloads
+│   │   │   └── instantaneous_archive
+│   │   ├── raw_r_downloads
+│   │   │   └── continuous
+│   │   ├── scripts
+│   │   │   ├── python
+│   │   │   ├── r
+│   │   │   └── build_usgs_noaa_gauge_encyclopedia.py
+│   │   ├── site_inventory
+│   │   │   ├── combined_usgs_noaa_gauge_encyclopedia_classified.csv
+│   │   │   ├── combined_usgs_noaa_gauge_encyclopedia_REVIEW_SUBSET.csv
+│   │   │   ├── mask_and_query_bbox_metadata.json
+│   │   │   ├── noaa_coops_station_encyclopedia_classified.csv
+│   │   │   ├── usgs_173_timeseries_metadata_raw_20260709_124515.csv
+│   │   │   ├── usgs_173_timeseries_metadata_summary.csv
+│   │   │   ├── usgs_2024_confirmed_download_audit.csv
+│   │   │   ├── usgs_gauge_encyclopedia_classified.csv
+│   │   │   ├── usgs_monitoring_locations_broad_bbox_classified.csv
+│   │   │   ├── usgs_r_pull_candidates_FIRST25_SMOKE.csv
+│   │   │   ├── usgs_r_pull_candidates_FULL_BROAD_INVENTORY.csv
+│   │   │   ├── usgs_r_pull_candidates_MODEL_DOMAIN_SURFACE_ONLY.csv
+│   │   │   ├── usgs_r_pull_candidates_MODEL_DOMAIN_SURFACE_ONLY_FIRST20.csv
+│   │   │   ├── usgs_r_pull_candidates_REVIEW_SUBSET.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_2024_CONFIRMED_DATA.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_MASK_ALL.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_MASK_FIRST100.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_MASK_SURFACE_NAME_FILTER.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_SURFACE_2024_CONFIRMED_DATA.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_SURFACE_HAS_2024_00065_OR_00060.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_SURFACE_HAS_2024_BOTH_00065_AND_00060.csv
+│   │   │   ├── usgs_r_pull_candidates_VERIFIED_ACTIVE_SURFACE_HAS_EVER_00065_OR_00060.csv
+│   │   │   └── usgs_verified_active_mask_audit.csv
+│   │   ├── .Rhistory
+│   │   └── usgs_master_archive.Rproj
+│   ├── validation
+│   │   ├── allison_2001
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── beryl_2024
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── flood_2009_04
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── flood_extents
+│   │   ├── gauge_comparison
+│   │   ├── halloween_2015
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── harvey_2017
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2006_06
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2012_07
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2014_08
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2024_04_05
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── high_water_marks
+│   │   ├── ike_2008
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── imelda_2019
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── memorial_2015
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── memorial_2016
+│   │   │   ├── validation_depth_points
+│   │   │   ├── validation_excluded_inputs
+│   │   │   ├── validation_flood_extent
+│   │   │   ├── validation_gauge_points
+│   │   │   ├── validation_gauge_timeseries
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_metadata
+│   │   │   ├── validation_metrics_config
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── qa
+│   │   └── tax_day_2016
+│   │       ├── validation_depth_points
+│   │       ├── validation_excluded_inputs
+│   │       ├── validation_flood_extent
+│   │       ├── validation_gauge_points
+│   │       ├── validation_gauge_timeseries
+│   │       ├── validation_hwms
+│   │       ├── validation_metadata
+│   │       ├── validation_metrics_config
+│   │       ├── validation_noaa_waterlevels
+│   │       ├── validation_qc
+│   │       ├── validation_usgs_discharge
+│   │       └── validation_usgs_stage
+│   ├── validation_staged_links
+│   │   ├── allison_2001
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── beryl_2024
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── flood_2009_04
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── halloween_2015
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── harvey_2017
+│   │   │   ├── validation_hwms
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2006_06
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2012_07
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2014_08
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── heavy_rain_2024_04_05
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── ike_2008
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── imelda_2019
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── memorial_2015
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   ├── memorial_2016
+│   │   │   ├── validation_noaa_waterlevels
+│   │   │   ├── validation_qc
+│   │   │   ├── validation_usgs_discharge
+│   │   │   └── validation_usgs_stage
+│   │   └── tax_day_2016
+│   │       ├── validation_noaa_waterlevels
+│   │       ├── validation_qc
+│   │       ├── validation_usgs_discharge
+│   │       └── validation_usgs_stage
+│   ├── water_level
+│   │   ├── boundary_candidates
+│   │   ├── qa
+│   │   └── validation_timeseries
+│   ├── aorc_event_processing_summary.csv
+│   ├── noaa_coops_waterlevel_event_processing_summary.csv
+│   ├── usgs_discharge_event_processing_summary.csv
+│   └── usgs_stage_validation_processing_summary.csv
+├── processed_catalog_work
+│   ├── active_mask_detector_audit
+│   │   [contents omitted]
+│   ├── boundary_setup_audits
+│   │   [contents omitted]
+│   ├── event_catalog_setup_audits
+│   │   [contents omitted]
+│   ├── event_misc_cleanup_runs
+│   │   ├── event_actionable_plus_misc_cleanup_20260625_183318
+│   │   │   ├── cleanup_manifest.json
+│   │   │   ├── cleanup_summary.txt
+│   │   │   ├── event_actionable_plus_misc_cleanup_log.csv
+│   │   │   └── protected_paths_from_run_configs.csv
+│   │   └── event_actionable_plus_misc_cleanup_20260625_183426
+│   │       ├── cleanup_manifest.json
+│   │       ├── cleanup_summary.txt
+│   │       ├── event_actionable_plus_misc_cleanup_log.csv
+│   │       └── protected_paths_from_run_configs.csv
+│   ├── event_window_consistency_audits
+│   │   [contents omitted]
+│   ├── event_working_file_inventory
+│   │   └── current_working_file_grid_20260625_183820
+│   │       ├── current_working_event_file_grid.csv
+│   │       ├── current_working_event_file_inventory_long.csv
+│   │       ├── manifest.json
+│   │       └── summary.txt
+│   ├── harvey_2017_mrms
+│   │   └── moved_from_event_catalog_processed_20260619_140645
+│   │       ├── obs_crs_cleanup_audit_20260619_135644
+│   │       │   [contents omitted]
+│   │       ├── move_manifest.json
+│   │       ├── obs_crs_clean_install_20260619_140101.json
+│   │       └── obs_crs_clean_install_20260619_140125.json
+│   ├── harvey_crs_reuse_validation_audits
+│   │   [contents omitted]
+│   ├── harvey_usgs_00065_stage_json_audit_20260623_172721
+│   │   [contents omitted]
+│   ├── harvey_usgs_00065_stage_json_audit_20260623_172738
+│   │   [contents omitted]
+│   ├── ike_2008_gap_context_audits
+│   │   [contents omitted]
+│   ├── lake_houston_professor_forcing_audit_20260625_135525
+│   │   [contents omitted]
+│   ├── lake_houston_san_jacinto_boundary
+│   │   ├── add_08072050_professor_bzs3_20260625_161037
+│   │   │   └── backup_before_add_08072050
+│   │   └── add_08072050_professor_bzs3_20260625_161407
+│   │       ├── backup_before_add_08072050
+│   │       ├── add_08072050_manifest.json
+│   │       ├── add_08072050_summary.txt
+│   │       ├── aligned_08072050_for_current_harvey_time_axis.csv
+│   │       ├── event_boundary_table_WITH_08072050.csv
+│   │       ├── harvey_houston_wl_bc_WITH_08072050.csv
+│   │       └── professor_08072050_bzs3_source_series.csv
+│   ├── mrms_catalog_cleanup_audits
+│   │   [contents omitted]
+│   ├── nonharvey_misc_cleanup_audits
+│   │   [contents omitted]
+│   ├── obs_gauge_review_staging
+│   │   └── input_gauge_validation_DRAFT_POINTS_ONLY.csv
+│   ├── open_boundary_outlines
+│   │   ├── harris_manual_coastal_open_boundary_professor_draft_v001.gpkg
+│   │   ├── harris_manual_coastal_open_boundary_professor_draft_v001_audit.json
+│   │   ├── harris_manual_coastal_open_boundary_professor_draft_v001_quicklook.png
+│   │   ├── harris_manual_coastal_open_boundary_professor_draft_v002.gpkg
+│   │   ├── harris_manual_coastal_open_boundary_professor_draft_v002_audit.json
+│   │   ├── harris_manual_coastal_open_boundary_professor_draft_v002_quicklook_full.png
+│   │   ├── harris_manual_coastal_open_boundary_professor_draft_v002_quicklook_zoom.png
+│   │   ├── harris_manual_coastal_open_boundary_reviewed_v001.gpkg
+│   │   ├── harris_manual_open_boundary_reviewed_v002.gpkg
+│   │   ├── harris_manual_open_boundary_reviewed_v002_DRAFT_from_override_candidates.gpkg
+│   │   ├── harris_manual_open_boundary_reviewed_v002_DRAFT_from_override_candidates_preview.png
+│   │   ├── harris_manual_open_boundary_reviewed_v002_DRAFT_segments.csv
+│   │   ├── harris_manual_open_boundary_reviewed_v002_preview.png
+│   │   ├── professor_open_boundary_guidance_v001.gpkg
+│   │   └── professor_open_boundary_guidance_v002.gpkg
+│   ├── premier_main4_event_catalog_build_audits
+│   │   [contents omitted]
+│   ├── review_backend_understanding_audits
+│   │   [contents omitted]
+│   ├── review_flood2009_vs_harvey_audit
+│   │   [contents omitted]
+│   ├── review_frontend_backend_audit_20260624_150018
+│   │   [contents omitted]
+│   ├── review_ui_async_local_audit
+│   │   [contents omitted]
+│   ├── review_ui_obs_button_audit
+│   │   [contents omitted]
+│   ├── review_wl_join_audit_20260623_170906
+│   │   [contents omitted]
+│   ├── review_wl_real_source_audit_20260623_172251
+│   │   [contents omitted]
+│   ├── review_wl_station_match_audit_20260623_171533
+│   │   [contents omitted]
+│   ├── usgs_gage_datum_metadata_audit_20260623_173333
+│   │   [contents omitted]
+│   ├── usgs_station_inventory
+│   │   ├── online_usgs_59_event_coverage_audit_20260702_100827
+│   │   │   [contents omitted]
+│   │   ├── online_usgs_inside_actual_dem_20260701_173123
+│   │   │   └── dem_candidates_scored.csv
+│   │   ├── online_usgs_inside_actual_dem_20260701_173336
+│   │   │   ├── dem_candidates_scored.csv
+│   │   │   ├── online_usgs_discharge_00060_sites_inside_actual_dem.csv
+│   │   │   ├── online_usgs_inside_actual_dem_summary.json
+│   │   │   ├── online_usgs_requests_summary.csv
+│   │   │   ├── online_usgs_site_service_rows_raw_combined.csv
+│   │   │   ├── online_usgs_sites_audited_against_actual_dem.csv
+│   │   │   ├── online_usgs_sites_inside_actual_dem.csv
+│   │   │   ├── online_usgs_sites_outside_or_nodata_actual_dem.csv
+│   │   │   ├── online_usgs_sites_with_both_00065_00060_inside_actual_dem.csv
+│   │   │   ├── online_usgs_stage_00065_sites_inside_actual_dem.csv
+│   │   │   ├── online_usgs_unique_sites_before_dem_filter.csv
+│   │   │   ├── usgs_site_service_00060_discharge.rdb
+│   │   │   └── usgs_site_service_00065_gage_height_stage.rdb
+│   │   ├── rebuild_validation_points_from_online_usgs_20260702_104730
+│   │   │   ├── sfincs_dep_index_info.json
+│   │   │   ├── station_pool_with_usgs_alt_and_sfincs_active_check.csv
+│   │   │   ├── usgs_expanded_site_metadata.csv
+│   │   │   └── usgs_expanded_site_metadata_chunk01.rdb
+│   │   ├── rebuild_validation_points_from_online_usgs_20260702_105233
+│   │   │   ├── all_events_candidates_after_filters.csv
+│   │   │   ├── beryl_2024_candidate_stage_points_after_filters.csv
+│   │   │   ├── beryl_2024_NEW_validation_gauges.csv
+│   │   │   ├── beryl_2024_NEW_validation_points.csv
+│   │   │   ├── flood_2009_04_candidate_stage_points_after_filters.csv
+│   │   │   ├── flood_2009_04_NEW_validation_gauges.csv
+│   │   │   ├── flood_2009_04_NEW_validation_points.csv
+│   │   │   ├── flood_2019_05_candidate_stage_points_after_filters.csv
+│   │   │   ├── flood_2019_05_NEW_validation_gauges.csv
+│   │   │   ├── flood_2019_05_NEW_validation_points.csv
+│   │   │   ├── harvey_2017_mrms_candidate_stage_points_after_filters.csv
+│   │   │   ├── harvey_2017_mrms_NEW_validation_gauges.csv
+│   │   │   ├── harvey_2017_mrms_NEW_validation_points.csv
+│   │   │   ├── heavy_rain_2014_08_candidate_stage_points_after_filters.csv
+│   │   │   ├── heavy_rain_2014_08_NEW_validation_gauges.csv
+│   │   │   ├── heavy_rain_2014_08_NEW_validation_points.csv
+│   │   │   ├── heavy_rain_2024_04_05_candidate_stage_points_after_filters.csv
+│   │   │   ├── heavy_rain_2024_04_05_NEW_validation_gauges.csv
+│   │   │   ├── heavy_rain_2024_04_05_NEW_validation_points.csv
+│   │   │   ├── imelda_2019_candidate_stage_points_after_filters.csv
+│   │   │   ├── imelda_2019_NEW_validation_gauges.csv
+│   │   │   ├── imelda_2019_NEW_validation_points.csv
+│   │   │   ├── memorial_2016_candidate_stage_points_after_filters.csv
+│   │   │   ├── memorial_2016_NEW_validation_gauges.csv
+│   │   │   ├── memorial_2016_NEW_validation_points.csv
+│   │   │   ├── rebuild_validation_points_manifest.json
+│   │   │   ├── rebuild_validation_points_summary.csv
+│   │   │   ├── sfincs_dep_index_info.json
+│   │   │   ├── station_pool_with_usgs_alt_and_sfincs_active_check.csv
+│   │   │   ├── tax_day_2016_candidate_stage_points_after_filters.csv
+│   │   │   ├── tax_day_2016_NEW_validation_gauges.csv
+│   │   │   ├── tax_day_2016_NEW_validation_points.csv
+│   │   │   ├── usgs_expanded_site_metadata.csv
+│   │   │   └── usgs_expanded_site_metadata_chunk01.rdb
+│   │   └── rebuild_validation_points_from_online_usgs_20260702_111038
+│   │       ├── all_events_candidates_after_filters.csv
+│   │       ├── beryl_2024_candidate_stage_points_after_filters.csv
+│   │       ├── beryl_2024_NEW_validation_gauges.csv
+│   │       ├── beryl_2024_NEW_validation_points.csv
+│   │       ├── flood_2009_04_candidate_stage_points_after_filters.csv
+│   │       ├── flood_2009_04_NEW_validation_gauges.csv
+│   │       ├── flood_2009_04_NEW_validation_points.csv
+│   │       ├── flood_2019_05_candidate_stage_points_after_filters.csv
+│   │       ├── flood_2019_05_NEW_validation_gauges.csv
+│   │       ├── flood_2019_05_NEW_validation_points.csv
+│   │       ├── heavy_rain_2014_08_candidate_stage_points_after_filters.csv
+│   │       ├── heavy_rain_2014_08_NEW_validation_gauges.csv
+│   │       ├── heavy_rain_2014_08_NEW_validation_points.csv
+│   │       ├── heavy_rain_2024_04_05_candidate_stage_points_after_filters.csv
+│   │       ├── heavy_rain_2024_04_05_NEW_validation_gauges.csv
+│   │       ├── heavy_rain_2024_04_05_NEW_validation_points.csv
+│   │       ├── imelda_2019_candidate_stage_points_after_filters.csv
+│   │       ├── imelda_2019_NEW_validation_gauges.csv
+│   │       ├── imelda_2019_NEW_validation_points.csv
+│   │       ├── memorial_2016_candidate_stage_points_after_filters.csv
+│   │       ├── memorial_2016_NEW_validation_gauges.csv
+│   │       ├── memorial_2016_NEW_validation_points.csv
+│   │       ├── rebuild_validation_points_manifest.json
+│   │       ├── rebuild_validation_points_summary.csv
+│   │       ├── sfincs_dep_index_info.json
+│   │       ├── station_pool_with_usgs_alt_and_sfincs_active_check.csv
+│   │       ├── tax_day_2016_candidate_stage_points_after_filters.csv
+│   │       ├── tax_day_2016_NEW_validation_gauges.csv
+│   │       ├── tax_day_2016_NEW_validation_points.csv
+│   │       ├── usgs_expanded_site_metadata.csv
+│   │       └── usgs_expanded_site_metadata_chunk01.rdb
+│   ├── validation_format_rebuild
+│   │   ├── all_8_events_datum_and_flow_audit_20260702_152635
+│   │   │   [contents omitted]
+│   │   ├── apply_datum_offset_trial_all_8_events_20260702_162242
+│   │   │   ├── raw_usgs_site_metadata
+│   │   │   ├── beryl_2024_validation_gauges_datum_offset_trial.csv
+│   │   │   ├── flood_2019_05_validation_gauges_datum_offset_trial.csv
+│   │   │   ├── heavy_rain_2024_04_05_validation_gauges_datum_offset_trial.csv
+│   │   │   ├── imelda_2019_validation_gauges_datum_offset_trial.csv
+│   │   │   ├── memorial_2016_validation_gauges_datum_offset_trial.csv
+│   │   │   ├── sfincs_dep_index_info.json
+│   │   │   ├── tax_day_2016_validation_gauges_datum_offset_trial.csv
+│   │   │   ├── usgs_site_metadata_offsets.csv
+│   │   │   └── usgs_site_metadata_raw_expanded.csv
+│   │   ├── apply_first_pass_usgs_datum_note_offsets_all8_20260703_124137
+│   │   │   ├── beryl_2024_site_peak_before_after.csv
+│   │   │   ├── duplicate_event_site_rules_not_applied_extra_rows.csv
+│   │   │   ├── first_pass_apply_event_summary.csv
+│   │   │   ├── first_pass_apply_row_log.csv
+│   │   │   ├── first_pass_apply_site_summary.csv
+│   │   │   ├── first_pass_datum_offset_apply_plan.csv
+│   │   │   ├── flood_2009_04_site_peak_before_after.csv
+│   │   │   ├── flood_2019_05_site_peak_before_after.csv
+│   │   │   ├── heavy_rain_2014_08_site_peak_before_after.csv
+│   │   │   ├── heavy_rain_2024_04_05_site_peak_before_after.csv
+│   │   │   ├── imelda_2019_site_peak_before_after.csv
+│   │   │   ├── memorial_2016_site_peak_before_after.csv
+│   │   │   └── tax_day_2016_site_peak_before_after.csv
+│   │   ├── build_non_harvey_from_harvey_contract_20260702_132423
+│   │   │   ├── all_events_point_candidates_after_filters.csv
+│   │   │   ├── beryl_2024_line_map_used_from_harvey.csv
+│   │   │   ├── beryl_2024_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── beryl_2024_validation_gauges.csv
+│   │   │   ├── beryl_2024_validation_points.csv
+│   │   │   ├── build_non_harvey_from_harvey_contract_manifest.json
+│   │   │   ├── build_non_harvey_from_harvey_contract_summary.csv
+│   │   │   ├── flood_2009_04_line_map_used_from_harvey.csv
+│   │   │   ├── flood_2009_04_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── flood_2009_04_validation_gauges.csv
+│   │   │   ├── flood_2009_04_validation_points.csv
+│   │   │   ├── flood_2019_05_line_map_used_from_harvey.csv
+│   │   │   ├── flood_2019_05_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── flood_2019_05_validation_gauges.csv
+│   │   │   ├── flood_2019_05_validation_points.csv
+│   │   │   ├── heavy_rain_2014_08_line_map_used_from_harvey.csv
+│   │   │   ├── heavy_rain_2014_08_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── heavy_rain_2014_08_validation_gauges.csv
+│   │   │   ├── heavy_rain_2014_08_validation_points.csv
+│   │   │   ├── heavy_rain_2024_04_05_line_map_used_from_harvey.csv
+│   │   │   ├── heavy_rain_2024_04_05_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── heavy_rain_2024_04_05_validation_gauges.csv
+│   │   │   ├── heavy_rain_2024_04_05_validation_points.csv
+│   │   │   ├── imelda_2019_line_map_used_from_harvey.csv
+│   │   │   ├── imelda_2019_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── imelda_2019_validation_gauges.csv
+│   │   │   ├── imelda_2019_validation_points.csv
+│   │   │   ├── memorial_2016_line_map_used_from_harvey.csv
+│   │   │   ├── memorial_2016_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── memorial_2016_validation_gauges.csv
+│   │   │   ├── memorial_2016_validation_points.csv
+│   │   │   ├── sfincs_dep_index_info.json
+│   │   │   ├── tax_day_2016_line_map_used_from_harvey.csv
+│   │   │   ├── tax_day_2016_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── tax_day_2016_validation_gauges.csv
+│   │   │   └── tax_day_2016_validation_points.csv
+│   │   ├── build_non_harvey_from_harvey_contract_20260702_133414
+│   │   │   ├── all_events_point_candidates_after_filters.csv
+│   │   │   ├── beryl_2024_line_map_used_from_harvey.csv
+│   │   │   ├── beryl_2024_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── beryl_2024_validation_gauges.csv
+│   │   │   ├── beryl_2024_validation_points.csv
+│   │   │   ├── build_non_harvey_from_harvey_contract_manifest.json
+│   │   │   ├── build_non_harvey_from_harvey_contract_summary.csv
+│   │   │   ├── flood_2009_04_line_map_used_from_harvey.csv
+│   │   │   ├── flood_2009_04_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── flood_2009_04_validation_gauges.csv
+│   │   │   ├── flood_2009_04_validation_points.csv
+│   │   │   ├── flood_2019_05_line_map_used_from_harvey.csv
+│   │   │   ├── flood_2019_05_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── flood_2019_05_validation_gauges.csv
+│   │   │   ├── flood_2019_05_validation_points.csv
+│   │   │   ├── heavy_rain_2014_08_line_map_used_from_harvey.csv
+│   │   │   ├── heavy_rain_2014_08_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── heavy_rain_2014_08_validation_gauges.csv
+│   │   │   ├── heavy_rain_2014_08_validation_points.csv
+│   │   │   ├── heavy_rain_2024_04_05_line_map_used_from_harvey.csv
+│   │   │   ├── heavy_rain_2024_04_05_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── heavy_rain_2024_04_05_validation_gauges.csv
+│   │   │   ├── heavy_rain_2024_04_05_validation_points.csv
+│   │   │   ├── imelda_2019_line_map_used_from_harvey.csv
+│   │   │   ├── imelda_2019_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── imelda_2019_validation_gauges.csv
+│   │   │   ├── imelda_2019_validation_points.csv
+│   │   │   ├── memorial_2016_line_map_used_from_harvey.csv
+│   │   │   ├── memorial_2016_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── memorial_2016_validation_gauges.csv
+│   │   │   ├── memorial_2016_validation_points.csv
+│   │   │   ├── sfincs_dep_index_info.json
+│   │   │   ├── tax_day_2016_line_map_used_from_harvey.csv
+│   │   │   ├── tax_day_2016_point_candidates_after_stage_coverage_and_sfincs_filter.csv
+│   │   │   ├── tax_day_2016_validation_gauges.csv
+│   │   │   └── tax_day_2016_validation_points.csv
+│   │   ├── datum_and_flow_time_audit_flood_2009_04_flood_2009_04_override_005_20260702_151737
+│   │   │   [contents omitted]
+│   │   ├── datum_and_flow_time_audit_flood_2009_04_flood_2009_04_override_005_20260702_152206
+│   │   │   [contents omitted]
+│   │   ├── datum_conversion_manual_review_packet_20260703_113238
+│   │   │   ├── raw_station_pages
+│   │   │   ├── raw_usgs_site_service
+│   │   │   ├── chosen_datum_change_rule_by_site.csv
+│   │   │   ├── compact_datum_conversion_review_all_cases_20260703_115238.csv
+│   │   │   ├── compact_datum_conversion_review_attention_cases_20260703_115238.csv
+│   │   │   ├── comprehensive_datum_conversion_review_cases.csv
+│   │   │   ├── datum_conversion_manual_review_packet_manifest.json
+│   │   │   ├── datum_review_4col_all_cases_20260703_120224.csv
+│   │   │   ├── datum_review_4col_attention_cases_20260703_120224.csv
+│   │   │   ├── event_site_original_wl_profile_with_corrected_dep.csv
+│   │   │   ├── manual_override_template.csv
+│   │   │   ├── parsed_datum_change_rules_by_site.csv
+│   │   │   ├── sfincs_dep_corrected_sampling_info.json
+│   │   │   ├── station_datum_snippets_all.csv
+│   │   │   ├── station_page_fetch_status.csv
+│   │   │   ├── summary_by_action.csv
+│   │   │   ├── summary_by_event.csv
+│   │   │   └── usgs_site_service_metadata.csv
+│   │   ├── discover_true_usgs_gage_datum_sources_20260703_103953
+│   │   │   ├── raw_station_pages
+│   │   │   ├── raw_usgs_site_service_expanded
+│   │   │   ├── best_candidate_offset_by_site.csv
+│   │   │   ├── candidate_gage_datum_offsets_from_pages_and_site_service.csv
+│   │   │   ├── candidate_offset_plausibility_eval.csv
+│   │   │   ├── current_point_wl_profile_all8_plus_harvey.csv
+│   │   │   ├── discover_true_usgs_gage_datum_sources_manifest.json
+│   │   │   ├── problem_sites_without_high_conf_explicit_navd88_candidate.csv
+│   │   │   ├── sfincs_dep_index_info.json
+│   │   │   ├── site_problem_summary.csv
+│   │   │   ├── station_page_fetch_status.csv
+│   │   │   ├── usgs_site_service_altitude_datum_fields.csv
+│   │   │   └── usgs_site_service_expanded_raw.csv
+│   │   ├── discover_true_usgs_gage_datum_sources_20260703_104408
+│   │   │   ├── raw_station_pages
+│   │   │   ├── raw_usgs_site_service_expanded
+│   │   │   ├── best_candidate_offset_by_site.csv
+│   │   │   ├── candidate_gage_datum_offsets_from_pages_and_site_service.csv
+│   │   │   ├── candidate_offset_plausibility_eval.csv
+│   │   │   ├── current_point_wl_profile_all8_plus_harvey.csv
+│   │   │   ├── discover_true_usgs_gage_datum_sources_manifest.json
+│   │   │   ├── problem_sites_without_high_conf_explicit_navd88_candidate.csv
+│   │   │   ├── sfincs_dep_index_info.json
+│   │   │   ├── site_problem_summary.csv
+│   │   │   ├── station_page_fetch_status.csv
+│   │   │   ├── usgs_site_service_altitude_datum_fields.csv
+│   │   │   └── usgs_site_service_expanded_raw.csv
+│   │   ├── hard_audit_flood_2009_04_flood_2009_04_override_005_20260702_145842
+│   │   │   [contents omitted]
+│   │   ├── harvey_baseline_audit_and_demote_current_20260702_131524
+│   │   │   [contents omitted]
+│   │   ├── harvey_why_did_it_work_audit_20260702_155321
+│   │   │   [contents omitted]
+│   │   ├── restore_after_bad_datum_offset_trial_20260703_101909
+│   │   │   └── restore_after_bad_datum_offset_trial_summary.csv
+│   │   └── verify_sfincs_dep_sampling_assumptions_20260703_111828
+│   │       ├── raw_usgs_site_service
+│   │       ├── current_event_site_wl_profile.csv
+│   │       ├── dep_sampling_all_conventions_by_event_site.csv
+│   │       ├── dep_sampling_convention_summary.csv
+│   │       ├── dep_sampling_suspect_sites.csv
+│   │       ├── dep_sampling_worst_30_by_convention.csv
+│   │       ├── gauge_xy_vs_usgs_station_xy.csv
+│   │       ├── gauge_xy_vs_usgs_station_xy_summary.csv
+│   │       ├── sfincs_dep_index_raw_info.json
+│   │       ├── usgs_site_metadata_projected.csv
+│   │       └── verify_sfincs_dep_sampling_assumptions_manifest.json
+│   ├── waterlevel_boundary_coverage_audits
+│   │   [contents omitted]
+│   └── harvey_usgs_00065_navd88_candidate_join_20260623_174542.csv
+├── qa
+├── raw
+│   ├── bathymetry
+│   │   ├── gebco_fallback
+│   │   ├── metadata
+│   │   ├── noaa_cudem_gulf_coast
+│   │   │   └── galveston_13_mhw_2007.nc
+│   │   ├── noaa_ncei_galveston_bay_g260
+│   │   │   └── galveston_bay_G260_2018.nc
+│   │   ├── twdb_coastal_bathymetry
+│   │   ├── usace_galveston_hydro_surveys
+│   │   └── SOURCE_PRIORITY.md
+│   ├── dem
+│   │   ├── maapnext_2018_lidar
+│   │   │   ├── hcfcd_hgac_if_obtained
+│   │   │   ├── metadata
+│   │   │   └── noaa_twdb_coastal_2018_dem
+│   │   ├── txgio_lidar
+│   │   └── usgs_3dep_1m
+│   ├── discharge
+│   │   ├── harris_county_fws
+│   │   │   ├── metadata
+│   │   │   ├── rainfall
+│   │   │   ├── site_inventory
+│   │   │   └── stream_elevation
+│   │   ├── logs
+│   │   ├── metadata
+│   │   ├── nwm_retrospective
+│   │   │   ├── metadata
+│   │   │   └── streamflow
+│   │   ├── usgs_nwis
+│   │   │   ├── dv_daily
+│   │   │   ├── iv_monthly
+│   │   │   ├── logs
+│   │   │   ├── metadata
+│   │   │   ├── retry_langham_2012
+│   │   │   └── site_inventory
+│   │   └── SOURCE_PRIORITY.md
+│   ├── hydrography
+│   ├── infiltration
+│   │   ├── gcn250
+│   │   │   ├── figshare_7756202_v1_metadata.json
+│   │   │   ├── GCN250_ARCI.tif
+│   │   │   ├── GCN250_ARCII.tif
+│   │   │   ├── GCN250_ARCIII.tif
+│   │   │   ├── GCN250m.R
+│   │   │   └── No
+│   │   ├── logs
+│   │   │   ├── gcn250_direct_download_20260520_101431.log
+│   │   │   └── gcn250_download_20260520_101041.log
+│   │   ├── metadata
+│   │   ├── ssurgo_gssurgo
+│   │   └── SOURCE_PRIORITY.md
+│   ├── landcover
+│   │   └── nlcd_annual
+│   │       ├── fractional_impervious
+│   │       ├── impervious
+│   │       ├── impervious_descriptor
+│   │       ├── land_cover
+│   │       ├── metadata
+│   │       ├── tree_canopy
+│   │       └── SOURCE_NOTES.md
+│   ├── meteo
+│   │   ├── aorc_v1_1_1km
+│   │   │   ├── event_netcdf
+│   │   │   ├── logs
+│   │   │   └── metadata
+│   │   ├── logs
+│   │   ├── metadata
+│   │   │   └── harris_event_windows.csv
+│   │   ├── mrms_iem
+│   │   │   ├── logs
+│   │   │   ├── metadata
+│   │   │   ├── pilot_all_product_hourly_zips_DO_NOT_EXTEND
+│   │   │   ├── qpe_01h_pass2_grib2_gz
+│   │   │   └── MRMS_COVERAGE_NOTES.md
+│   │   └── SOURCE_NOTES.md
+│   ├── rainfall
+│   │   └── aorc_v1_1_harris_event_subsets
+│   │       ├── alicia_1983
+│   │       ├── allison_1989
+│   │       ├── allison_2001
+│   │       ├── beryl_2024
+│   │       ├── claudette_1979
+│   │       ├── erin_2007
+│   │       ├── flood_1979_04
+│   │       ├── flood_1979_09
+│   │       ├── flood_1981_04
+│   │       ├── flood_1981_06
+│   │       ├── flood_1983_09
+│   │       ├── flood_1984_10
+│   │       ├── flood_1989_05
+│   │       ├── flood_1989_07
+│   │       ├── flood_1992_03
+│   │       ├── flood_1994_10
+│   │       ├── flood_1998_10
+│   │       ├── flood_2002_10
+│   │       ├── flood_2003_11
+│   │       ├── flood_2009_04
+│   │       ├── flood_2012_01
+│   │       ├── flood_2019_05
+│   │       ├── frances_1998
+│   │       ├── halloween_2015
+│   │       ├── heavy_rain_2006_06
+│   │       ├── heavy_rain_2012_07
+│   │       ├── heavy_rain_2014_08
+│   │       ├── heavy_rain_2024_04_05
+│   │       ├── ike_2008
+│   │       ├── imelda_2019
+│   │       ├── memorial_2015
+│   │       ├── memorial_2016
+│   │       ├── tax_day_2016
+│   │       └── td8_1981
+│   ├── soils
+│   ├── structures
+│   │   ├── fema_nfhl
+│   │   │   ├── fema_nfhl_23_levees_harris_buffer.geojson
+│   │   │   └── fema_nfhl_24_general_structures_harris_buffer.geojson
+│   │   ├── hcfcd_m3
+│   │   ├── logs
+│   │   │   ├── fema_nfhl_general_structures_retry_20260520_112709.log
+│   │   │   ├── structures_arcgis_download_20260520_112528.log
+│   │   │   └── structures_arcgis_download_20260520_112642.log
+│   │   ├── metadata
+│   │   ├── usace_nld
+│   │   │   ├── usace_nld_10_closure_structures_harris_buffer.geojson
+│   │   │   ├── usace_nld_11_embankments_harris_buffer.geojson
+│   │   │   ├── usace_nld_12_floodwalls_harris_buffer.geojson
+│   │   │   ├── usace_nld_13_frm_lines_harris_buffer.geojson
+│   │   │   ├── usace_nld_15_system_routes_harris_buffer.geojson
+│   │   │   ├── usace_nld_16_leveed_areas_harris_buffer.geojson
+│   │   │   ├── usace_nld_17_berms_harris_buffer.geojson
+│   │   │   └── usace_nld_4_pump_stations_harris_buffer.geojson
+│   │   ├── SOURCE_PRIORITY.md
+│   │   └── STRUCTURES_COVERAGE_NOTES.md
+│   ├── validation
+│   │   ├── hcfcd_fws
+│   │   ├── logs
+│   │   │   └── usgs_stn_validation_20260520_113818.log
+│   │   ├── metadata
+│   │   ├── usgs_harvey_products
+│   │   ├── usgs_hwm
+│   │   ├── usgs_stn_fev
+│   │   │   ├── event_files
+│   │   │   ├── high_water_marks
+│   │   │   ├── metadata
+│   │   │   ├── sensors
+│   │   │   └── sites
+│   │   ├── VALIDATION_COVERAGE_NOTES.md
+│   │   └── VALIDATION_SOURCE_PRIORITY.md
+│   ├── water_level
+│   │   └── noaa_coops
+│   │       ├── datums
+│   │       ├── hourly_height
+│   │       ├── logs
+│   │       ├── metadata
+│   │       ├── predictions
+│   │       ├── retry_6min_eagle_point
+│   │       ├── station_metadata
+│   │       ├── verified_6min
+│   │       ├── verified_6min_all_monthly
+│   │       └── SOURCE_NOTES.md
+│   ├── wind_pressure
+│   └── README_DATA_ACQUISITION.md
+├── scripts
+│   ├── .spyproject
+│   │   └── config
+│   │       ├── backups
+│   │       │   [contents omitted]
+│   │       ├── defaults
+│   │       ├── codestyle.ini
+│   │       ├── encoding.ini
+│   │       ├── vcs.ini
+│   │       └── workspace.ini
+│   ├── __pycache__
+│   │   ├── compare_hybrid_vs_prof_pipeline.cpython-311.pyc
+│   │   ├── download_fema_nfhl_general_structures_retry.cpython-39.pyc
+│   │   ├── download_mrms_iem_hourly_zips.cpython-39.pyc
+│   │   ├── download_mrms_qpe01h_pass2_2024_only.cpython-39.pyc
+│   │   ├── download_mrms_qpe01h_pass2_mtarchive.cpython-39.pyc
+│   │   ├── download_noaa_coops_6min_monthly_2000_present.cpython-39.pyc
+│   │   ├── download_noaa_coops_eagle_point_msl_2000_present.cpython-39.pyc
+│   │   ├── download_structures_arcgis.cpython-39.pyc
+│   │   ├── download_usgs_harris_site_inventory.cpython-39.pyc
+│   │   ├── download_usgs_iv_monthly_2000_present.cpython-39.pyc
+│   │   ├── download_usgs_iv_monthly_parallel_worker.cpython-39.pyc
+│   │   ├── download_usgs_stn_validation.cpython-39.pyc
+│   │   ├── make_usgs_iv_missing_jobs.cpython-39.pyc
+│   │   ├── stage_event_validation_catalog_links.cpython-311.pyc
+│   │   ├── subset_aorc_events.cpython-311.pyc
+│   │   └── test_eagle_point_noaa_products.cpython-39.pyc
+│   ├── 01_init_actual_harvey_catalog_targets.py
+│   ├── 02_link_final_sources_no_duplicates.py
+│   ├── 03_check_actual_catalogs_no_duplicates.py
+│   ├── 04_strict_check_actual_catalog_completion.py
+│   ├── 05_classify_catalog_against_professor_run.py
+│   ├── 08_link_focused_discharge_sources.py
+│   ├── 09_cross_reference_discharge_sources.py
+│   ├── 10_fix_discharge_crosswalk_and_trim.py
+│   ├── 11_promote_discharge_drafts_to_final.py
+│   ├── 12_audit_event_boundary_table.py
+│   ├── 12b_infer_boundary_columns_from_professor_bzs.py
+│   ├── 12b_infer_boundary_columns_from_professor_bzs.py.before_dtype_fix
+│   ├── 12c_diagnose_boundary_row4_offset.py
+│   ├── 12d_inspect_boundary_row4_sources.py
+│   ├── 12e_trace_boundary_row4_source_metadata.py
+│   ├── 13_accept_boundary_table_with_professor_native_row4.py
+│   ├── 13b_accept_boundary_table_with_professor_native_row4.py
+│   ├── 14_generate_grid_metadata_and_forcing_qc.py
+│   ├── 15_final_catalog_status_check.py
+│   ├── 16_build_validation_gauge_master_inventory.py
+│   ├── 17_build_obs_master_from_processed_validation_catalogs.py
+│   ├── 18_select_harvey_obs_points_from_master.py
+│   ├── 19_create_obs_point_profiles.py
+│   ├── 20_audit_obs_profile_data_availability_by_event.py
+│   ├── 21_build_crs_line_candidate_profiles.py
+│   ├── 22_interactive_review_crs_line_orientations.py
+│   ├── 23_click_custom_crs_lines.py
+│   ├── 23b_auto_accept_custom_crs_lines.py
+│   ├── 24_promote_mask_template_and_build_dem_valid_draft.py
+│   ├── apply_bzs3_bzs4_stage_offsets.py
+│   ├── atch_professor_forcing_columns.py
+│   ├── audit_hybrid_full_001.py
+│   ├── audit_hybrid_full_001_report.txt
+│   ├── audit_hybrid_full_001_summary.csv
+│   ├── audit_professor_lake_houston_forcing_harvey.py
+│   ├── audit_professor_static_box_sources.py
+│   ├── audit_professor_static_template.py
+│   ├── audit_reduced_forcing_data_gaps.py
+│   ├── audit_sfincs_outputs_for_ml_readiness.py
+│   ├── build_harvey_2017_full_aorc_catalog_products.py
+│   ├── build_harvey_2017_full_reduced_catalog.py
+│   ├── build_nfip_harris_event_candidates.py
+│   ├── build_pipeline_bundle.py
+│   ├── check_aorc_smoke_test_output.sh
+│   ├── check_hybrid_full_002.py
+│   ├── check_run_slurm_utilization.py
+│   ├── clean_events_reduced_after_bzs_update.py
+│   ├── compare_hybrid_vs_prof_pipeline.py
+│   ├── compare_hybrid_vs_prof_pipeline_before_future_fix.py
+│   ├── compare_precip_netcdf_headers.py
+│   ├── compare_precip_netcdf_headers_report.txt
+│   ├── compare_sfincs_outputs.py
+│   ├── CPU Time Finder Scripts Generator.py
+│   ├── create_catalog_skeletons.py
+│   ├── create_events_reduced_catalog.py
+│   ├── curate_event_validation_catalog_metadata.py
+│   ├── download_fema_nfhl_general_structures_retry.py
+│   ├── download_gcn250_direct.sh
+│   ├── download_mrms_iem_hourly_zips.py
+│   ├── download_mrms_qpe01h_pass2_2024_only.py
+│   ├── download_mrms_qpe01h_pass2_mtarchive.py
+│   ├── download_noaa_coops_6min_monthly_2000_present.py
+│   ├── download_noaa_coops_eagle_point_msl_2000_present.py
+│   ├── download_noaa_twdb_coastal_2018_dem.sh
+│   ├── download_structures_arcgis.py
+│   ├── download_usgs_harris_site_inventory.py
+│   ├── download_usgs_iv_jobs_worker.sh
+│   ├── download_usgs_iv_monthly_2000_present.py
+│   ├── download_usgs_iv_monthly_parallel_worker.py
+│   ├── download_usgs_stn_validation.py
+│   ├── explore_fima_nfip_harris_weekly.py
+│   ├── fetch_aorc_harris_event_subsets.py
+│   ├── fill_event_catalog_runtime_and_exact_aorc_precip.py
+│   ├── fill_tropical_event_wind_pressure_from_aorc.py
+│   ├── final_catalog_audit.py
+│   ├── final_y_n_event_window_pass.py
+│   ├── find_and_download_nlcd_extra_layers.sh
+│   ├── flow_validation_context_report.txt
+│   ├── gather_flow_validation_context.py
+│   ├── infer_lake_houston_gaps_from_best_nearby_gauge.py
+│   ├── inspect_2014_aorc_precip_candidates.py
+│   ├── inspect_2014_aorc_precip_candidates_report.txt
+│   ├── inspect_sfincs_crosssection_files.py
+│   ├── inspect_sfincs_crosssection_files_report.txt
+│   ├── inspect_validation_catalogs.py
+│   ├── inspect_validation_catalogs_report.txt
+│   ├── make_aorc_rain_window_review.py
+│   ├── make_professor_guided_open_boundary_outline_v001.py
+│   ├── make_professor_guided_open_boundary_outline_v002.py
+│   ├── make_usgs_iv_missing_jobs.py
+│   ├── manual_finish_skipped_event_windows_pm15.py
+│   ├── map_crosssections_to_usgs_discharge_gauges.py
+│   ├── map_professor_dem_outline_noaa_stations.py
+│   ├── match_eagle_point_bzs_offset.py
+│   ├── match_professor_forcing_columns.py
+│   ├── move_not_finished_runs_to_trash.py
+│   ├── patch_harvey_2017_full_required_reduced_files.py
+│   ├── process_aorc_event_catalogs
+│   ├── process_aorc_event_catalogs.py
+│   ├── process_harvey_hwm_validation_catalog.py
+│   ├── process_noaa_coops_waterlevel_event_catalogs.py
+│   ├── process_usgs_discharge_event_catalogs.py
+│   ├── process_usgs_discharge_events_catalogs.py
+│   ├── process_usgs_stage_validation_catalogs.py
+│   ├── pull_harvey_long_aorc_raw.py
+│   ├── refresh_aorc_from_approved_windows_pm30.py
+│   ├── repair_2014_reduced_precip_from_raw_aorc.py
+│   ├── reset_event_and_validation_catalog_skeletons.py
+│   ├── retry_eagle_point_6min_coops.py
+│   ├── retry_langham_2012_discharge.py
+│   ├── review_aorc_rain_windows_interactive.py
+│   ├── run_aorc_all_events_download.sh
+│   ├── run_aorc_one_event_smoke_test.sh
+│   ├── run_comparer.py
+│   ├── run_comparer_2.py
+│   ├── score_sfincs_physical_plausibility.py
+│   ├── score_sfincs_physical_plausibility_v2.py
+│   ├── Script_temp.py
+│   ├── sfincs_outputs_ml_readiness_report.txt
+│   ├── sfincs_outputs_ml_readiness_summary.csv
+│   ├── sfincs_physical_plausibility_report.txt
+│   ├── sfincs_physical_plausibility_report_v2.txt
+│   ├── sfincs_physical_plausibility_scores.csv
+│   ├── sfincs_physical_plausibility_scores_v2.csv
+│   ├── stage_event_validation_catalog_links.py
+│   ├── stage_harvey_2017_full_aorc_raw.py
+│   ├── subset_aorc_events.py
+│   ├── Temp.py
+│   ├── test_eagle_point_noaa_products.py
+│   └── update_proj_pipeline_from_personal.py
+└── README.md

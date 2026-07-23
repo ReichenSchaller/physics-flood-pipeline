@@ -1,0 +1,36 @@
+working_key,catalog_key,label,documentation_status,tref,tstart,tstop
+flood_1979_04,flood_1979_04,April 1979 Harris County flood,Next-step event catalog,1979-04-15 17:00:00,1979-04-15 17:00:00,1979-04-25 15:00:00
+claudette_1979,claudette_1979,Tropical Storm Claudette,Next-step event catalog,1979-07-16 00:00:00,1979-07-16 00:00:00,1979-08-13 00:00:00
+flood_1979_09,flood_1979_09,September 1979 flood; possible Tropical Storm Elena relationship remains to be verified,Next-step event catalog,1979-09-15 22:00:00,1979-09-15 22:00:00,1979-09-22 17:00:00
+flood_1981_04,flood_1981_04,April-May 1981 flood,Next-step event catalog,1981-04-29 00:00:00,1981-04-29 00:00:00,1981-05-07 07:00:00
+flood_1981_06,flood_1981_06,June 1981 flood,Next-step event catalog,1981-05-28 19:00:00,1981-05-28 19:00:00,1981-06-09 08:00:00
+td8_1981,td8_1981,Possible Tropical Depression Eight / August-September 1981 flood,Next-step event catalog,1981-08-25 13:00:00,1981-08-25 13:00:00,1981-09-09 01:00:00
+alicia_1983,alicia_1983,Hurricane Alicia,Next-step event catalog,1983-07-28 05:00:00,1983-07-28 05:00:00,1983-08-22 04:00:00
+flood_1983_09,flood_1983_09,September 1983 flood,Next-step event catalog,1983-09-14 14:00:00,1983-09-14 14:00:00,1983-09-23 17:00:00
+flood_1984_10,flood_1984_10,"October 21-22, 1984 heavy rain and flooding south of Houston",Next-step event catalog,1984-10-15 20:00:00,1984-10-15 20:00:00,1984-10-31 07:00:00
+flood_1989_05,flood_1989_05,May 1989 flood,Next-step event catalog,1989-05-10 13:00:00,1989-05-10 13:00:00,1989-05-21 03:00:00
+allison_1989,allison_1989,"Tropical Storm Allison, 1989",Next-step event catalog,1989-06-17 18:00:00,1989-06-17 18:00:00,1989-07-12 03:00:00
+flood_1989_07,flood_1989_07,Late July / early August 1989 flood,Next-step event catalog,1989-07-30 00:00:00,1989-07-30 00:00:00,1989-08-04 18:00:00
+flood_1992_03,flood_1992_03,"March 4, 1992 Houston/Harris County flood",Next-step event catalog,1992-03-02 13:00:00,1992-03-02 13:00:00,1992-03-08 21:00:00
+flood_1994_10,flood_1994_10,Southeast Texas Floods of October 1994,Next-step event catalog,1994-10-13 08:00:00,1994-10-13 08:00:00,1994-10-25 03:00:00
+frances_1998,frances_1998,Tropical Storm Frances,Next-step event catalog,1998-09-01 20:00:00,1998-09-01 20:00:00,1998-09-22 15:00:00
+flood_1998_10,flood_1998_10,October 1998 flood / post-Frances fall storm,Next-step event catalog,1998-10-15 11:00:00,1998-10-15 11:00:00,1998-10-23 04:00:00
+allison_2001,allison_2001,Tropical Storm Allison,Next-step event catalog,2001-05-23 04:00:00,2001-05-23 04:00:00,2001-06-14 05:00:00
+flood_2002_10,flood_2002_10,"October 28-29, 2002 Houston/Harris flooding",Next-step event catalog,2002-10-17 11:00:00,2002-10-17 11:00:00,2002-10-31 17:00:00
+flood_2003_11,flood_2003_11,"November 17, 2003 flood / severe-weather event",Next-step event catalog,2003-11-14 17:00:00,2003-11-14 17:00:00,2003-11-20 17:00:00
+heavy_rain_2006_06,heavy_rain_2006_06,June 2006 heavy rainfall,Next-step event catalog,2006-06-14 12:00:00,2006-06-14 12:00:00,2006-06-25 05:00:00
+erin_2007,erin_2007,Tropical Storm Erin / August 2007 flood,Next-step event catalog,2007-08-10 23:00:00,2007-08-10 23:00:00,2007-09-20 23:00:00
+ike_2008,ike_2008,Hurricane Ike,Complete current data catalog,2008-09-09 21:00:00,2008-09-09 21:00:00,2008-09-18 05:00:00
+flood_2009_04,flood_2009_04,April 2009 flood,Complete current data catalog,2009-04-16 17:00:00,2009-04-16 17:00:00,2009-04-21 09:00:00
+flood_2012_01,flood_2012_01,January 2012 flood,Complete current data catalog,2012-01-07 20:00:00,2012-01-07 20:00:00,2012-01-12 11:00:00
+heavy_rain_2012_07,heavy_rain_2012_07,July 2012 Cypress / northern Harris heavy rainfall,Complete current data catalog,2012-07-06 17:00:00,2012-07-06 17:00:00,2012-07-22 05:00:00
+heavy_rain_2014_08,heavy_rain_2014_08,August 2014 heavy rainfall,Complete current data catalog,2014-07-28 19:00:00,2014-07-28 19:00:00,2014-09-24 07:00:00
+memorial_2015,memorial_2015,2015 Memorial Day Flood,Complete current data catalog,2015-05-20 18:00:00,2015-05-20 18:00:00,2015-06-02 18:00:00
+halloween_2015,halloween_2015,2015 Halloween Flood,Complete current data catalog,2015-10-29 14:00:00,2015-10-29 14:00:00,2015-11-04 10:00:00
+tax_day_2016,tax_day_2016,2016 Tax Day Flood,Complete current data catalog,2016-04-15 23:00:00,2016-04-15 23:00:00,2016-04-24 02:00:00
+memorial_2016,memorial_2016,2016 Memorial Day Flood,Complete current data catalog,2016-05-30 22:00:00,2016-05-30 22:00:00,2016-06-10 03:00:00
+harvey_2017,harvey_2017_mrms,Hurricane Harvey,Complete current data catalog,2017-08-22 00:00:00,2017-08-22 00:00:00,2017-09-17 01:00:00
+flood_2019_05,flood_2019_05,"May 7, 2019 Kingwood / Sugar Land flooding",Complete current data catalog,2019-05-05 21:00:00,2019-05-05 21:00:00,2019-05-13 05:00:00
+imelda_2019,imelda_2019,Tropical Storm Imelda,Complete current data catalog,2019-09-07 09:00:00,2019-09-07 09:00:00,2019-09-27 13:00:00
+heavy_rain_2024_04_05,heavy_rain_2024_04_05,April-May 2024 heavy rainfall / northeast Harris flooding,Complete current data catalog,2024-04-28 15:00:00,2024-04-28 15:00:00,2024-05-08 07:00:00
+beryl_2024,beryl_2024,Hurricane Beryl,Complete current data catalog,2024-06-21 14:00:00,2024-06-21 14:00:00,2024-08-03 00:00:00

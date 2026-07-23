@@ -567,9 +567,9 @@ physics-flood-pipeline/
 │   │   ├── running_models.md
 │   │   └── reviewing_results.md
 │   │
-│   └── data/
-│       ├── data_layout.md
-│       └── catalog_structure.md
+│   └── data.md
+│
+│
 │
 ├── code/
 ├── web_launcher/
@@ -796,12 +796,3 @@ University of North Carolina at Chapel Hill
 Repository issues may also be used once the issue-tracking workflow is
 established.
 
----
-
-## License
-
-A repository license has not yet been finalized.
-
-The MIT License is currently under consideration, subject to approval by the
-research group and institute. Until a license is added, users should not assume
-that the repository has been released under MIT or another open-source license.
