@@ -539,39 +539,33 @@ physics-flood-pipeline/
 ├── docs/
 │   ├── current_research.md
 │   │
-│   ├── architecture/
-│   │   ├── overview.md
-│   │   ├── slurm_execution.md
-│   │   │
-│   │   ├── python_backend/
-│   │   │   ├── python_backend.md
-│   │   │   ├── module_catalog.md
-│   │   │   └── files/
-│   │   │
-│   │   ├── web_launcher/
-│   │   │   ├── web_launcher.md
-│   │   │   ├── page_and_api_map.md
-│   │   │   └── files/
-│   │   │
-│   │   └── review_mode/
-│   │       ├── review_mode.md
-│   │       ├── product_and_status_model.md
-│   │       └── files/
+│   ├── data.md
 │   │
-│   ├── usage/
-│   │   ├── installation.md
-│   │   ├── configuration.md
-│   │   ├── running_models.md
-│   │   └── reviewing_results.md
+│   ├── usage.md
 │   │
-│   └── data.md
+│   └── architecture/
+│       ├── overview.md
+│       ├── slurm_execution.md
+│       │
+│       ├── python_backend/
+│       │   ├── python_backend.md
+│       │   ├── module_catalog.md
+│       │   └── files/
+│       │
+│       ├── web_launcher/
+│       │   ├── web_launcher.md
+│       │   ├── page_and_api_map.md
+│       │   └── files/
+│       │
+│       └── review_mode/
+│           ├── review_mode.md
+│           ├── product_and_status_model.md
+│           └── files/
 │
-│
-├── code/
-├── web_launcher/
 ├── configs/
 │   └── examples/
-└── tests/
+├── code/
+└── web_launcher/
 ```
 
 The architecture documents will explain how the major subsystems connect. More
