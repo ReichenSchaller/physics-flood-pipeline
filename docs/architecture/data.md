@@ -9,7 +9,7 @@ This page explains the current data architecture and catalog contract. It does n
 
 ## Availability
 
-The complete project datasets are stored in the maintainer's Longleaf user-space data area under `/users`. They are not committed to GitHub because of their size and because some inputs remain subject to the terms of their original data providers.
+The complete project datasets are stored in the Reichen Schaller's Longleaf user-space data area under `/users`. They are not committed to GitHub because of their size and because some inputs remain subject to the terms of their original data providers.
 
 Rounded working sizes are:
 
@@ -266,7 +266,7 @@ The current event-catalog design separates forcing by physical role.
 | `event_runtime_window` | Approved reference, start, and stop times |
 | `event_forcing_qc` | Coverage and preparation evidence |
 
-The current source pattern is intentionally described cautiously:
+The a rough list of current data sources:
 
 - **MRMS** supplies the active radar-based precipitation product for Hurricane Harvey.
 - **AORC** supplies precipitation and, where applicable, atmospheric forcing used in many other event preparations.
@@ -274,9 +274,7 @@ The current source pattern is intentionally described cautiously:
 - **USGS** supplies inland gauge-height and discharge records.
 - **HCFCD** contributes Harris County spatial and hydrologic source material and inherited project references.
 - **NLCD** supplies land-cover information used in static roughness preparation.
-- **DesignSafe** is the source of the curated elevation product used by the current Harris County setup.
 
-Only sources evidenced in current filenames, manifests, metadata, or catalog records are named here.
 
 ---
 
@@ -296,7 +294,7 @@ The active event-water-level table uses:
 time,8771013,8770613,08072050
 ```
 
-Manchester station `8770777` is not an active boundary in the current contract. It may remain useful as an observation, comparison location, or provenance source, but it is excluded from the active generated boundary geometry and water-level forcing.
+Manchester station `8770777` is not an active boundary in the current contract. It may remain useful as an observation, comparison location, or provenance source, but it is excluded from the active generated boundary geometry and water-level forcing due to being too far from a boundary cell.
 
 The boundary series preserve event-specific hydrographs and event windows. The standardization applies to station identity, order, coordinates, and accepted datum handling; it does not replace every event with one universal water-level time series.
 
@@ -316,6 +314,8 @@ Lake Houston:
 ```
 
 The physical NOAA instrument coordinates do not have to coincide with the modeled boundary coordinates. Boundary points are placed on the model's active open boundary, while the observed time series represents the selected physical station.
+
+Morgan's and Lake Houston are located very close to a boundary cell. Eagle's point however had to be shifted ~9km to the nearest boundary cell.
 
 ---
 
@@ -381,7 +381,7 @@ Gauge-height records cannot be compared safely by treating every number as thoug
 Several complications occur in the project data:
 
 - A USGS station may use a local gage datum rather than NAVD88.
-- Station metadata may record a change to NAVD88 on a particular date.
+- Station metadata may record a change to NAVD88 on a particular date that has to be accounted for.
 - The value required to reconcile pre-change records is site-specific.
 - Offsets may be positive or negative.
 - Some offsets are large because they reconcile local reference elevations, not because the water surface physically jumped by that amount.
@@ -503,7 +503,7 @@ The datum-adjusted master derivative is used to construct event-specific validat
 
 </details>
 
-Of the 89 selected sites, 34 currently have a recorded transition date and pre-transition offset in this table. The remaining 55 do not have an explicit rule recorded here.
+Of the 89 selected sites, 34 currently have a recorded transition date and pre-transition offset in this table. The remaining 55 are being used as is.
 
 ---
 
@@ -598,7 +598,7 @@ A completed scheduler job is also not proof that an updated catalog is scientifi
 
 ## External data and attribution
 
-The project currently uses or preserves direct evidence for the following external source families:
+The project currently uses or preserves direct evidence for the following external source families(though this list not exhaustive):
 
 | Source | Current project role |
 |---|---|
@@ -608,7 +608,7 @@ The project currently uses or preserves direct evidence for the following extern
 | AORC | Precipitation and applicable atmospheric forcing for event preparation |
 | HCFCD | Harris County spatial, hydrologic, and inherited source material |
 | NLCD | Land-cover information used in roughness preparation |
-| DesignSafe | Curated elevation data used by the Harris County setup |
+
 
 This list is intentionally limited to sources evidenced by the current data tree. Individual products retain their original attribution, access conditions, and licenses.
 

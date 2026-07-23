@@ -537,10 +537,7 @@ physics-flood-pipeline/
 ├── .gitignore
 │
 ├── docs/
-│   ├── research/
-│   │   ├── overview.md
-│   │   ├── current_status.md
-│   │   └── validation.md
+│   ├── current_research.md
 │   │
 │   ├── architecture/
 │   │   ├── overview.md
@@ -568,7 +565,6 @@ physics-flood-pipeline/
 │   │   └── reviewing_results.md
 │   │
 │   └── data.md
-│
 │
 │
 ├── code/
