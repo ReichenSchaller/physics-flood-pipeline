@@ -531,42 +531,58 @@ finished production application.
 The repository is being organized into source code, user documentation,
 developer documentation, and portable examples.
 
+
 ```text
 physics-flood-pipeline/
 ├── README.md
+├── LICENSE
 ├── .gitignore
 │
 ├── docs/
 │   ├── current_research.md
-│   │
 │   ├── data.md
-│   │
 │   ├── usage.md
+│   ├── installation.md
+│   ├── sfincs_container.md
 │   │
-│   └── architecture/
-│       ├── overview.md
-│       ├── slurm_execution.md
-│       │
-│       ├── python_backend/
-│       │   ├── python_backend.md
-│       │   ├── module_catalog.md
-│       │   └── files/
-│       │
-│       ├── web_launcher/
-│       │   ├── web_launcher.md
-│       │   ├── page_and_api_map.md
-│       │   └── files/
-│       │
-│       └── review_mode/
-│           ├── review_mode.md
-│           ├── product_and_status_model.md
-│           └── files/
+│   ├── architecture/
+│   │   ├── overview.md
+│   │   ├── slurm_execution.md
+│   │   │
+│   │   ├── python_backend/
+│   │   │   ├── python_backend.md
+│   │   │   ├── module_catalog.md
+│   │   │   └── files/
+│   │   │
+│   │   ├── web_launcher/
+│   │   │   ├── web_launcher.md
+│   │   │   ├── page_and_api_map.md
+│   │   │   └── files/
+│   │   │
+│   │   └── review_mode/
+│   │       ├── review_mode.md
+│   │       ├── product_and_status_model.md
+│   │       └── files/
+│   │
+│   └── assets/
+│       └── architecture/
 │
 ├── configs/
 │   └── examples/
+│
+├── environments/
+│   ├── environments.md
+│   ├── sfincs_environment.yml
+│   ├── sfincs_contextily_environment.yml
+│   ├── web_launcher_environment.yml
+│   └── aorc_s3_environment.yml
+│
 ├── code/
+│
 └── web_launcher/
 ```
+
+
 
 The architecture documents will explain how the major subsystems connect. More
 detailed module and function documentation will remain close to the source code
