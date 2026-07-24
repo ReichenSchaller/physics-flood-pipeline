@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is developing a repeatable system for simulating flood hazards and their consequences across a large range of storm events. The long-term scientific objective is a **storm-loss database** that connects storm characteristics, flood behavior, and resulting physical or financial losses.
+This project is developing a repeatable system for simulating flood hazards and their consequences across a large range of storm events. The long-term scientific objective is a **storm-outcome database** that connects storm characteristics, flood behavior, and resulting physical and economic outcomes.
 
 Producing that database requires more than one hydraulic model run. It requires a method that can:
 
@@ -14,7 +14,7 @@ Producing that database requires more than one hydraulic model run. It requires 
 - support large batches of simulations on a high-performance computing system; and
 - eventually connect flood depth and inundation outputs to damage and loss estimates.
 
-The current GitHub repository focuses on the modeling pipeline that makes those larger research goals practical. Its main contribution is not a new hydraulic solver. SFINCS is developed by Deltares, and HydroMT provides an existing framework for reproducible model construction. The contribution of this project is the system built around those tools: structured data catalogs, validated configuration handling, reusable model components, automated Longleaf and Slurm execution, browser-based run creation, comparison and review tools, and durable run provenance.
+The current GitHub repository focuses on the modeling pipeline that makes those larger research goals practical. Its main contribution is not a new hydraulic solver. SFINCS is developed by Deltares, and HydroMT provides an existing framework for reproducible model construction. The contribution of this project is the system built around those tools: structured data catalogs, validated configuration handling, reusable model components, automated Longleaf and Slurm execution, browser-based run creation, working Review tools, planned run-comparison capabilities, and durable run provenance.
 
 In other words, the project packages a complicated physics-based flood simulation workflow into a form that is easier to use, repeat, inspect, update, and extend. The Web Launcher was intended as part of that larger research system from the beginning rather than being added only after the backend was complete.
 
@@ -31,11 +31,13 @@ A simplified version of the intended research chain is:
 ```text
 historical storms and observations
     ↓
-validated physics-based SFINCS workflow
+validated historical SFINCS workflow
     ↓
 large synthetic storm ensemble
     ↓
 representative subset selected for full SFINCS simulation
+    ↓
+full physics-based simulations for the selected subset
     ↓
 machine-learning flood emulator
     ↓
@@ -43,14 +45,14 @@ rapid inundation estimates for the larger ensemble
     ↓
 damage and loss estimation
     ↓
-searchable storm-loss database
+searchable storm-outcome database
 ```
 
 The conceptual ensemble may ultimately contain on the order of one million storm scenarios. Running a full hydraulic simulation for every scenario would be unnecessarily expensive. The intended strategy is therefore to run SFINCS for a smaller, carefully selected subset and use those simulations to train and test an emulator capable of estimating flood outcomes for the wider ensemble.
 
 The project is currently considering **stochastic storm transposition** as one possible method for constructing the storm ensemble. Stochastic storm transposition can help generate additional plausible scenarios by relocating and resampling observed storms while retaining important physical structure. The final ensemble-generation method has not yet been locked. Its selection will depend on how well it represents the relevant rainfall, tropical-cyclone, coastal, and compound-flood conditions for the study area.
 
-The storm-loss database remains the overall research destination. This repository concentrates on the part that must work first: producing trustworthy, repeatable, and efficiently generated flood simulations.
+The storm-outcome database remains the overall research destination. This repository concentrates on the part that must work first: producing trustworthy, repeatable, and efficiently generated flood simulations.
 
 ---
 
@@ -68,7 +70,7 @@ The current work is organized around several connected questions:
 
 5. Can a smaller, strategically selected set of SFINCS simulations represent a much larger synthetic storm space?
 
-6. Can the resulting inundation estimates be translated into useful estimates of damage and loss?
+6. Can the resulting inundation estimates be translated into useful estimates of physical damage, financial loss, and other storm outcomes?
 
 These questions make the software architecture part of the research method. A model that is difficult to reproduce, difficult to update, or easy to configure incorrectly is not a strong basis for a large simulation ensemble.
 
@@ -180,8 +182,8 @@ The method therefore developed around several deliberate changes:
 6. **Provide a browser-accessible interface.**  
    The Web Launcher was planned as an intended part of the larger method: a way to expose the model safely to a broader research audience while preserving explicit backend configurations and guardrails.
 
-7. **Build comparison and review into the workflow.**  
-   A run should not end when SFINCS exits. Researchers need maps, animations, observation comparisons, status information, and access to the exact files that produced the result.
+7. **Build review and future comparison into the workflow.**  
+   A run should not end when SFINCS exits. Researchers need maps, animations, observation comparisons, status information, and access to the exact files that produced the result. Multi-run comparison remains a planned extension of the current Review system.
 
 The current repository is the result of turning a useful regional reference model into a more general and maintainable research platform.
 
@@ -219,9 +221,11 @@ run preflight checks
     ↓
 submit the model workflow
     ↓
-monitor status
+monitor computational status
     ↓
-review outputs and validation products
+review generated products
+    ↓
+perform scientific validation and interpretation
 ```
 
 The scientific model remains complex, but the complexity is made visible and manageable rather than being hidden in undocumented folders and one-off scripts.
@@ -239,7 +243,7 @@ flowchart LR
 
     DATA["Static, event, and<br/>validation catalogs"]
 
-    LAUNCHER["SFINCS Web Launcher<br/>Configure and review"]
+    LAUNCHER["SFINCS Web Launcher<br/>Configure runs and access Review"]
 
     CONFIG["Frozen run configuration<br/>Explicit inputs and settings"]
 
@@ -295,7 +299,7 @@ The current project plan contains 35 historical events. Fourteen event catalogs 
 
 The remaining 21 events expand the historical record back to 1979. Their folders currently range from skeleton catalogs to partially prepared events. They will be completed after the current 14-event method and validation cycle are closed out.
 
-The full event list, working windows, catalog structure, and data-availability information are documented in [Data](architecture/data.md).
+The full event list, working windows, catalog structure, and data-availability information are documented in [Data Catalogs and Validation Data](data.md).
 
 ---
 
@@ -303,9 +307,9 @@ The full event list, working windows, catalog structure, and data-availability i
 
 The pipeline supports two main ways to create a run. This is a scientific and computational design choice, not merely a user-interface preference.
 
-### Manual / HydroMT construction
+### Manual Mode
 
-The Manual workflow builds a model from source-oriented static and event data.
+Manual Mode builds a model from source-oriented static and event data through the HydroMT-SFINCS construction workflow.
 
 This mode is appropriate when the research requires changes to:
 
@@ -321,9 +325,9 @@ This mode is appropriate when the research requires changes to:
 
 Manual construction exposes how source data become native SFINCS files and is essential for extending the method to new domains.
 
-### Override / Hybrid construction
+### Override Mode
 
-The Override workflow imports trusted native SFINCS static files and combines them with selected event forcing and runtime settings.
+Override Mode imports trusted native SFINCS static files and combines them with selected event forcing and runtime settings.
 
 This mode is appropriate when the research question is primarily:
 
@@ -347,7 +351,7 @@ reuse it for runs that do not change the relevant assumptions
 regenerate only the event-dependent pieces
 ```
 
-This does not mean files should be reused blindly. The configuration must still prove that a reused file is compatible with the selected grid, mask, model version, and scientific question.
+This does not mean files should be reused blindly. The configuration, preflight checks, provenance records, and generated-input review must establish that a reused file is compatible with the selected grid, mask, model version, and scientific question.
 
 The distinction is especially important for future Batch Mode. Large batches become practical when runs can share validated static components while changing only the rainfall, boundary forcing, atmospheric forcing, runtime, or another intentionally selected variable.
 
@@ -392,7 +396,7 @@ This provenance model is necessary for historical validation, sensitivity analys
 
 ## Validation framework
 
-Validation is divided into three layers.
+For the current research workflow, validation is organized into three broad layers.
 
 ### Input validation
 
@@ -486,7 +490,7 @@ The current 14-event setup uses a common three-station boundary identity and ord
 
 ```text
 1. Eagle Point — 8771013
-2. Morgan's Point / Barbours Cut — 8770613
+2. Morgan's Point — 8770613
 3. Lake Houston / San Jacinto near Sheldon — 08072050
 ```
 
@@ -517,13 +521,13 @@ The project preserves the raw archive and creates separate datum-adjusted deriva
 
 Datum harmonization is not an administrative detail. A datum error can appear as persistent model bias and can lead to an incorrect conclusion about model performance.
 
-The full transition table and current data conventions are documented in [Data](architecture/data.md).
+The full transition table and current data conventions are documented in [Data Catalogs and Validation Data](data.md).
 
 ---
 
 ## Current status
 
-The project has reached a point where the major system components exist and the current historical-event catalogs can be run through the pipeline. The remaining work is increasingly about scientific closeout, performance assessment, and scaling rather than initial software assembly.
+The project has reached a point where the major Version 1 system components exist and the fourteen complete historical-event catalogs have been run through the current pipeline. The remaining work is increasingly focused on scientific closeout, performance assessment, additional event development, and scaling rather than initial software assembly.
 
 ### Operational or complete for the present phase
 
@@ -543,9 +547,9 @@ The project has reached a point where the major system components exist and the 
 - reusable USGS validation archive;
 - datum-adjusted water-level derivatives;
 - common 59-point and 29-line validation geometry; and
-- fresh run folders for all 14 current events.
+- a fresh completed SFINCS run family for all 14 current events.
 
-The latest quick Review snapshot labeled 13 fresh runs `completed` and one run `sfincs-completed`. Those labels indicate scheduler or file-based progress, not final scientific validation.
+The fresh fourteen-event run family has completed at the scheduler and quick file-status level. This computational completion does not establish that every generated input, output, postprocessing product, or scientific comparison is correct.
 
 ### Complete at the catalog or input level
 
@@ -569,13 +573,13 @@ The current closeout requires:
 - confirmation of 59 point observations and 29 line observations in the generated models;
 - inspection of `sfincs_his.nc` dimensions, identifiers, variables, and time axes;
 - inspection of `sfincs_map.nc` contents and rainfall accumulation;
-- confirmation that postprocessing belongs to the current run family;
+- confirmation that all retained postprocessing and Review products belong to the current run family;
 - regenerated validation metrics and plots; and
 - event-to-event interpretation of error, timing, bias, and hydrograph behavior.
 
 The accurate current statement is:
 
-> Validation-input and active-boundary preparation are complete for the 14-event set. The fresh simulation cycle has finished at the scheduler or quick-status level, but consolidated generated-input, output, and scientific validation remain in progress.
+> Validation-input and active-boundary preparation are complete for the 14-event set, and the fresh SFINCS run family has completed. Consolidated generated-input, output-file, postprocessing, and scientific validation remain in progress.
 
 ---
 
@@ -672,7 +676,7 @@ estimated physical and financial loss
     ↓
 comparison with historical claims
     ↓
-storm-loss database
+storm-outcome database
 ```
 
 Historical claims information is one reason Harris County is a valuable test location. Claims can provide an outcome layer against which the combined hazard-and-loss method can eventually be evaluated.
@@ -719,11 +723,11 @@ The project should not commit to one synthetic method until it can be connected 
 ### Near term
 
 - complete the consolidated 14-run generated-input and output audit;
+- confirm that retained postprocessing and Review products belong to the current run family;
 - regenerate validation metrics and plots from the current run family;
 - document event-to-event model performance;
-- resolve the remaining postprocessing distinction for the `sfincs-completed` run;
 - finish browser smoke testing of current Review behavior; and
-- stabilize the public architecture and research documentation.
+- complete the first full review and correction pass of the public documentation.
 
 ### Historical-event expansion
 
@@ -751,14 +755,14 @@ The project should not commit to one synthetic method until it can be connected 
 - generate representative SFINCS training simulations; and
 - measure how well the selected simulations span the larger ensemble.
 
-### Emulator and loss database
+### Emulator and storm-outcome database
 
 - define emulator inputs and flood-output targets;
 - separate training, validation, and out-of-sample storms;
 - quantify emulator error alongside SFINCS and data uncertainty;
 - connect flood outputs to exposure and vulnerability information;
 - compare estimated losses with historical claims; and
-- assemble the searchable storm-loss database.
+- assemble the searchable storm-outcome database.
 
 ---
 
@@ -788,7 +792,7 @@ Longleaf and Slurm execution are integrated with frozen configurations, staged j
 
 ### Foundation for ensemble and loss research
 
-The system is designed to support the later stochastic-storm, emulator, and loss-database phases rather than treating each historical simulation as an isolated result.
+The system is designed to support the later stochastic-storm, emulator, damage-estimation, and storm-outcome-database phases rather than treating each historical simulation as an isolated result.
 
 The repository's main novelty is therefore best described as **an accessible, repeatable, and extensible way to use a complex physics-based flood model as part of a larger research program**.
 
@@ -796,12 +800,25 @@ The repository's main novelty is therefore best described as **an accessible, re
 
 ## Related documentation
 
-- [Architecture overview](architecture/overview.md) explains the complete software system.
-- [Data](architecture/data.md) documents the static, event, and validation catalog structure.
-- [Web Launcher](architecture/web_launcher/web_launcher.md) explains the browser-facing application and its backend handoffs.
-- [Page and API map](architecture/web_launcher/page_and_api_map.md) maps pages, JavaScript, Flask routes, and helper scripts.
-- [Python Backend](architecture/python_backend/python_backend.md) explains configuration validation and model orchestration.
-- [Slurm Execution](architecture/slurm_execution.md) explains preparation, simulation, and postprocessing jobs.
-- [Review Mode](architecture/review_mode/review_mode.md) explains run discovery, maps, animations, and validation products.
+### Project, data, and reproducibility
 
-Detailed operating instructions and the future catalog-construction tutorial belong in the SFINCS Web Launcher Guide. This page remains the public narrative of the research goal, method, progress, validation state, limitations, and next steps.
+- [Repository overview](../README.md)
+- [Data Catalogs and Validation Data](data.md)
+- [Usage and Access](usage.md)
+- [SFINCS Container](sfincs_container.md)
+- [Python Environments](../environments/environments.md)
+- [Example Run Configurations](../configs/README.md)
+
+### Architecture
+
+- [Architecture Overview](architecture/overview.md)
+- [Slurm Execution Stack](architecture/slurm_execution.md)
+- [Python Backend](architecture/python_backend/python_backend.md)
+- [Backend Module Catalog](architecture/python_backend/module_catalog.md)
+- [Web Launcher](architecture/web_launcher/web_launcher.md)
+- [Page and API Map](architecture/web_launcher/page_and_api_map.md)
+- [Review Mode](architecture/review_mode/review_mode.md)
+
+Detailed operating instructions and future catalog-construction guidance belong
+in the SFINCS Web Launcher Guide. This page remains the public narrative of the
+research goal, method, progress, validation state, limitations, and next steps.
