@@ -41,7 +41,7 @@ packaged application.
 - Read [Usage and Access](docs/usage.md) for the current access workflow.
 - Review the [Python environments](environments/environments.md).
 - Review the [SFINCS container setup](docs/sfincs_container.md).
-- Inspect the [Manual and Override example configurations](configs/README.md).
+- Inspect the [Manual and Override example configurations](configs/configs_README.md).
 - Use the built-in Web Launcher Guide for page-level operating instructions.
 
 The large model datasets, installed software environments, and SFINCS container
