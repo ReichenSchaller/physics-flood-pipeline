@@ -1,8 +1,8 @@
 # Physics-Based Flood Simulation Pipeline
 
 A web-based research pipeline for configuring, running, reviewing, and
-validating physics-based flood simulations with SFINCS on Linux-based
-high-performance computing systems.
+supporting the validation of physics-based flood simulations with SFINCS on
+Linux-based high-performance computing systems.
 
 > **Development status:** A working Version 1 of the main SFINCS workflow is
 > currently available. Manual Mode, Override Mode, and Review Mode are
@@ -13,15 +13,16 @@ high-performance computing systems.
 
 ## Overview
 
-This repository contains a general-purpose workflow built around the SFINCS
-flood model developed by Deltares. The system combines four main parts:
+This repository contains a research workflow built around the SFINCS flood
+model developed by Deltares. It is designed for reuse across Linux-based
+high-performance computing deployments. The system combines four main parts:
 
 1. A browser-based web launcher for configuring simulations.
 2. A Python backend for validating configurations and preparing runs.
 3. A Slurm job stack for preprocessing, simulation, and postprocessing.
 4. A Review system for reading model outputs and creating diagnostics.
 
-The web launcher is one component of a broader research effort. Its purpose is
+The Web Launcher is one component of a broader research effort. Its purpose is
 to make large numbers of SFINCS simulations easier to configure, submit,
 organize, inspect, and compare without requiring a researcher to manually build
 every input file or Slurm script.
@@ -29,6 +30,22 @@ every input file or Slurm script.
 The pipeline is being developed on a shared Linux computing cluster, but its
 design is intended to be general enough for deployment in another Linux project
 space with the required software, data, and scheduler configuration.
+
+---
+
+## Getting Started
+
+The current deployment is a working research installation rather than a
+packaged application.
+
+- Read [Usage and Access](docs/usage.md) for the current access workflow.
+- Review the [Python environments](environments/environments.md).
+- Review the [SFINCS container setup](docs/sfincs_container.md).
+- Inspect the [Manual and Override example configurations](configs/README.md).
+- Use the built-in Web Launcher Guide for page-level operating instructions.
+
+The large model datasets, installed software environments, and SFINCS container
+are maintained separately from this Git repository.
 
 ---
 
@@ -102,7 +119,7 @@ The pipeline is organized into four connected subsystems:
 1. Web Launcher
 2. Python Backend
 3. Slurm Execution Stack
-4. Run Review and Scientific Validation
+4. Review Mode
 
 [![Physics-Based Flood Simulation Pipeline system architecture](docs/assets/architecture/system_overview.svg)](docs/assets/architecture/system_overview.svg)
 
@@ -118,13 +135,14 @@ computing resources, paths, and enabled pipeline stages.
 A normal full run follows this sequence:
 
 ```text
-Web launcher
+Web Launcher
     → configuration and preflight checks
     → run-directory creation
     → preprocessing job
     → SFINCS solver job
     → postprocessing job
-    → Review and validation
+    → Review products
+    → scientific validation and interpretation
 ```
 
 The Slurm jobs normally use dependency rules so that each stage begins only
@@ -136,7 +154,7 @@ after the previous stage completes successfully.
 
 ### Web Launcher
 
-The web launcher provides the researcher-facing interface. It is built from
+The Web Launcher provides the researcher-facing interface. It is built from
 HTML, JavaScript, CSS, and a Python Flask application.
 
 Its responsibilities include:
@@ -155,9 +173,8 @@ is designed to explain the purpose and normal use of each front-facing launcher
 mode without requiring a user to read the backend source code.
 
 The Manual and Override guide sections currently contain the most complete
-first-pass documentation. The introductory, Batch, Guided, and Comparison
-sections remain under active development, and the guide will continue to change
-alongside the launcher.
+first-pass documentation. The introductory, Batch, Guided, and Compare Mode sections remain under active
+development, and the guide will continue to change alongside the launcher.
 
 The launcher is intended to reduce repetitive setup work, but it does not
 replace the backend or the SFINCS model. Its main output is a validated
@@ -243,7 +260,7 @@ The current launcher contains several modes with different levels of maturity.
 |---|---|---|
 | Manual | Version 1 operational | Builds a SFINCS run from selected source data and model settings |
 | Override | Version 1 operational | Reuses selected SFINCS-native inputs while regenerating other run components |
-| Review | Version 1 operational and under active development | Reads completed runs and produces diagnostic and validation products |
+| Review | Version 1 operational; continuing development | Reads existing runs and produces diagnostic and model-observation products |
 | Compare | In development | Compares outputs and settings across multiple runs |
 | Batch | Not yet complete | Intended to generate and submit groups of related runs |
 | Guided | Not yet complete | Intended to provide a more structured beginner-oriented setup process |
@@ -321,11 +338,12 @@ are actively consumed by a specific model run. This makes it possible to
 preserve raw observations and provenance while still creating standardized,
 event-specific inputs for the pipeline.
 
-### Fourteen-Event Development Set
+### Historical Event Catalog
 
-The current Harris County development set contains fourteen historical events
-covering tropical cyclones, major urban floods, and other heavy-rainfall
-periods:
+The current Harris County research scope contains 35 identified historical
+events. Fourteen events currently have complete active catalog packages and
+form the main development, run, and validation set. They cover tropical
+cyclones, major urban floods, and other heavy-rainfall periods:
 
 | Event | Working identifier |
 |---|---|
@@ -363,7 +381,7 @@ The active event catalogs have since been standardized around three modeled
 water-level boundaries:
 
 1. Eagle Point;
-2. Morgan's Point / Barbours Cut;
+2. Morgan's Point;
 3. Lake Houston / the San Jacinto River near Sheldon.
 
 Manchester is retained where useful as an interior observation or reference
@@ -416,16 +434,11 @@ silently filled or treated as a zero observation.
 
 ### Current Run and Validation Status
 
-A fresh SFINCS solver run now exists for all fourteen events using the current
-catalog family.
+A fresh SFINCS solver run family has been completed for all fourteen active
+events using the current catalog family.
 
-In the latest automated Review status snapshot:
-
-```text
-all 14 runs completed and awaiting validation
-```
-
-The next consolidated run audit is intended to verify, across all fourteen
+Consolidated generated-input, output-file, and scientific-validation audits
+remain in progress. These audits are intended to verify, across all fourteen
 events:
 
 - generated boundary locations and ordering;
@@ -510,7 +523,7 @@ Current strengths include:
 Major areas still under development include:
 
 - portable installation and dependency setup;
-- general configuration templates;
+- additional portable example and test configurations;
 - full Compare Mode;
 - Batch Mode;
 - Guided Mode;
@@ -526,11 +539,10 @@ finished production application.
 
 ---
 
-## Planned Repository Organization
+## Repository Organization
 
-The repository is being organized into source code, user documentation,
-developer documentation, and portable examples.
-
+The repository is organized into source code, project documentation,
+architecture documentation, reproducibility records, and portable examples.
 
 ```text
 physics-flood-pipeline/
@@ -542,7 +554,6 @@ physics-flood-pipeline/
 │   ├── current_research.md
 │   ├── data.md
 │   ├── usage.md
-│   ├── installation.md
 │   ├── sfincs_container.md
 │   │
 │   ├── architecture/
@@ -567,25 +578,25 @@ physics-flood-pipeline/
 │       └── architecture/
 │
 ├── configs/
+│   ├── config_README.md
 │   └── examples/
+│       ├── harvey_manual_example_config.json
+│       └── beryl_override_example_config.json
 │
 ├── environments/
 │   ├── environments.md
 │   ├── sfincs_environment.yml
 │   ├── sfincs_contextily_environment.yml
-│   ├── web_launcher_environment.yml
-│   └── aorc_s3_environment.yml
+│   ├── aorc_s3_environment.yml
+│   ├── web_launcher_requirements.txt
+│   └── exact/
+│       ├── sfincs_explicit_linux-64.txt
+│       ├── sfincs_contextily_explicit_linux-64.txt
+│       └── aorc_s3_explicit_linux-64.txt
 │
 ├── code/
-│
 └── web_launcher/
 ```
-
-
-
-The architecture documents will explain how the major subsystems connect. More
-detailed module and function documentation will remain close to the source code
-or be generated from Python docstrings where practical.
 
 ---
 
@@ -630,7 +641,9 @@ The repository should not include:
 - credentials;
 - private or restricted data.
 
-Detailed data-layout and provenance documentation will be added separately.
+See [Data Catalogs and Validation Data](docs/data.md) for the current data
+architecture, catalog contents, event inventory, gauge archive, boundary setup,
+and storage expectations.
 
 ---
 
@@ -654,90 +667,75 @@ A complete deployment is expected to require some combination of:
 Some workflows also depend on specialized preprocessing, mapping, animation, or
 validation packages.
 
-Exact versions and installation steps have not yet been finalized for a
-portable release.
+The current Longleaf package versions are recorded in the repository's
+environment YAML files, Web Launcher requirements file, and exact Linux package
+specifications. A complete portable installation procedure has not yet been
+validated.
 
 ---
 
-## Installation
+## Access and Installation Status
 
-> **Installation documentation is in preparation.**
+The current Longleaf deployment is working, but the complete installation and
+data-transfer process has not yet been tested as a portable procedure. The
+repository therefore does not currently claim one-command or general
+installation support.
 
-The current research deployment contains multiple Python environments, model
-dependencies, scheduler settings, data roots, and external software components.
-These need to be audited and converted into a portable installation process
-before reliable general instructions can be published.
+The repository records the major deployment components through:
 
-Planned installation documentation will cover:
+- environment definitions and exact Linux package specifications;
+- SFINCS container documentation;
+- site and usage notes;
+- Manual and Override example configurations;
+- architecture documentation;
+- current data-layout documentation.
 
-1. Cloning the repository.
-2. Creating the required Python environments.
-3. Installing or obtaining SFINCS.
-4. Configuring Slurm and project resources.
-5. Defining project, data, and run-output roots.
-6. Preparing static and event catalogs.
-7. Starting the web launcher.
-8. Running a small verification case.
+Large project datasets and the SFINCS container are transferred separately
+rather than stored in Git.
 
-Until that work is complete, the repository should not be assumed to provide a
-one-command installation.
+See:
+
+- [Usage and Access](docs/usage.md)
+- [Python Environments](environments/environments.md)
+- [SFINCS Container](docs/sfincs_container.md)
+- [Example Run Configurations](configs/README.md)
+
+The portable installation process will be documented only after it has been
+tested from a clean deployment.
 
 ---
 
-## Documentation Plan
+## Documentation
 
-The root README provides only the project overview. Detailed documentation will
-be divided by purpose.
+The root README provides the project overview. More detailed documentation is
+organized by purpose.
 
-### Research documentation
+### Project and research
 
-Will describe:
+- [Current Research](docs/current_research.md)
+- [Data Catalogs and Validation Data](docs/data.md)
+- [Usage and Access](docs/usage.md)
+- [SFINCS Container](docs/sfincs_container.md)
+- [Python Environments](environments/environments.md)
+- [Example Run Configurations](configs/README.md)
 
-- the storm-outcome database concept;
-- the current Harris County working area;
-- event selection and data preparation;
-- validation methods;
-- current results and limitations.
+### Architecture
 
-### Architecture documentation
-
-Will describe:
-
-- the full software architecture;
-- the web launcher;
-- the Python backend;
-- the Slurm execution stack;
-- Review Mode;
-- major data and control flows.
-
-### Usage documentation
-
-Will describe:
-
-- installation;
-- site configuration;
-- preparing a run;
-- Manual and Override workflows;
-- submitting jobs;
-- reviewing results;
-- common errors.
-
-### Developer documentation
-
-Will describe:
-
-- important modules and scripts;
-- inputs and outputs;
-- file relationships;
-- API routes;
-- function responsibilities;
-- extension and testing practices.
+- [System Architecture](docs/architecture/overview.md)
+- [Slurm Execution Stack](docs/architecture/slurm_execution.md)
+- [Python Backend](docs/architecture/python_backend/python_backend.md)
+- [Backend Module Catalog](docs/architecture/python_backend/module_catalog.md)
+- [Web Launcher](docs/architecture/web_launcher/web_launcher.md)
+- [Page and API Map](docs/architecture/web_launcher/page_and_api_map.md)
+- [Review Mode](docs/architecture/review_mode/review_mode.md)
 
 The launcher also contains a built-in user guide for its front-facing modes.
-That guide is intended to teach normal operation, while the repository
-documentation explains the broader architecture and research workflow. Both
-the launcher guide and the repository documentation remain under active
-development.
+That guide teaches normal operation, while the repository documentation
+explains the broader architecture, software environment, data organization, and
+research workflow.
+
+Detailed source-file and function documentation will continue to expand as the
+pipeline develops.
 
 ---
 
@@ -775,6 +773,15 @@ inspection of run-local files and comparisons against observed records.
 
 ---
 
+## License
+
+The pipeline source code is released under the [MIT License](LICENSE).
+
+SFINCS, HydroMT-SFINCS, source datasets, and other external software or data
+remain subject to their own licenses and terms.
+
+---
+
 ## Project Team
 
 This project is being developed at the University of North Carolina at Chapel
@@ -797,7 +804,4 @@ For questions about the current research implementation, contact:
 **Reichen Schaller**  
 University of North Carolina at Chapel Hill  
 `epsilon@unc.edu`
-
-Repository issues may also be used once the issue-tracking workflow is
-established.
 
