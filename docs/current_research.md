@@ -583,40 +583,6 @@ The accurate current statement is:
 
 ---
 
-## Lessons from the current work
-
-Several broader lessons have emerged from constructing and testing the system.
-
-### Reuse improves both speed and scientific control
-
-Reusing a validated static package avoids repeating expensive model-building steps and helps isolate event-driven differences. Reuse is valuable only when compatibility and provenance remain explicit.
-
-### File order can be scientifically meaningful
-
-Boundary station identities and column order are not cosmetic. A correct-looking time series assigned to the wrong modeled point can invalidate the forcing.
-
-### Datum errors can resemble model errors
-
-Persistent vertical offsets may originate in the observation reference rather than the hydraulic model. Datum checks must occur before interpreting bias.
-
-### Universal geometry requires event-aware scoring
-
-Using the same model observation geometry across events improves consistency, but not every location has valid observations in every event. Metrics must distinguish missing observation coverage from poor model performance.
-
-### Computational completion is not scientific completion
-
-Slurm success, file existence, and SFINCS completion are only parts of the validation chain. Generated inputs, output structure, and observed comparisons must still be checked.
-
-### A browser interface should expose rather than conceal the configuration
-
-The launcher is intended to simplify use without turning the model into a black box. The final JSON configuration, selected paths, warnings, and run files remain inspectable.
-
-### Architecture matters for future scale
-
-A one-off run can tolerate manual cleanup. A historical collection, batch study, or emulator-training campaign cannot. Naming, catalog authority, reusable components, and provenance become scientific necessities at scale.
-
----
-
 ## Limitations and uncertainties
 
 The current system has important limitations.
@@ -636,10 +602,6 @@ Although the project has constructed explicit datum-adjustment rules, metadata h
 ### Static-model assumptions
 
 Terrain, roughness, infiltration, structures, mask placement, and subgrid representation all influence simulated flooding. Holding the static model fixed improves comparability but does not prove that the static setup is perfect.
-
-### Urban drainage representation
-
-Regional flood models simplify some local drainage, storage, structure, and infrastructure behavior. A regional result should not automatically be interpreted as parcel-scale certainty.
 
 ### Boundary representation
 
