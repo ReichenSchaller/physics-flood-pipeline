@@ -14,10 +14,10 @@ The transfer process has not yet been tested as a public installation workflow. 
 After the pipeline has been transferred and configured on Longleaf, open an Open OnDemand desktop session and launch the Web Launcher with:
 
 ```bash
-/proj/zefflab/projects/Flooding/pipeline/web_launcher/launch_web_launcher.sh
+/<proj or user space>/.../Sfincs/web_launcher/launch_web_launcher.sh
 ```
 
-Assign at least **16 GB of memory** to the Longleaf browser session. A larger session may be appropriate for reliable use; for example:
+Assign at least **16 GB of memory** to the Longleaf browser session.(Otherwise it could OOM and end the session) A larger session may be appropriate for reliable use; for example:
 
 ```text
 --mem=64G --ntasks=1 --cpus-per-task=4
